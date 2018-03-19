@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="radiobtn_bg_radius">200dp</dimen>
+    <dimen name="title_radiobutton_txt">16sp</dimen>
+    <dimen name="msg_state_size">14sp</dimen>
+    <dimen name="msg_title">16sp</dimen>
+</resources>

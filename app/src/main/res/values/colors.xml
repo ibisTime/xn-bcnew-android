@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#2F93ED</color>
+    <color name="colorPrimaryDark">#2F93ED</color>
+    <color name="colorAccent">#2F93ED</color>
+
+
+    <color name="app_title_bg">#2F93ED</color>
+    <color name="app_text_color">#2F93ED</color>
+    <color name="app_main_txt_select_un">#2F93ED</color>
+    <color name="app_main_txt_select">#ffffff</color>
+
+    <color name="radiobutton_txt_select">#2F93ED</color>
+    <color name="radiobutton_txt_select_un">#ffffff</color>
+
+    <color name="app_text_gray">#818181</color>
+</resources>

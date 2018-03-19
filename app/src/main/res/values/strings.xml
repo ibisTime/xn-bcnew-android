@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">链接社</string>
+    <string name="fast_msg">快讯</string>
+    <string name="msg">资讯</string>
+    <string name="share">分享</string>
+    <string name="please_down_load">更多资讯请下载\n链接社APP</string>
+</resources>

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/layout_left_interval"
+    android:paddingRight="@dimen/layout_right_interval"
+    android:paddingTop="15dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:paddingRight="10dp">
+
+            <TextView
+                android:id="@+id/tv_msg_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="3"
+                android:text="sdfssdfsdsdfssdfsdfsfsfsdfsdfsfsfsdfsdfsfsfdfsfsfsdfssdfsdfsfsfsdfsdfsfsfsdfsdfsfsfdfsfsfsdfssdfsdfsfsfsdfsdfsfsfsdfsdfsfsfdfsfsffsfsfsdfsdfsfsfsdfsdfsfsfdfsfsf"
+                android:textColor="@color/text_black_cd"
+                android:textSize="@dimen/msg_title" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_msg_content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="sdfsdfsfsf"
+                    android:textColor="@color/app_text_gray"
+                    android:textSize="@dimen/msg_state_size" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLines="3"
+                    android:text="分享"
+                    android:textColor="@color/app_text_gray"
+                    android:textSize="@dimen/msg_state_size" />
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:scaleType="centerCrop"
+            tools:src="@drawable/default_pic" />
+
+    </LinearLayout>
+
+    <View
+        style="@style/style_split_line"
+        android:layout_marginTop="15dp" />
+
+</LinearLayout>
