@@ -4,4 +4,10 @@
     <string name="msg">资讯</string>
     <string name="share">分享</string>
     <string name="please_down_load">更多资讯请下载\n链接社APP</string>
+    <string name="share_to">分享至</string>
+    <string name="we_chat">微信</string>
+    <string name="we_pyq">朋友圈</string>
+    <string name="bast_new_comments">最新评论</string>
+    <string name="hot_comments">热门评论</string>
+    <string name="recommended_note">相关文章</string>
 </resources>
