@@ -9,7 +9,7 @@ import com.cdkj.baselibrary.R;
 import com.cdkj.baselibrary.databinding.EmptyViewBinding;
 
 /**
- * 刷新方法回调
+ * 刷新方法回调 空数据显示图片
  * Created by cdkj on 2017/10/17.
  */
 

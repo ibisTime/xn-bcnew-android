@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/app_title_bg"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingBottom="5dp"
+        android:paddingTop="5dp">
+
+        <FrameLayout
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center"
+                android:src="@drawable/add" />
+
+        </FrameLayout>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <RadioGroup
+            android:id="@+id/radiogroup"
+            android:layout_width="210dp"
+            android:layout_height="35dp"
+            android:layout_gravity="center_horizontal"
+            android:orientation="horizontal"
+            android:weightSum="3">
+
+            <RadioButton
+                android:id="@+id/radio_left"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/common_radiobtn_select_left"
+                android:button="@null"
+                android:checked="true"
+                android:gravity="center"
+                android:padding="5dp"
+                android:text="@string/my_choose"
+                android:textColor="@drawable/common_radiobtn_select_text_color"
+                android:textSize="@dimen/title_radiobutton_txt" />
+
+            <RadioButton
+                android:id="@+id/radio_middle"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/common_radiobtn_select_middle"
+                android:button="@null"
+                android:checked="false"
+                android:gravity="center"
+                android:text="@string/platform"
+                android:textColor="@drawable/common_radiobtn_select_text_color"
+                android:textSize="@dimen/title_radiobutton_txt" />
+
+
+            <RadioButton
+                android:id="@+id/radio_right"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/common_radiobtn_select_right"
+                android:button="@null"
+                android:checked="false"
+                android:gravity="center"
+                android:text="@string/coin_type"
+                android:textColor="@drawable/common_radiobtn_select_text_color"
+                android:textSize="@dimen/title_radiobutton_txt" />
+
+        </RadioGroup>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <FrameLayout
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:layout_marginRight="5dp">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center"
+                android:src="@drawable/search" />
+
+        </FrameLayout>
+
+
+    </LinearLayout>
+
+</layout>

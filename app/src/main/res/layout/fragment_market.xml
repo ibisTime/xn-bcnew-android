@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include
+            android:id="@+id/titleLayout"
+            layout="@layout/layout_marketpage_title" />
+
+        <com.cdkj.baselibrary.views.EnabledViewpager
+            android:id="@+id/viewpager"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+        </com.cdkj.baselibrary.views.EnabledViewpager>
+
+
+    </LinearLayout>
+</layout>

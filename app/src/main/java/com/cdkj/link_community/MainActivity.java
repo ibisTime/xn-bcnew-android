@@ -12,6 +12,7 @@ import com.cdkj.baselibrary.base.AbsBaseLoadActivity;
 import com.cdkj.link_community.databinding.ActivityMainBinding;
 import com.cdkj.link_community.manager.MyRouteHelper;
 import com.cdkj.link_community.module.maintab.FirstPageFragment;
+import com.cdkj.link_community.module.maintab.MarketPageFragment;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -97,7 +98,7 @@ public class MainActivity extends AbsBaseLoadActivity {
         ArrayList fragments = new ArrayList<>();
 
         fragments.add(FirstPageFragment.getInstanse());
-        fragments.add(FirstPageFragment.getInstanse());
+        fragments.add(MarketPageFragment.getInstanse());
         fragments.add(FirstPageFragment.getInstanse());
         fragments.add(FirstPageFragment.getInstanse());
 

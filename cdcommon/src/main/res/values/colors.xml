@@ -72,7 +72,7 @@
     <!--app模块 相同 -->
 
     <color name="line_gray_cd">#dedede</color>
-    <color name="text_black_cd">#3a3a3a</color>
+    <color name="text_black_cd">#34354e</color>
     <color name="page_bg">#fafcff</color>
 
 </resources>

@@ -13,4 +13,7 @@
     <string name="dont_touch">拜托，不要碰底线哦!</string>
     <string name="cancel">取消</string>
     <string name="realse">发布</string>
+    <string name="coin_type">币种</string>
+    <string name="platform">平台</string>
+    <string name="my_choose">自选</string>
 </resources>

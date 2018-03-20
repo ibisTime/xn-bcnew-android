@@ -192,6 +192,10 @@ public class RefreshHelper<T> {
     }
 
 
+    public void setData(List<T> datas) {
+        setData(datas, "", 0);
+    }
+
     /**
      * 设置加载数据 实现分页逻辑
      *
