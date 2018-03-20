@@ -9,7 +9,6 @@
     </style>
 
 
-
     <style name="main_tab_radio">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">50dp</item>
@@ -20,6 +19,10 @@
         <item name="android:gravity">center</item>
         <item name="android:textSize">12sp</item>
         <item name="android:textColor">@drawable/main_tab_txt_select_color</item>
+    </style>
+
+    <style name="comment_input_dialog" parent="@style/Theme.AppCompat.Dialog">
+        <item name="android:windowBackground">@color/white</item>
     </style>
 
 </resources>

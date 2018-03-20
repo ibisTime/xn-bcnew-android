@@ -10,4 +10,7 @@
     <string name="bast_new_comments">最新评论</string>
     <string name="hot_comments">热门评论</string>
     <string name="recommended_note">相关文章</string>
+    <string name="dont_touch">拜托，不要碰底线哦!</string>
+    <string name="cancel">取消</string>
+    <string name="realse">发布</string>
 </resources>
