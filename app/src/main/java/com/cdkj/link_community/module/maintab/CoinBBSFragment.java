@@ -60,7 +60,7 @@ public class CoinBBSFragment extends BaseLazyFragment {
         mBinding.viewpager.setPagingEnabled(true);
         mBinding.viewindicator.setVisibleTabCount(fragments.size());
         mBinding.viewindicator.setmLinWidth(25);
-        mBinding.viewindicator.setTabItemTitles(Arrays.asList("全部", "热门", "关注"));
+        mBinding.viewindicator.setTabItemTitles(Arrays.asList(getString(R.string.all), getString(R.string.hot), getString(R.string.focus_on)));
         mBinding.viewindicator.setViewPager(mBinding.viewpager, 0);
 
     }

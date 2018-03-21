@@ -125,7 +125,7 @@ public class ExpandableTextLayout extends LinearLayout implements View.OnClickLi
 
         mCollapsed = !mCollapsed;
         mButton.setImageDrawable(mCollapsed ? mExpandDrawable : mCollapseDrawable);
-        mExpandCollapseTV.setText(mCollapsed ? "展开" : "收起");
+        mExpandCollapseTV.setText(mCollapsed ? getContext().getString(R.string.click_open) : getContext().getString(R.string.click_close));
 
         if (mCollapsedStatus != null) {
             mCollapsedStatus.put(mPosition, mCollapsed);
@@ -253,7 +253,7 @@ public class ExpandableTextLayout extends LinearLayout implements View.OnClickLi
         clearAnimation();
         mCollapsed = isCollapsed;
         mButton.setImageDrawable(mCollapsed ? mExpandDrawable : mCollapseDrawable);
-        mExpandCollapseTV.setText(mCollapsed ? "展开" : "收起");
+        mExpandCollapseTV.setText(mCollapsed ? getContext().getString(R.string.click_open) : getContext().getString(R.string.click_close));
         setText(text);
         getLayoutParams().height = ViewGroup.LayoutParams.WRAP_CONTENT;
         requestLayout();
@@ -297,7 +297,7 @@ public class ExpandableTextLayout extends LinearLayout implements View.OnClickLi
         mButton = (ImageView) findViewById(R.id.expand_collapse);
         mButton.setImageDrawable(mCollapsed ? mExpandDrawable : mCollapseDrawable);
         mExpandCollapseTV = (TextView) findViewById(R.id.expand_collapse_tv);
-        mExpandCollapseTV.setText(mCollapsed ? "展开" : "收起");
+        mExpandCollapseTV.setText(mCollapsed ? getContext().getString(R.string.click_open) : getContext().getString(R.string.click_close));
         mExpandCollapseLayout = findViewById(R.id.expand_collapse_layout);
         mExpandCollapseLayout.setOnClickListener(this);
     }

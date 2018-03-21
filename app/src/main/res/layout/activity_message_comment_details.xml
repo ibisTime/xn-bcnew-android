@@ -37,27 +37,9 @@
 
         </ScrollView>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/layout_left_interval"
-            android:layout_marginRight="@dimen/layout_right_interval"
-            android:paddingBottom="10dp"
-            android:paddingTop="10dp">
+        <View style="@style/style_split_line" />
 
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="35dp"
-                android:layout_marginRight="15dp"
-                android:layout_weight="1"
-                android:background="@drawable/to_comments_bg"
-                android:gravity="center_vertical"
-                android:paddingLeft="15dp"
-                android:text="说出你的看法"
-                android:textColor="@color/app_text_gray_2" />
-
-
-        </LinearLayout>
+        <include layout="@layout/layout_to_comment_bottom" />
 
     </LinearLayout>
 </layout>

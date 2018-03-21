@@ -60,7 +60,7 @@ public class FastMessageFragment extends BaseLazyFragment {
         mBinding.viewpager.setPagingEnabled(true);
 
         mBinding.viewindicator.setmLinWidth(25);
-        mBinding.viewindicator.setTabItemTitles(Arrays.asList("全部", "热点"));
+        mBinding.viewindicator.setTabItemTitles(Arrays.asList(getString(R.string.all), getString(R.string.hot_message)));
         mBinding.viewindicator.setViewPager(mBinding.viewpager, 0);
 
     }

@@ -38,7 +38,7 @@ public class ViewPagerIndicator extends LinearLayout {
      */
     private int mTranslationX;
     /**
-     * tab数量
+     * tab可见数量
      */
     private int mTabVisibleCount;
 
@@ -47,6 +47,7 @@ public class ViewPagerIndicator extends LinearLayout {
     private List<String> mTitles;
 
     private int mLinWidth;
+    private int mColor;
 
     public void setmLinWidth(int mLinWidth) {
         this.mLinWidth = DisplayHelper.dip2px(mContext, mLinWidth);
@@ -60,7 +61,7 @@ public class ViewPagerIndicator extends LinearLayout {
         super(context, attrs);
 
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.viewPagerIndicatorStyle);
-        int mColor = ta.getResourceId(R.styleable.viewPagerIndicatorStyle_choose_color, R.color.app_indicator_color);
+        mColor = ta.getResourceId(R.styleable.viewPagerIndicatorStyle_choose_color, R.color.app_indicator_color);
         ta.recycle();
 
         mContext = context;
@@ -105,7 +106,6 @@ public class ViewPagerIndicator extends LinearLayout {
             LinearLayout.LayoutParams lp = (LayoutParams) view
                     .getLayoutParams();
             lp.weight = 1;
-            lp.width = 0;
             view.setLayoutParams(lp);
         }
 
@@ -177,7 +177,6 @@ public class ViewPagerIndicator extends LinearLayout {
         tv.setText(title);
         tv.setGravity(Gravity.CENTER);
         tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
-        tv.setTextColor(Color.parseColor("#2F93ED"));
         tv.setLayoutParams(lp);
         return tv;
     }
@@ -264,7 +263,7 @@ public class ViewPagerIndicator extends LinearLayout {
         resetTextViewColor();
         View view = getChildAt(pos);
         if (view instanceof TextView) {
-            ((TextView) view).setTextColor(Color.parseColor("#2F93ED"));
+            ((TextView) view).setTextColor(ContextCompat.getColor(mContext, mColor));
         }
     }
 

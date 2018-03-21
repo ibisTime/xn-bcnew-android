@@ -35,6 +35,13 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
 
+        <!--币吧详情-->
+        <activity
+            android:name=".module.coin_bbs.CoinBBSDetailsActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
+
+
 
     </application>
 
