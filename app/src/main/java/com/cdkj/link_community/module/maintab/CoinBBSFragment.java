@@ -1,4 +1,4 @@
-package com.cdkj.link_community.module.message;
+package com.cdkj.link_community.module.maintab;
 
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
@@ -10,47 +10,47 @@ import android.view.ViewGroup;
 import com.cdkj.baselibrary.adapters.ViewPagerAdapter;
 import com.cdkj.baselibrary.base.BaseLazyFragment;
 import com.cdkj.link_community.R;
-import com.cdkj.link_community.databinding.FragmentFastMessageBinding;
-import com.cdkj.link_community.module.maintab.FirstPageFragment;
+import com.cdkj.link_community.databinding.FragmentCoinBbsBinding;
+import com.cdkj.link_community.module.message.FastMessageListFragment;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
- * 快讯
- * Created by cdkj on 2018/3/19.
+ * 币吧
+ * Created by cdkj on 2018/3/21.
  */
 
-public class FastMessageFragment extends BaseLazyFragment {
+public class CoinBBSFragment extends BaseLazyFragment {
 
 
-    private FragmentFastMessageBinding mBinding;
+    private FragmentCoinBbsBinding mBinding;
 
-
-    public static FastMessageFragment getInstanse() {
-        FastMessageFragment fragment = new FastMessageFragment();
+    public static CoinBBSFragment getInstanse() {
+        CoinBBSFragment fragment = new CoinBBSFragment();
         Bundle bundle = new Bundle();
         fragment.setArguments(bundle);
         return fragment;
     }
 
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_fast_message, null, false);
+        mBinding = DataBindingUtil.inflate(getLayoutInflater(), R.layout.fragment_coin_bbs, null, false);
 
-        initViews();
+        initViewPager();
 
         return mBinding.getRoot();
+
     }
 
-    private void initViews() {
+    private void initViewPager() {
 
         //设置fragment数据
         ArrayList fragments = new ArrayList<>();
 
+        fragments.add(FastMessageListFragment.getInstanse());
         fragments.add(FastMessageListFragment.getInstanse());
         fragments.add(FastMessageListFragment.getInstanse());
 
@@ -58,9 +58,9 @@ public class FastMessageFragment extends BaseLazyFragment {
         mBinding.viewpager.setOffscreenPageLimit(fragments.size());
 
         mBinding.viewpager.setPagingEnabled(true);
-
+        mBinding.viewindicator.setVisibleTabCount(fragments.size());
         mBinding.viewindicator.setmLinWidth(25);
-        mBinding.viewindicator.setTabItemTitles(Arrays.asList("全部", "热点"));
+        mBinding.viewindicator.setTabItemTitles(Arrays.asList("全部", "热门", "关注"));
         mBinding.viewindicator.setViewPager(mBinding.viewpager, 0);
 
     }

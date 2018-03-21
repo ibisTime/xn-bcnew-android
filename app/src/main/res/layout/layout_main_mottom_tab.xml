@@ -17,25 +17,25 @@
             android:layout_gravity="bottom"
             android:checked="true"
             android:drawableTop="@drawable/main_buttom_tab_1"
-            android:text="首页" />
+            android:text="@string/firstpage" />
 
         <RadioButton
             android:id="@+id/radio_main_tab_2"
             style="@style/main_tab_radio"
             android:drawableTop="@drawable/main_buttom_tab_2"
-            android:text="行情" />
+            android:text="@string/market" />
 
 
         <RadioButton
             android:id="@+id/radio_main_tab_3"
             style="@style/main_tab_radio"
             android:drawableTop="@drawable/main_buttom_tab_3"
-            android:text="币吧" />
+            android:text="@string/coin_bbs" />
 
         <RadioButton
             android:id="@+id/radio_main_tab_4"
             style="@style/main_tab_radio"
             android:drawableTop="@drawable/main_buttom_tab_4"
-            android:text="我的" />
+            android:text="@string/mind" />
     </RadioGroup>
 </layout>

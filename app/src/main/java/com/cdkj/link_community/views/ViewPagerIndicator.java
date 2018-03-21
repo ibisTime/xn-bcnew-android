@@ -73,7 +73,7 @@ public class ViewPagerIndicator extends LinearLayout {
             canvas.save();
             mLinWidth = Math.min(mLinWidth, getMeasuredWidth() / 2);
             // 画出一个矩形
-            Rect rect = new Rect(mTranslationX, getMeasuredHeight() - 5, mTranslationX + mLinWidth
+            Rect rect = new Rect(mTranslationX, getMeasuredHeight() - 10, mTranslationX + mLinWidth
                     , getMeasuredHeight());
             canvas.translate(getMeasuredWidth() / mTabVisibleCount / 2 - mLinWidth / 2, 0);   //计算偏移量
             canvas.drawRect(rect, mPaint); // 绘制该矩形
@@ -96,8 +96,8 @@ public class ViewPagerIndicator extends LinearLayout {
             View view = getChildAt(i);
             LinearLayout.LayoutParams lp = (LayoutParams) view
                     .getLayoutParams();
-            lp.weight = 0;
-            lp.width = getScreenWidth() / mTabVisibleCount;
+            lp.weight = 1;
+            lp.width = 0;
             view.setLayoutParams(lp);
         }
 
@@ -105,18 +105,6 @@ public class ViewPagerIndicator extends LinearLayout {
 
     }
 
-    /**
-     * 获得屏幕的宽度
-     *
-     * @return
-     */
-    private int getScreenWidth() {
-        WindowManager wm = (WindowManager) getContext().getSystemService(
-                Context.WINDOW_SERVICE);
-        DisplayMetrics outMetrics = new DisplayMetrics();
-        wm.getDefaultDisplay().getMetrics(outMetrics);
-        return outMetrics.widthPixels;
-    }
 
     /**
      * 指示器跟随手指进行滚动
@@ -175,8 +163,9 @@ public class ViewPagerIndicator extends LinearLayout {
     private View generateTextView(String title) {
         TextView tv = new TextView(getContext());
         LinearLayout.LayoutParams lp = new LayoutParams(
-                LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
-        lp.width = getScreenWidth() / mTabVisibleCount;
+                LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT);
+        lp.width = 0;
+        lp.weight = 1;
         tv.setText(title);
         tv.setGravity(Gravity.CENTER);
         tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);

@@ -11,6 +11,7 @@ import com.cdkj.baselibrary.adapters.ViewPagerAdapter;
 import com.cdkj.baselibrary.base.AbsBaseLoadActivity;
 import com.cdkj.link_community.databinding.ActivityMainBinding;
 import com.cdkj.link_community.manager.MyRouteHelper;
+import com.cdkj.link_community.module.maintab.CoinBBSFragment;
 import com.cdkj.link_community.module.maintab.FirstPageFragment;
 import com.cdkj.link_community.module.maintab.MarketPageFragment;
 
@@ -99,7 +100,7 @@ public class MainActivity extends AbsBaseLoadActivity {
 
         fragments.add(FirstPageFragment.getInstanse());
         fragments.add(MarketPageFragment.getInstanse());
-        fragments.add(FirstPageFragment.getInstanse());
+        fragments.add(CoinBBSFragment.getInstanse());
         fragments.add(FirstPageFragment.getInstanse());
 
         mBinding.pagerMain.setAdapter(new ViewPagerAdapter(getSupportFragmentManager(), fragments));
