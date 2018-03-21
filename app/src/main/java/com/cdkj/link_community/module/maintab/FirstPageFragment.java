@@ -37,7 +37,7 @@ public class FirstPageFragment extends BaseLazyFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_first_page, null, false);
+        mBinding = DataBindingUtil.inflate(getLayoutInflater(), R.layout.fragment_first_page, null, false);
 
         initTopTitle();
 

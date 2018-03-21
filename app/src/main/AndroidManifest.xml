@@ -29,6 +29,11 @@
             android:name=".module.message.FastMessageToShareActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
+        <!--行情搜索-->
+        <activity
+            android:name=".module.market.search.SearchMarketActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
 
 
     </application>

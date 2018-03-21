@@ -10,11 +10,9 @@ import android.view.ViewGroup;
 import com.cdkj.baselibrary.adapters.ViewPagerAdapter;
 import com.cdkj.baselibrary.base.BaseLazyFragment;
 import com.cdkj.link_community.R;
-import com.cdkj.link_community.databinding.FragmentFirstPageBinding;
 import com.cdkj.link_community.databinding.FragmentMarketBinding;
 import com.cdkj.link_community.module.market.MyChooseFragment;
-import com.cdkj.link_community.module.message.FastMessageFragment;
-import com.cdkj.link_community.module.message.MessageFragment;
+import com.cdkj.link_community.module.market.search.SearchMarketActivity;
 
 import java.util.ArrayList;
 
@@ -38,7 +36,7 @@ public class MarketPageFragment extends BaseLazyFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_market, null, false);
+        mBinding = DataBindingUtil.inflate(getLayoutInflater(), R.layout.fragment_market, null, false);
 
         initTopTitle();
 
@@ -49,6 +47,7 @@ public class MarketPageFragment extends BaseLazyFragment {
 
     private void initTopTitle() {
 
+        mBinding.titleLayout.fraToSearch.setOnClickListener(view -> SearchMarketActivity.open(mActivity));
 
     }
 

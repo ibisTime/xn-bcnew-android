@@ -85,6 +85,7 @@
             android:layout_weight="1" />
 
         <FrameLayout
+            android:id="@+id/fra_to_search"
             android:layout_width="50dp"
             android:layout_height="match_parent"
             android:layout_marginRight="5dp">

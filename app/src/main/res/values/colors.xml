@@ -7,15 +7,16 @@
 
     <color name="app_title_bg">#2F93ED</color>
     <color name="app_text_color">#2F93ED</color>
-    <color name="app_main_txt_select_un">#2F93ED</color>
-    <color name="app_main_txt_select">#ffffff</color>
+    <color name="app_main_txt_select_un">#616161</color>
+    <color name="app_main_txt_select">#2F93ED</color>
 
-    <color name="radiobutton_txt_select">#2F93ED</color>
+    <color name="radiobutton_txt_select">#595a6e</color>
     <color name="radiobutton_txt_select_un">#ffffff</color>
 
     <color name="app_text_gray">#818181</color>
     <color name="app_text_gray_2">#9e9e9e</color>
     <color name="app_text_gray_3">#595a6e</color>
+    <color name="market_item_bg">#fafcff</color>
 
 
 </resources>

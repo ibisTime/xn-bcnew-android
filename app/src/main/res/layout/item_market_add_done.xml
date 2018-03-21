@@ -1,86 +1,116 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.mcxtzhang.swipemenulib.SwipeMenuLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/white"
-    android:orientation="horizontal"
-    android:padding="15dp">
+    android:clickable="true"
+    android:paddingBottom="1dp">
 
     <LinearLayout
-        android:layout_width="0dp"
+        android:id="@+id/content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:orientation="horizontal">
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:padding="15dp">
+
 
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:ellipsize="end"
-                android:singleLine="true"
-                android:text="sdfsdfsd"
-                android:textColor="@color/text_black_cd"
-                android:textSize="17sp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="7dp"
-                android:ellipsize="end"
-                android:singleLine="true"
-                android:text="sdfsdfsd"
-                android:textColor="@color/app_text_gray"
-                android:textSize="15sp" />
-
-        </LinearLayout>
-
-        <View
             android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
-
-        <LinearLayout
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_weight="1"
+            android:orientation="horizontal">
 
-            <TextView
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:ellipsize="end"
-                android:singleLine="true"
-                android:text="sdfsdfsd"
-                android:textColor="@color/text_black_cd"
-                android:textSize="17sp" />
+                android:orientation="vertical">
 
-            <TextView
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:text="sdfsdfsd"
+                    android:textColor="@color/text_black_cd"
+                    android:textSize="17sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="7dp"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:text="sdfsdfsd"
+                    android:textColor="@color/app_text_gray"
+                    android:textSize="15sp" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="7dp"
-                android:ellipsize="end"
-                android:singleLine="true"
-                android:text="sdfsdfsd"
-                android:textColor="@color/app_text_gray_3"
-                android:textSize="15sp" />
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:text="sdfsdfsd"
+                    android:textColor="@color/text_black_cd"
+                    android:textSize="17sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="7dp"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:text="sdfsdfsd"
+                    android:textColor="@color/app_text_gray_3"
+                    android:textSize="15sp" />
+
+            </LinearLayout>
+
 
         </LinearLayout>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="15dp"
+            android:background="@drawable/market_green_bg"
+            android:text="sdfsfs"
+            android:textColor="@color/white"
+            android:textSize="15sp" />
 
 
     </LinearLayout>
 
+    <!-- 以下都是侧滑菜单的内容依序排列 -->
     <Button
-        android:layout_gravity="center"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
-        android:background="@drawable/market_green_bg"
-        android:text="sdfsfs"
-        android:textColor="@color/white"
-        android:textSize="15sp" />
+        android:textSize="15sp"
+        android:id="@+id/btn_to_top"
+        android:layout_width="65dp"
+        android:layout_height="match_parent"
+        android:background="#c3c3c3"
+        android:text="@string/to_top"
+        android:textColor="@android:color/white"/>
+
+    <Button
+        android:textSize="15sp"
+        android:id="@+id/btn_delete"
+        android:layout_width="65dp"
+        android:layout_height="match_parent"
+        android:background="#ff4545"
+        android:text="@string/delete"
+        android:textColor="@android:color/white"/>
 
 
-</LinearLayout>
+</com.mcxtzhang.swipemenulib.SwipeMenuLayout>

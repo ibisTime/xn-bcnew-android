@@ -16,4 +16,13 @@
     <string name="coin_type">币种</string>
     <string name="platform">平台</string>
     <string name="my_choose">自选</string>
+    <string name="delete">删除</string>
+    <string name="to_top">置顶</string>
+    <string name="in_to_bbs">进吧</string>
+    <string name="please_input_search_type">请输入平台/币种</string>
+    <string name="hot_coin">热门币种</string>
+    <string name="search_history">搜索历史</string>
+    <string name="clean_history">清除搜索历史</string>
+    <string name="please_input_search_info">请输入搜索内容</string>
+    <string name="no_search_history">暂无搜索历史</string>
 </resources>

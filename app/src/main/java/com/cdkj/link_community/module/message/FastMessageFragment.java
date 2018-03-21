@@ -39,7 +39,7 @@ public class FastMessageFragment extends BaseLazyFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_fast_message, null, false);
+        mBinding = DataBindingUtil.inflate(getLayoutInflater(), R.layout.fragment_fast_message, null, false);
 
         initViews();
 
