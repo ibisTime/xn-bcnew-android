@@ -18,5 +18,5 @@
     <color name="app_text_gray_3">#595a6e</color>
     <color name="market_item_bg">#fafcff</color>
 
-
+    <color name="app_indicator_color">#2F93ED</color>
 </resources>

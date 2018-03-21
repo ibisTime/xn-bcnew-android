@@ -25,4 +25,12 @@
         <item name="android:windowBackground">@color/white</item>
     </style>
 
+
+    <!--密码输入layout-->
+    <declare-styleable name="viewPagerIndicatorStyle">
+        <attr name="choose_color" format="reference"></attr>//选中状态状态颜色
+    </declare-styleable>
+
+
+
 </resources>

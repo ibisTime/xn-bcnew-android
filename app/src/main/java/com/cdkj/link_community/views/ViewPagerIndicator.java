@@ -1,12 +1,14 @@
 package com.cdkj.link_community.views;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.CornerPathEffect;
 import android.graphics.Paint;
 import android.graphics.Paint.Style;
 import android.graphics.Rect;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.AttributeSet;
@@ -20,11 +22,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cdkj.baselibrary.utils.DisplayHelper;
+import com.cdkj.link_community.R;
 
 import java.util.List;
 
 /**
- * ViewPager指示器 颜色 数量暂时硬编码
+ * ViewPager指示器
  */
 public class ViewPagerIndicator extends LinearLayout {
 
@@ -55,13 +58,18 @@ public class ViewPagerIndicator extends LinearLayout {
 
     public ViewPagerIndicator(Context context, AttributeSet attrs) {
         super(context, attrs);
+
+        TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.viewPagerIndicatorStyle);
+        int mColor = ta.getResourceId(R.styleable.viewPagerIndicatorStyle_choose_color, R.color.app_indicator_color);
+        ta.recycle();
+
         mContext = context;
-        mTabVisibleCount = 2;
+        mTabVisibleCount = 2;//默认为2
 
         // 初始化画笔
         mPaint = new Paint();
         mPaint.setAntiAlias(true);
-        mPaint.setColor(Color.parseColor("#2296f0"));
+        mPaint.setColor(ContextCompat.getColor(mContext, mColor));
         mPaint.setStyle(Style.FILL);
         mPaint.setPathEffect(new CornerPathEffect(3));
     }
@@ -73,7 +81,7 @@ public class ViewPagerIndicator extends LinearLayout {
             canvas.save();
             mLinWidth = Math.min(mLinWidth, getMeasuredWidth() / 2);
             // 画出一个矩形
-            Rect rect = new Rect(mTranslationX, getMeasuredHeight() - 10, mTranslationX + mLinWidth
+            Rect rect = new Rect(mTranslationX, getMeasuredHeight() - 8, mTranslationX + mLinWidth
                     , getMeasuredHeight());
             canvas.translate(getMeasuredWidth() / mTabVisibleCount / 2 - mLinWidth / 2, 0);   //计算偏移量
             canvas.drawRect(rect, mPaint); // 绘制该矩形
@@ -169,7 +177,7 @@ public class ViewPagerIndicator extends LinearLayout {
         tv.setText(title);
         tv.setGravity(Gravity.CENTER);
         tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
-        tv.setTextColor(Color.parseColor("#2296f0"));
+        tv.setTextColor(Color.parseColor("#2F93ED"));
         tv.setLayoutParams(lp);
         return tv;
     }
@@ -256,7 +264,7 @@ public class ViewPagerIndicator extends LinearLayout {
         resetTextViewColor();
         View view = getChildAt(pos);
         if (view instanceof TextView) {
-            ((TextView) view).setTextColor(Color.parseColor("#2296f0"));
+            ((TextView) view).setTextColor(Color.parseColor("#2F93ED"));
         }
     }
 
