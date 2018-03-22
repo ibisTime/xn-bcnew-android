@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -19,18 +20,23 @@ import com.cdkj.baselibrary.interfaces.LoginPresenter;
 import com.cdkj.baselibrary.interfaces.SendCodeInterface;
 import com.cdkj.baselibrary.interfaces.SendPhoneCoodePresenter;
 import com.cdkj.baselibrary.model.UserLoginModel;
+import com.cdkj.baselibrary.nets.BaseResponseModelCallBack;
+import com.cdkj.baselibrary.nets.RetrofitUtils;
+import com.cdkj.baselibrary.utils.StringUtils;
 import com.cdkj.link_community.R;
 import com.cdkj.link_community.databinding.ActivityLoginBinding;
 import com.cdkj.link_community.manager.MyRouteHelper;
 import com.jakewharton.rxbinding2.view.RxView;
 import com.jakewharton.rxbinding2.widget.RxTextView;
 
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
+import retrofit2.Call;
 
 import static com.cdkj.baselibrary.appmanager.CdRouteHelper.DATASIGN;
 
@@ -39,9 +45,8 @@ import static com.cdkj.baselibrary.appmanager.CdRouteHelper.DATASIGN;
  * Created by cdkj on 2017/8/8.
  */
 @Route(path = CdRouteHelper.APPLOGIN)
-public class LoginActivity extends AbsBaseLoadActivity implements LoginInterface, SendCodeInterface {
+public class LoginActivity extends AbsBaseLoadActivity implements SendCodeInterface {
 
-    private LoginPresenter mPresenter;
     private ActivityLoginBinding mBinding;
     private boolean canOpenMain;
 
@@ -78,7 +83,6 @@ public class LoginActivity extends AbsBaseLoadActivity implements LoginInterface
     public void afterCreate(Bundle savedInstanceState) {
 
         mSendCOdePresenter = new SendPhoneCoodePresenter(this);
-        mPresenter = new LoginPresenter(this);
 
         if (getIntent() != null) {
             canOpenMain = getIntent().getBooleanExtra(DATASIGN, false);
@@ -90,12 +94,7 @@ public class LoginActivity extends AbsBaseLoadActivity implements LoginInterface
 
     private void initListener() {
         //登录
-        mBinding.btnLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mPresenter.login(mBinding.editUsername.getText().toString(), mBinding.edtiUserpass.getText().toString(), LoginActivity.this);
-            }
-        });
+        mBinding.btnLogin.setOnClickListener(view -> login());
 
         //验证码
         mBinding.tvCode.setOnClickListener(view -> checkPhoneNumAndSendCode());
@@ -108,6 +107,47 @@ public class LoginActivity extends AbsBaseLoadActivity implements LoginInterface
     }
 
     /**
+     * 登录
+     */
+    private void login() {
+
+        if (TextUtils.isEmpty(mBinding.editUsername.getText().toString())) {
+            UITipDialog.showInfo(LoginActivity.this, getString(R.string.please_input_phone));
+            return;
+        }
+        if (TextUtils.isEmpty(mBinding.edtiUserpass.getText().toString())) {
+            UITipDialog.showInfo(LoginActivity.this, getString(R.string.please_input_verification_code));
+            return;
+        }
+
+        Map<String, String> map = RetrofitUtils.getRequestMap();
+
+        map.put("smsCaptcha", mBinding.edtiUserpass.getText().toString());
+        map.put("mobile", mBinding.editUsername.getText().toString());
+        map.put("kind", MyCdConfig.USERTYPE);
+
+        Call call = RetrofitUtils.getBaseAPiService().userLogin("805173", StringUtils.getJsonToString(map));
+
+        showLoadingDialog();
+
+        call.enqueue(new BaseResponseModelCallBack<UserLoginModel>(this) {
+            @Override
+            protected void onSuccess(UserLoginModel data, String SucMessage) {
+                SPUtilHelpr.saveUserId(data.getUserId());
+                SPUtilHelpr.saveUserToken(data.getToken());
+                SPUtilHelpr.saveUserPhoneNum(mBinding.editUsername.getText().toString());
+                startNext();
+            }
+
+            @Override
+            protected void onFinish() {
+                disMissLoading();
+            }
+        });
+
+    }
+
+    /**
      * 检车手机号是然后发送验证码
      */
     private void checkPhoneNumAndSendCode() {
@@ -115,41 +155,7 @@ public class LoginActivity extends AbsBaseLoadActivity implements LoginInterface
             UITipDialog.showFall(LoginActivity.this, getString(R.string.please_input_phone));
             return;
         }
-        mSendCOdePresenter.sendCodeRequest(mBinding.editUsername.getText().toString(), "805041", MyCdConfig.USERTYPE, LoginActivity.this);
-    }
-
-
-    @Override
-    public void LoginSuccess(UserLoginModel user, String msg) {
-        SPUtilHelpr.saveUserId(user.getUserId());
-        SPUtilHelpr.saveUserToken(user.getToken());
-        SPUtilHelpr.saveUserPhoneNum(mBinding.editUsername.getText().toString());
-        startNext();
-    }
-
-    @Override
-    public void LoginFailed(String code, String msg) {
-        disMissLoading();
-        UITipDialog.showFall(LoginActivity.this, msg);
-    }
-
-    @Override
-    public void StartLogin() {
-        showLoadingDialog();
-    }
-
-    @Override
-    public void EndLogin() {
-        disMissLoading();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if (mPresenter != null) {
-            mPresenter.clear();
-            mPresenter = null;
-        }
+        mSendCOdePresenter.sendCodeRequest(mBinding.editUsername.getText().toString(), "805173", MyCdConfig.USERTYPE, LoginActivity.this);
     }
 
 
@@ -170,7 +176,6 @@ public class LoginActivity extends AbsBaseLoadActivity implements LoginInterface
         if (canOpenMain) {
             MyRouteHelper.openMain();
         }
-
         finish();
     }
 

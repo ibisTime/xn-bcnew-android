@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
+import com.cdkj.baselibrary.R;
 import com.cdkj.baselibrary.dialog.CommonDialog;
 import com.cdkj.baselibrary.dialog.LoadingDialog;
 import com.cdkj.baselibrary.model.eventmodels.EventFinishAll;
@@ -123,9 +124,9 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
 
         CommonDialog commonDialog = new CommonDialog(this).builder()
-                .setTitle("提示").setContentMsg(str)
-                .setPositiveBtn("确定", onPositiveListener)
-                .setNegativeBtn("取消", null, false);
+                .setTitle(getString(R.string.tips)).setContentMsg(str)
+                .setPositiveBtn(getString(R.string.sure), onPositiveListener)
+                .setNegativeBtn(getString(R.string.cancel), null, false);
 
         commonDialog.show();
     }
@@ -137,9 +138,9 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
 
         CommonDialog commonDialog = new CommonDialog(this).builder()
-                .setTitle("提示").setContentMsg(str)
-                .setPositiveBtn("确定", onPositiveListener)
-                .setNegativeBtn("取消", onNegativeListener, false);
+                .setTitle(getString(R.string.tips)).setContentMsg(str)
+                .setPositiveBtn(getString(R.string.sure), onPositiveListener)
+                .setNegativeBtn(getString(R.string.cancel), onNegativeListener, false);
 
         commonDialog.show();
     }
@@ -151,8 +152,8 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
 
         CommonDialog commonDialog = new CommonDialog(this).builder()
-                .setTitle("提示").setContentMsg(str)
-                .setPositiveBtn("确定", onPositiveListener);
+                .setTitle(getString(R.string.tips)).setContentMsg(str)
+                .setPositiveBtn(getString(R.string.sure), onPositiveListener);
 //        commonDialog.getContentView().setGravity(Gravity.CENTER);
 
         commonDialog.show();

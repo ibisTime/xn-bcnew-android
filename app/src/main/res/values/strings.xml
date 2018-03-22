@@ -51,5 +51,9 @@
     <string name="edit_user_info">编辑资料</string>
     <string name="woman">女</string>
     <string name="man">男</string>
+    <string name="sure_logout">确认退出登录？</string>
+    <string name="sure_clear_cache">确认清除缓存？</string>
+    <string name="clear_cache_succ">缓存清除成功</string>
+    <string name="logout_succ">退出登录成功</string>
 
 </resources>
