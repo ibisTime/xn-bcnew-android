@@ -67,19 +67,17 @@ public class CoinBBSDetailsActivity extends AbsBaseLoadActivity {
         mBinding.viewpager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager(), fragments));
         mBinding.viewpager.setOffscreenPageLimit(fragments.size());
 
+        mBinding.viewindicator.setmLinWidth(25);
+        mBinding.viewindicator.setVisibleTabCount(fragments.size());
+        mBinding.viewindicator.setTabItemTitles(Arrays.asList(getString(R.string.all), getString(R.string.hot_message), getString(R.string.hot_message)));
+        mBinding.viewindicator.setViewPager(mBinding.viewpager, 0);
+
 
         mBinding.viewindicatorTop.setmLinWidth(25);
         mBinding.viewindicatorTop.setVisibleTabCount(fragments.size());
         mBinding.viewindicatorTop.setTabItemTitles(Arrays.asList(getString(R.string.all), getString(R.string.hot_message), getString(R.string.hot_message)));
         mBinding.viewindicatorTop.setViewPager(mBinding.viewpager, 0);
         mBinding.viewindicatorTop.setVisibility(View.GONE);
-
-
-        mBinding.viewindicator.setmLinWidth(25);
-        mBinding.viewindicator.setVisibleTabCount(fragments.size());
-        mBinding.viewindicator.setTabItemTitles(Arrays.asList(getString(R.string.all), getString(R.string.hot_message), getString(R.string.hot_message)));
-        mBinding.viewindicator.setViewPager(mBinding.viewpager, 0);
-
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false) {
             @Override

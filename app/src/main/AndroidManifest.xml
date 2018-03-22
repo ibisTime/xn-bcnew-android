@@ -5,9 +5,8 @@
     <application
         android:name=".BaseApplication"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/logo"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
@@ -40,7 +39,6 @@
             android:name=".module.coin_bbs.CoinBBSDetailsActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
-
 
 
     </application>
