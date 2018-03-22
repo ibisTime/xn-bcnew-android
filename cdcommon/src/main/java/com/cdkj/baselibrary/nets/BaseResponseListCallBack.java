@@ -3,6 +3,7 @@ package com.cdkj.baselibrary.nets;
 import android.content.Context;
 
 import com.cdkj.baselibrary.CdApplication;
+import com.cdkj.baselibrary.R;
 import com.cdkj.baselibrary.api.BaseResponseListModel;
 import com.cdkj.baselibrary.utils.LogUtil;
 
@@ -13,6 +14,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.cdkj.baselibrary.nets.NetHelper.DATA_NULL;
 import static com.cdkj.baselibrary.nets.NetHelper.NETERRORCODE4;
 import static com.cdkj.baselibrary.nets.NetHelper.REQUESTFECODE4;
 import static com.cdkj.baselibrary.nets.NetHelper.REQUESTOK;
@@ -39,7 +41,7 @@ public abstract class BaseResponseListCallBack<T> implements Callback<BaseRespon
         onFinish();
 
         if (response == null || response.body() == null) {
-            onNull();
+            onReqFailure(DATA_NULL, CdApplication.getContext().getString(R.string.net_data_is_null));
             return;
         }
 
@@ -52,12 +54,12 @@ public abstract class BaseResponseListCallBack<T> implements Callback<BaseRespon
                 if (LogUtil.isDeBug) {
                     onReqFailure(NETERRORCODE4, "未知错误" + e.toString());
                 } else {
-                    onReqFailure(NETERRORCODE4, "程序出现未知错误");
+                    onReqFailure(NETERRORCODE4, CdApplication.getContext().getString(R.string.error_unknown));
                 }
             }
 
         } else {
-            onReqFailure(NETERRORCODE4, "网络请求失败");
+            onReqFailure(NETERRORCODE4, CdApplication.getContext().getString(R.string.net_req_fail));
         }
 
     }
@@ -70,8 +72,7 @@ public abstract class BaseResponseListCallBack<T> implements Callback<BaseRespon
         }
         onFinish();
         if (!NetUtils.isNetworkConnected(CdApplication.getContext())) {
-            onNoNet("暂无网络");
-            return;
+            onNoNet(CdApplication.getContext().getString(R.string.no_net));
         }
 
         onReqFailure(getThrowableStateCode(t), getThrowableStateString(t));
@@ -92,8 +93,7 @@ public abstract class BaseResponseListCallBack<T> implements Callback<BaseRespon
             List<T> t = (List<T>) baseModelNew.getData();
 
             if (t == null) {
-                onFinish();
-                onNull();
+                onReqFailure(DATA_NULL, CdApplication.getContext().getString(R.string.net_data_is_null));
                 return;
             }
 
@@ -131,13 +131,6 @@ public abstract class BaseResponseListCallBack<T> implements Callback<BaseRespon
      */
     protected void onLoginFailure(Context context, String errorMessage) {
         NetHelper.onLoginFailure(context, errorMessage);
-    }
-
-    /**
-     * 请求数据为空
-     */
-    protected void onNull() {
-        NetHelper.onNull(context);
     }
 
     /**

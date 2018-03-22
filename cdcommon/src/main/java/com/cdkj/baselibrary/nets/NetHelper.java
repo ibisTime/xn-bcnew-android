@@ -2,6 +2,8 @@ package com.cdkj.baselibrary.nets;
 
 import android.content.Context;
 
+import com.cdkj.baselibrary.CdApplication;
+import com.cdkj.baselibrary.R;
 import com.cdkj.baselibrary.appmanager.CdRouteHelper;
 import com.cdkj.baselibrary.appmanager.SPUtilHelpr;
 import com.cdkj.baselibrary.utils.LogUtil;
@@ -33,6 +35,7 @@ public class NetHelper {
     public static final String REQUESTFECODE9 = "9";
 
     public static final String NET_ERROR = "-1";
+    public static final String DATA_NULL = "-2";
 
 
     /**
@@ -48,15 +51,15 @@ public class NetHelper {
     public static String getThrowableStateString(Throwable t) {
         String errorString;
         if (t instanceof UnknownHostException) { // 网络错误
-            errorString = "网络加载异常";
+            errorString = CdApplication.getContext().getString(R.string.net_error);
         } else if (t instanceof SocketTimeoutException) {//响应超时
-            errorString = "服务器响应超时";
+            errorString = CdApplication.getContext().getString(R.string.net_service_time_out);
         } else if (t instanceof ConnectException) {//请求超时
-            errorString = "网络请求超时";
+            errorString = CdApplication.getContext().getString(R.string.net_req_time_out);
         } else if (t instanceof HttpException) {
-            errorString = "网络异常";
+            errorString = CdApplication.getContext().getString(R.string.net_exception);
         } else {
-            errorString = "未知错误";
+            errorString = CdApplication.getContext().getString(R.string.error_unknown);
         }
 
         if (LogUtil.isDeBug) {
@@ -83,23 +86,13 @@ public class NetHelper {
 
 
     /**
-     * 获取数据为空
-     *
-     * @param context
-     */
-    public static void onNull(Context context) {
-        if(context==null)return;
-        ToastUtil.show(context, "请求失败,数据返回错误");
-    }
-
-    /**
      * 暂无网络
      *
      * @param context
      * @param msg
      */
     public static void onNoNet(Context context, String msg) {
-        if(context==null)return;
+        if (context == null) return;
         ToastUtil.show(context, msg);
     }
 
@@ -111,7 +104,7 @@ public class NetHelper {
      * @param msg
      */
     public static void onReqFailure(Context context, String errorCode, String msg) {
-        if(context==null)return;
+        if (context == null) return;
         ToastUtil.show(context, msg);
         LogUtil.E("网络请求错误————————：" + msg);
 
@@ -125,7 +118,7 @@ public class NetHelper {
      */
     public static void onLoginFailure(Context context, String errorMessage) {
         SPUtilHelpr.logOutClear();
-        if(context!=null){
+        if (context != null) {
             ToastUtil.show(context, errorMessage);
         }
         // 路由跳转登录页面

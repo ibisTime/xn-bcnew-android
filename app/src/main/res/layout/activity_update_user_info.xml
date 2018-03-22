@@ -35,13 +35,13 @@
                 android:layout_weight="1" />
 
             <ImageView
+                android:id="@+id/img_logo"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_marginRight="15dp"
                 android:src="@drawable/photo_default" />
 
             <ImageView
-                android:id="@+id/img_right"
                 android:layout_width="10dp"
                 android:layout_height="15dp"
                 android:src="@drawable/more_right_black" />

@@ -55,5 +55,8 @@
     <string name="sure_clear_cache">确认清除缓存？</string>
     <string name="clear_cache_succ">缓存清除成功</string>
     <string name="logout_succ">退出登录成功</string>
+    <string name="update_logo_succ">头像更换成功</string>
+    <string name="please_input_nick_name">请输入昵称</string>
+    <string name="update_nick_name_succ">昵称修改成功</string>
 
 </resources>

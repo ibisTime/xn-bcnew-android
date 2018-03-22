@@ -9,6 +9,9 @@ import android.view.View;
 import com.cdkj.baselibrary.base.AbsBaseLoadActivity;
 import com.cdkj.link_community.R;
 import com.cdkj.link_community.databinding.ActivityChooseGenderBinding;
+import com.cdkj.link_community.model.GenderUpdateModel;
+
+import org.greenrobot.eventbus.EventBus;
 
 /**
  * 性别选择
@@ -16,6 +19,10 @@ import com.cdkj.link_community.databinding.ActivityChooseGenderBinding;
  */
 
 public class GenderChooseActivity extends AbsBaseLoadActivity {
+
+
+    public static String MAN = "1";
+    public static String WOMAN = "2";
 
     private ActivityChooseGenderBinding mBinding;
 
@@ -43,5 +50,21 @@ public class GenderChooseActivity extends AbsBaseLoadActivity {
 
         mBinding.tvCancle.setOnClickListener(view -> finish());
 
+
+        mBinding.tvMan.setOnClickListener(view -> chooseGender(MAN));
+
+        mBinding.tvWoman.setOnClickListener(view -> chooseGender(WOMAN));
+
     }
+
+    /**
+     * @param gender
+     */
+    public void chooseGender(String gender) {
+        GenderUpdateModel genderUpdateModel = new GenderUpdateModel();
+        genderUpdateModel.setGender(gender);
+        EventBus.getDefault().post(genderUpdateModel);
+        finish();
+    }
+
 }

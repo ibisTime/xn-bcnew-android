@@ -62,7 +62,7 @@
                         android:layout_marginBottom="20dp"
                         android:layout_marginLeft="15dp"
                         android:layout_marginTop="20dp"
-                        android:src="@drawable/photo_default" />
+                        tools:src="@drawable/photo_default" />
 
 
                     <TextView

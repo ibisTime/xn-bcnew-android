@@ -24,6 +24,10 @@ public class ImgUtils {
         loadImg(obj, MyCdConfig.QINIUURL + imgid, img);
     }
 
+    public static void loadQiniuLogo(Object obj, String imgid, ImageView img) {
+        loadLogo(obj, MyCdConfig.QINIUURL + imgid, img);
+    }
+
     public static void loadImg(Object obj, Object imgid, ImageView img) {
 
         LogUtil.E("图片" + imgid);

@@ -96,6 +96,12 @@ public class RowInfoLayout extends LinearLayout {
         tvRight.setTextColor(ContextCompat.getColor(context, color));
     }
 
+    public void setTvRight(String str) {
+        txtRight = str;
+        tvRight.setText(txtRight);
+        tvRight.setVisibility(VISIBLE);
+    }
+
 
     private void init(Context context) {
         this.context = context;

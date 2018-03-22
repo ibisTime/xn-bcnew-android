@@ -16,6 +16,7 @@ import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
 import com.cdkj.baselibrary.CdApplication;
+import com.cdkj.baselibrary.R;
 import com.cdkj.baselibrary.appmanager.MyCdConfig;
 import com.cdkj.baselibrary.interfaces.CameraPhotoListener;
 
@@ -59,7 +60,7 @@ public class CameraHelper {
 
     public final static String staticPath = "imgSelect";
     public final static String cropPath = "cropPath";
-
+    private String photoPath;//拍照图片路径
     private boolean isSplit = true;//执行相机或拍照后是否需要裁剪 默认裁剪
 
     private CameraPhotoListener mCameraPhotoListener;
@@ -179,7 +180,7 @@ public class CameraHelper {
 
         if (!hasCamera())  //判断有没有可用相机
         {
-            mCameraPhotoListener.onPhotoFailure(CAPTURE_PHOTO_CODE, "没有可用相机");
+            mCameraPhotoListener.onPhotoFailure(CAPTURE_PHOTO_CODE, CdApplication.getContext().getString(R.string.no_camera));
             return;
         }
 
@@ -188,11 +189,12 @@ public class CameraHelper {
             Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
             File file = FileUtils.saveAlbumPic("cream");
             imageUrl = FileProviderHelper.getUriForFile(getContextActivity(mContext), file);
+            photoPath = file.getAbsolutePath();
             intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUrl);
             intent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 0);
             startActivity(intent, CAPTURE_PHOTO_CODE);
         } else {
-            mCameraPhotoListener.onPhotoFailure(CAPTURE_PHOTO_CODE, "SD卡不存在");
+            mCameraPhotoListener.onPhotoFailure(CAPTURE_PHOTO_CODE, CdApplication.getContext().getString(R.string.no_sd_card));
         }
     }
 
@@ -238,7 +240,7 @@ public class CameraHelper {
     private void zoomNext(Intent data, final int requestCode) {
 
         if (data == null || TextUtils.isEmpty(data.getStringExtra(cropPath))) {
-            mCameraPhotoListener.onPhotoFailure(requestCode, "图片获取失败");
+            mCameraPhotoListener.onPhotoFailure(requestCode, CdApplication.getContext().getString(R.string.get_pic_fail));
             return;
         }
         mCameraPhotoListener.onPhotoSuccessful(requestCode, data.getStringExtra(cropPath));
@@ -275,18 +277,28 @@ public class CameraHelper {
      */
     private void cameraNext() {
         if (isSplit) {
-            startCrop(imageUrl.getPath());
-
+            if (!isNeedUriAdapte()) {
+                startCrop(imageUrl.getPath());
+            } else {
+                startCrop(photoPath);
+            }
         } else {
             try {
+                if (!CameraHelper.isNeedUriAdapte()) {
+                    File file = new File(imageUrl.getPath());
+                    mCameraPhotoListener.onPhotoSuccessful(CAPTURE_PHOTO_CODE, imageUrl.getPath());
+                    //通知相册更新
+                    CdApplication.getContext().sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE,
+                            Uri.fromFile(file)));
 
-                File file = new File(imageUrl.getPath());
-                LogUtil.E("图片路径" + imageUrl.getPath());
-                mCameraPhotoListener.onPhotoSuccessful(CAPTURE_PHOTO_CODE, imageUrl.getPath());
-                //通知相册更新
-                CdApplication.getContext().sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE,
-                        Uri.fromFile(file)));
+                } else {
+                    File file = new File(photoPath);
+                    mCameraPhotoListener.onPhotoSuccessful(CAPTURE_PHOTO_CODE, photoPath);
+                    //通知相册更新
+                    CdApplication.getContext().sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE,
+                            Uri.fromFile(file)));
 
+                }
 
             } catch (Exception e) {
                 mCameraPhotoListener.onPhotoFailure(CAPTURE_PHOTO_CODE, "图片获取失败");
@@ -345,7 +357,7 @@ public class CameraHelper {
             String imgP = setPhotoForMiuiSystem(data);
 
             if (imageUri == null) {
-                mCameraPhotoListener.onPhotoFailure(CAPTURE_WALBUM_CODE, "图片获取失败");
+                mCameraPhotoListener.onPhotoFailure(CAPTURE_WALBUM_CODE, CdApplication.getContext().getString(R.string.get_pic_fail));
                 return;
             }
             if (isSplit) {
@@ -360,7 +372,7 @@ public class CameraHelper {
             return;
         }
         if (imageUri == null) {
-            mCameraPhotoListener.onPhotoFailure(CAPTURE_WALBUM_CODE, "图片获取失败");
+            mCameraPhotoListener.onPhotoFailure(CAPTURE_WALBUM_CODE, CdApplication.getContext().getString(R.string.get_pic_fail));
             return;
         }
 
@@ -622,7 +634,7 @@ public class CameraHelper {
             method.invoke(this.mContext, new Object[]{intent, requestCode});
         } catch (Exception var2) {
             var2.printStackTrace();
-            ToastUtil.show(getContextActivity(this.mContext), "出现未知错误");
+            ToastUtil.show(getContextActivity(this.mContext), CdApplication.getContext().getString(R.string.error_unknown));
         }
     }
 

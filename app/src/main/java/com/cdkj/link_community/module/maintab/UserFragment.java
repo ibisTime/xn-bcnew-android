@@ -42,6 +42,8 @@ public class UserFragment extends BaseLazyFragment {
 
     private FragmentUserBinding mBinding;
 
+    private UserInfoModel mUserInfo;
+
     public static UserFragment getInstanse() {
         UserFragment fragment = new UserFragment();
         Bundle bundle = new Bundle();
@@ -74,7 +76,12 @@ public class UserFragment extends BaseLazyFragment {
         /**
          * 编辑
          */
-        mBinding.tvEdit.setOnClickListener(view -> UserInfoUpdateActivity.open(mActivity));
+        mBinding.tvEdit.setOnClickListener(view -> {
+            if (!SPUtilHelpr.isLogin(mActivity, false)) {
+                return;
+            }
+            UserInfoUpdateActivity.open(mActivity,mUserInfo);
+        });
 
         mBinding.rowCommentBbs.setOnClickListener(view -> {
             if (!SPUtilHelpr.isLogin(mActivity, false)) {
@@ -159,10 +166,11 @@ public class UserFragment extends BaseLazyFragment {
             return;
         }
         setShowState();
+        setShowCache();
         if (SPUtilHelpr.isLoginNoStart()) {
             getUserInfoRequest(false);
         }
-        setShowCache();
+
     }
 
     /**
@@ -205,14 +213,14 @@ public class UserFragment extends BaseLazyFragment {
         call.enqueue(new BaseResponseModelCallBack<UserInfoModel>(mActivity) {
             @Override
             protected void onSuccess(UserInfoModel data, String SucMessage) {
-
-                SPUtilHelpr.saveisTradepwdFlag(data.isTradepwdFlag());
+                mUserInfo=data;
+                mBinding.tvUserName.setText(data.getNickname());
+                ImgUtils.loadQiniuLogo(UserFragment.this, data.getPhoto(), mBinding.imgUserLogo);
                 SPUtilHelpr.saveUserPhoneNum(data.getMobile());
                 SPUtilHelpr.saveUserName(data.getRealName());
                 SPUtilHelpr.saveUserNickName(data.getNickname());
                 SPUtilHelpr.saveUserPhoto(data.getPhoto());
-                mBinding.tvUserName.setText(data.getNickname());
-                ImgUtils.loadQiniuImg(this, data.getPhoto(), mBinding.imgUserLogo);
+
             }
 
             @Override
