@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.widget.ImageView;
 
 import com.cdkj.baselibrary.base.BaseActivity;
+import com.cdkj.baselibrary.utils.UIStatusBarHelper;
 import com.cdkj.link_community.manager.MyRouteHelper;
 import com.cdkj.link_community.module.coin_bbs.CoinBBSDetailsActivity;
 
@@ -37,6 +38,8 @@ public class WelcomeAcitivity extends BaseActivity {
         setContentView(R.layout.activity_welcom);
         ImageView img = (ImageView) findViewById(R.id.img_start);
         img.setImageResource(R.drawable.start);
+
+        UIStatusBarHelper.translucent(this); //设置状态栏透明
 
         mSubscription.add(Observable.timer(2, TimeUnit.SECONDS)
                 .subscribeOn(AndroidSchedulers.mainThread())

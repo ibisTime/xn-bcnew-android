@@ -14,6 +14,7 @@ import com.cdkj.link_community.manager.MyRouteHelper;
 import com.cdkj.link_community.module.maintab.CoinBBSFragment;
 import com.cdkj.link_community.module.maintab.FirstPageFragment;
 import com.cdkj.link_community.module.maintab.MarketPageFragment;
+import com.cdkj.link_community.module.maintab.UserFragment;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -101,7 +102,7 @@ public class MainActivity extends AbsBaseLoadActivity {
         fragments.add(FirstPageFragment.getInstanse());
         fragments.add(MarketPageFragment.getInstanse());
         fragments.add(CoinBBSFragment.getInstanse());
-        fragments.add(FirstPageFragment.getInstanse());
+        fragments.add(UserFragment.getInstanse());
 
         mBinding.pagerMain.setAdapter(new ViewPagerAdapter(getSupportFragmentManager(), fragments));
         mBinding.pagerMain.setOffscreenPageLimit(fragments.size());

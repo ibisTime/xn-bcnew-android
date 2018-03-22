@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/title_height"
+            android:background="@color/app_title_bg">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/mind"
+                android:textColor="@color/white"
+                android:textSize="@dimen/top_center_title_size" />
+
+            <TextView
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center|right"
+                android:gravity="center"
+                android:text="@string/edit"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                android:visibility="gone" />
+
+
+        </FrameLayout>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/page_bg"
+            android:paddingBottom="50dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/app_title_bg"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="65dp"
+                        android:layout_height="65dp"
+                        android:layout_marginBottom="20dp"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="20dp"
+                        android:src="@drawable/photo_default" />
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="15dp"
+                        android:textColor="@color/white"
+                        android:textSize="17sp"
+                        tools:text="@string/fast_to_login" />
+
+
+                </LinearLayout>
+
+
+                <com.cdkj.baselibrary.views.RowInfoLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:img_left="@drawable/user_collection"
+                    app:img_right="@drawable/more_right_black"
+                    app:txt_left="@string/collection" />
+
+                <View style="@style/style_split_line" />
+
+                <com.cdkj.baselibrary.views.RowInfoLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:img_left="@drawable/user_comment"
+                    app:img_right="@drawable/more_right_black"
+                    app:txt_left="@string/user_comment_1" />
+
+                <View style="@style/style_split_line" />
+
+                <com.cdkj.baselibrary.views.RowInfoLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:img_left="@drawable/user_comment_2"
+                    app:img_right="@drawable/more_right_black"
+                    app:txt_left="@string/user_comment_2" />
+
+                <View style="@style/style_split_line" />
+
+                <com.cdkj.baselibrary.views.RowInfoLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:img_left="@drawable/user_about"
+                    app:img_right="@drawable/more_right_black"
+                    app:txt_left="@string/abtou" />
+
+                <View style="@style/style_split_line" />
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:background="@drawable/selector_gray">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="15dp"
+                        android:text="@string/clear_cache"
+                        android:textColor="@color/text_black_cd"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:layout_width="50dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center|right"
+                        android:gravity="center"
+                        android:text="0M"
+                        android:textColor="#ff5757"
+                        android:textSize="14sp" />
+
+
+                </FrameLayout>
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center|right"
+                    android:layout_marginTop="35dp"
+                    android:background="@drawable/selector_gray"
+                    android:gravity="center"
+                    android:text="退出登录"
+                    android:textColor="#ff5757"
+                    android:textSize="14sp" />
+
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
+</layout>

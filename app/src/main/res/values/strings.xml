@@ -34,5 +34,12 @@
     <string name="hot">热门</string>
     <string name="focus_on">关注</string>
     <string name="hot_message">热点</string>
+    <string name="edit">编辑</string>
+    <string name="fast_to_login">快速登录</string>
+    <string name="collection">收藏</string>
+    <string name="user_comment_1">圈子评论</string>
+    <string name="user_comment_2">资讯评论</string>
+    <string name="abtou">关于</string>
+    <string name="clear_cache">清除缓存</string>
 
 </resources>
