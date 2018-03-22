@@ -7,9 +7,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.cdkj.baselibrary.appmanager.SPUtilHelpr;
 import com.cdkj.baselibrary.base.BaseLazyFragment;
 import com.cdkj.link_community.R;
 import com.cdkj.link_community.databinding.FragmentUserBinding;
+import com.cdkj.link_community.module.user.UserInfoUpdateActivity;
 
 /**
  * 我的
@@ -34,7 +36,28 @@ public class UserFragment extends BaseLazyFragment {
 
         mBinding = DataBindingUtil.inflate(getLayoutInflater(), R.layout.fragment_user, null, false);
 
+        initListener();
+
         return mBinding.getRoot();
+    }
+
+    private void initListener() {
+
+        /**
+         * 用户登录
+         */
+        mBinding.linUserHead.setOnClickListener(view -> {
+            if (!SPUtilHelpr.isLogin(mActivity, false)) {
+                return;
+            }
+        });
+
+        /**
+         * 编辑
+         */
+        mBinding.tvEdit.setOnClickListener(view -> UserInfoUpdateActivity.open(mActivity));
+
+
     }
 
     @Override

@@ -41,5 +41,15 @@
     <string name="user_comment_2">资讯评论</string>
     <string name="abtou">关于</string>
     <string name="clear_cache">清除缓存</string>
+    <string name="phone_number">手机号码</string>
+    <string name="input_validation_code">输入验证码</string>
+    <string name="validation_code">验证码</string>
+    <string name="logo">头像</string>
+    <string name="nick_name">昵称</string>
+    <string name="gender">性别</string>
+    <string name="birthdy">生日</string>
+    <string name="edit_user_info">编辑资料</string>
+    <string name="woman">女</string>
+    <string name="man">男</string>
 
 </resources>

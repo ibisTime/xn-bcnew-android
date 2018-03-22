@@ -16,6 +16,7 @@ import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.cdkj.baselibrary.R;
 import com.jakewharton.rxbinding2.view.RxView;
@@ -136,7 +137,7 @@ public class AppUtils {
      * @param btn   按钮
      * @return
      */
-    public static Disposable startCodeDown(final int count, final Button btn) {
+    public static Disposable startCodeDown(final int count, final TextView btn) {
         return Observable.interval(0, 1, TimeUnit.SECONDS, AndroidSchedulers.mainThread())    // 创建一个按照给定的时间间隔发射从0开始的整数序列
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -167,6 +168,7 @@ public class AppUtils {
                         }
                 );
     }
+
 
 
     public static void startWeb(Context context, String url) {

@@ -2,10 +2,10 @@
 <resources>
     <color name="colorPrimary">#00ffffff</color>
     <color name="colorPrimaryDark">#00ffffff</color>
-    <color name="colorAccent">#0eb8ae</color>
+    <color name="colorAccent">#2F93ED</color>
 
     <color name="gray_bg">#f6f6f6</color>
-    <color name="title_bg">#0eb8ae</color>
+    <color name="title_bg">#2F93ED</color>
     <color name="title_left_tv">#ffffff</color>
     <color name="title_right_tv">#ffffff</color>
     <color name="title_mid_tv">#ffffff</color>
@@ -40,7 +40,7 @@
 
 
     <color name="btn_white">#ffffff</color>
-    <color name="btn_blue">#0eb8ae</color>
+    <color name="btn_blue">#2F93ED</color>
     <color name="btn_title_bg">#ff6702</color>
 
 
@@ -49,15 +49,15 @@
     <color name="fontColor_hint">#aaaaaa</color>
 
 
-    <color name="btn_select_un">#0eb8ae</color>
-    <color name="btn_select">#0e978f</color>
-    <color name="tablayout_select">#0eb8ae</color>
+    <color name="btn_select_un">#2F93ED</color>
+    <color name="btn_select">#287ecc</color>
+    <color name="tablayout_select">#2F93ED</color>
     <color name="lineColor">#ebeaea</color>
 
 
     <color name="updateProgress_bg">#E7E7E7</color>
 
-    <color name="updateProgress">#0eb8ae</color>
+    <color name="updateProgress">#2F93ED</color>
 
     <!--caijianView-->
     <color name="white_translucent">#AAFFFFFF</color>

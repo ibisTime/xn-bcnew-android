@@ -50,11 +50,7 @@
             android:name="com.cdkj.baselibrary.activitys.FindPwdActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
-        <!--//登录-->
-        <activity
-            android:name=".activitys.login.LoginActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" />
+
 
         <!--图片选择-->
         <activity

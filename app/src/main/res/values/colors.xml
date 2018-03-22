@@ -19,4 +19,5 @@
     <color name="market_item_bg">#fafcff</color>
 
     <color name="app_indicator_color">#2F93ED</color>
+    <color name="app_hint_color">#898989</color>
 </resources>

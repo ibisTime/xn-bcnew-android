@@ -22,6 +22,7 @@
                 android:textSize="@dimen/top_center_title_size" />
 
             <TextView
+                android:id="@+id/tv_edit"
                 android:layout_width="50dp"
                 android:layout_height="match_parent"
                 android:layout_gravity="center|right"
@@ -29,7 +30,7 @@
                 android:text="@string/edit"
                 android:textColor="@color/white"
                 android:textSize="14sp"
-                android:visibility="gone" />
+               />
 
 
         </FrameLayout>
@@ -48,6 +49,7 @@
 
 
                 <LinearLayout
+                    android:id="@+id/lin_user_head"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/app_title_bg"
@@ -69,7 +71,7 @@
                         android:layout_marginLeft="15dp"
                         android:textColor="@color/white"
                         android:textSize="17sp"
-                        tools:text="@string/fast_to_login" />
+                        android:text="@string/fast_to_login" />
 
 
                 </LinearLayout>

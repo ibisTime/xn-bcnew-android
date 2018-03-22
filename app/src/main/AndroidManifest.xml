@@ -40,6 +40,30 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
 
+        <!--登录-->
+        <activity
+            android:name=".module.user.LoginActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
+
+        <!--编辑资料-->
+        <activity
+            android:name=".module.user.UserInfoUpdateActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
+
+        <!--昵称-->
+        <activity
+            android:name=".module.user.NickNameUpdateActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
+        <!--性别选择-->
+        <activity
+            android:name=".module.user.GenderChooseActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityDialogStyleBottom"
+            android:windowSoftInputMode="adjustPan" />
+
 
     </application>
 
