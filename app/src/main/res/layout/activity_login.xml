@@ -13,12 +13,12 @@
 
             <FrameLayout
                 android:id="@+id/fra_finish"
-                android:layout_width="50dp"
-                android:layout_height="50dp">
+                android:layout_width="60dp"
+                android:layout_height="60dp">
 
                 <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
                     android:layout_gravity="center"
                     android:src="@drawable/x" />
 

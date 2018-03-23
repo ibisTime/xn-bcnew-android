@@ -1,8 +1,11 @@
 package com.cdkj.link_community.api;
 
+import com.cdkj.baselibrary.api.BaseResponseListModel;
 import com.cdkj.baselibrary.api.BaseResponseModel;
 import com.cdkj.baselibrary.api.ResponseInListModel;
 import com.cdkj.link_community.model.FastMessage;
+import com.cdkj.link_community.model.MessageModel;
+import com.cdkj.link_community.model.MessageType;
 import com.cdkj.link_community.model.UserInfoModel;
 
 import retrofit2.Call;
@@ -37,5 +40,28 @@ public interface MyApiServer {
     @FormUrlEncoded
     @POST("api")
     Call<BaseResponseModel<ResponseInListModel<FastMessage>>> getFastMsgList(@Field("code") String code, @Field("json") String json);
+
+    /**
+     * 获取资讯类型
+     *
+     * @param code
+     * @param json
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("api")
+    Call<BaseResponseListModel<MessageType>> getMessageType(@Field("code") String code, @Field("json") String json);
+
+    /**
+     * 获取资讯列表
+     *
+     * @param code
+     * @param json
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("api")
+    Call<BaseResponseModel<ResponseInListModel<MessageModel>>> getMsgList(@Field("code") String code, @Field("json") String json);
+
 
 }

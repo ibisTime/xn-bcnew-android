@@ -3,6 +3,7 @@ package com.cdkj.baselibrary.interfaces;
 import android.app.Activity;
 import android.content.Context;
 import android.databinding.DataBindingUtil;
+import android.text.TextUtils;
 import android.view.View;
 
 import com.cdkj.baselibrary.R;
@@ -38,6 +39,13 @@ public abstract class BaseRefreshCallBack<T> implements RefreshInterface<T> {
             return;
         }
         emptyViewBinding.tv.setText(errorMsg);
+
+        if(TextUtils.isEmpty(errorMsg)){
+            emptyViewBinding.tv.setVisibility(View.GONE);
+        }else{
+            emptyViewBinding.tv.setVisibility(View.VISIBLE);
+        }
+
         if (img <= 0) {
             emptyViewBinding.img.setVisibility(View.GONE);
         } else {
@@ -53,6 +61,12 @@ public abstract class BaseRefreshCallBack<T> implements RefreshInterface<T> {
             return;
         }
         emptyViewBinding.tv.setText(errorMsg);
+        if(TextUtils.isEmpty(errorMsg)){
+            emptyViewBinding.tv.setVisibility(View.GONE);
+        }else{
+            emptyViewBinding.tv.setVisibility(View.VISIBLE);
+        }
+
         if (errorImg <= 0) {
             emptyViewBinding.img.setVisibility(View.GONE);
         } else {

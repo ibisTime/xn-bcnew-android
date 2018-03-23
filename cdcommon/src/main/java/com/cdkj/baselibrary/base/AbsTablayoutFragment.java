@@ -15,7 +15,6 @@ import com.cdkj.baselibrary.databinding.ActivityTabBinding;
 import java.util.List;
 
 /**
- *
  * Created by cdkj on 2017/6/15.
  */
 
@@ -30,12 +29,12 @@ public abstract class AbsTablayoutFragment extends BaseLazyFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mTabLayoutBinding = DataBindingUtil.inflate(getLayoutInflater(), R.layout.activity_tab, null, false);
-        initViewPager();
+
         return mTabLayoutBinding.getRoot();
     }
 
 
-    private void initViewPager() {
+    protected void initViewPager() {
 
         tablayoutAdapter = new TablayoutAdapter(getChildFragmentManager());
 

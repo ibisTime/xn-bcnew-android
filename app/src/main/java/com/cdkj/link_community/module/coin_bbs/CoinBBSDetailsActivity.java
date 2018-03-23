@@ -61,8 +61,8 @@ public class CoinBBSDetailsActivity extends AbsBaseLoadActivity {
         ArrayList fragments = new ArrayList<>();
 
         fragments.add(FastMessageListFragment.getInstanse(0,false));
-        fragments.add(MessageListFragment.getInstanse());
-        fragments.add(MessageListFragment.getInstanse());
+        fragments.add(FastMessageListFragment.getInstanse(0,false));
+        fragments.add(FastMessageListFragment.getInstanse(0,false));
 
         mBinding.viewpager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager(), fragments));
         mBinding.viewpager.setOffscreenPageLimit(fragments.size());

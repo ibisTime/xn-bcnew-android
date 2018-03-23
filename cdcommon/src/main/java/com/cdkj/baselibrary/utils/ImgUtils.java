@@ -13,6 +13,7 @@ import com.bumptech.glide.request.RequestListener;
 import com.cdkj.baselibrary.R;
 import com.cdkj.baselibrary.appmanager.MyCdConfig;
 import com.cdkj.baselibrary.utils.glidetransforms.GlideCircleTransform;
+import com.cdkj.baselibrary.utils.glidetransforms.GlideRoundTransform;
 
 /**
  * 图片加载工具类
@@ -26,6 +27,10 @@ public class ImgUtils {
 
     public static void loadQiniuLogo(Object obj, String imgid, ImageView img) {
         loadLogo(obj, MyCdConfig.QINIUURL + imgid, img);
+    }
+
+    public static void loadQiniuRoundImg(Context obj, String imgid, ImageView img) {
+        Glide.with((Context) obj).load(MyCdConfig.QINIUURL +imgid).placeholder(R.drawable.default_pic).transform(new GlideRoundTransform(((Context) obj), 5)).error(R.drawable.default_pic).into(img);
     }
 
     public static void loadImg(Object obj, Object imgid, ImageView img) {

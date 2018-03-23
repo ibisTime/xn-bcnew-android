@@ -7,12 +7,23 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
+import com.cdkj.baselibrary.api.ResponseInListModel;
+import com.cdkj.baselibrary.appmanager.CdRouteHelper;
+import com.cdkj.baselibrary.appmanager.MyCdConfig;
 import com.cdkj.baselibrary.base.AbsRefreshListFragment;
-import com.cdkj.baselibrary.base.BaseLazyFragment;
+import com.cdkj.baselibrary.nets.BaseResponseModelCallBack;
+import com.cdkj.baselibrary.nets.RetrofitUtils;
+import com.cdkj.baselibrary.utils.StringUtils;
+import com.cdkj.link_community.R;
 import com.cdkj.link_community.adapters.MessageListAdapter;
-import com.cdkj.link_community.model.MessageModel;
+import com.cdkj.link_community.api.MyApiServer;
+import com.cdkj.link_community.model.FastMessage;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import retrofit2.Call;
 
 /**
  * 资讯列表
@@ -21,9 +32,22 @@ import java.util.List;
 
 public class MessageListFragment extends AbsRefreshListFragment {
 
-    public static MessageListFragment getInstanse() {
+
+    private String mMessageType;//资讯类型
+
+    private boolean mIsFristRequest;//是否创建时就进行请求
+
+    private static String ISFRISTREQUEST = "isFristRequest";//是否创建时就进行请求
+
+    /**
+     * @param type 资讯类型
+     * @return
+     */
+    public static MessageListFragment getInstanse(String type, boolean isFristRequest) {
         MessageListFragment fragment = new MessageListFragment();
         Bundle bundle = new Bundle();
+        bundle.putString(CdRouteHelper.DATASIGN, type);
+        bundle.putBoolean(ISFRISTREQUEST, isFristRequest);
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -31,6 +55,12 @@ public class MessageListFragment extends AbsRefreshListFragment {
 
     @Override
     protected void lazyLoad() {
+
+        if (mRefreshBinding == null || mIsFristRequest) {
+            return;
+        }
+
+        mRefreshHelper.onDefaluteMLoadMore(false);
 
     }
 
@@ -41,22 +71,58 @@ public class MessageListFragment extends AbsRefreshListFragment {
 
     @Override
     protected void afterCreate(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-       initRefreshHelper(10);
+
+        if (getArguments() != null) {
+            mMessageType = getArguments().getString(CdRouteHelper.DATASIGN);
+            mIsFristRequest = getArguments().getBoolean(ISFRISTREQUEST);
+        }
+
+        initRefreshHelper(MyCdConfig.LISTLIMIT);
+
+        if (mIsFristRequest) {
+            mRefreshHelper.onDefaluteMRefresh(false);
+        }
     }
+
 
     @Override
     public RecyclerView.Adapter getListAdapter(List listData) {
-
-        listData.add(new MessageModel());
-        MessageModel messageModel= new MessageModel();
-        messageModel.setPic("d");
-        listData.add(messageModel);
-
         return new MessageListAdapter(listData);
     }
 
     @Override
     public void getListRequest(int pageindex, int limit, boolean isShowDialog) {
+        Map<String, String> map = new HashMap<>();
+
+        map.put("type", mMessageType);
+        map.put("start", pageindex + "");
+        map.put("limit", limit + "");
+
+        if (isShowDialog) showLoadingDialog();
+
+        Call call = RetrofitUtils.createApi(MyApiServer.class).getMsgList("628205", StringUtils.getJsonToString(map));
+
+        addCall(call);
+
+
+        call.enqueue(new BaseResponseModelCallBack<ResponseInListModel<FastMessage>>(mActivity) {
+            @Override
+            protected void onSuccess(ResponseInListModel<FastMessage> data, String SucMessage) {
+                mRefreshHelper.setData(data.getList(), getString(R.string.no_msg), 0);
+            }
+
+            @Override
+            protected void onReqFailure(String errorCode, String errorMessage) {
+                super.onReqFailure(errorCode, errorMessage);
+                mRefreshHelper.loadError(errorMessage, 0);
+            }
+
+            @Override
+            protected void onFinish() {
+                disMissLoading();
+            }
+        });
+
 
     }
 }

@@ -59,5 +59,6 @@
     <string name="please_input_nick_name">请输入昵称</string>
     <string name="update_nick_name_succ">昵称修改成功</string>
     <string name="no_fast_msg">暂无快讯</string>
+    <string name="no_msg">暂无资讯</string>
 
 </resources>
