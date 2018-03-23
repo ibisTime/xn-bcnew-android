@@ -28,14 +28,15 @@
 
 
                 <TextView
+                    android:id="@+id/tv_msg"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
                     android:paddingLeft="@dimen/layout_right_interval"
                     android:paddingRight="@dimen/layout_right_interval"
-                    android:text="ddfddfdfddfddfdfddfddfdfddfddfdfddfddfdfddfddfdfddfddfdfddfddfdfddfddfdfddfddfdfddfddfdf"
                     android:textColor="@color/text_black_cd"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"
+                    tools:text="ddfddfdfddfddfdfddfddfdfddfddfdfddfddfdfddfddfdfddfddfdfddfddfdfddfddfdfddfddfdfddfddfdf" />
 
 
                 <LinearLayout
@@ -56,13 +57,14 @@
                         android:src="@drawable/time" />
 
                     <TextView
+                        android:id="@+id/tv_time"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingLeft="@dimen/layout_right_interval"
                         android:paddingRight="@dimen/layout_right_interval"
-                        android:text="12312131113"
                         android:textColor="@color/app_text_gray"
-                        android:textSize="14sp" />
+                        android:textSize="14sp"
+                        tools:text="12312131113" />
 
                 </LinearLayout>
 
@@ -70,6 +72,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="50dp"
                     android:layout_marginLeft="@dimen/layout_left_interval"
                     android:layout_marginTop="120dp"
                     android:gravity="center_vertical"
@@ -129,6 +132,7 @@
                 android:src="@drawable/share_qq" />
 
             <ImageView
+                android:id="@+id/img_wx"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:layout_gravity="center_vertical"
@@ -136,6 +140,7 @@
                 android:src="@drawable/share_we_chat" />
 
             <ImageView
+                android:id="@+id/img_pyq"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:layout_gravity="center_vertical"

@@ -3,7 +3,7 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion rootProject.ext.android["compileSdkVersion"]
     defaultConfig {
-        applicationId  rootProject.ext.applicationId
+        applicationId rootProject.ext.applicationId
         minSdkVersion rootProject.ext.android["minSdkVersion"]
         targetSdkVersion rootProject.ext.android["targetSdkVersion"]
         versionCode rootProject.ext.android["versionCode"]
@@ -16,6 +16,16 @@ android {
         }
 
     }
+
+    signingConfigs {
+        config {
+            keyAlias "ljskey"
+            keyPassword "ljskey123456"
+            storeFile file("../ljs.jks")
+            storePassword "ljs123456"
+        }
+    }
+
     buildTypes {
         release {
             buildConfigField "boolean", "LOG_DEBUG", "false"
@@ -28,9 +38,8 @@ android {
             }
         }
         debug {
+            signingConfig signingConfigs.config
             buildConfigField "boolean", "LOG_DEBUG", "true"
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
 
@@ -42,6 +51,8 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
+
 
 }
 
@@ -57,7 +68,7 @@ dependencies {
 
     implementation 'com.github.mcxtzhang:SwipeDelMenuLayout:V1.3.0'
 
-    annotationProcessor  rootProject.ext.arouterCompiler
+    annotationProcessor rootProject.ext.arouterCompiler
     implementation rootProject.ext.arouterApi
     api project(':cdcommon')
 }

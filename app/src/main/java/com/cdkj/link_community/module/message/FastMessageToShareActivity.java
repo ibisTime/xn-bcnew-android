@@ -7,13 +7,29 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.SpannableStringBuilder;
+import android.text.Spanned;
+import android.text.style.ForegroundColorSpan;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.ScrollView;
 
+import com.cdkj.baselibrary.appmanager.CdRouteHelper;
 import com.cdkj.baselibrary.base.AbsBaseLoadActivity;
+import com.cdkj.baselibrary.utils.DateUtil;
 import com.cdkj.link_community.R;
 import com.cdkj.link_community.databinding.ActivityFastMessageShareBinding;
+import com.cdkj.link_community.model.FastMessage;
+import com.cdkj.link_community.utils.WxUtil;
+
+import org.greenrobot.eventbus.Subscribe;
+
+import java.util.Date;
+import java.util.concurrent.TimeUnit;
+
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * 快讯分享
@@ -23,13 +39,17 @@ import com.cdkj.link_community.databinding.ActivityFastMessageShareBinding;
 public class FastMessageToShareActivity extends AbsBaseLoadActivity {
 
     private ActivityFastMessageShareBinding mBinding;
-    private boolean is;
 
-    public static void open(Context context) {
+    /**
+     * @param context
+     * @param message
+     */
+    public static void open(Context context, FastMessage message) {
         if (context == null) {
             return;
         }
         Intent intent = new Intent(context, FastMessageToShareActivity.class);
+        intent.putExtra(CdRouteHelper.DATASIGN, message);
         context.startActivity(intent);
     }
 
@@ -48,6 +68,21 @@ public class FastMessageToShareActivity extends AbsBaseLoadActivity {
     @Override
     public void afterCreate(Bundle savedInstanceState) {
 
+        if (getIntent() != null) {
+            FastMessage fastMessage = getIntent().getParcelableExtra(CdRouteHelper.DATASIGN);
+
+            if (fastMessage == null) return;
+
+            SpannableStringBuilder span = new SpannableStringBuilder("缩" + "【" + getString(R.string.fast_msg) + "】 " + fastMessage.getContent());
+            span.setSpan(new ForegroundColorSpan(Color.TRANSPARENT), 0, 1,
+                    Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+
+            mBinding.tvMsg.setText(span);
+
+            mBinding.tvTime.setText(DateUtil.getWeekOfDate(new Date(fastMessage.getShowDatetime())) + " " + DateUtil.formatStringData(fastMessage.getShowDatetime(), DateUtil.DATE_YYMMddHHmm));
+
+        }
+
         ininListener();
 
     }
@@ -57,20 +92,19 @@ public class FastMessageToShareActivity extends AbsBaseLoadActivity {
         //结束当前界面
         mBinding.fraToFinish.setOnClickListener(view -> finish());
 
-        is = true;
-        mBinding.scrollView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-            @Override
-            public void onGlobalLayout() {
-                if (!is) {
-                    return;
-                }
-                is = !is;
-                mBinding.img.setImageBitmap(getBitmapByView(mBinding.scrollView));
-            }
+
+        mBinding.imgWx.setOnClickListener(view -> {
+            mBinding.scrollView.post(() -> {
+                WxUtil.shareBitmapToWX(FastMessageToShareActivity.this, getBitmapByView(mBinding.scrollView));
+            });
         });
 
+        mBinding.imgPyq.setOnClickListener(view -> {
+            mBinding.scrollView.post(() -> {
+                WxUtil.shareBitmapToWXPYQ(FastMessageToShareActivity.this, getBitmapByView(mBinding.scrollView));
+            });
+        });
     }
-
 
     /**
      * 截取scrollview的生产bitmap
@@ -89,7 +123,7 @@ public class FastMessageToShareActivity extends AbsBaseLoadActivity {
         }
         // 创建对应大小的bitmap
         bitmap = Bitmap.createBitmap(scrollView.getWidth(), h,
-                Bitmap.Config.ARGB_4444);
+                Bitmap.Config.ARGB_8888);
         final Canvas canvas = new Canvas(bitmap);
         scrollView.draw(canvas);
         return bitmap;

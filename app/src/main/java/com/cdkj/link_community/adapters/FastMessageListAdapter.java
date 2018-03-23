@@ -46,7 +46,7 @@ public class FastMessageListAdapter extends BaseQuickAdapter<FastMessage, BaseVi
 
         TextView textView = viewHolder.getView(R.id.tv_content);
         //设置首行缩进
-        SpannableStringBuilder span = new SpannableStringBuilder("缩" + "【" + mContext.getString(R.string.fast_msg) + "】 " + item.getContent() + item.getContent() + item.getContent() + item.getContent() + item.getContent() + item.getContent() + item.getContent() + item.getContent() + item.getContent() + item.getContent() + item.getContent() + item.getContent() + item.getContent() + item.getContent() + item.getContent() + item.getContent() + item.getContent());
+        SpannableStringBuilder span = new SpannableStringBuilder("缩" + "【" + mContext.getString(R.string.fast_msg) + "】 " + item.getContent() );
         span.setSpan(new ForegroundColorSpan(Color.TRANSPARENT), 0, 1,
                 Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
 

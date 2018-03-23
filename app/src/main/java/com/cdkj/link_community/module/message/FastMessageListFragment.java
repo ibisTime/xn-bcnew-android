@@ -90,7 +90,7 @@ public class FastMessageListFragment extends AbsRefreshListFragment {
         FastMessageListAdapter fastMessageListAdapter = new FastMessageListAdapter(listData);
 
         fastMessageListAdapter.setOnItemChildClickListener((adapter, view, position) -> {
-            FastMessageToShareActivity.open(mActivity);
+            FastMessageToShareActivity.open(mActivity, fastMessageListAdapter.getItem(position));
         });
 
         return fastMessageListAdapter;

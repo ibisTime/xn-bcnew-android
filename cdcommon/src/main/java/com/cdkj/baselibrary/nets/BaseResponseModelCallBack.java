@@ -35,7 +35,6 @@ public abstract class BaseResponseModelCallBack<T> implements Callback<BaseRespo
 
     @Override
     public void onResponse(Call<BaseResponseModel<T>> call, Response<BaseResponseModel<T>> response) {
-
         onFinish();
 
         if (response == null || response.body() == null) {
