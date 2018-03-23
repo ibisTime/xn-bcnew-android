@@ -60,5 +60,11 @@
     <string name="update_nick_name_succ">昵称修改成功</string>
     <string name="no_fast_msg">暂无快讯</string>
     <string name="no_msg">暂无资讯</string>
+    <string name="author">作者:</string>
+    <string name="message_frome">来源:</string>
+    <string name="show_your_idea">说出你的看法</string>
+    <string name="please_input_comment_info">请输入评论内容</string>
+    <string name="comment_succ">评价成功</string>
+    <string name="comment_fall">评价失败</string>
 
 </resources>

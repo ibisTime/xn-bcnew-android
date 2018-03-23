@@ -45,6 +45,7 @@
             android:weightSum="2">
 
             <TextView
+                android:id="@+id/tv_to_comment"
                 android:layout_width="0dp"
                 android:layout_height="35dp"
                 android:layout_marginRight="15dp"
@@ -61,7 +62,9 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp">
 
                 <FrameLayout
                     android:layout_width="30dp"
@@ -71,14 +74,18 @@
                         android:layout_width="25dp"
                         android:layout_height="25dp"
                         android:src="@drawable/comments" />
+
                     <TextView
+                        android:layout_marginRight="5dp"
+                        android:gravity="center"
+                        android:id="@+id/tv_comment_num"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="right"
                         android:background="#fbfbfb"
                         android:textColor="#ff4747"
                         android:textSize="12sp"
-                        tools:text="999" />
+                        tools:text="9" />
 
 
                 </FrameLayout>

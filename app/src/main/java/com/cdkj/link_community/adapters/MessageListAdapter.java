@@ -3,6 +3,7 @@ package com.cdkj.link_community.adapters;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
+import com.cdkj.baselibrary.utils.DateUtil;
 import com.cdkj.baselibrary.utils.ImgUtils;
 import com.cdkj.baselibrary.utils.LogUtil;
 import com.cdkj.baselibrary.utils.StringUtils;
@@ -13,6 +14,8 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.chad.library.adapter.base.util.MultiTypeDelegate;
 
 import java.util.List;
+
+import static com.cdkj.baselibrary.utils.DateUtil.DEFAULT_DATE_FMT;
 
 /**
  * 资讯适配器
@@ -74,7 +77,7 @@ public class MessageListAdapter extends BaseQuickAdapter<MessageModel, BaseViewH
 
     private void setShowData(BaseViewHolder viewHolder, MessageModel item) {
         viewHolder.setText(R.id.tv_msg_title, item.getTitle());
-        viewHolder.setText(R.id.tv_date, item.getShowDatetime());
+        viewHolder.setText(R.id.tv_date, DateUtil.formatStringData(item.getShowDatetime(), DEFAULT_DATE_FMT));
 
         if (item.getCollectCount() <= 999) {
             viewHolder.setText(R.id.tv_collection, item.getCollectCount() + mContext.getString(R.string.collection));

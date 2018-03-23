@@ -107,7 +107,7 @@ public class MessageFragment extends AbsTablayoutFragment {
                 for (MessageType datum : data) {
                     if (datum == null) continue;
                     mTitleList.add(datum.getName());
-                    mFragmentList.add(MessageListFragment.getInstanse(datum.getCode(), i == 0));
+                    mFragmentList.add(MessageListFragment.getInstanse(datum.getCode(), i == 0, datum.getName()));
                     i++;
                 }
 

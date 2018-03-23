@@ -21,8 +21,14 @@ public class CommentInputDialog extends Dialog {
 
     private DialogCommentInputBinding mBinding;
 
+    private sureClickListener mSureListener;
+
+    public void setmSureListener(sureClickListener mSureListener) {
+        this.mSureListener = mSureListener;
+    }
+
     public CommentInputDialog(@NonNull Context context) {
-        super(context,R.style.comment_input_dialog);
+        super(context, R.style.comment_input_dialog);
         mBinding = DataBindingUtil.inflate(getLayoutInflater(), R.layout.dialog_comment_input, null, false);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(mBinding.getRoot());
@@ -41,10 +47,22 @@ public class CommentInputDialog extends Dialog {
         setCancelable(true);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
 
-
         getWindow().setGravity(Gravity.BOTTOM);
+
+        mBinding.tvCancel.setOnClickListener(view -> dismiss());
+
+        mBinding.tvRelease.setOnClickListener(view -> {
+            if (mSureListener != null) {
+                dismiss();
+                mSureListener.sure(mBinding.editComment.getText().toString());
+            }
+        });
 
     }
 
+
+    public interface sureClickListener {
+        void sure(String comment);
+    }
 
 }
