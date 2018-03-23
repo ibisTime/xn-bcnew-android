@@ -51,8 +51,8 @@ public class FastMessageFragment extends BaseLazyFragment {
         //设置fragment数据
         ArrayList fragments = new ArrayList<>();
 
-        fragments.add(FastMessageListFragment.getInstanse());
-        fragments.add(FastMessageListFragment.getInstanse());
+        fragments.add(FastMessageListFragment.getInstanse(FastMessageListFragment.ALLMESSAGE,true));
+        fragments.add(FastMessageListFragment.getInstanse(FastMessageListFragment.HOTMESSAGE,false));
 
         mBinding.viewpager.setAdapter(new ViewPagerAdapter(getChildFragmentManager(), fragments));
         mBinding.viewpager.setOffscreenPageLimit(fragments.size());

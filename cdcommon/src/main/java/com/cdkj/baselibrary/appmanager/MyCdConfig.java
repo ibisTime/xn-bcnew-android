@@ -6,6 +6,8 @@ package com.cdkj.baselibrary.appmanager;
 
 public class MyCdConfig {
 
+    public final static int LISTLIMIT = 20; //统一的lisi Limit
+
     public final static String COMPANYCODE = "CD-BCINF0019";
     public final static String SYSTEMCODE = "CD-BCINF0019";
 

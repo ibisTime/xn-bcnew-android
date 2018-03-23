@@ -60,7 +60,7 @@ public class CoinBBSDetailsActivity extends AbsBaseLoadActivity {
         //设置fragment数据
         ArrayList fragments = new ArrayList<>();
 
-        fragments.add(FastMessageListFragment.getInstanse());
+        fragments.add(FastMessageListFragment.getInstanse(0,false));
         fragments.add(MessageListFragment.getInstanse());
         fragments.add(MessageListFragment.getInstanse());
 

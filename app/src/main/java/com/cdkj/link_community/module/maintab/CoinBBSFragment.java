@@ -50,9 +50,9 @@ public class CoinBBSFragment extends BaseLazyFragment {
         //设置fragment数据
         ArrayList fragments = new ArrayList<>();
 
-        fragments.add(FastMessageListFragment.getInstanse());
-        fragments.add(FastMessageListFragment.getInstanse());
-        fragments.add(FastMessageListFragment.getInstanse());
+        fragments.add(FastMessageListFragment.getInstanse(0,false));
+        fragments.add(FastMessageListFragment.getInstanse(0,false));
+        fragments.add(FastMessageListFragment.getInstanse(0,false));
 
         mBinding.viewpager.setAdapter(new ViewPagerAdapter(getChildFragmentManager(), fragments));
         mBinding.viewpager.setOffscreenPageLimit(fragments.size());
