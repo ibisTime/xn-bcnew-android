@@ -63,6 +63,7 @@
     <string name="no_collection">暂无收藏</string>
     <string name="no_coin_info">暂无币种信息</string>
     <string name="no_platform_info">暂无平台信息</string>
+    <string name="no_add_market">暂无信息</string>
     <string name="author">作者:</string>
     <string name="message_frome">来源:</string>
     <string name="show_your_idea">说出你的看法</string>
@@ -72,5 +73,7 @@
     <string name="comment_fall">评价失败</string>
     <string name="comment_detail">评论详情</string>
     <string name="come_here_sit">来,坐下谈谈</string>
+    <string name="done">完成</string>
+    <string name="add_market_title">添加自选</string>
 
 </resources>

@@ -3,6 +3,7 @@ package com.cdkj.link_community.module.market;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -11,15 +12,18 @@ import android.view.ViewGroup;
 import com.cdkj.baselibrary.api.ResponseInListModel;
 import com.cdkj.baselibrary.appmanager.CdRouteHelper;
 import com.cdkj.baselibrary.appmanager.MyCdConfig;
+import com.cdkj.baselibrary.appmanager.SPUtilHelpr;
 import com.cdkj.baselibrary.base.AbsRefreshListFragment;
+import com.cdkj.baselibrary.model.IsSuccessModes;
+import com.cdkj.baselibrary.nets.BaseResponseListCallBack;
 import com.cdkj.baselibrary.nets.BaseResponseModelCallBack;
 import com.cdkj.baselibrary.nets.RetrofitUtils;
 import com.cdkj.baselibrary.utils.StringUtils;
 import com.cdkj.link_community.R;
-import com.cdkj.link_community.adapters.CoinListAdapter;
-import com.cdkj.link_community.adapters.PlatformListAdapter;
+import com.cdkj.link_community.adapters.AddMarketListAdapter;
 import com.cdkj.link_community.api.MyApiServer;
 import com.cdkj.link_community.model.CoinListModel;
+import com.cdkj.link_community.model.CoinPlatformType;
 
 import java.util.HashMap;
 import java.util.List;
@@ -28,24 +32,24 @@ import java.util.Map;
 import retrofit2.Call;
 
 /**
- * 添加行情 列表Fragment
+ * 添加行情(币种) 列表Fragment
  * Created by cdkj on 2018/3/24.
  */
 
-public class PlatformListFragment extends AbsRefreshListFragment {
+public class AddMarketCoinListFragment extends AbsRefreshListFragment {
 
     private boolean isFirstRequest;//是否进行了第一次请求
 
-    private String mPlatformType;
+    private String mCoinType;
 
     /**
-     * @param platformType 币种类型
+     * @param
      * @return
      */
-    public static PlatformListFragment getInstanse(String platformType, Boolean isFirstRequest) {
-        PlatformListFragment fragment = new PlatformListFragment();
+    public static AddMarketCoinListFragment getInstanse(String type, Boolean isFirstRequest) {
+        AddMarketCoinListFragment fragment = new AddMarketCoinListFragment();
         Bundle bundle = new Bundle();
-        bundle.putString(CdRouteHelper.DATASIGN, platformType);
+        bundle.putString(CdRouteHelper.DATASIGN, type);
         bundle.putBoolean("isFirstRequest", isFirstRequest);
         fragment.setArguments(bundle);
         return fragment;
@@ -71,10 +75,11 @@ public class PlatformListFragment extends AbsRefreshListFragment {
     protected void afterCreate(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         if (getArguments() != null) {
-            mPlatformType = getArguments().getString(CdRouteHelper.DATASIGN);
+            mCoinType = getArguments().getString(CdRouteHelper.DATASIGN);
             isFirstRequest = getArguments().getBoolean("isFirstRequest");
         }
-
+        //防止局部刷新闪烁
+        ((DefaultItemAnimator) mRefreshBinding.rv.getItemAnimator()).setSupportsChangeAnimations(false);
         initRefreshHelper(MyCdConfig.LISTLIMIT);
 
         if (isFirstRequest) {
@@ -84,19 +89,26 @@ public class PlatformListFragment extends AbsRefreshListFragment {
 
     @Override
     public RecyclerView.Adapter getListAdapter(List listData) {
-        return new PlatformListAdapter(listData);
+        AddMarketListAdapter addMarketListAdapter = new AddMarketListAdapter(listData);
+
+        addMarketListAdapter.setOnItemChildClickListener((adapter, view, position) -> {
+            addMarketRequest(addMarketListAdapter, position);
+        });
+
+        return addMarketListAdapter;
     }
 
     @Override
     public void getListRequest(int pageindex, int limit, boolean isShowDialog) {
 
-        if (TextUtils.isEmpty(mPlatformType)) return;
+        if (TextUtils.isEmpty(mCoinType)) return;
 
         Map<String, String> map = new HashMap<>();
 
-        map.put("exchangeEname", mPlatformType);
+        map.put("coinSymbol", mCoinType);
         map.put("start", pageindex + "");
         map.put("limit", limit + "");
+        map.put("userId", SPUtilHelpr.getUserId());
 
         if (isShowDialog) showLoadingDialog();
 
@@ -107,7 +119,7 @@ public class PlatformListFragment extends AbsRefreshListFragment {
         call.enqueue(new BaseResponseModelCallBack<ResponseInListModel<CoinListModel>>(mActivity) {
             @Override
             protected void onSuccess(ResponseInListModel<CoinListModel> data, String SucMessage) {
-                mRefreshHelper.setData(data.getList(), getString(R.string.no_platform_info), 0);
+                mRefreshHelper.setData(data.getList(), getString(R.string.no_add_market), 0);
             }
 
             @Override
@@ -122,6 +134,50 @@ public class PlatformListFragment extends AbsRefreshListFragment {
             }
         });
 
+    }
+
+    /**
+     * 添加自选
+     *
+     * @param
+     */
+    public void addMarketRequest(AddMarketListAdapter addMarketListAdapter, int position) {
+        CoinListModel model = addMarketListAdapter.getItem(position);
+
+        if (model == null) return;
+
+        if (!SPUtilHelpr.isLogin(mActivity, false)) {
+            return;
+        }
+
+        Map<String, String> map = new HashMap<>();
+
+        map.put("userId", SPUtilHelpr.getUserId());
+        map.put("exchangeEname", model.getExchangeEname());
+        map.put("refCoin", model.getToCoinSymbol());
+        map.put("symbol", model.getCoinSymbol());
+
+        Call call = RetrofitUtils.getBaseAPiService().successRequest("628330", StringUtils.getJsonToString(map));
+
+        addCall(call);
+
+        showLoadingDialog();
+
+        call.enqueue(new BaseResponseModelCallBack<IsSuccessModes>(mActivity) {
+
+            @Override
+            protected void onSuccess(IsSuccessModes data, String SucMessage) {
+                if (data.isSuccess()) {
+                    addMarketListAdapter.notifyItemChanged(position);
+                }
+            }
+
+            @Override
+            protected void onFinish() {
+                disMissLoading();
+            }
+        });
 
     }
+
 }

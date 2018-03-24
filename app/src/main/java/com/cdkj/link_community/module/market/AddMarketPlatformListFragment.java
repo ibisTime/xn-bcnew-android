@@ -11,13 +11,13 @@ import android.view.ViewGroup;
 import com.cdkj.baselibrary.api.ResponseInListModel;
 import com.cdkj.baselibrary.appmanager.CdRouteHelper;
 import com.cdkj.baselibrary.appmanager.MyCdConfig;
+import com.cdkj.baselibrary.appmanager.SPUtilHelpr;
 import com.cdkj.baselibrary.base.AbsRefreshListFragment;
 import com.cdkj.baselibrary.nets.BaseResponseModelCallBack;
 import com.cdkj.baselibrary.nets.RetrofitUtils;
 import com.cdkj.baselibrary.utils.StringUtils;
 import com.cdkj.link_community.R;
-import com.cdkj.link_community.adapters.CoinListAdapter;
-import com.cdkj.link_community.adapters.PlatformListAdapter;
+import com.cdkj.link_community.adapters.AddMarketListAdapter;
 import com.cdkj.link_community.api.MyApiServer;
 import com.cdkj.link_community.model.CoinListModel;
 
@@ -28,24 +28,24 @@ import java.util.Map;
 import retrofit2.Call;
 
 /**
- * 添加行情 列表Fragment
+ * 添加行情(币种) 列表Fragment
  * Created by cdkj on 2018/3/24.
  */
 
-public class PlatformListFragment extends AbsRefreshListFragment {
+public class AddMarketPlatformListFragment extends AbsRefreshListFragment {
 
     private boolean isFirstRequest;//是否进行了第一次请求
 
-    private String mPlatformType;
+    private String mCoinType;
 
     /**
-     * @param platformType 币种类型
+     * @param
      * @return
      */
-    public static PlatformListFragment getInstanse(String platformType, Boolean isFirstRequest) {
-        PlatformListFragment fragment = new PlatformListFragment();
+    public static AddMarketPlatformListFragment getInstanse(String type, Boolean isFirstRequest) {
+        AddMarketPlatformListFragment fragment = new AddMarketPlatformListFragment();
         Bundle bundle = new Bundle();
-        bundle.putString(CdRouteHelper.DATASIGN, platformType);
+        bundle.putString(CdRouteHelper.DATASIGN, type);
         bundle.putBoolean("isFirstRequest", isFirstRequest);
         fragment.setArguments(bundle);
         return fragment;
@@ -71,7 +71,7 @@ public class PlatformListFragment extends AbsRefreshListFragment {
     protected void afterCreate(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         if (getArguments() != null) {
-            mPlatformType = getArguments().getString(CdRouteHelper.DATASIGN);
+            mCoinType = getArguments().getString(CdRouteHelper.DATASIGN);
             isFirstRequest = getArguments().getBoolean("isFirstRequest");
         }
 
@@ -84,19 +84,20 @@ public class PlatformListFragment extends AbsRefreshListFragment {
 
     @Override
     public RecyclerView.Adapter getListAdapter(List listData) {
-        return new PlatformListAdapter(listData);
+        return new AddMarketListAdapter(listData);
     }
 
     @Override
     public void getListRequest(int pageindex, int limit, boolean isShowDialog) {
 
-        if (TextUtils.isEmpty(mPlatformType)) return;
+        if (TextUtils.isEmpty(mCoinType)) return;
 
         Map<String, String> map = new HashMap<>();
 
-        map.put("exchangeEname", mPlatformType);
+        map.put("coinSymbol", mCoinType);
         map.put("start", pageindex + "");
         map.put("limit", limit + "");
+        map.put("userId", SPUtilHelpr.getUserId());
 
         if (isShowDialog) showLoadingDialog();
 
@@ -107,7 +108,7 @@ public class PlatformListFragment extends AbsRefreshListFragment {
         call.enqueue(new BaseResponseModelCallBack<ResponseInListModel<CoinListModel>>(mActivity) {
             @Override
             protected void onSuccess(ResponseInListModel<CoinListModel> data, String SucMessage) {
-                mRefreshHelper.setData(data.getList(), getString(R.string.no_platform_info), 0);
+                mRefreshHelper.setData(data.getList(), getString(R.string.no_add_market), 0);
             }
 
             @Override

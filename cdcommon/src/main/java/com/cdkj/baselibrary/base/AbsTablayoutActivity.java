@@ -35,7 +35,7 @@ public abstract class AbsTablayoutActivity extends AbsBaseLoadActivity {
         initViewPager();
     }
 
-    private void initViewPager() {
+    protected void initViewPager() {
 
         tablayoutAdapter = new TablayoutAdapter(getSupportFragmentManager());
 
@@ -43,7 +43,7 @@ public abstract class AbsTablayoutActivity extends AbsBaseLoadActivity {
         List<String> mTitles = getFragmentTitles();
 
         tablayoutAdapter.addFrag(mFragments, mTitles);
-        
+
         mTabLayoutBinding.viewpager.setAdapter(tablayoutAdapter);
         mTabLayoutBinding.tablayout.setupWithViewPager(mTabLayoutBinding.viewpager);        //viewpager和tablayout关联
         mTabLayoutBinding.viewpager.setOffscreenPageLimit(tablayoutAdapter.getCount());

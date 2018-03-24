@@ -95,7 +95,7 @@ public class MyChooseFragment extends BaseLazyFragment {
 
                 emptyViewBinding.img.setImageResource(R.drawable.add_market_big);
 
-                emptyViewBinding.img.setOnClickListener(view -> emptyViewClick());
+                emptyViewBinding.img.setOnClickListener(view -> addClick());
 
                 return emptyViewBinding.getRoot();
             }
@@ -143,8 +143,11 @@ public class MyChooseFragment extends BaseLazyFragment {
     /**
      * 数据为空时图片点击
      */
-    private void emptyViewClick() {
-
+    private void addClick() {
+        if (!SPUtilHelpr.isLogin(mActivity, false)) {
+            return;
+        }
+        AddMarketActivity.open(mActivity);
     }
 
 

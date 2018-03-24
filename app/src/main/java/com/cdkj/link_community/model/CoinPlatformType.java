@@ -1,36 +1,34 @@
 package com.cdkj.link_community.model;
 
-/**平台类型
+/**
  * Created by cdkj on 2018/3/24.
  */
 
-public class PlatformType {
+public class CoinPlatformType {
 
 
     /**
      * id : 1
-     * ename : bitfinex
-     * cname : bitfinex
+     * ename : bitcoin
+     * cname : 比特币
+     * symbol : BTC
      * status : 1
      * orderNo : 1
-     * updater : admin
-     * updateDatetime : 2018-03-23 20:33:19.0
+     * lastPrice : 0.00000000
+     * todayVol : 0
+     * todayChange : 0.00000000
+     * totalSupply : 15844176.0
+     * maxSupply : 21000000.0
+     * totalPrice : 956600000000
+     * rank : 1
      */
 
     private int id;
     private String ename;
     private String cname;
+    private String symbol;
     private String status;
     private String orderNo;
-    private String getSymbol;
-
-    public String getGetSymbol() {
-        return getSymbol;
-    }
-
-    public void setGetSymbol(String getSymbol) {
-        this.getSymbol = getSymbol;
-    }
 
     public int getId() {
         return id;
@@ -54,6 +52,14 @@ public class PlatformType {
 
     public void setCname(String cname) {
         this.cname = cname;
+    }
+
+    public String getSymbol() {
+        return symbol;
+    }
+
+    public void setSymbol(String symbol) {
+        this.symbol = symbol;
     }
 
     public String getStatus() {

@@ -34,7 +34,17 @@ public class CoinListModel {
     private String lastPrice;
     private String lastCnyPrice;
     private String volume;
+    private String isChoice;  //是否自选 1 是
     private double changeRate; // - 红色
+
+
+    public String getIsChoice() {
+        return isChoice;
+    }
+
+    public void setIsChoice(String isChoice) {
+        this.isChoice = isChoice;
+    }
 
     public String getId() {
         return id;

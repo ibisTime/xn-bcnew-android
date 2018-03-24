@@ -68,6 +68,8 @@ public class MainActivity extends AbsBaseLoadActivity {
 
     private void initListener() {
 
+
+
         mBinding.layoutTab.radiogroup.setOnCheckedChangeListener((radioGroup, i) -> {
 
             switch (i) {

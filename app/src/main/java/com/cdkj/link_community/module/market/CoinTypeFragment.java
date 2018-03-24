@@ -13,8 +13,7 @@ import com.cdkj.baselibrary.nets.BaseResponseListCallBack;
 import com.cdkj.baselibrary.nets.RetrofitUtils;
 import com.cdkj.baselibrary.utils.StringUtils;
 import com.cdkj.link_community.api.MyApiServer;
-import com.cdkj.link_community.model.CoinType;
-import com.cdkj.link_community.module.message.FastMessageListFragment;
+import com.cdkj.link_community.model.CoinPlatformType;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -96,10 +95,10 @@ public class CoinTypeFragment extends AbsTablayoutFragment {
 
         showLoadingDialog();
 
-        call.enqueue(new BaseResponseListCallBack<CoinType>(mActivity) {
+        call.enqueue(new BaseResponseListCallBack<CoinPlatformType>(mActivity) {
 
             @Override
-            protected void onSuccess(List<CoinType> data, String SucMessage) {
+            protected void onSuccess(List<CoinPlatformType> data, String SucMessage) {
 
                 initViewPagerData(data);
             }
@@ -111,10 +110,10 @@ public class CoinTypeFragment extends AbsTablayoutFragment {
         });
     }
 
-    private void initViewPagerData(List<CoinType> data) {
+    private void initViewPagerData(List<CoinPlatformType> data) {
         int i = 0;
 
-        for (CoinType coinType : data) {
+        for (CoinPlatformType coinType : data) {
             if (coinType == null) continue;
             mTitleList.add(coinType.getSymbol());
             mFragmentList.add(CoinTypeListFragment.getInstanse(coinType.getSymbol(), i == 0));

@@ -60,9 +60,9 @@ public class CoinBBSDetailsActivity extends AbsBaseLoadActivity {
         //设置fragment数据
         ArrayList fragments = new ArrayList<>();
 
-        fragments.add(FastMessageListFragment.getInstanse(0,false));
-        fragments.add(FastMessageListFragment.getInstanse(0,false));
-        fragments.add(FastMessageListFragment.getInstanse(0,false));
+        fragments.add(FastMessageListFragment.getInstanse(0, false));
+        fragments.add(FastMessageListFragment.getInstanse(0, false));
+        fragments.add(FastMessageListFragment.getInstanse(0, false));
 
         mBinding.viewpager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager(), fragments));
         mBinding.viewpager.setOffscreenPageLimit(fragments.size());
@@ -88,19 +88,7 @@ public class CoinBBSDetailsActivity extends AbsBaseLoadActivity {
 
         mBinding.recyclerViewLeft.setLayoutManager(linearLayoutManager);
 
-        List<String> list = new ArrayList<>();
-
-        list.add("");
-        list.add("");
-        list.add("");
-        list.add("");
-        list.add("");
-        list.add("");
-        list.add("");
-        list.add("");
-        list.add("");
-
-        mBinding.recyclerViewLeft.setAdapter(new MarketChooseListAdapter(list));
+        mBinding.recyclerViewLeft.setAdapter(new MarketChooseListAdapter(new ArrayList<>()));
 
         mBinding.scrollView.setOnScrollListener(new MyScrollView.MyOnScrollListener() {
             @Override

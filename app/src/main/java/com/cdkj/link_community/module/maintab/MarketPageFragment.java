@@ -8,9 +8,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.cdkj.baselibrary.adapters.ViewPagerAdapter;
+import com.cdkj.baselibrary.appmanager.SPUtilHelpr;
 import com.cdkj.baselibrary.base.BaseLazyFragment;
 import com.cdkj.link_community.R;
 import com.cdkj.link_community.databinding.FragmentMarketBinding;
+import com.cdkj.link_community.module.market.AddMarketActivity;
 import com.cdkj.link_community.module.market.CoinTypeFragment;
 import com.cdkj.link_community.module.market.MyChooseFragment;
 import com.cdkj.link_community.module.market.PlatformFragment;
@@ -49,6 +51,9 @@ public class MarketPageFragment extends BaseLazyFragment {
 
     private void initTopTitle() {
 
+        //行情添加
+        mBinding.titleLayout.fraAddMarket.setOnClickListener(view -> addClick());
+
         //搜索
         mBinding.titleLayout.fraToSearch.setOnClickListener(view -> SearchMarketActivity.open(mActivity));
 
@@ -68,6 +73,16 @@ public class MarketPageFragment extends BaseLazyFragment {
 
         });
 
+    }
+
+    /**
+     * 行情添加
+     */
+    private void addClick() {
+        if (!SPUtilHelpr.isLogin(mActivity, false)) {
+            return;
+        }
+        AddMarketActivity.open(mActivity);
     }
 
     private void initViewPager() {
