@@ -152,9 +152,9 @@ public class CommentDetailsActivity extends AbsBaseLoadActivity {
         mBinding.replayCommentLayout.tvContent.setText(messageDetails.getContent());
 
         if (messageDetails.getIsPoint() == 1) {
-            mBinding.replayCommentLayout.imgIsLike.setImageResource(R.drawable.gave_a_like);
+            mBinding.replayCommentLayout.imgIsLike.setImageResource(R.drawable.gave_a_like_2);
         } else {
-            mBinding.replayCommentLayout.imgIsLike.setImageResource(R.drawable.gave_a_like_un);
+            mBinding.replayCommentLayout.imgIsLike.setImageResource(R.drawable.gave_a_like_2_un);
         }
 
 

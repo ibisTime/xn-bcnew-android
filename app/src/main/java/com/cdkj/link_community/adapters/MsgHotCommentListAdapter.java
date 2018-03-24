@@ -50,9 +50,9 @@ public class MsgHotCommentListAdapter extends BaseQuickAdapter<MsgDetailsComment
         viewHolder.setText(R.id.tv_content, item.getContent());
 
         if (item.getIsPoint() == 1) {
-            viewHolder.setImageResource(R.id.img_is_like, R.drawable.gave_a_like);
+            viewHolder.setImageResource(R.id.img_is_like, R.drawable.gave_a_like_2);
         } else {
-            viewHolder.setImageResource(R.id.img_is_like, R.drawable.gave_a_like_un);
+            viewHolder.setImageResource(R.id.img_is_like, R.drawable.gave_a_like_2_un);
         }
 
 

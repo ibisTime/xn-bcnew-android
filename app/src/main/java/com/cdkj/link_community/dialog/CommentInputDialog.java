@@ -33,8 +33,8 @@ public class CommentInputDialog extends Dialog {
         mBinding = DataBindingUtil.inflate(getLayoutInflater(), R.layout.dialog_comment_input, null, false);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(mBinding.getRoot());
-        if(!TextUtils.isEmpty(name)){
-            mBinding.editComment.setHint("对 " + name + " 进行回复");
+        if (!TextUtils.isEmpty(name)) {
+            mBinding.editComment.setHint("对" + name + "进行回复");
         }
     }
 

@@ -11,7 +11,9 @@ import com.cdkj.baselibrary.adapters.ViewPagerAdapter;
 import com.cdkj.baselibrary.base.BaseLazyFragment;
 import com.cdkj.link_community.R;
 import com.cdkj.link_community.databinding.FragmentMarketBinding;
+import com.cdkj.link_community.module.market.CoinTypeFragment;
 import com.cdkj.link_community.module.market.MyChooseFragment;
+import com.cdkj.link_community.module.market.PlatformFragment;
 import com.cdkj.link_community.module.market.search.SearchMarketActivity;
 
 import java.util.ArrayList;
@@ -47,7 +49,24 @@ public class MarketPageFragment extends BaseLazyFragment {
 
     private void initTopTitle() {
 
+        //搜索
         mBinding.titleLayout.fraToSearch.setOnClickListener(view -> SearchMarketActivity.open(mActivity));
+
+        mBinding.titleLayout.radiogroup.setOnCheckedChangeListener((radioGroup, i) -> {
+
+            switch (i) {
+                case R.id.radio_left:
+                    mBinding.viewpager.setCurrentItem(0, true);
+                    break;
+                case R.id.radio_middle:
+                    mBinding.viewpager.setCurrentItem(1, true);
+                    break;
+                case R.id.radio_right:
+                    mBinding.viewpager.setCurrentItem(2, true);
+                    break;
+            }
+
+        });
 
     }
 
@@ -56,8 +75,8 @@ public class MarketPageFragment extends BaseLazyFragment {
         ArrayList fragments = new ArrayList<>();
 
         fragments.add(MyChooseFragment.getInstanse());
-        fragments.add(MyChooseFragment.getInstanse());
-        fragments.add(MyChooseFragment.getInstanse());
+        fragments.add(PlatformFragment.getInstanse());
+        fragments.add(CoinTypeFragment.getInstanse());
 
         mBinding.viewpager.setAdapter(new ViewPagerAdapter(getChildFragmentManager(), fragments));
         mBinding.viewpager.setOffscreenPageLimit(fragments.size());
