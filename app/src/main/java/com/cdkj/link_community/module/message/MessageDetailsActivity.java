@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -30,10 +31,13 @@ import com.cdkj.link_community.adapters.MsgHotCommentListAdapter;
 import com.cdkj.link_community.api.MyApiServer;
 import com.cdkj.link_community.databinding.ActivityMessageDetailBinding;
 import com.cdkj.link_community.dialog.CommentInputDialog;
+import com.cdkj.link_community.model.LoinSucc;
 import com.cdkj.link_community.model.MessageDetails;
 import com.cdkj.link_community.model.MessageDetailsNoteList;
 import com.cdkj.link_community.model.MsgDetailsComment;
 import com.chad.library.adapter.base.BaseQuickAdapter;
+
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.HashMap;
 import java.util.List;
@@ -60,8 +64,11 @@ public class MessageDetailsActivity extends AbsBaseLoadActivity {
     private RefreshHelper mNewCommentRefreshHelper; //最新评论刷新
 
 
-    private String MSGCOMMENT = "1";/*类型(Y 1 资讯 2 评论)*/
-    private String COMMENTCOMMENT = "2";/*类型(Y 1 资讯 2 评论)*/
+    public static final String MSGCOMMENT = "1";/*类型(Y 1 资讯 2 评论)*/
+    public static final String COMMENTCOMMENT = "2";/*类型(Y 1 资讯 2 评论)*/
+
+    private MessageDetails messageDetails;
+
 
     /**
      * @param context
@@ -103,9 +110,17 @@ public class MessageDetailsActivity extends AbsBaseLoadActivity {
         mBinding.contentLayout.recyclerViewHotComment.setNestedScrollingEnabled(false);
         mBinding.contentLayout.recyclerViewRecommended.setNestedScrollingEnabled(false);
 
+        /*防止局部刷新闪烁*/
+        ((DefaultItemAnimator) mBinding.contentLayout.recyclerViewNewComment.getItemAnimator()).setSupportsChangeAnimations(false);
+        ((DefaultItemAnimator) mBinding.contentLayout.recyclerViewHotComment.getItemAnimator()).setSupportsChangeAnimations(false);
+        ((DefaultItemAnimator) mBinding.contentLayout.recyclerViewRecommended.getItemAnimator()).setSupportsChangeAnimations(false);
+
         initRefreshHelper();
 
         initListener();
+
+        getMessageDetailRequest();
+
     }
 
     private void initListener() {
@@ -117,7 +132,7 @@ public class MessageDetailsActivity extends AbsBaseLoadActivity {
                 return;
             }
 
-            CommentInputDialog commentInputDialog = new CommentInputDialog(this);
+            CommentInputDialog commentInputDialog = new CommentInputDialog(this, "");
             commentInputDialog.setmSureListener(comment -> {
                 if (TextUtils.isEmpty(comment)) {
                     UITipDialog.showFall(MessageDetailsActivity.this, getString(R.string.please_input_comment_info));
@@ -128,13 +143,24 @@ public class MessageDetailsActivity extends AbsBaseLoadActivity {
             commentInputDialog.show();
         });
 
+        //点赞
+        mBinding.contentLayout.imgLike.setOnClickListener(view -> {
+            if (!SPUtilHelpr.isLogin(this, false)) {
+                return;
+            }
+            toMsgLikeRequest();
+        });
+
+        //收藏
+        mBinding.imgCollection.setOnClickListener(view -> {
+            if (!SPUtilHelpr.isLogin(this, false)) {
+                return;
+            }
+            toMsgCollectionRequest();
+        });
+
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        getMessageDetailRequest();
-    }
 
     private void initRefreshHelper() {
         mNewCommentRefreshHelper = new RefreshHelper(this, new BaseRefreshCallBack(this) {
@@ -145,12 +171,16 @@ public class MessageDetailsActivity extends AbsBaseLoadActivity {
 
             @Override
             public RecyclerView getRecyclerView() {
+
                 return mBinding.contentLayout.recyclerViewNewComment;
             }
 
             @Override
             public RecyclerView.Adapter getAdapter(List listData) {
-                return new MsgHotCommentListAdapter(listData);
+
+                MsgHotCommentListAdapter msgHotCommentListAdapter = getCommentListAdapter(listData);
+
+                return msgHotCommentListAdapter;
             }
 
             @Override
@@ -162,6 +192,32 @@ public class MessageDetailsActivity extends AbsBaseLoadActivity {
         mNewCommentRefreshHelper.init(MyCdConfig.LISTLIMIT);
 
         mBinding.contentLayout.recyclerViewNewComment.setLayoutManager(getLinearLayoutManager());
+    }
+
+    /**
+     * 获取评论适配器
+     *
+     * @param listData
+     * @return
+     */
+    @NonNull
+    private MsgHotCommentListAdapter getCommentListAdapter(List listData) {
+        MsgHotCommentListAdapter msgHotCommentListAdapter = new MsgHotCommentListAdapter(listData);
+
+        msgHotCommentListAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                CommentDetailsActivity.open(MessageDetailsActivity.this, msgHotCommentListAdapter.getItem(position).getCode());
+//                commentPlayRequest(msgHotCommentListAdapter.getItem(position).getCode());
+            }
+        });
+
+        /*点赞*/
+        msgHotCommentListAdapter.setOnItemChildClickListener((adapter, view, position) -> {
+            toCommentLikeRequest(msgHotCommentListAdapter, position);
+        });
+
+        return msgHotCommentListAdapter;
     }
 
     /**
@@ -187,7 +243,7 @@ public class MessageDetailsActivity extends AbsBaseLoadActivity {
 
             @Override
             protected void onSuccess(MessageDetails data, String SucMessage) {
-
+                messageDetails = data;
                 setShowData(data);
 
                 mBinding.getRoot().setVisibility(View.VISIBLE);
@@ -214,20 +270,53 @@ public class MessageDetailsActivity extends AbsBaseLoadActivity {
         mBinding.contentLayout.tvFrom.setText(getString(R.string.message_frome) + data.getSource());
         mBinding.contentLayout.tvTitle.setText(data.getTitle());
 
-        if (data.getCommentCount() > 0) {
-            if (data.getCommentCount() > 999) {
-                mBinding.tvCommentNum.setText("999+");
-            } else {
-                mBinding.tvCommentNum.setText(data.getCommentCount() + "");
-            }
+        /*收藏按钮*/
+        if (TextUtils.equals(data.getIsCollect(), "0")) {
+            mBinding.imgCollection.setImageResource(R.drawable.callection_un);
         } else {
-            mBinding.tvCommentNum.setText("");
+            mBinding.imgCollection.setImageResource(R.drawable.user_collection);
+        }
+
+        setLikeInfo(data);
+
+        /*评论数量*/
+        if (data.getCommentCount() > 999) {
+            mBinding.tvCommentNum.setText("999+");
+        } else {
+            mBinding.tvCommentNum.setText(data.getCommentCount() + "");
         }
 
         setRecommendedList(data.getRefNewList());
         setHotCommentList(data.getHotCommentList());
 
         mNewCommentRefreshHelper.onDefaluteMRefresh(true);
+    }
+
+    /**
+     * 设置点赞信息
+     *
+     * @param data
+     */
+    private void setLikeInfo(MessageDetails data) {
+    /*是否点赞*/
+
+        if (data.getIsPoint() == 1) {
+            mBinding.contentLayout.imgLike.setImageResource(R.drawable.gave_a_like);
+        } else {
+            mBinding.contentLayout.imgLike.setImageResource(R.drawable.gave_a_like_un);
+        }
+
+
+        /*点赞数量*/
+        if (data.getPointCount() > 0) {
+            if (data.getPointCount() > 999) {
+                mBinding.contentLayout.tvLikeNum.setText("999+");
+            } else {
+                mBinding.contentLayout.tvLikeNum.setText(data.getPointCount() + "");
+            }
+        } else {
+            mBinding.contentLayout.tvLikeNum.setText("0");
+        }
     }
 
     /**
@@ -266,15 +355,7 @@ public class MessageDetailsActivity extends AbsBaseLoadActivity {
             mBinding.contentLayout.tvHotCommentTitle.setVisibility(View.GONE);
             return;
         }
-        MsgHotCommentListAdapter msgHotCommentListAdapter = new MsgHotCommentListAdapter(hotCommentList);
-
-        msgHotCommentListAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                toCommentRequest(msgHotCommentListAdapter.getItem(position).getCode(), "xxx123", COMMENTCOMMENT);
-            }
-        });
-
+        MsgHotCommentListAdapter msgHotCommentListAdapter = getCommentListAdapter(hotCommentList);
         mBinding.contentLayout.recyclerViewHotComment.setLayoutManager(getLinearLayoutManager());
         mBinding.contentLayout.recyclerViewHotComment.setAdapter(msgHotCommentListAdapter);
 
@@ -399,9 +480,18 @@ public class MessageDetailsActivity extends AbsBaseLoadActivity {
             protected void onSuccess(IsSuccessModes data, String SucMessage) {
 
                 if (data.isSuccess()) {
-                    mBinding.contentLayout.imgLike.setImageResource(R.drawable.gave_a_like);
-                } else {
-                    mBinding.contentLayout.imgLike.setImageResource(R.drawable.gave_a_like_un);
+
+                    if (messageDetails != null) {
+                        if (messageDetails.getIsPoint() == 0) {
+                            messageDetails.setIsPoint(1);
+                            messageDetails.setPointCount(messageDetails.getPointCount() + 1);
+                        } else {
+                            messageDetails.setIsPoint(0);
+                            messageDetails.setPointCount(messageDetails.getPointCount() - 1);
+                        }
+                    }
+                    setLikeInfo(messageDetails);
+
                 }
             }
 
@@ -411,6 +501,106 @@ public class MessageDetailsActivity extends AbsBaseLoadActivity {
             }
         });
 
+    }
+
+    /**
+     * 评论点赞
+     */
+    private void toCommentLikeRequest(MsgHotCommentListAdapter adapter, int position) {
+
+        MsgDetailsComment msgDetailsComment = adapter.getItem(position);
+
+        if (TextUtils.isEmpty(msgDetailsComment.getCode())) {
+            return;
+        }
+
+        Map<String, String> map = new HashMap<>(); /*类型(Y 1 资讯 2 评论)*/
+
+        map.put("type", COMMENTCOMMENT);
+        map.put("objectCode", msgDetailsComment.getCode());
+        map.put("userId", SPUtilHelpr.getUserId());
+
+        showLoadingDialog();
+        Call call = RetrofitUtils.getBaseAPiService().successRequest("628201", StringUtils.getJsonToString(map));
+
+        addCall(call);
+
+        call.enqueue(new BaseResponseModelCallBack<IsSuccessModes>(this) {
+            @Override
+            protected void onSuccess(IsSuccessModes data, String SucMessage) {
+
+                if (data.isSuccess()) {
+                    if (msgDetailsComment.getIsPoint() == 1) {
+                        msgDetailsComment.setPointCount(msgDetailsComment.getPointCount() - 1);
+                        msgDetailsComment.setIsPoint(0);
+                    } else {
+                        msgDetailsComment.setPointCount(msgDetailsComment.getPointCount() + 1);
+                        msgDetailsComment.setIsPoint(1);
+                    }
+                    adapter.notifyItemChanged(position);
+                }
+            }
+
+            @Override
+            protected void onFinish() {
+                disMissLoading();
+            }
+        });
+
+    }
+
+    /**
+     * 资讯收藏
+     */
+    private void toMsgCollectionRequest() {
+
+        if (TextUtils.isEmpty(mCode)) {
+            return;
+        }
+
+        Map<String, String> map = new HashMap<>(); /*类型(Y 1 资讯 2 评论)*/
+
+        map.put("objectCode", mCode);
+        map.put("userId", SPUtilHelpr.getUserId());
+
+        showLoadingDialog();
+        Call call = RetrofitUtils.getBaseAPiService().successRequest("628202", StringUtils.getJsonToString(map));
+
+        addCall(call);
+
+        call.enqueue(new BaseResponseModelCallBack<IsSuccessModes>(this) {
+            @Override
+            protected void onSuccess(IsSuccessModes data, String SucMessage) {
+
+                if (data.isSuccess()) {
+                    if (messageDetails != null) {
+                        if (TextUtils.equals(messageDetails.getIsCollect(), "0")) {
+                            messageDetails.setIsCollect("1");
+                            mBinding.imgCollection.setImageResource(R.drawable.user_collection);
+                        } else {
+                            messageDetails.setIsCollect("0");
+                            mBinding.imgCollection.setImageResource(R.drawable.callection_un);
+                        }
+                    }
+                }
+            }
+
+            @Override
+            protected void onFinish() {
+                disMissLoading();
+            }
+        });
+
+    }
+
+    /**
+     * 登录成功 刷新界面
+     *
+     * @param loinSucc
+     */
+    @Subscribe
+    public void LoginEvent(LoinSucc loinSucc) {
+        getMessageDetailRequest();
     }
 
 

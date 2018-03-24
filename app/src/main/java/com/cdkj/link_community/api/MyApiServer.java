@@ -46,6 +46,17 @@ public interface MyApiServer {
     Call<BaseResponseModel<MessageDetails>> getMessageDetails(@Field("code") String code, @Field("json") String json);
 
     /**
+     * 获取资讯评论详情
+     *
+     * @param code
+     * @param json
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("api")
+    Call<BaseResponseModel<MsgDetailsComment>> getMessageCommentDetails(@Field("code") String code, @Field("json") String json);
+
+    /**
      * 获取用户信息详情
      *
      * @param code

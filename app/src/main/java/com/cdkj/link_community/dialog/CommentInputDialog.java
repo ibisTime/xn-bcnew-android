@@ -5,6 +5,7 @@ import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.Window;
 import android.view.WindowManager;
@@ -27,11 +28,14 @@ public class CommentInputDialog extends Dialog {
         this.mSureListener = mSureListener;
     }
 
-    public CommentInputDialog(@NonNull Context context) {
+    public CommentInputDialog(@NonNull Context context, String name) {
         super(context, R.style.comment_input_dialog);
         mBinding = DataBindingUtil.inflate(getLayoutInflater(), R.layout.dialog_comment_input, null, false);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(mBinding.getRoot());
+        if(!TextUtils.isEmpty(name)){
+            mBinding.editComment.setHint("对 " + name + " 进行回复");
+        }
     }
 
 

@@ -64,7 +64,10 @@
     <string name="message_frome">来源:</string>
     <string name="show_your_idea">说出你的看法</string>
     <string name="please_input_comment_info">请输入评论内容</string>
+    <string name="please_input_replycomment_info">请输入回复内容</string>
     <string name="comment_succ">评价成功</string>
     <string name="comment_fall">评价失败</string>
+    <string name="comment_detail">评论详情</string>
+    <string name="come_here_sit">来,坐下谈谈</string>
 
 </resources>

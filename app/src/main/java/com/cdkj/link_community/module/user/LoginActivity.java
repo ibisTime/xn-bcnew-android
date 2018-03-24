@@ -26,8 +26,11 @@ import com.cdkj.baselibrary.utils.StringUtils;
 import com.cdkj.link_community.R;
 import com.cdkj.link_community.databinding.ActivityLoginBinding;
 import com.cdkj.link_community.manager.MyRouteHelper;
+import com.cdkj.link_community.model.LoinSucc;
 import com.jakewharton.rxbinding2.view.RxView;
 import com.jakewharton.rxbinding2.widget.RxTextView;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -173,6 +176,9 @@ public class LoginActivity extends AbsBaseLoadActivity implements SendCodeInterf
      * 登录后操作
      */
     private void startNext() {
+
+        EventBus.getDefault().post(new LoinSucc());
+
         if (canOpenMain) {
             MyRouteHelper.openMain();
         }

@@ -44,9 +44,27 @@ public class MessageDetails {
     private String updateDatetime;
     private int commentCount;
     private int collectCount;
+    private int pointCount;
+    private int isPoint;
     private String isCollect;
     private List<MessageDetailsNoteList> refNewList;
     private List<MsgDetailsComment> hotCommentList;
+
+    public int getIsPoint() {
+        return isPoint;
+    }
+
+    public void setIsPoint(int isPoint) {
+        this.isPoint = isPoint;
+    }
+
+    public int getPointCount() {
+        return pointCount;
+    }
+
+    public void setPointCount(int pointCount) {
+        this.pointCount = pointCount;
+    }
 
     public String getCode() {
         return code;

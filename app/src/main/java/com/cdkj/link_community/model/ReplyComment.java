@@ -1,29 +1,11 @@
 package com.cdkj.link_community.model;
 
-import java.util.List;
-
 /**
- * Created by cdkj on 2018/3/23.
+ * 评论回复
+ * Created by 李先俊 on 2018/3/24.
  */
 
-public class MsgDetailsComment {
-
-    /**
-     * code : PL201803820101174351
-     * type : 2
-     * content : 好有评论
-     * userId : U2018038105315757
-     * commentDatetime : Mar 23, 2018 1:01:17 PM
-     * pointCount : 0.0
-     * parentCode : PL201803820100253982
-     * parentUserId : U2018038105315757
-     * objectCode : NS201803821247121521
-     * status : A
-     * nickname : aa
-     * photo : baidu.com
-     * parentNickName : aa
-     * parentPhoto : baidu.com
-     */
+public class ReplyComment {
 
     private String code;
     private String type;
@@ -39,25 +21,8 @@ public class MsgDetailsComment {
     private String photo;
     private String parentNickName;
     private String parentPhoto;
-    private List<ReplyComment> commentList;
+    private String isTop;
 
-    private int isPoint;
-
-    public int getIsPoint() {
-        return isPoint;
-    }
-
-    public void setIsPoint(int isPoint) {
-        this.isPoint = isPoint;
-    }
-
-    public List<ReplyComment> getCommentList() {
-        return commentList;
-    }
-
-    public void setCommentList(List<ReplyComment> commentList) {
-        this.commentList = commentList;
-    }
 
     public String getCode() {
         return code;
@@ -169,5 +134,13 @@ public class MsgDetailsComment {
 
     public void setParentPhoto(String parentPhoto) {
         this.parentPhoto = parentPhoto;
+    }
+
+    public String getIsTop() {
+        return isTop;
+    }
+
+    public void setIsTop(String isTop) {
+        this.isTop = isTop;
     }
 }
