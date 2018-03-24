@@ -82,6 +82,12 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
 
+        <!--收藏列表-->
+        <activity
+            android:name=".module.user.MyCollectionListActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
+
         <!-- 微信分享回调 -->
         <activity
             android:name="wxapi.WXEntryActivity"

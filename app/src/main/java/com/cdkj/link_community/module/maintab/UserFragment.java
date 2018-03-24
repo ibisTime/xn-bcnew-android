@@ -20,6 +20,7 @@ import com.cdkj.link_community.api.MyApiServer;
 import com.cdkj.link_community.databinding.FragmentUserBinding;
 import com.cdkj.link_community.manager.DataCleanManager;
 import com.cdkj.link_community.model.UserInfoModel;
+import com.cdkj.link_community.module.user.MyCollectionListActivity;
 import com.cdkj.link_community.module.user.MyCommentsActivity;
 import com.cdkj.link_community.module.user.UserInfoUpdateActivity;
 
@@ -80,9 +81,18 @@ public class UserFragment extends BaseLazyFragment {
             if (!SPUtilHelpr.isLogin(mActivity, false)) {
                 return;
             }
-            UserInfoUpdateActivity.open(mActivity,mUserInfo);
+            UserInfoUpdateActivity.open(mActivity, mUserInfo);
         });
 
+        //收藏
+        mBinding.rowCollection.setOnClickListener(view -> {
+            if (!SPUtilHelpr.isLogin(mActivity, false)) {
+                return;
+            }
+            MyCollectionListActivity.open(mActivity);
+        });
+
+        /**/
         mBinding.rowCommentBbs.setOnClickListener(view -> {
             if (!SPUtilHelpr.isLogin(mActivity, false)) {
                 return;
@@ -93,6 +103,8 @@ public class UserFragment extends BaseLazyFragment {
         /*清除缓存*/
         mBinding.fraClearCache.setOnClickListener(view -> clearCache());
 
+
+        /*退出登录*/
         mBinding.tvLogout.setOnClickListener(view -> logOut());
 
     }
@@ -213,7 +225,7 @@ public class UserFragment extends BaseLazyFragment {
         call.enqueue(new BaseResponseModelCallBack<UserInfoModel>(mActivity) {
             @Override
             protected void onSuccess(UserInfoModel data, String SucMessage) {
-                mUserInfo=data;
+                mUserInfo = data;
                 mBinding.tvUserName.setText(data.getNickname());
                 ImgUtils.loadQiniuLogo(UserFragment.this, data.getPhoto(), mBinding.imgUserLogo);
                 SPUtilHelpr.saveUserPhoneNum(data.getMobile());
