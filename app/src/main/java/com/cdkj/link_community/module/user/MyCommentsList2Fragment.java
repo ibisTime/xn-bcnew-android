@@ -15,7 +15,6 @@ import com.cdkj.baselibrary.nets.BaseResponseModelCallBack;
 import com.cdkj.baselibrary.nets.RetrofitUtils;
 import com.cdkj.baselibrary.utils.StringUtils;
 import com.cdkj.link_community.R;
-import com.cdkj.link_community.adapters.UserMyCommentListAdapter;
 import com.cdkj.link_community.adapters.UserMyCommentReplayListAdapter;
 import com.cdkj.link_community.api.MyApiServer;
 import com.cdkj.link_community.model.UserMyComment;
@@ -28,15 +27,15 @@ import java.util.Map;
 import retrofit2.Call;
 
 /**
- * 我的评论列表
+ * 我的评论列表 (回复我的)
  * Created by cdkj on 2018/3/22.
  */
 
-public class MyCommentsListFragment extends AbsRefreshListFragment {
+public class MyCommentsList2Fragment extends AbsRefreshListFragment {
 
 
-    public static MyCommentsListFragment getInstanse() {
-        MyCommentsListFragment fragment = new MyCommentsListFragment();
+    public static MyCommentsList2Fragment getInstanse() {
+        MyCommentsList2Fragment fragment = new MyCommentsList2Fragment();
         Bundle bundle = new Bundle();
         fragment.setArguments(bundle);
         return fragment;
@@ -49,7 +48,6 @@ public class MyCommentsListFragment extends AbsRefreshListFragment {
 
     @Override
     protected void onInvisible() {
-
     }
 
     @Override
@@ -61,8 +59,7 @@ public class MyCommentsListFragment extends AbsRefreshListFragment {
 
     @Override
     public RecyclerView.Adapter getListAdapter(List listData) {
-        UserMyCommentListAdapter userMyCommentListAdapter = new UserMyCommentListAdapter(listData);
-
+        UserMyCommentReplayListAdapter userMyCommentListAdapter = new UserMyCommentReplayListAdapter(listData);
         userMyCommentListAdapter.setOnItemClickListener((adapter, view, position) -> {
 
         });
@@ -88,7 +85,7 @@ public class MyCommentsListFragment extends AbsRefreshListFragment {
 
         if (isShowDialog) showLoadingDialog();
 
-        Call call = RetrofitUtils.createApi(MyApiServer.class).getUserMyCommentList("628209", StringUtils.getJsonToString(map));
+        Call call = RetrofitUtils.createApi(MyApiServer.class).getUserMyCommentList("628208", StringUtils.getJsonToString(map));
 
         addCall(call);
 

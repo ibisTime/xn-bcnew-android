@@ -20,7 +20,6 @@ public class MyCollectionListAdapter extends BaseQuickAdapter<CollectionList, Ba
 
     public MyCollectionListAdapter(@Nullable List<CollectionList> data) {
         super(R.layout.item_collection, data);
-
     }
 
 
@@ -28,7 +27,7 @@ public class MyCollectionListAdapter extends BaseQuickAdapter<CollectionList, Ba
     protected void convert(BaseViewHolder viewHolder, CollectionList item) {
         if (item == null) return;
 
-        if (viewHolder.getLayoutPosition() / 2 == 0) {
+        if (viewHolder.getLayoutPosition() % 2 == 0) {
             viewHolder.setBackgroundColor(R.id.lin_bg, ContextCompat.getColor(mContext, R.color.item_bg_other));
         } else {
             viewHolder.setBackgroundColor(R.id.lin_bg, ContextCompat.getColor(mContext, R.color.white));

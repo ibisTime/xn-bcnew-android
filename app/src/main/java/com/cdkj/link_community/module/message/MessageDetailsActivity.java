@@ -264,6 +264,9 @@ public class MessageDetailsActivity extends AbsBaseLoadActivity {
 
         if (data == null) return;
 
+
+        mBaseBinding.titleView.setMidTitle(data.getTypeName());
+
         mBinding.contentLayout.webView.loadData(data.getContent(), "text/html; charset=UTF-8", null);
         mBinding.contentLayout.tvAuthor.setText(getString(R.string.author) + data.getAuther());
         mBinding.contentLayout.tvTime.setText(DateUtil.formatStringData(data.getShowDatetime(), DEFAULT_DATE_FMT));

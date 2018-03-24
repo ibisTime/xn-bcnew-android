@@ -75,7 +75,7 @@ public class MyCommentsActivity extends AbsBaseLoadActivity {
         //设置fragment数据
         ArrayList fragments = new ArrayList<>();
 
-        fragments.add(MyCommentsListFragment.getInstanse());
+        fragments.add(MyCommentsList2Fragment.getInstanse());
         fragments.add(MyCommentsListFragment.getInstanse());
 
         mBinding.viewpager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager(), fragments));

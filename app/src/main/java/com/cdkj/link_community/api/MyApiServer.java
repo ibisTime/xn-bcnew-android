@@ -12,6 +12,7 @@ import com.cdkj.link_community.model.MessageType;
 import com.cdkj.link_community.model.MsgDetailsComment;
 import com.cdkj.link_community.model.PlatformType;
 import com.cdkj.link_community.model.UserInfoModel;
+import com.cdkj.link_community.model.UserMyComment;
 
 import retrofit2.Call;
 import retrofit2.http.Field;
@@ -23,6 +24,17 @@ import retrofit2.http.POST;
  */
 
 public interface MyApiServer {
+
+    /**
+     * 获取我的评论
+     *
+     * @param code
+     * @param json
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("api")
+    Call<BaseResponseModel<ResponseInListModel<UserMyComment>>> getUserMyCommentList(@Field("code") String code, @Field("json") String json);
 
 
     /**

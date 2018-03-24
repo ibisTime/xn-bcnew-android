@@ -3,7 +3,6 @@ package com.cdkj.link_community.adapters;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 
-import com.cdkj.baselibrary.appmanager.SPUtilHelpr;
 import com.cdkj.baselibrary.utils.DateUtil;
 import com.cdkj.baselibrary.utils.ImgUtils;
 import com.cdkj.baselibrary.utils.StringUtils;
@@ -15,14 +14,14 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import java.util.List;
 
 /**
- * 我的评论
+ * 我的评论 (回复我的)
  * Created by cdkj on 2018/3/19.
  */
 
-public class UserMyCommentListAdapter extends BaseQuickAdapter<UserMyComment, BaseViewHolder> {
+public class UserMyCommentReplayListAdapter extends BaseQuickAdapter<UserMyComment, BaseViewHolder> {
 
 
-    public UserMyCommentListAdapter(@Nullable List<UserMyComment> data) {
+    public UserMyCommentReplayListAdapter(@Nullable List<UserMyComment> data) {
         super(R.layout.item_user_my_comments, data);
 
     }
@@ -40,13 +39,10 @@ public class UserMyCommentListAdapter extends BaseQuickAdapter<UserMyComment, Ba
 
         ImgUtils.loadQiniuLogo(mContext, item.getPhoto(), viewHolder.getView(R.id.img_logo));
 
-        viewHolder.setText(R.id.tv_name, SPUtilHelpr.getUserNickName());
+        viewHolder.setText(R.id.tv_name, item.getNickname());
         viewHolder.setText(R.id.tv_content, item.getContent());
-        viewHolder.setText(R.id.tv_replay_name, "回复 "+item.getNickname());
         viewHolder.setText(R.id.tv_time, DateUtil.formatStringData(item.getCommentDatetime(), DateUtil.DEFAULT_DATE_FMT));
-
         viewHolder.addOnClickListener(R.id.lin_msg);
-
         if (item.getNews() != null) {
 
             if (StringUtils.splitAsPicList(item.getNews().getAdvPic()).size() > 0) {
