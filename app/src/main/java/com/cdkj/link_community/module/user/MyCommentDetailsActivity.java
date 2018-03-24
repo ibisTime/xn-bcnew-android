@@ -1,4 +1,4 @@
-package com.cdkj.link_community.module.message;
+package com.cdkj.link_community.module.user;
 
 import android.content.Context;
 import android.content.Intent;
@@ -6,7 +6,6 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 
@@ -26,14 +25,9 @@ import com.cdkj.link_community.adapters.ReplyCommentListAdapter;
 import com.cdkj.link_community.api.MyApiServer;
 import com.cdkj.link_community.databinding.ActivityMessageCommentDetailsBinding;
 import com.cdkj.link_community.dialog.CommentInputDialog;
-import com.cdkj.link_community.model.MessageDetails;
 import com.cdkj.link_community.model.MsgDetailsComment;
 import com.cdkj.link_community.model.ReplyComment;
-import com.cdkj.link_community.model.ReplyCommentEvent;
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.chad.library.adapter.base.BaseViewHolder;
-
-import org.greenrobot.eventbus.EventBus;
 
 import java.util.HashMap;
 import java.util.List;
@@ -46,11 +40,11 @@ import static com.cdkj.link_community.module.message.MessageDetailsActivity.COMM
 import static com.cdkj.link_community.module.message.MessageDetailsActivity.MSGCOMMENT;
 
 /**
- * 我的评论详情
+ * 资讯评论详情
  * Created by cdkj on 2018/3/24.
  */
 
-public class CommentDetailsActivity extends AbsBaseLoadActivity {
+public class MyCommentDetailsActivity extends AbsBaseLoadActivity {
 
     private ActivityMessageCommentDetailsBinding mBinding;
 
@@ -64,7 +58,7 @@ public class CommentDetailsActivity extends AbsBaseLoadActivity {
         if (context == null) {
             return;
         }
-        Intent intent = new Intent(context, CommentDetailsActivity.class);
+        Intent intent = new Intent(context, MyCommentDetailsActivity.class);
 
         intent.putExtra(CdRouteHelper.APPLOGIN, commentCode);
         context.startActivity(intent);
@@ -89,7 +83,7 @@ public class CommentDetailsActivity extends AbsBaseLoadActivity {
         mBinding.getRoot().setVisibility(View.GONE);
 
         mBinding.bottomLayout.linComment.setOnClickListener(view -> {
-            if (!SPUtilHelpr.isLogin(CommentDetailsActivity.this, false)) {
+            if (!SPUtilHelpr.isLogin(MyCommentDetailsActivity.this, false)) {
                 return;
             }
             commentPlayRequest(mCommentCode, "");
@@ -186,7 +180,7 @@ public class CommentDetailsActivity extends AbsBaseLoadActivity {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
 
-                if (!SPUtilHelpr.isLogin(CommentDetailsActivity.this, false)) {
+                if (!SPUtilHelpr.isLogin(MyCommentDetailsActivity.this, false)) {
                     return;
                 }
 
@@ -225,7 +219,7 @@ public class CommentDetailsActivity extends AbsBaseLoadActivity {
         CommentInputDialog commentInputDialog = new CommentInputDialog(this, name);
         commentInputDialog.setmSureListener(comment -> {
             if (TextUtils.isEmpty(comment)) {
-                UITipDialog.showFall(CommentDetailsActivity.this, getString(R.string.please_input_replycomment_info));
+                UITipDialog.showFall(MyCommentDetailsActivity.this, getString(R.string.please_input_replycomment_info));
                 return;
             }
             toCommentRequest(code, comment, COMMENTCOMMENT);
@@ -261,12 +255,12 @@ public class CommentDetailsActivity extends AbsBaseLoadActivity {
 
                 if (data.isSuccess()) {
                     if (TextUtils.equals(type, MSGCOMMENT)) {
-                        UITipDialog.showSuccess(CommentDetailsActivity.this, getString(R.string.comment_succ));
+                        UITipDialog.showSuccess(MyCommentDetailsActivity.this, getString(R.string.comment_succ));
                     }
                     getCommentDetailRequest();
                 } else {
                     if (TextUtils.equals(type, MSGCOMMENT)) {
-                        UITipDialog.showSuccess(CommentDetailsActivity.this, getString(R.string.comment_fall));
+                        UITipDialog.showSuccess(MyCommentDetailsActivity.this, getString(R.string.comment_fall));
                     }
 
                 }

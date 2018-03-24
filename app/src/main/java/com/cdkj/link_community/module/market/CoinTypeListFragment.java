@@ -1,25 +1,24 @@
-package com.cdkj.link_community.module.user;
+package com.cdkj.link_community.module.market;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import com.cdkj.baselibrary.api.ResponseInListModel;
+import com.cdkj.baselibrary.appmanager.CdRouteHelper;
 import com.cdkj.baselibrary.appmanager.MyCdConfig;
-import com.cdkj.baselibrary.appmanager.SPUtilHelpr;
 import com.cdkj.baselibrary.base.AbsRefreshListFragment;
 import com.cdkj.baselibrary.nets.BaseResponseModelCallBack;
 import com.cdkj.baselibrary.nets.RetrofitUtils;
 import com.cdkj.baselibrary.utils.StringUtils;
 import com.cdkj.link_community.R;
-import com.cdkj.link_community.adapters.UserMyCommentListAdapter;
-import com.cdkj.link_community.adapters.UserMyCommentReplayListAdapter;
+import com.cdkj.link_community.adapters.CoinListAdapter;
 import com.cdkj.link_community.api.MyApiServer;
-import com.cdkj.link_community.model.UserMyComment;
-import com.cdkj.link_community.module.message.MessageDetailsActivity;
+import com.cdkj.link_community.model.CoinListModel;
 
 import java.util.HashMap;
 import java.util.List;
@@ -28,22 +27,36 @@ import java.util.Map;
 import retrofit2.Call;
 
 /**
- * 我的评论列表
- * Created by cdkj on 2018/3/22.
+ * 币种 列表Fragment
+ * Created by cdkj on 2018/3/24.
  */
 
-public class MyCommentsListFragment extends AbsRefreshListFragment {
+public class CoinTypeListFragment extends AbsRefreshListFragment {
 
+    private boolean isFirstRequest;//是否进行了第一次请求
 
-    public static MyCommentsListFragment getInstanse() {
-        MyCommentsListFragment fragment = new MyCommentsListFragment();
+    private String mCoinType;
+
+    /**
+     * @param coinType 币种类型
+     * @return
+     */
+    public static CoinTypeListFragment getInstanse(String coinType, Boolean isFirstRequest) {
+        CoinTypeListFragment fragment = new CoinTypeListFragment();
         Bundle bundle = new Bundle();
+        bundle.putString(CdRouteHelper.DATASIGN, coinType);
+        bundle.putBoolean("isFirstRequest", isFirstRequest);
         fragment.setArguments(bundle);
         return fragment;
     }
 
+
     @Override
     protected void lazyLoad() {
+
+        if (mRefreshBinding == null || isFirstRequest) return;
+        isFirstRequest = true;
+        mRefreshHelper.onDefaluteMRefresh(true);
 
     }
 
@@ -52,50 +65,48 @@ public class MyCommentsListFragment extends AbsRefreshListFragment {
 
     }
 
+
     @Override
     protected void afterCreate(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        initRefreshHelper(MyCdConfig.LISTLIMIT);
-        mRefreshHelper.onDefaluteMRefresh(true);
-    }
 
+        if (getArguments() != null) {
+            mCoinType = getArguments().getString(CdRouteHelper.DATASIGN);
+            isFirstRequest = getArguments().getBoolean("isFirstRequest");
+        }
+
+        initRefreshHelper(MyCdConfig.LISTLIMIT);
+
+        if (isFirstRequest) {
+            mRefreshHelper.onDefaluteMRefresh(true);
+        }
+    }
 
     @Override
     public RecyclerView.Adapter getListAdapter(List listData) {
-        UserMyCommentListAdapter userMyCommentListAdapter = new UserMyCommentListAdapter(listData);
-
-        userMyCommentListAdapter.setOnItemClickListener((adapter, view, position) -> {
-            MyCommentDetailsActivity.open(mActivity,userMyCommentListAdapter.getItem(position).getCode());
-        });
-
-        userMyCommentListAdapter.setOnItemChildClickListener((adapter, view, position) -> {
-            UserMyComment userMyComment = userMyCommentListAdapter.getItem(position);
-            if (userMyComment == null || userMyComment.getNews() == null) return;
-            MessageDetailsActivity.open(mActivity, userMyComment.getNews().getCode(), "");
-        });
-
-        return userMyCommentListAdapter;
+        return new CoinListAdapter(listData);
     }
 
     @Override
     public void getListRequest(int pageindex, int limit, boolean isShowDialog) {
 
+        if (TextUtils.isEmpty(mCoinType)) return;
 
         Map<String, String> map = new HashMap<>();
 
-        map.put("userId", SPUtilHelpr.getUserId());
+        map.put("coinSymbol", mCoinType);
         map.put("start", pageindex + "");
         map.put("limit", limit + "");
 
         if (isShowDialog) showLoadingDialog();
 
-        Call call = RetrofitUtils.createApi(MyApiServer.class).getUserMyCommentList("628209", StringUtils.getJsonToString(map));
+        Call call = RetrofitUtils.createApi(MyApiServer.class).getCoinList("628340", StringUtils.getJsonToString(map));
 
         addCall(call);
 
-        call.enqueue(new BaseResponseModelCallBack<ResponseInListModel<UserMyComment>>(mActivity) {
+        call.enqueue(new BaseResponseModelCallBack<ResponseInListModel<CoinListModel>>(mActivity) {
             @Override
-            protected void onSuccess(ResponseInListModel<UserMyComment> data, String SucMessage) {
-                mRefreshHelper.setData(data.getList(), getString(R.string.no_fast_msg), 0);
+            protected void onSuccess(ResponseInListModel<CoinListModel> data, String SucMessage) {
+                mRefreshHelper.setData(data.getList(), getString(R.string.no_coin_info), 0);
             }
 
             @Override

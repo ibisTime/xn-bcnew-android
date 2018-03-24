@@ -36,8 +36,8 @@ public class PlatformFragment extends AbsTablayoutFragment {
     private List<String> mTitleList;
     private List<Fragment> mFragmentList;
 
-    public static CoinTypeFragment getInstanse() {
-        CoinTypeFragment fragment = new CoinTypeFragment();
+    public static PlatformFragment getInstanse() {
+        PlatformFragment fragment = new PlatformFragment();
         Bundle bundle = new Bundle();
         fragment.setArguments(bundle);
         return fragment;
@@ -118,7 +118,7 @@ public class PlatformFragment extends AbsTablayoutFragment {
         for (PlatformType type : data) {
             if (type == null) continue;
             mTitleList.add(type.getEname());
-            mFragmentList.add(FastMessageListFragment.getInstanse(0, false));
+            mFragmentList.add(PlatformListFragment.getInstanse(type.getEname(), i == 0));
             i++;
         }
 

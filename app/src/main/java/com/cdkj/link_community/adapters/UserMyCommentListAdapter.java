@@ -42,7 +42,7 @@ public class UserMyCommentListAdapter extends BaseQuickAdapter<UserMyComment, Ba
 
         viewHolder.setText(R.id.tv_name, SPUtilHelpr.getUserNickName());
         viewHolder.setText(R.id.tv_content, item.getContent());
-        viewHolder.setText(R.id.tv_replay_name, "回复 "+item.getNickname());
+        viewHolder.setText(R.id.tv_replay_name, "回复 " + item.getParentNickName());
         viewHolder.setText(R.id.tv_time, DateUtil.formatStringData(item.getCommentDatetime(), DateUtil.DEFAULT_DATE_FMT));
 
         viewHolder.addOnClickListener(R.id.lin_msg);

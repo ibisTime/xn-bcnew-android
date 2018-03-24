@@ -9,19 +9,33 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.cdkj.baselibrary.api.ResponseInListModel;
+import com.cdkj.baselibrary.appmanager.SPUtilHelpr;
 import com.cdkj.baselibrary.base.AbsRefreshListFragment;
 import com.cdkj.baselibrary.base.BaseLazyFragment;
 import com.cdkj.baselibrary.databinding.LayoutCommonRecyclerRefreshBinding;
 import com.cdkj.baselibrary.interfaces.BaseRefreshCallBack;
 import com.cdkj.baselibrary.interfaces.RefreshHelper;
+import com.cdkj.baselibrary.nets.BaseResponseModelCallBack;
+import com.cdkj.baselibrary.nets.RetrofitUtils;
 import com.cdkj.baselibrary.utils.ImgUtils;
+import com.cdkj.baselibrary.utils.StringUtils;
 import com.cdkj.link_community.R;
 import com.cdkj.link_community.adapters.MarketChooseListAdapter;
+import com.cdkj.link_community.api.MyApiServer;
 import com.cdkj.link_community.databinding.FragmentMarketBinding;
 import com.cdkj.link_community.databinding.PhotoEmptyViewBinding;
 import com.cdkj.link_community.interfaces.DataEmptyToPhotoCallBack;
+import com.cdkj.link_community.model.CoinListModel;
+import com.cdkj.link_community.model.LoinSucc;
 
+import org.greenrobot.eventbus.Subscribe;
+
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import retrofit2.Call;
 
 /**
  * 自选Fragment
@@ -46,7 +60,11 @@ public class MyChooseFragment extends BaseLazyFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mRefreshBinding = DataBindingUtil.inflate(getLayoutInflater(), com.cdkj.baselibrary.R.layout.layout_common_recycler_refresh, null, false);
         initRefreshHelper(10);
-        mRefreshHelper.setData(null);
+
+        if (SPUtilHelpr.isLoginNoStart()) { //未登录不用请求
+            mRefreshHelper.onDefaluteMRefresh(true);
+        }
+
         return mRefreshBinding.getRoot();
     }
 
@@ -57,8 +75,6 @@ public class MyChooseFragment extends BaseLazyFragment {
         mRefreshHelper = new RefreshHelper(mActivity, new DataEmptyToPhotoCallBack() {
             @Override
             public View getRefreshLayout() {
-                mRefreshBinding.refreshLayout.setEnableRefresh(false);
-                mRefreshBinding.refreshLayout.setEnableLoadmore(false);
                 return mRefreshBinding.refreshLayout;
             }
 
@@ -69,16 +85,6 @@ public class MyChooseFragment extends BaseLazyFragment {
 
             @Override
             public RecyclerView.Adapter getAdapter(List listData) {
-                listData.add("");
-                listData.add("");
-                listData.add("");
-                listData.add("");
-                listData.add("");
-                listData.add("");
-                listData.add("");
-                listData.add("");
-                listData.add("");
-                listData.add("");
                 return new MarketChooseListAdapter(listData);
             }
 
@@ -96,6 +102,36 @@ public class MyChooseFragment extends BaseLazyFragment {
 
             @Override
             public void getListDataRequest(int pageindex, int limit, boolean isShowDialog) {
+                Map<String, String> map = new HashMap<>();
+
+                map.put("start", pageindex + "");
+                map.put("limit", limit + "");
+                map.put("userId", SPUtilHelpr.getUserId());
+
+                if (isShowDialog) showLoadingDialog();
+
+                Call call = RetrofitUtils.createApi(MyApiServer.class).getCoinList("628336", StringUtils.getJsonToString(map));
+
+                addCall(call);
+
+                call.enqueue(new BaseResponseModelCallBack<ResponseInListModel<CoinListModel>>(mActivity) {
+                    @Override
+                    protected void onSuccess(ResponseInListModel<CoinListModel> data, String SucMessage) {
+
+                        mRefreshHelper.setData(data.getList());
+                    }
+
+                    @Override
+                    protected void onReqFailure(String errorCode, String errorMessage) {
+                        super.onReqFailure(errorCode, errorMessage);
+                        mRefreshHelper.loadError(errorMessage, 0);
+                    }
+
+                    @Override
+                    protected void onFinish() {
+                        disMissLoading();
+                    }
+                });
 
             }
         });
@@ -121,4 +157,20 @@ public class MyChooseFragment extends BaseLazyFragment {
     protected void onInvisible() {
 
     }
+
+    /**
+     * 登录
+     *
+     * @param loinSucc
+     */
+    @Subscribe
+    public void LoginSuccEvent(LoinSucc loinSucc) {
+        if (mRefreshHelper != null) {
+            if (mActivity == null || mActivity.isFinishing() || !SPUtilHelpr.isLoginNoStart()) {
+                return;
+            }
+            mRefreshHelper.onDefaluteMRefresh(false);
+        }
+    }
+
 }

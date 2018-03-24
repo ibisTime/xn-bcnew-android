@@ -3,6 +3,7 @@ package com.cdkj.link_community.api;
 import com.cdkj.baselibrary.api.BaseResponseListModel;
 import com.cdkj.baselibrary.api.BaseResponseModel;
 import com.cdkj.baselibrary.api.ResponseInListModel;
+import com.cdkj.link_community.model.CoinListModel;
 import com.cdkj.link_community.model.CoinType;
 import com.cdkj.link_community.model.CollectionList;
 import com.cdkj.link_community.model.FastMessage;
@@ -24,6 +25,21 @@ import retrofit2.http.POST;
  */
 
 public interface MyApiServer {
+
+
+
+    /**
+     * 获取币列表
+     *
+     * @param code
+     * @param json
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("api")
+    Call<BaseResponseModel<ResponseInListModel<CoinListModel>>> getCoinList(@Field("code") String code, @Field("json") String json);
+
+
 
     /**
      * 获取我的评论

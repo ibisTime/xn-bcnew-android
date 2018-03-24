@@ -61,7 +61,7 @@ public class MyCommentsList2Fragment extends AbsRefreshListFragment {
     public RecyclerView.Adapter getListAdapter(List listData) {
         UserMyCommentReplayListAdapter userMyCommentListAdapter = new UserMyCommentReplayListAdapter(listData);
         userMyCommentListAdapter.setOnItemClickListener((adapter, view, position) -> {
-
+            MyCommentDetailsActivity.open(mActivity,userMyCommentListAdapter.getItem(position).getCode());
         });
 
         userMyCommentListAdapter.setOnItemChildClickListener((adapter, view, position) -> {

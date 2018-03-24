@@ -22,6 +22,15 @@ public class PlatformType {
     private String cname;
     private String status;
     private String orderNo;
+    private String getSymbol;
+
+    public String getGetSymbol() {
+        return getSymbol;
+    }
+
+    public void setGetSymbol(String getSymbol) {
+        this.getSymbol = getSymbol;
+    }
 
     public int getId() {
         return id;

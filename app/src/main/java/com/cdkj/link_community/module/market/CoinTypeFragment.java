@@ -116,8 +116,8 @@ public class CoinTypeFragment extends AbsTablayoutFragment {
 
         for (CoinType coinType : data) {
             if (coinType == null) continue;
-            mTitleList.add(coinType.getEname());
-            mFragmentList.add(FastMessageListFragment.getInstanse(0, false));
+            mTitleList.add(coinType.getSymbol());
+            mFragmentList.add(CoinTypeListFragment.getInstanse(coinType.getSymbol(), i == 0));
             i++;
         }
 

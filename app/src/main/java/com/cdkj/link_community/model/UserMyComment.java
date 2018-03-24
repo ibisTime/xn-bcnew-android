@@ -25,10 +25,19 @@ public class UserMyComment {
     private String content;
     private String userId;
     private String nickname;
+    private String parentNickName;
     private String commentDatetime;
     private String remark;
     private String photo;
     private NewsBean news;
+
+    public String getParentNickName() {
+        return parentNickName;
+    }
+
+    public void setParentNickName(String parentNickName) {
+        this.parentNickName = parentNickName;
+    }
 
     public String getPhoto() {
         return photo;
