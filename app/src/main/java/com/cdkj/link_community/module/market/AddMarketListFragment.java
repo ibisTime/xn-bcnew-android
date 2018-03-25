@@ -180,6 +180,7 @@ public class AddMarketListFragment extends AbsRefreshListFragment {
                 if (data.isSuccess()) {
                     model.setIsChoice("1");
                     addMarketListAdapter.notifyItemChanged(position);
+                    UITipDialog.showSuccess(mActivity, getString(R.string.add_market_succ));
                 }
             }
 

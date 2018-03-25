@@ -28,7 +28,7 @@ public class MyChooseMarket {
     private String toCoin;
     private String orderNo;
     private String updateDatetime;
-    private df.DataBean.ListBean.MarketFxhBean marketFxh;
+    private MarketFxhBean marketFxh;
 
     public String getId() {
         return id;
@@ -86,11 +86,11 @@ public class MyChooseMarket {
         this.updateDatetime = updateDatetime;
     }
 
-    public df.DataBean.ListBean.MarketFxhBean getMarketFxh() {
+    public MarketFxhBean getMarketFxh() {
         return marketFxh;
     }
 
-    public void setMarketFxh(df.DataBean.ListBean.MarketFxhBean marketFxh) {
+    public void setMarketFxh(MarketFxhBean marketFxh) {
         this.marketFxh = marketFxh;
     }
 
@@ -122,7 +122,7 @@ public class MyChooseMarket {
         private String lastPrice;
         private String lastCnyPrice;
         private String volume;
-        private String changeRate;
+        private double changeRate;
         private String isUse;
 
         public String getId() {
@@ -213,11 +213,11 @@ public class MyChooseMarket {
             this.volume = volume;
         }
 
-        public String getChangeRate() {
+        public double getChangeRate() {
             return changeRate;
         }
 
-        public void setChangeRate(String changeRate) {
+        public void setChangeRate(double changeRate) {
             this.changeRate = changeRate;
         }
 

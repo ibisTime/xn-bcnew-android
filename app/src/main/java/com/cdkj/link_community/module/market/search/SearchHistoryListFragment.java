@@ -19,8 +19,10 @@ import com.cdkj.link_community.adapters.SearchHistoryListAdapter;
 import com.cdkj.link_community.databinding.FragmentShearchHistoryBinding;
 import com.cdkj.link_community.databinding.LayoutSearchClearBinding;
 import com.cdkj.link_community.model.SearchHistoryModel;
+import com.cdkj.link_community.model.StartSearch;
 import com.cdkj.link_community.utils.SearchSaveUtils;
 
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
@@ -76,6 +78,13 @@ public class SearchHistoryListFragment extends BaseLazyFragment {
         mBinding.reycclerView.setAdapter(mSearchHistoryListAdapter);
         mBinding.reycclerView.setLayoutManager(new LinearLayoutManager(mActivity, LinearLayout.VERTICAL, false));
         mBinding.reycclerView.addItemDecoration(new MyDividerItemDecoration(mActivity, LinearLayout.VERTICAL));
+
+        mSearchHistoryListAdapter.setOnItemClickListener((adapter, view, position) -> {
+            StartSearch startSearch = new StartSearch();
+            startSearch.setStarchKey(mSearchHistoryListAdapter.getItem(position));
+            EventBus.getDefault().post(startSearch);  //通知activity 进行搜索
+        });
+
     }
 
     /**

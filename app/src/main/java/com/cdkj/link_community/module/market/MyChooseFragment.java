@@ -135,6 +135,10 @@ public class MyChooseFragment extends BaseLazyFragment {
      * @param position
      */
     private void removeAddMarketRequest(MarketChooseListAdapter adapter, int position) {
+        
+        if (adapter == null || position > adapter.getData().size()) {
+            return;
+        }
 
         MyChooseMarket market = adapter.getItem(position);
 
@@ -179,6 +183,10 @@ public class MyChooseFragment extends BaseLazyFragment {
      * @param position
      */
     private void toTopAddMarketRequest(MarketChooseListAdapter adapter, int position) {
+
+        if (adapter == null || position > adapter.getData().size()) {
+            return;
+        }
 
         MyChooseMarket market = adapter.getItem(position);
 

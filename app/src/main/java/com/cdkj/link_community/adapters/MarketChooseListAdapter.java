@@ -2,15 +2,11 @@ package com.cdkj.link_community.adapters;
 
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
-import android.text.TextUtils;
 
 import com.cdkj.link_community.R;
-import com.cdkj.link_community.model.CoinListModel;
-import com.cdkj.link_community.model.MessageModel;
 import com.cdkj.link_community.model.MyChooseMarket;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.chad.library.adapter.base.util.MultiTypeDelegate;
 
 import java.util.List;
 

@@ -62,6 +62,7 @@
     <string name="no_msg">暂无资讯</string>
     <string name="no_collection">暂无收藏</string>
     <string name="no_coin_info">暂无币种信息</string>
+    <string name="no_search_info">暂无搜索内容</string>
     <string name="no_platform_info">暂无平台信息</string>
     <string name="no_add_market">暂无信息</string>
     <string name="author">作者:</string>
@@ -77,5 +78,6 @@
     <string name="add_market_title">添加自选</string>
     <string name="you_have_add">您已添加过自选</string>
     <string name="set_to_top_succ">置顶成功</string>
+    <string name="add_market_succ">添加成功</string>
 
 </resources>

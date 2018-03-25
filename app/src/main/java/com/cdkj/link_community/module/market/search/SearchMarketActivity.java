@@ -5,7 +5,11 @@ import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -13,17 +17,37 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 
 import com.cdkj.baselibrary.adapters.ViewPagerAdapter;
+import com.cdkj.baselibrary.api.ResponseInListModel;
+import com.cdkj.baselibrary.appmanager.MyCdConfig;
+import com.cdkj.baselibrary.appmanager.SPUtilHelpr;
 import com.cdkj.baselibrary.base.AbsBaseLoadActivity;
 import com.cdkj.baselibrary.dialog.UITipDialog;
+import com.cdkj.baselibrary.interfaces.BaseRefreshCallBack;
+import com.cdkj.baselibrary.interfaces.RefreshHelper;
+import com.cdkj.baselibrary.model.IsSuccessModes;
+import com.cdkj.baselibrary.nets.BaseResponseModelCallBack;
+import com.cdkj.baselibrary.nets.RetrofitUtils;
+import com.cdkj.baselibrary.utils.StringUtils;
 import com.cdkj.link_community.R;
+import com.cdkj.link_community.adapters.AddMarketListAdapter;
+import com.cdkj.link_community.adapters.SearchMarketListAdapter;
+import com.cdkj.link_community.api.MyApiServer;
 import com.cdkj.link_community.databinding.ActivityMarketSearchBinding;
+import com.cdkj.link_community.model.CoinListModel;
 import com.cdkj.link_community.model.SearchHistoryModel;
+import com.cdkj.link_community.model.StartSearch;
 import com.cdkj.link_community.module.maintab.FirstPageFragment;
 import com.cdkj.link_community.module.maintab.MarketPageFragment;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import retrofit2.Call;
 
 /**
  * 行情搜索
@@ -33,6 +57,11 @@ import java.util.ArrayList;
 public class SearchMarketActivity extends AbsBaseLoadActivity {
 
     private ActivityMarketSearchBinding mBinding;
+
+    private RefreshHelper mRefreshHelper;
+
+    private String mSearchKey;//搜索关键字
+    private SearchMarketListAdapter searchMarketListAdapter;
 
 
     public static void open(Context context) {
@@ -63,10 +92,51 @@ public class SearchMarketActivity extends AbsBaseLoadActivity {
     @Override
     public void afterCreate(Bundle savedInstanceState) {
 
+        initRefreshHeper();
         initViewPager();
         initTabView();
         initListener();
         initEditKeyPoard();
+
+    }
+
+    private void initRefreshHeper() {
+        mRefreshHelper = new RefreshHelper(this, new BaseRefreshCallBack(this) {
+            @Override
+            public View getRefreshLayout() {
+                mBinding.refreshLayout.setEnableRefresh(false);
+                return mBinding.refreshLayout;
+            }
+
+            @Override
+            public RecyclerView getRecyclerView() {
+                //防止局部刷新闪烁
+                ((DefaultItemAnimator) mBinding.rv.getItemAnimator()).setSupportsChangeAnimations(false);
+                return mBinding.rv;
+            }
+
+            @Override
+            public RecyclerView.Adapter getAdapter(List listData) {
+                searchMarketListAdapter = new SearchMarketListAdapter(listData);
+
+                searchMarketListAdapter.setOnItemClickListener((adapter, view, position) -> {
+                    if (!SPUtilHelpr.isLogin(SearchMarketActivity.this, false)) {
+                        return;
+                    }
+                    addMarketRequest(searchMarketListAdapter, position);
+
+                });
+
+                return searchMarketListAdapter;
+            }
+
+            @Override
+            public void getListDataRequest(int pageindex, int limit, boolean isShowDialog) {
+                getarketRequest(pageindex, limit, isShowDialog);
+            }
+        });
+
+        mRefreshHelper.init(MyCdConfig.LISTLIMIT);
 
     }
 
@@ -80,6 +150,8 @@ public class SearchMarketActivity extends AbsBaseLoadActivity {
 
         mBinding.viewpager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager(), fragments));
         mBinding.viewpager.setOffscreenPageLimit(fragments.size());
+
+        mBinding.viewpager.setCurrentItem(1);
 
     }
 
@@ -106,7 +178,6 @@ public class SearchMarketActivity extends AbsBaseLoadActivity {
     private void setTabShowByIndex(int typeIndex) {
 
         if (typeIndex == 0) {
-
             mBinding.viewpager.setCurrentItem(0, true);
             mBinding.tabIndex1.setVisibility(View.VISIBLE);
             mBinding.tabIndex2.setVisibility(View.INVISIBLE);
@@ -127,20 +198,39 @@ public class SearchMarketActivity extends AbsBaseLoadActivity {
      * 设置输入键盘
      */
     private void initEditKeyPoard() {
+        mBinding.searchLayout.editSerchView.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if (TextUtils.isEmpty(charSequence.toString())) {
+                    searchMarketListAdapter.replaceData(new ArrayList<>()); //清空搜索数据
+                    mBinding.viewpager.setVisibility(View.VISIBLE);
+                    mBinding.refreshLayout.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
 
         mBinding.searchLayout.editSerchView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                final String str = v.getText().toString();
+                mSearchKey = v.getText().toString();
 
-                if (TextUtils.isEmpty(str)) {
-                    UITipDialog.showInfo(SearchMarketActivity.this, getString(R.string.please_input_search_info));
-                    return false;
-                }
+                if (startSearchByKey()) return false;
+
 
                 //通知SearchHistoryListFragnemt 保存搜索历史
                 SearchHistoryModel searchHistoryModel = new SearchHistoryModel();
-                searchHistoryModel.setHistory(str);
+                searchHistoryModel.setHistory(mSearchKey);
                 EventBus.getDefault().post(searchHistoryModel);
+
 
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                     InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -152,5 +242,125 @@ public class SearchMarketActivity extends AbsBaseLoadActivity {
         });
     }
 
+    /**
+     * 开始搜索
+     *
+     * @return
+     */
+    private boolean startSearchByKey() {
+        if (TextUtils.isEmpty(mSearchKey)) {
+            UITipDialog.showInfo(SearchMarketActivity.this, getString(R.string.please_input_search_info));
+            return true;
+        }
+
+        mBinding.viewpager.setVisibility(View.GONE);
+        mBinding.refreshLayout.setVisibility(View.VISIBLE);
+        mRefreshHelper.onDefaluteMRefresh(true);
+        return false;
+    }
+
+    /**
+     * 开始搜索
+     *
+     * @param
+     */
+    private void getarketRequest(int pageindex, int limit, boolean isShowDialog) {
+
+        if (mSearchKey == null) return;
+
+        Map<String, String> map = new HashMap<>();
+
+        map.put("keywords", mSearchKey);
+        map.put("start", pageindex + "");
+        map.put("limit", limit + "");
+        map.put("userId", SPUtilHelpr.getUserId());
+
+        if (isShowDialog) showLoadingDialog();
+
+        Call call = RetrofitUtils.createApi(MyApiServer.class).getCoinList("628340", StringUtils.getJsonToString(map));
+
+        addCall(call);
+
+        call.enqueue(new BaseResponseModelCallBack<ResponseInListModel<CoinListModel>>(this) {
+            @Override
+            protected void onSuccess(ResponseInListModel<CoinListModel> data, String SucMessage) {
+                mRefreshHelper.setData(data.getList(), getString(R.string.no_search_info), 0);
+            }
+
+            @Override
+            protected void onReqFailure(String errorCode, String errorMessage) {
+                super.onReqFailure(errorCode, errorMessage);
+                mRefreshHelper.loadError(errorMessage, 0);
+            }
+
+            @Override
+            protected void onFinish() {
+                disMissLoading();
+            }
+        });
+
+
+    }
+
+
+    /**
+     * 添加自选
+     *
+     * @param
+     */
+    public void addMarketRequest(SearchMarketListAdapter addMarketListAdapter, int position) {
+        CoinListModel model = addMarketListAdapter.getItem(position);
+
+        if (model == null) return;
+
+        if (TextUtils.equals(model.getIsChoice(), "1")) {
+            UITipDialog.showInfo(this, getString(R.string.you_have_add));
+            return;
+        }
+
+        Map<String, String> map = new HashMap<>();
+
+        map.put("userId", SPUtilHelpr.getUserId());
+        map.put("exchangeEname", model.getExchangeEname());
+        map.put("toCoin", model.getToCoinSymbol());
+        map.put("coin", model.getCoinSymbol());
+
+        Call call = RetrofitUtils.getBaseAPiService().successRequest("628330", StringUtils.getJsonToString(map));
+
+        addCall(call);
+
+        showLoadingDialog();
+
+        call.enqueue(new BaseResponseModelCallBack<IsSuccessModes>(this) {
+
+            @Override
+            protected void onSuccess(IsSuccessModes data, String SucMessage) {
+                if (data.isSuccess()) {
+                    model.setIsChoice("1");
+                    addMarketListAdapter.notifyItemChanged(position);
+                    UITipDialog.showSuccess(SearchMarketActivity.this, getString(R.string.add_market_succ));
+                }
+            }
+
+            @Override
+            protected void onFinish() {
+                disMissLoading();
+            }
+        });
+
+    }
+
+    /**
+     * 接受搜索历史通知开始搜索
+     *
+     * @param startSearch
+     */
+    @Subscribe
+    public void StartSearchEvent(StartSearch startSearch) {
+        if (startSearch == null) return;
+        mSearchKey = startSearch.getStarchKey();
+        mBinding.searchLayout.editSerchView.setText(mSearchKey);
+        startSearchByKey();
+    }
 
 }
