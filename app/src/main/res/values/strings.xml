@@ -75,5 +75,7 @@
     <string name="come_here_sit">来,坐下谈谈</string>
     <string name="done">完成</string>
     <string name="add_market_title">添加自选</string>
+    <string name="you_have_add">您已添加过自选</string>
+    <string name="set_to_top_succ">置顶成功</string>
 
 </resources>

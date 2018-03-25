@@ -24,11 +24,11 @@ public class CoinListModel {
      */
 
     private String id;
-    private String exchangeEname;
+    private String exchangeEname;//
     private String exchangeCname;
     private String coinEname;
     private String coinCname;
-    private String coinSymbol;
+    private String coinSymbol;//
     private String toCoinSymbol;
     private String coinSymbolPair;
     private String lastPrice;

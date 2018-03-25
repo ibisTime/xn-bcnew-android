@@ -12,6 +12,7 @@ import com.cdkj.link_community.model.MessageDetails;
 import com.cdkj.link_community.model.MessageModel;
 import com.cdkj.link_community.model.MessageType;
 import com.cdkj.link_community.model.MsgDetailsComment;
+import com.cdkj.link_community.model.MyChooseMarket;
 import com.cdkj.link_community.model.UserInfoModel;
 import com.cdkj.link_community.model.UserMyComment;
 
@@ -37,6 +38,18 @@ public interface MyApiServer {
     @FormUrlEncoded
     @POST("api")
     Call<BaseResponseListModel<AddMarketModel>> getAddMarketList(@Field("code") String code, @Field("json") String json);
+
+
+    /**
+     * 获取我的自选列表
+     *
+     * @param code
+     * @param json
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("api")
+    Call<BaseResponseModel<ResponseInListModel<MyChooseMarket>>> getMyChooseMarketList(@Field("code") String code, @Field("json") String json);
 
 
     /**

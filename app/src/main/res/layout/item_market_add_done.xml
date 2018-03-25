@@ -24,26 +24,52 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:orientation="vertical">
 
-                <TextView
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:ellipsize="end"
-                    android:singleLine="true"
-                    android:textColor="@color/text_black_cd"
-                    android:textSize="17sp"
-                    tools:text="sdfsdfsd" />
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tv_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:ellipsize="end"
+                        android:singleLine="true"
+                        android:textColor="@color/text_black_cd"
+                        android:textSize="17sp"
+                        tools:text="sdfsdfsdsdfsdfsdfsdsdfsdfsdsdfsd" />
+
+                    <TextView
+                        android:id="@+id/tv_name_2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_weight="1"
+                        android:ellipsize="end"
+                        android:singleLine="true"
+                        android:textColor="@color/app_text_gray"
+                        android:textSize="15sp"
+                        tools:text="sdfsdfsd" />
+
+                </LinearLayout>
+
 
                 <TextView
+                    android:id="@+id/tv_coin_num"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="7dp"
+                    android:layout_weight="1"
                     android:ellipsize="end"
                     android:singleLine="true"
                     android:textColor="@color/app_text_gray"
                     android:textSize="15sp"
-                    tools:text="sdfsdfsd" />
+                    tools:text="sdfsdfsdsdfsdfsd" />
 
             </LinearLayout>
 
@@ -52,12 +78,15 @@
                 android:layout_height="0dp"
                 android:layout_weight="1" />
 
+
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:gravity="right"
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/tv_price"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:ellipsize="end"
@@ -67,10 +96,12 @@
                     tools:text="sdfsdfsd" />
 
                 <TextView
+                    android:id="@+id/tv_price_2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="7dp"
                     android:ellipsize="end"
+                    android:gravity="right"
                     android:singleLine="true"
                     android:textColor="@color/app_text_gray_3"
                     android:textSize="15sp"
@@ -82,13 +113,14 @@
         </LinearLayout>
 
         <Button
+            android:id="@+id/btn_state"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginLeft="15dp"
-            android:background="@drawable/market_green_bg"
             android:textColor="@color/white"
             android:textSize="15sp"
+            tools:background="@drawable/market_green_bg"
             tools:text="sdfsfs" />
 
 

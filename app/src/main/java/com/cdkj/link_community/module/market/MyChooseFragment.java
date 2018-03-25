@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,8 +15,10 @@ import com.cdkj.baselibrary.appmanager.SPUtilHelpr;
 import com.cdkj.baselibrary.base.AbsRefreshListFragment;
 import com.cdkj.baselibrary.base.BaseLazyFragment;
 import com.cdkj.baselibrary.databinding.LayoutCommonRecyclerRefreshBinding;
+import com.cdkj.baselibrary.dialog.UITipDialog;
 import com.cdkj.baselibrary.interfaces.BaseRefreshCallBack;
 import com.cdkj.baselibrary.interfaces.RefreshHelper;
+import com.cdkj.baselibrary.model.IsSuccessModes;
 import com.cdkj.baselibrary.nets.BaseResponseModelCallBack;
 import com.cdkj.baselibrary.nets.RetrofitUtils;
 import com.cdkj.baselibrary.utils.ImgUtils;
@@ -28,6 +31,7 @@ import com.cdkj.link_community.databinding.PhotoEmptyViewBinding;
 import com.cdkj.link_community.interfaces.DataEmptyToPhotoCallBack;
 import com.cdkj.link_community.model.CoinListModel;
 import com.cdkj.link_community.model.LoinSucc;
+import com.cdkj.link_community.model.MyChooseMarket;
 
 import org.greenrobot.eventbus.Subscribe;
 
@@ -85,7 +89,20 @@ public class MyChooseFragment extends BaseLazyFragment {
 
             @Override
             public RecyclerView.Adapter getAdapter(List listData) {
-                return new MarketChooseListAdapter(listData);
+                MarketChooseListAdapter adapter = new MarketChooseListAdapter(listData);
+                adapter.setOnItemChildClickListener((adapter1, view, position) -> {
+                    switch (view.getId()) {
+                        case R.id.btn_to_top: //置顶
+                            toTopAddMarketRequest(adapter, position);
+                            break;
+                        case R.id.btn_delete: //删除
+
+                            removeAddMarketRequest(adapter, position);
+
+                            break;
+                    }
+                });
+                return adapter;
             }
 
             @Override
@@ -102,43 +119,144 @@ public class MyChooseFragment extends BaseLazyFragment {
 
             @Override
             public void getListDataRequest(int pageindex, int limit, boolean isShowDialog) {
-                Map<String, String> map = new HashMap<>();
-
-                map.put("start", pageindex + "");
-                map.put("limit", limit + "");
-                map.put("userId", SPUtilHelpr.getUserId());
-
-                if (isShowDialog) showLoadingDialog();
-
-                Call call = RetrofitUtils.createApi(MyApiServer.class).getCoinList("628336", StringUtils.getJsonToString(map));
-
-                addCall(call);
-
-                call.enqueue(new BaseResponseModelCallBack<ResponseInListModel<CoinListModel>>(mActivity) {
-                    @Override
-                    protected void onSuccess(ResponseInListModel<CoinListModel> data, String SucMessage) {
-
-                        mRefreshHelper.setData(data.getList());
-                    }
-
-                    @Override
-                    protected void onReqFailure(String errorCode, String errorMessage) {
-                        super.onReqFailure(errorCode, errorMessage);
-                        mRefreshHelper.loadError(errorMessage, 0);
-                    }
-
-                    @Override
-                    protected void onFinish() {
-                        disMissLoading();
-                    }
-                });
+                getChooseListRequest(pageindex, limit, isShowDialog);
 
             }
+
         });
         mRefreshHelper.init(limit);
 
     }
 
+    /**
+     * 自选删除操作
+     *
+     * @param adapter
+     * @param position
+     */
+    private void removeAddMarketRequest(MarketChooseListAdapter adapter, int position) {
+
+        MyChooseMarket market = adapter.getItem(position);
+
+        if (market == null || TextUtils.isEmpty(market.getId())) {
+            return;
+        }
+
+        Map<String, String> map = new HashMap<>();
+
+        map.put("id", market.getId());
+
+        Call call = RetrofitUtils.getBaseAPiService().successRequest("628332", StringUtils.getJsonToString(map));
+
+        addCall(call);
+
+        showLoadingDialog();
+
+        call.enqueue(new BaseResponseModelCallBack<IsSuccessModes>(mActivity) {
+            @Override
+            protected void onSuccess(IsSuccessModes data, String SucMessage) {
+
+                if (data.isSuccess()) {
+                    adapter.remove(position);
+                    if (adapter.getData().isEmpty()) {
+                        adapter.notifyDataSetChanged();
+                    }
+                    UITipDialog.showSuccess(mActivity, getString(R.string.delete_succ));
+                }
+            }
+
+            @Override
+            protected void onFinish() {
+                disMissLoading();
+            }
+        });
+    }
+
+    /**
+     * 自选置顶操作
+     *
+     * @param adapter
+     * @param position
+     */
+    private void toTopAddMarketRequest(MarketChooseListAdapter adapter, int position) {
+
+        MyChooseMarket market = adapter.getItem(position);
+
+        if (market == null || TextUtils.isEmpty(market.getId())) {
+            return;
+        }
+
+        Map<String, String> map = new HashMap<>();
+
+        map.put("id", market.getId());
+
+        Call call = RetrofitUtils.getBaseAPiService().successRequest("628331", StringUtils.getJsonToString(map));
+
+        addCall(call);
+
+        showLoadingDialog();
+
+        call.enqueue(new BaseResponseModelCallBack<IsSuccessModes>(mActivity) {
+            @Override
+            protected void onSuccess(IsSuccessModes data, String SucMessage) {
+
+                if (data.isSuccess()) {
+                    adapter.remove(position);
+                    adapter.addData(0, market);
+                    UITipDialog.showSuccess(mActivity, getString(R.string.set_to_top_succ));
+                }
+            }
+
+            @Override
+            protected void onFinish() {
+                disMissLoading();
+            }
+        });
+    }
+
+    /**
+     * 获取自选列表请求
+     *
+     * @param pageindex
+     * @param limit
+     * @param isShowDialog
+     */
+    private void getChooseListRequest(int pageindex, int limit, boolean isShowDialog) {
+
+        if (!SPUtilHelpr.isLoginNoStart()) {
+            return;
+        }
+
+        Map<String, String> map = new HashMap<>();
+
+        map.put("start", pageindex + "");
+        map.put("limit", limit + "");
+        map.put("userId", SPUtilHelpr.getUserId());
+
+        if (isShowDialog) showLoadingDialog();
+
+        Call call = RetrofitUtils.createApi(MyApiServer.class).getMyChooseMarketList("628336", StringUtils.getJsonToString(map));
+
+        addCall(call);
+
+        call.enqueue(new BaseResponseModelCallBack<ResponseInListModel<MyChooseMarket>>(mActivity) {
+            @Override
+            protected void onSuccess(ResponseInListModel<MyChooseMarket> data, String SucMessage) {
+                mRefreshHelper.setData(data.getList());
+            }
+
+            @Override
+            protected void onReqFailure(String errorCode, String errorMessage) {
+                super.onReqFailure(errorCode, errorMessage);
+                mRefreshHelper.loadError(errorMessage, 0);
+            }
+
+            @Override
+            protected void onFinish() {
+                disMissLoading();
+            }
+        });
+    }
 
     /**
      * 数据为空时图片点击
@@ -159,6 +277,14 @@ public class MyChooseFragment extends BaseLazyFragment {
     @Override
     protected void onInvisible() {
 
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (mRefreshHelper != null && getUserVisibleHint()) {
+            mRefreshHelper.onDefaluteMRefresh(true);
+        }
     }
 
     /**

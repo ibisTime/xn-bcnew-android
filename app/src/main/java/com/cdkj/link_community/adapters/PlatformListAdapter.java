@@ -40,12 +40,15 @@ public class PlatformListAdapter extends BaseQuickAdapter<CoinListModel, BaseVie
         if (item.getChangeRate() == 0) {
             viewHolder.setBackgroundRes(R.id.btn_state, R.drawable.market_gray_bg);
             viewHolder.setText(R.id.btn_state, item.getChangeRate() + "%");
+            viewHolder.setTextColor(R.id.tv_price, ContextCompat.getColor(mContext, R.color.market_gray));
         } else if (item.getChangeRate() > 0) {
             viewHolder.setBackgroundRes(R.id.btn_state, R.drawable.market_green_bg);
             viewHolder.setText(R.id.btn_state, "+" + item.getChangeRate() + "%");
+            viewHolder.setTextColor(R.id.tv_price, ContextCompat.getColor(mContext, R.color.market_green));
         } else {
             viewHolder.setBackgroundRes(R.id.btn_state, R.drawable.market_red_bg);
             viewHolder.setText(R.id.btn_state, item.getChangeRate() + "%");
+            viewHolder.setTextColor(R.id.tv_price, ContextCompat.getColor(mContext, R.color.market_red));
         }
     }
 

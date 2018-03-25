@@ -14,16 +14,16 @@ import com.cdkj.baselibrary.appmanager.CdRouteHelper;
 import com.cdkj.baselibrary.appmanager.MyCdConfig;
 import com.cdkj.baselibrary.appmanager.SPUtilHelpr;
 import com.cdkj.baselibrary.base.AbsRefreshListFragment;
+import com.cdkj.baselibrary.dialog.UITipDialog;
 import com.cdkj.baselibrary.model.IsSuccessModes;
-import com.cdkj.baselibrary.nets.BaseResponseListCallBack;
 import com.cdkj.baselibrary.nets.BaseResponseModelCallBack;
 import com.cdkj.baselibrary.nets.RetrofitUtils;
 import com.cdkj.baselibrary.utils.StringUtils;
 import com.cdkj.link_community.R;
 import com.cdkj.link_community.adapters.AddMarketListAdapter;
 import com.cdkj.link_community.api.MyApiServer;
+import com.cdkj.link_community.model.AddMarketModel;
 import com.cdkj.link_community.model.CoinListModel;
-import com.cdkj.link_community.model.CoinPlatformType;
 
 import java.util.HashMap;
 import java.util.List;
@@ -36,20 +36,21 @@ import retrofit2.Call;
  * Created by cdkj on 2018/3/24.
  */
 
-public class AddMarketCoinListFragment extends AbsRefreshListFragment {
+public class AddMarketListFragment extends AbsRefreshListFragment {
 
     private boolean isFirstRequest;//是否进行了第一次请求
 
-    private String mCoinType;
+
+    private AddMarketModel marketModel;
 
     /**
      * @param
      * @return
      */
-    public static AddMarketCoinListFragment getInstanse(String type, Boolean isFirstRequest) {
-        AddMarketCoinListFragment fragment = new AddMarketCoinListFragment();
+    public static AddMarketListFragment getInstanse(AddMarketModel addMarketModel, Boolean isFirstRequest) {
+        AddMarketListFragment fragment = new AddMarketListFragment();
         Bundle bundle = new Bundle();
-        bundle.putString(CdRouteHelper.DATASIGN, type);
+        bundle.putParcelable(CdRouteHelper.DATASIGN, addMarketModel);
         bundle.putBoolean("isFirstRequest", isFirstRequest);
         fragment.setArguments(bundle);
         return fragment;
@@ -75,7 +76,7 @@ public class AddMarketCoinListFragment extends AbsRefreshListFragment {
     protected void afterCreate(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         if (getArguments() != null) {
-            mCoinType = getArguments().getString(CdRouteHelper.DATASIGN);
+            marketModel = getArguments().getParcelable(CdRouteHelper.DATASIGN);
             isFirstRequest = getArguments().getBoolean("isFirstRequest");
         }
         //防止局部刷新闪烁
@@ -89,9 +90,9 @@ public class AddMarketCoinListFragment extends AbsRefreshListFragment {
 
     @Override
     public RecyclerView.Adapter getListAdapter(List listData) {
-        AddMarketListAdapter addMarketListAdapter = new AddMarketListAdapter(listData);
+        AddMarketListAdapter addMarketListAdapter = new AddMarketListAdapter(listData, marketModel.getType());
 
-        addMarketListAdapter.setOnItemChildClickListener((adapter, view, position) -> {
+        addMarketListAdapter.setOnItemClickListener((adapter, view, position) -> {
             addMarketRequest(addMarketListAdapter, position);
         });
 
@@ -101,11 +102,15 @@ public class AddMarketCoinListFragment extends AbsRefreshListFragment {
     @Override
     public void getListRequest(int pageindex, int limit, boolean isShowDialog) {
 
-        if (TextUtils.isEmpty(mCoinType)) return;
+        if (marketModel == null || TextUtils.isEmpty(marketModel.getEname())) return;
 
         Map<String, String> map = new HashMap<>();
 
-        map.put("coinSymbol", mCoinType);
+        if (TextUtils.equals(marketModel.getType(), "1")) {
+            map.put("coinSymbol", marketModel.getEname());//币种
+        } else {
+            map.put("exchangeEname", marketModel.getEname());//平台
+        }
         map.put("start", pageindex + "");
         map.put("limit", limit + "");
         map.put("userId", SPUtilHelpr.getUserId());
@@ -150,12 +155,17 @@ public class AddMarketCoinListFragment extends AbsRefreshListFragment {
             return;
         }
 
+        if (TextUtils.equals(model.getIsChoice(), "1")) {
+            UITipDialog.showInfo(mActivity, getString(R.string.you_have_add));
+            return;
+        }
+
         Map<String, String> map = new HashMap<>();
 
         map.put("userId", SPUtilHelpr.getUserId());
         map.put("exchangeEname", model.getExchangeEname());
-        map.put("refCoin", model.getToCoinSymbol());
-        map.put("symbol", model.getCoinSymbol());
+        map.put("toCoin", model.getToCoinSymbol());
+        map.put("coin", model.getCoinSymbol());
 
         Call call = RetrofitUtils.getBaseAPiService().successRequest("628330", StringUtils.getJsonToString(map));
 
@@ -168,6 +178,7 @@ public class AddMarketCoinListFragment extends AbsRefreshListFragment {
             @Override
             protected void onSuccess(IsSuccessModes data, String SucMessage) {
                 if (data.isSuccess()) {
+                    model.setIsChoice("1");
                     addMarketListAdapter.notifyItemChanged(position);
                 }
             }

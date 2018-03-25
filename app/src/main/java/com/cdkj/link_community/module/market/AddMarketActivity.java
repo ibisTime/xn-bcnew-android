@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
-import android.text.TextUtils;
 
 import com.cdkj.baselibrary.base.AbsTablayoutActivity;
 import com.cdkj.baselibrary.nets.BaseResponseListCallBack;
@@ -99,11 +98,7 @@ public class AddMarketActivity extends AbsTablayoutActivity {
         for (AddMarketModel type : data) {
             if (type == null) continue;
             mTitleList.add(type.getSname());
-            if (TextUtils.equals(type.getType(), "1")) {   //1 币种 0 平台
-                mFragmentList.add(AddMarketCoinListFragment.getInstanse(type.getEname(), i == 0));
-            } else {
-                mFragmentList.add(AddMarketPlatformListFragment.getInstanse(type.getEname(), i == 0));
-            }
+            mFragmentList.add(AddMarketListFragment.getInstanse(type, i == 0));
             i++;
         }
 
