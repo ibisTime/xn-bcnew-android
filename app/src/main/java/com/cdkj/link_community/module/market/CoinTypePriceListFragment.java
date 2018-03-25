@@ -11,16 +11,16 @@ import android.view.ViewGroup;
 import com.cdkj.baselibrary.api.ResponseInListModel;
 import com.cdkj.baselibrary.appmanager.CdRouteHelper;
 import com.cdkj.baselibrary.appmanager.MyCdConfig;
-import com.cdkj.baselibrary.appmanager.SPUtilHelpr;
 import com.cdkj.baselibrary.base.AbsRefreshListFragment;
 import com.cdkj.baselibrary.nets.BaseResponseModelCallBack;
 import com.cdkj.baselibrary.nets.RetrofitUtils;
 import com.cdkj.baselibrary.utils.StringUtils;
 import com.cdkj.link_community.R;
 import com.cdkj.link_community.adapters.CoinListAdapter;
-import com.cdkj.link_community.adapters.PlatformListAdapter;
+import com.cdkj.link_community.adapters.CoinPriceListAdapter;
 import com.cdkj.link_community.api.MyApiServer;
 import com.cdkj.link_community.model.CoinListModel;
+import com.cdkj.link_community.model.CoinPrice;
 import com.cdkj.link_community.model.MarketInterval;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -32,26 +32,21 @@ import java.util.Map;
 import retrofit2.Call;
 
 /**
- * 添加行情 列表Fragment
+ * 币种列表（币价） Fragment
  * Created by cdkj on 2018/3/24.
  */
 
-public class PlatformListFragment extends AbsRefreshListFragment {
+public class CoinTypePriceListFragment extends AbsRefreshListFragment {
 
     private boolean isFirstRequest;//是否进行了第一次请求
-
-    private String mPlatformType;
-
     private boolean isRequesting;//是否正在请求中 用于轮询判断
 
     /**
-     * @param platformType 币种类型
      * @return
      */
-    public static PlatformListFragment getInstanse(String platformType, Boolean isFirstRequest) {
-        PlatformListFragment fragment = new PlatformListFragment();
+    public static CoinTypePriceListFragment getInstanse(Boolean isFirstRequest) {
+        CoinTypePriceListFragment fragment = new CoinTypePriceListFragment();
         Bundle bundle = new Bundle();
-        bundle.putString(CdRouteHelper.DATASIGN, platformType);
         bundle.putBoolean("isFirstRequest", isFirstRequest);
         fragment.setArguments(bundle);
         return fragment;
@@ -77,7 +72,6 @@ public class PlatformListFragment extends AbsRefreshListFragment {
     protected void afterCreate(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         if (getArguments() != null) {
-            mPlatformType = getArguments().getString(CdRouteHelper.DATASIGN);
             isFirstRequest = getArguments().getBoolean("isFirstRequest");
         }
 
@@ -90,30 +84,28 @@ public class PlatformListFragment extends AbsRefreshListFragment {
 
     @Override
     public RecyclerView.Adapter getListAdapter(List listData) {
-        return new PlatformListAdapter(listData);
+        return new CoinPriceListAdapter(listData);
     }
 
     @Override
     public void getListRequest(int pageindex, int limit, boolean isShowDialog) {
 
-        if (TextUtils.isEmpty(mPlatformType)) return;
 
         Map<String, String> map = new HashMap<>();
 
-        map.put("exchangeEname", mPlatformType);
         map.put("start", pageindex + "");
         map.put("limit", limit + "");
 
         if (isShowDialog) showLoadingDialog();
 
-        Call call = RetrofitUtils.createApi(MyApiServer.class).getCoinList("628340", StringUtils.getJsonToString(map));
+        Call call = RetrofitUtils.createApi(MyApiServer.class).getCoinPriceList("628341", StringUtils.getJsonToString(map));
 
         addCall(call);
-        isRequesting = true;
-        call.enqueue(new BaseResponseModelCallBack<ResponseInListModel<CoinListModel>>(mActivity) {
+        isRequesting=true;
+        call.enqueue(new BaseResponseModelCallBack<ResponseInListModel<CoinPrice>>(mActivity) {
             @Override
-            protected void onSuccess(ResponseInListModel<CoinListModel> data, String SucMessage) {
-                mRefreshHelper.setData(data.getList(), getString(R.string.no_platform_info), 0);
+            protected void onSuccess(ResponseInListModel<CoinPrice> data, String SucMessage) {
+                mRefreshHelper.setData(data.getList(), getString(R.string.no_coin_info), 0);
             }
 
             @Override
@@ -124,7 +116,7 @@ public class PlatformListFragment extends AbsRefreshListFragment {
 
             @Override
             protected void onFinish() {
-                isRequesting = false;
+                isRequesting=false;
                 disMissLoading();
             }
         });
@@ -138,7 +130,7 @@ public class PlatformListFragment extends AbsRefreshListFragment {
      */
     @Subscribe
     public void IntervalRefreshEvent(MarketInterval marketInterval) {
-        if (mActivity == null || mActivity.isFinishing() || mRefreshHelper == null || isRequesting) {
+        if (mActivity == null || mActivity.isFinishing() || !getUserVisibleHint() || mRefreshHelper == null || isRequesting) {
             return;
         }
         mRefreshHelper.onDefaluteMRefresh(false);

@@ -19,6 +19,9 @@ import com.cdkj.link_community.R;
 import com.cdkj.link_community.adapters.CoinListAdapter;
 import com.cdkj.link_community.api.MyApiServer;
 import com.cdkj.link_community.model.CoinListModel;
+import com.cdkj.link_community.model.MarketInterval;
+
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.HashMap;
 import java.util.List;
@@ -36,6 +39,8 @@ public class CoinTypeListFragment extends AbsRefreshListFragment {
     private boolean isFirstRequest;//是否进行了第一次请求
 
     private String mCoinType;
+
+    private boolean isRequesting;
 
     /**
      * @param coinType 币种类型
@@ -102,7 +107,7 @@ public class CoinTypeListFragment extends AbsRefreshListFragment {
         Call call = RetrofitUtils.createApi(MyApiServer.class).getCoinList("628340", StringUtils.getJsonToString(map));
 
         addCall(call);
-
+        isRequesting = true;
         call.enqueue(new BaseResponseModelCallBack<ResponseInListModel<CoinListModel>>(mActivity) {
             @Override
             protected void onSuccess(ResponseInListModel<CoinListModel> data, String SucMessage) {
@@ -117,10 +122,25 @@ public class CoinTypeListFragment extends AbsRefreshListFragment {
 
             @Override
             protected void onFinish() {
+                isRequesting = false;
                 disMissLoading();
             }
         });
 
-
     }
+
+    /**
+     * 轮询刷新
+     *
+     * @param
+     */
+    @Subscribe
+    public void IntervalRefreshEvent(MarketInterval marketInterval) {
+        if (mActivity == null || mActivity.isFinishing() || !getUserVisibleHint() || mRefreshHelper == null || mRefreshHelper == null || isRequesting) {
+            return;
+        }
+        mRefreshHelper.onDefaluteMRefresh(false);
+    }
+
+
 }

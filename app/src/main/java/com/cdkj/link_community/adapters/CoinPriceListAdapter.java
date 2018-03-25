@@ -5,25 +5,27 @@ import android.support.v4.content.ContextCompat;
 
 import com.cdkj.link_community.R;
 import com.cdkj.link_community.model.CoinListModel;
+import com.cdkj.link_community.model.CoinPrice;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 
 import java.util.List;
 
 /**
- * 平台列表适配器
+ * 币价格列表适配器
  * Created by cdkj on 2018/3/19.
  */
 
-public class PlatformListAdapter extends BaseQuickAdapter<CoinListModel, BaseViewHolder> {
+public class CoinPriceListAdapter extends BaseQuickAdapter<CoinPrice, BaseViewHolder> {
 
-    public PlatformListAdapter(@Nullable List<CoinListModel> data) {
-        super(R.layout.item_market_platform, data);
+    public CoinPriceListAdapter(@Nullable List<CoinPrice> data) {
+        super(R.layout.item_market_coin_price, data);
+
     }
 
 
     @Override
-    protected void convert(BaseViewHolder viewHolder, CoinListModel item) {
+    protected void convert(BaseViewHolder viewHolder, CoinPrice item) {
         if (item == null) return;
 
         if (viewHolder.getLayoutPosition() % 2 == 0) {
@@ -31,23 +33,22 @@ public class PlatformListAdapter extends BaseQuickAdapter<CoinListModel, BaseVie
         } else {
             viewHolder.setBackgroundColor(R.id.lin_bg, ContextCompat.getColor(mContext, R.color.white));
         }
-
-        viewHolder.setText(R.id.tv_platform, item.getCoinSymbol());
-        viewHolder.setText(R.id.tv_coin_num, item.getToCoinSymbol() + "量:" + item.getVolume());
-        viewHolder.setText(R.id.tv_price, mContext.getString(R.string.money_sing) + item.getLastCnyPrice());
-        viewHolder.setText(R.id.tv_price_2, item.getLastPrice());
-
-        if (item.getChangeRate() == 0) {
+//
+        viewHolder.setText(R.id.tv_price, mContext.getString(R.string.money_sing) + item.getPriceCny());
+        viewHolder.setText(R.id.tv_coin_name, item.getSymbol());
+        viewHolder.setText(R.id.tv_coin_info, "24H量/" + item.getH24VolumeCny());
+//
+        if (item.getPercentChange24h() == 0) {
             viewHolder.setBackgroundRes(R.id.btn_state, R.drawable.market_gray_bg);
-            viewHolder.setText(R.id.btn_state, item.getChangeRate() + "%");
+            viewHolder.setText(R.id.btn_state, item.getPercentChange24h() + "%");
             viewHolder.setTextColor(R.id.tv_price, ContextCompat.getColor(mContext, R.color.market_gray));
-        } else if (item.getChangeRate() > 0) {
+        } else if (item.getPercentChange24h() > 0) {
             viewHolder.setBackgroundRes(R.id.btn_state, R.drawable.market_green_bg);
-            viewHolder.setText(R.id.btn_state, "+" + item.getChangeRate() + "%");
+            viewHolder.setText(R.id.btn_state, "+" + item.getPercentChange24h() + "%");
             viewHolder.setTextColor(R.id.tv_price, ContextCompat.getColor(mContext, R.color.market_green));
         } else {
             viewHolder.setBackgroundRes(R.id.btn_state, R.drawable.market_red_bg);
-            viewHolder.setText(R.id.btn_state, item.getChangeRate() + "%");
+            viewHolder.setText(R.id.btn_state, item.getPercentChange24h() + "%");
             viewHolder.setTextColor(R.id.tv_price, ContextCompat.getColor(mContext, R.color.market_red));
         }
     }

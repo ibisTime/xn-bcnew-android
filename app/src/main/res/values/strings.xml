@@ -79,5 +79,6 @@
     <string name="you_have_add">您已添加过自选</string>
     <string name="set_to_top_succ">置顶成功</string>
     <string name="add_market_succ">添加成功</string>
+    <string name="coin_price">币价</string>
 
 </resources>

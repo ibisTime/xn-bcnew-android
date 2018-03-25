@@ -115,7 +115,7 @@ public class PlatformFragment extends AbsTablayoutFragment {
 
         for (CoinPlatformType type : data) {
             if (type == null) continue;
-            mTitleList.add(type.getEname());
+            mTitleList.add(type.getCname());
             mFragmentList.add(PlatformListFragment.getInstanse(type.getEname(), i==0));
             i++;
         }

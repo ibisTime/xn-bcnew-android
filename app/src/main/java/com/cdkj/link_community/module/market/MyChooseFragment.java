@@ -31,6 +31,7 @@ import com.cdkj.link_community.databinding.PhotoEmptyViewBinding;
 import com.cdkj.link_community.interfaces.DataEmptyToPhotoCallBack;
 import com.cdkj.link_community.model.CoinListModel;
 import com.cdkj.link_community.model.LoinSucc;
+import com.cdkj.link_community.model.MarketInterval;
 import com.cdkj.link_community.model.MyChooseMarket;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -49,6 +50,8 @@ import retrofit2.Call;
 public class MyChooseFragment extends BaseLazyFragment {
 
     protected LayoutCommonRecyclerRefreshBinding mRefreshBinding;
+
+    private boolean isRequesting;//是否正在请求中 用于轮询判断
 
     protected RefreshHelper mRefreshHelper;
 
@@ -96,9 +99,7 @@ public class MyChooseFragment extends BaseLazyFragment {
                             toTopAddMarketRequest(adapter, position);
                             break;
                         case R.id.btn_delete: //删除
-
                             removeAddMarketRequest(adapter, position);
-
                             break;
                     }
                 });
@@ -135,7 +136,7 @@ public class MyChooseFragment extends BaseLazyFragment {
      * @param position
      */
     private void removeAddMarketRequest(MarketChooseListAdapter adapter, int position) {
-        
+
         if (adapter == null || position > adapter.getData().size()) {
             return;
         }
@@ -246,7 +247,7 @@ public class MyChooseFragment extends BaseLazyFragment {
         Call call = RetrofitUtils.createApi(MyApiServer.class).getMyChooseMarketList("628336", StringUtils.getJsonToString(map));
 
         addCall(call);
-
+        isRequesting = true;
         call.enqueue(new BaseResponseModelCallBack<ResponseInListModel<MyChooseMarket>>(mActivity) {
             @Override
             protected void onSuccess(ResponseInListModel<MyChooseMarket> data, String SucMessage) {
@@ -261,6 +262,7 @@ public class MyChooseFragment extends BaseLazyFragment {
 
             @Override
             protected void onFinish() {
+                isRequesting = false;
                 disMissLoading();
             }
         });
@@ -279,7 +281,8 @@ public class MyChooseFragment extends BaseLazyFragment {
 
     @Override
     protected void lazyLoad() {
-
+        if (mRefreshBinding == null || mRefreshHelper == null) return;
+        mRefreshHelper.onDefaluteMRefresh(false);
     }
 
     @Override
@@ -309,5 +312,19 @@ public class MyChooseFragment extends BaseLazyFragment {
             mRefreshHelper.onDefaluteMRefresh(false);
         }
     }
+
+    /**
+     * 轮询刷新
+     *
+     * @param
+     */
+    @Subscribe
+    public void IntervalRefreshEvent(MarketInterval marketInterval) {
+        if (mActivity == null || mActivity.isFinishing() || !SPUtilHelpr.isLoginNoStart() || mRefreshHelper == null || isRequesting) {
+            return;
+        }
+        mRefreshHelper.onDefaluteMRefresh(false);
+    }
+
 
 }

@@ -12,6 +12,7 @@ import com.cdkj.baselibrary.base.AbsTablayoutFragment;
 import com.cdkj.baselibrary.nets.BaseResponseListCallBack;
 import com.cdkj.baselibrary.nets.RetrofitUtils;
 import com.cdkj.baselibrary.utils.StringUtils;
+import com.cdkj.link_community.R;
 import com.cdkj.link_community.api.MyApiServer;
 import com.cdkj.link_community.model.CoinPlatformType;
 
@@ -111,13 +112,13 @@ public class CoinTypeFragment extends AbsTablayoutFragment {
     }
 
     private void initViewPagerData(List<CoinPlatformType> data) {
-        int i = 0;
+        mTitleList.add(getString(R.string.coin_price));
+        mFragmentList.add(CoinTypePriceListFragment.getInstanse(true));
 
         for (CoinPlatformType coinType : data) {
             if (coinType == null) continue;
             mTitleList.add(coinType.getSymbol());
-            mFragmentList.add(CoinTypeListFragment.getInstanse(coinType.getSymbol(), i == 0));
-            i++;
+            mFragmentList.add(CoinTypeListFragment.getInstanse(coinType.getSymbol(), false));
         }
 
         initViewPager();

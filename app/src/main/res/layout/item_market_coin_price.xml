@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/lin_bg"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/white"
@@ -18,16 +20,18 @@
             android:orientation="vertical">
 
             <TextView
+                android:visibility="gone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="2dp"
                 android:ellipsize="end"
                 android:singleLine="true"
-                android:text="sdfsdfsd"
+                tools:text="sdfsdfsd"
                 android:textColor="@color/app_text_gray_3"
                 android:textSize="12sp" />
 
             <TextView
+                android:id="@+id/tv_coin_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
@@ -37,12 +41,13 @@
                 android:textSize="17sp" />
 
             <TextView
+                android:id="@+id/tv_coin_info"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
                 android:ellipsize="end"
                 android:singleLine="true"
-                android:text="sdfsdfsd"
+                tools:text="sdfsdfsd"
                 android:textColor="@color/app_text_gray"
                 android:textSize="12sp" />
 
@@ -54,24 +59,24 @@
             android:layout_weight="1" />
 
         <TextView
+            android:id="@+id/tv_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:ellipsize="end"
-            android:singleLine="true"
-            android:text="sdfsdfsd"
+            tools:text="sdfsdfsdsdfsdfsd"
             android:textColor="@color/text_black_cd"
             android:textSize="17sp" />
 
     </LinearLayout>
 
     <Button
+        android:id="@+id/btn_state"
         android:layout_gravity="center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="15dp"
         android:background="@drawable/market_green_bg"
-        android:text="sdfsfs"
+        tools:text="sdfsfs"
         android:textColor="@color/white"
         android:textSize="15sp" />
 

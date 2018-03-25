@@ -5,20 +5,33 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.IntDef;
 import android.view.View;
+import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.cdkj.baselibrary.adapters.ViewPagerAdapter;
 import com.cdkj.baselibrary.base.AbsBaseLoadActivity;
+import com.cdkj.baselibrary.utils.LogUtil;
 import com.cdkj.link_community.databinding.ActivityMainBinding;
 import com.cdkj.link_community.manager.MyRouteHelper;
+import com.cdkj.link_community.model.MarketInterval;
 import com.cdkj.link_community.module.maintab.CoinBBSFragment;
 import com.cdkj.link_community.module.maintab.FirstPageFragment;
 import com.cdkj.link_community.module.maintab.MarketPageFragment;
 import com.cdkj.link_community.module.maintab.UserFragment;
+import com.jakewharton.rxbinding2.view.RxView;
+import com.jakewharton.rxbinding2.widget.RxTextView;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
+
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
 
 /**
  * 我的
@@ -32,6 +45,8 @@ public class MainActivity extends AbsBaseLoadActivity {
     public static final int SHOWINVITATION = 2;//显示贴吧
     public static final int SHOWADVICE = 3;//显示我的
     public static final int SHOWMY = 4;//显示我的界面
+
+    private boolean isMarketInterval;//行情是否开始轮询
 
 
     @IntDef({SHOWFIRST, SHOWINFO, SHOWINVITATION, SHOWADVICE, SHOWMY})
@@ -69,7 +84,6 @@ public class MainActivity extends AbsBaseLoadActivity {
     private void initListener() {
 
 
-
         mBinding.layoutTab.radiogroup.setOnCheckedChangeListener((radioGroup, i) -> {
 
             switch (i) {
@@ -77,6 +91,9 @@ public class MainActivity extends AbsBaseLoadActivity {
                     mBinding.pagerMain.setCurrentItem(0);
                     break;
                 case R.id.radio_main_tab_2:
+                    if (!isMarketInterval) {
+                        mSubscription.add(startMarketInterval());
+                    }
                     mBinding.pagerMain.setCurrentItem(1);
                     break;
                 case R.id.radio_main_tab_3:
@@ -92,6 +109,28 @@ public class MainActivity extends AbsBaseLoadActivity {
 
     }
 
+
+    /**
+     * 开始行情轮询
+     *
+     * @return
+     */
+    public Disposable startMarketInterval() {
+        isMarketInterval = true;
+        return Observable.interval(30, 30, TimeUnit.SECONDS, AndroidSchedulers.mainThread())    // 创建一个按照给定的时间间隔发射从0开始的整数序列
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<Long>() {
+                               @Override
+                               public void accept(Long aLong) throws Exception {
+                                   LogUtil.E("a" + aLong);
+                                   EventBus.getDefault().post(new MarketInterval());
+
+                               }
+                           }, throwable -> {
+
+                        }
+                );
+    }
 
     /**
      * 初始化ViewPager

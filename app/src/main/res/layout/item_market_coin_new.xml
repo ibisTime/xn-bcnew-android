@@ -13,6 +13,7 @@
         android:orientation="horizontal">
 
         <LinearLayout
+            android:layout_weight="1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical">
@@ -47,9 +48,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:ellipsize="end"
-            android:singleLine="true"
-            android:text="sdfsdfsd"
+            android:text="sdfsdfsdsdfsdfsd"
             android:textColor="@color/text_black_cd"
             android:textSize="17sp" />
 
