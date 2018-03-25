@@ -4,6 +4,7 @@ import com.cdkj.baselibrary.api.BaseResponseListModel;
 import com.cdkj.baselibrary.api.BaseResponseModel;
 import com.cdkj.baselibrary.api.ResponseInListModel;
 import com.cdkj.link_community.model.AddMarketModel;
+import com.cdkj.link_community.model.CoinBBSListModel;
 import com.cdkj.link_community.model.CoinListModel;
 import com.cdkj.link_community.model.CoinPlatformType;
 import com.cdkj.link_community.model.CoinPrice;
@@ -51,6 +52,16 @@ public interface MyApiServer {
     @FormUrlEncoded
     @POST("api")
     Call<BaseResponseModel<ResponseInListModel<MyChooseMarket>>> getMyChooseMarketList(@Field("code") String code, @Field("json") String json);
+    /**
+     * 获币吧列表
+     *
+     * @param code
+     * @param json
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("api")
+    Call<BaseResponseModel<ResponseInListModel<CoinBBSListModel>>> getCoinBBSList(@Field("code") String code, @Field("json") String json);
 
 
     /**

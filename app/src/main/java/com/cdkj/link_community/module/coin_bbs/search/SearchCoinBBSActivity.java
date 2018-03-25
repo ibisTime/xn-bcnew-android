@@ -1,4 +1,4 @@
-package com.cdkj.link_community.module.market.search;
+package com.cdkj.link_community.module.coin_bbs.search;
 
 import android.content.Context;
 import android.content.Intent;
@@ -29,15 +29,16 @@ import com.cdkj.baselibrary.nets.BaseResponseModelCallBack;
 import com.cdkj.baselibrary.nets.RetrofitUtils;
 import com.cdkj.baselibrary.utils.StringUtils;
 import com.cdkj.link_community.R;
-import com.cdkj.link_community.adapters.AddMarketListAdapter;
+import com.cdkj.link_community.adapters.CoinBBSListAdapter;
 import com.cdkj.link_community.adapters.SearchMarketListAdapter;
 import com.cdkj.link_community.api.MyApiServer;
 import com.cdkj.link_community.databinding.ActivityMarketSearchBinding;
+import com.cdkj.link_community.model.CoinBBSListModel;
 import com.cdkj.link_community.model.CoinListModel;
 import com.cdkj.link_community.model.SearchHistoryModel;
 import com.cdkj.link_community.model.StartSearch;
 import com.cdkj.link_community.module.maintab.FirstPageFragment;
-import com.cdkj.link_community.module.maintab.MarketPageFragment;
+import com.cdkj.link_community.module.market.search.SearchHistoryListFragment;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -49,28 +50,29 @@ import java.util.Map;
 
 import retrofit2.Call;
 
-import static com.cdkj.link_community.module.market.search.SearchHistoryListFragment.SAVEKEYFORCOINTYPE;
+import static com.cdkj.link_community.module.market.search.SearchHistoryListFragment.SAVEKEYFORBBS;
 
 /**
- * 行情搜索
+ * 币吧搜索
  * Created by cdkj on 2018/3/21.
  */
 
-public class SearchMarketActivity extends AbsBaseLoadActivity {
+public class SearchCoinBBSActivity extends AbsBaseLoadActivity {
 
     private ActivityMarketSearchBinding mBinding;
 
     private RefreshHelper mRefreshHelper;
 
     private String mSearchKey;//搜索关键字
-    private SearchMarketListAdapter searchMarketListAdapter;
+
+    private CoinBBSListAdapter coinBBSListAdapter;
 
 
     public static void open(Context context) {
         if (context == null) {
             return;
         }
-        Intent intent = new Intent(context, SearchMarketActivity.class);
+        Intent intent = new Intent(context, SearchCoinBBSActivity.class);
         context.startActivity(intent);
     }
 
@@ -93,6 +95,8 @@ public class SearchMarketActivity extends AbsBaseLoadActivity {
 
     @Override
     public void afterCreate(Bundle savedInstanceState) {
+
+        mBinding.searchLayout.editSerchView.setHint(R.string.please_input_key);
 
         initRefreshHeper();
         initViewPager();
@@ -119,17 +123,17 @@ public class SearchMarketActivity extends AbsBaseLoadActivity {
 
             @Override
             public RecyclerView.Adapter getAdapter(List listData) {
-                searchMarketListAdapter = new SearchMarketListAdapter(listData);
+                coinBBSListAdapter = new CoinBBSListAdapter(listData);
 
-                searchMarketListAdapter.setOnItemClickListener((adapter, view, position) -> {
-                    if (!SPUtilHelpr.isLogin(SearchMarketActivity.this, false)) {
+                coinBBSListAdapter.setOnItemChildClickListener((adapter, view, position) -> {
+                    if (!SPUtilHelpr.isLogin(SearchCoinBBSActivity.this, false)) {
                         return;
                     }
-                    addMarketRequest(searchMarketListAdapter, position);
+                    focuseonRequest(coinBBSListAdapter, position);
 
                 });
 
-                return searchMarketListAdapter;
+                return coinBBSListAdapter;
             }
 
             @Override
@@ -148,7 +152,7 @@ public class SearchMarketActivity extends AbsBaseLoadActivity {
         ArrayList fragments = new ArrayList<>();
 
         fragments.add(FirstPageFragment.getInstanse());
-        fragments.add(SearchHistoryListFragment.getInstanse(SAVEKEYFORCOINTYPE));
+        fragments.add(SearchHistoryListFragment.getInstanse(SAVEKEYFORBBS));
 
         mBinding.viewpager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager(), fragments));
         mBinding.viewpager.setOffscreenPageLimit(fragments.size());
@@ -209,7 +213,7 @@ public class SearchMarketActivity extends AbsBaseLoadActivity {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 if (TextUtils.isEmpty(charSequence.toString())) {
-                    searchMarketListAdapter.replaceData(new ArrayList<>()); //清空搜索数据
+                    coinBBSListAdapter.replaceData(new ArrayList<>()); //清空搜索数据
                     mBinding.viewpager.setVisibility(View.VISIBLE);
                     mBinding.refreshLayout.setVisibility(View.GONE);
                 }
@@ -251,7 +255,7 @@ public class SearchMarketActivity extends AbsBaseLoadActivity {
      */
     private boolean startSearchByKey() {
         if (TextUtils.isEmpty(mSearchKey)) {
-            UITipDialog.showInfo(SearchMarketActivity.this, getString(R.string.please_input_search_info));
+            UITipDialog.showInfo(SearchCoinBBSActivity.this, getString(R.string.please_input_search_info));
             return true;
         }
 
@@ -273,19 +277,19 @@ public class SearchMarketActivity extends AbsBaseLoadActivity {
         Map<String, String> map = new HashMap<>();
 
         map.put("keywords", mSearchKey);
+        map.put("userId", SPUtilHelpr.getUserId());
         map.put("start", pageindex + "");
         map.put("limit", limit + "");
-        map.put("userId", SPUtilHelpr.getUserId());
 
         if (isShowDialog) showLoadingDialog();
 
-        Call call = RetrofitUtils.createApi(MyApiServer.class).getCoinList("628340", StringUtils.getJsonToString(map));
+        Call call = RetrofitUtils.createApi(MyApiServer.class).getCoinBBSList("628237", StringUtils.getJsonToString(map));
 
         addCall(call);
 
-        call.enqueue(new BaseResponseModelCallBack<ResponseInListModel<CoinListModel>>(this) {
+        call.enqueue(new BaseResponseModelCallBack<ResponseInListModel<CoinBBSListModel>>(this) {
             @Override
-            protected void onSuccess(ResponseInListModel<CoinListModel> data, String SucMessage) {
+            protected void onSuccess(ResponseInListModel<CoinBBSListModel> data, String SucMessage) {
                 mRefreshHelper.setData(data.getList(), getString(R.string.no_search_info), 0);
             }
 
@@ -306,42 +310,48 @@ public class SearchMarketActivity extends AbsBaseLoadActivity {
 
 
     /**
-     * 添加自选
+     * 关注/解除关注
      *
-     * @param
+     * @param adapter
+     * @param position
      */
-    public void addMarketRequest(SearchMarketListAdapter addMarketListAdapter, int position) {
-        CoinListModel model = addMarketListAdapter.getItem(position);
+    public void focuseonRequest(CoinBBSListAdapter adapter, int position) {
 
-        if (model == null) return;
-
-        if (TextUtils.equals(model.getIsChoice(), "1")) {
-            UITipDialog.showInfo(this, getString(R.string.you_have_add));
+        if (!SPUtilHelpr.isLogin(this, false)) {
             return;
         }
 
+        CoinBBSListModel coinBBSListModel = adapter.getItem(position);
+
+        if (coinBBSListModel == null || TextUtils.isEmpty(coinBBSListModel.getCode())) return;
+
         Map<String, String> map = new HashMap<>();
-
+        map.put("code", coinBBSListModel.getCode());
         map.put("userId", SPUtilHelpr.getUserId());
-        map.put("exchangeEname", model.getExchangeEname());
-        map.put("toCoin", model.getToCoinSymbol());
-        map.put("coin", model.getCoinSymbol());
 
-        Call call = RetrofitUtils.getBaseAPiService().successRequest("628330", StringUtils.getJsonToString(map));
+        Call call = RetrofitUtils.getBaseAPiService().successRequest("628240", StringUtils.getJsonToString(map));
 
         addCall(call);
 
         showLoadingDialog();
 
         call.enqueue(new BaseResponseModelCallBack<IsSuccessModes>(this) {
-
             @Override
             protected void onSuccess(IsSuccessModes data, String SucMessage) {
+
                 if (data.isSuccess()) {
-                    model.setIsChoice("1");
-                    addMarketListAdapter.notifyItemChanged(position);
-                    UITipDialog.showSuccess(SearchMarketActivity.this, getString(R.string.add_market_succ));
+
+                    if (TextUtils.equals(coinBBSListModel.getIsKeep(), "1")) {
+                        coinBBSListModel.setIsKeep("0");
+                        UITipDialog.showSuccess(SearchCoinBBSActivity.this, getString(R.string.bbs_cancel_succ));
+                    } else {
+                        UITipDialog.showSuccess(SearchCoinBBSActivity.this, getString(R.string.bbs_focuse_on_succ));
+                        coinBBSListModel.setIsKeep("1");
+                    }
+
+                    adapter.notifyItemChanged(position);
                 }
+
             }
 
             @Override
@@ -351,7 +361,6 @@ public class SearchMarketActivity extends AbsBaseLoadActivity {
         });
 
     }
-
     /**
      * 接受搜索历史通知开始搜索
      *

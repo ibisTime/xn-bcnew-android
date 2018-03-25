@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.alibaba.fastjson.JSON;
+import com.cdkj.baselibrary.appmanager.CdRouteHelper;
 import com.cdkj.baselibrary.base.BaseLazyFragment;
 import com.cdkj.baselibrary.databinding.EmptyViewBinding;
 import com.cdkj.baselibrary.utils.StringUtils;
@@ -43,16 +44,25 @@ public class SearchHistoryListFragment extends BaseLazyFragment {
     private FragmentShearchHistoryBinding mBinding;
 
     private final static int SAVESIZE = 30;
-    private final static String SAVEKEY = "coinSearch";
+    public final static String SAVEKEYFORCOINTYPE = "coinSearch";
+    public final static String SAVEKEYFORBBS = "coinbbsSearch";
+
+
+    private String mSaveKey;
 
     private List<String> searchStrings;
 
+
     private SearchHistoryListAdapter mSearchHistoryListAdapter;
 
-
-    public static SearchHistoryListFragment getInstanse() {
+    /**
+     * @param key 保存历史
+     * @return
+     */
+    public static SearchHistoryListFragment getInstanse(String key) {
         SearchHistoryListFragment fragment = new SearchHistoryListFragment();
         Bundle bundle = new Bundle();
+        bundle.putString(CdRouteHelper.DATASIGN, key);
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -60,8 +70,12 @@ public class SearchHistoryListFragment extends BaseLazyFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
         mBinding = DataBindingUtil.inflate(getLayoutInflater(), R.layout.fragment_shearch_history, null, false);
+
+        if (getArguments() != null) {
+            mSaveKey = getArguments().getString(CdRouteHelper.DATASIGN);
+        }
+
         initAdapter();
         initEmptyView();
         initAdapterFooter();
@@ -112,14 +126,14 @@ public class SearchHistoryListFragment extends BaseLazyFragment {
     private void clearHistory() {
         searchStrings.clear();
         mSearchHistoryListAdapter.notifyDataSetChanged();
-        SearchSaveUtils.clearSearchInfo(SAVEKEY);
+        SearchSaveUtils.clearSearchInfo(mSaveKey);
     }
 
     /**
      * 初始化搜索历史数据
      */
     private void initHistoryData() {
-        mSubscription.add(Observable.just(SAVEKEY)
+        mSubscription.add(Observable.just(mSaveKey)
                 .observeOn(Schedulers.newThread())
                 .map(new Function<String, List<String>>() {
                     @Override
@@ -172,7 +186,7 @@ public class SearchHistoryListFragment extends BaseLazyFragment {
         }
         searchStrings.add(0, str);
         mSearchHistoryListAdapter.notifyDataSetChanged();
-        SearchSaveUtils.saveSearchInfo(SAVEKEY, StringUtils.getJsonToString(searchStrings));
+        SearchSaveUtils.saveSearchInfo(mSaveKey, StringUtils.getJsonToString(searchStrings));
     }
 
 

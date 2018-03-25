@@ -64,6 +64,7 @@
     <string name="no_coin_info">暂无币种信息</string>
     <string name="no_search_info">暂无搜索内容</string>
     <string name="no_platform_info">暂无平台信息</string>
+    <string name="no_coin_bbs">暂无币吧</string>
     <string name="no_add_market">暂无信息</string>
     <string name="author">作者:</string>
     <string name="message_frome">来源:</string>
@@ -80,5 +81,10 @@
     <string name="set_to_top_succ">置顶成功</string>
     <string name="add_market_succ">添加成功</string>
     <string name="coin_price">币价</string>
+    <string name="focus_num">关注量:</string>
+    <string name="post_num">发帖量:</string>
+    <string name="bbs_cancel_succ">取消关注成功</string>
+    <string name="bbs_focuse_on_succ">关注成功</string>
+    <string name="please_input_key">请输入关键字</string>
 
 </resources>
