@@ -46,7 +46,7 @@ public class FastMessageListAdapter extends BaseQuickAdapter<FastMessage, BaseVi
 
         TextView textView = viewHolder.getView(R.id.tv_content);
         //设置首行缩进
-        SpannableStringBuilder span = new SpannableStringBuilder("缩" + "【" + mContext.getString(R.string.fast_msg) + "】 " + item.getContent() );
+        SpannableStringBuilder span = new SpannableStringBuilder("缩" + "【" + mContext.getString(R.string.fast_msg) + "】 " + item.getContent());
         span.setSpan(new ForegroundColorSpan(Color.TRANSPARENT), 0, 1,
                 Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
 
@@ -85,11 +85,15 @@ public class FastMessageListAdapter extends BaseQuickAdapter<FastMessage, BaseVi
      */
     public boolean isShowDateBg(int position) {
 
-        if (position == 0) {
+        if (position == 0 || mData.size() == 1) {
             return true;
         }
 
         int onPosition = position - 1;
+
+        if (onPosition < 0 || mData.get(onPosition) == null || mData.get(position) == null || TextUtils.isEmpty(mData.get(onPosition).getShowDatetime()) || TextUtils.isEmpty(mData.get(position).getShowDatetime())) {
+            return true;
+        }
 
         if (DateUtil.inSameDay(new Date(mData.get(onPosition).getShowDatetime()), new Date(mData.get(position).getShowDatetime()))) {
             return false;

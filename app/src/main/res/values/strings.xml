@@ -86,5 +86,7 @@
     <string name="bbs_cancel_succ">取消关注成功</string>
     <string name="bbs_focuse_on_succ">关注成功</string>
     <string name="please_input_key">请输入关键字</string>
+    <string name="bbs_circular">圈子</string>
+    <string name="bbs_today_num">今日跟贴:</string>
 
 </resources>

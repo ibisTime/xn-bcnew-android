@@ -91,7 +91,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="right"
-                android:text="今日更贴:"
+                android:text="@string/bbs_today_num"
                 android:textColor="@color/app_text_gray"
                 android:textSize="15sp" />
 

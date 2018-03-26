@@ -37,6 +37,7 @@ import com.cdkj.link_community.model.CoinBBSListModel;
 import com.cdkj.link_community.model.CoinListModel;
 import com.cdkj.link_community.model.SearchHistoryModel;
 import com.cdkj.link_community.model.StartSearch;
+import com.cdkj.link_community.module.coin_bbs.CoinBBSDetailsActivity;
 import com.cdkj.link_community.module.maintab.FirstPageFragment;
 import com.cdkj.link_community.module.market.search.SearchHistoryListFragment;
 
@@ -124,6 +125,13 @@ public class SearchCoinBBSActivity extends AbsBaseLoadActivity {
             @Override
             public RecyclerView.Adapter getAdapter(List listData) {
                 coinBBSListAdapter = new CoinBBSListAdapter(listData);
+
+                coinBBSListAdapter.setOnItemClickListener((adapter, view, position) -> {
+                    if (coinBBSListAdapter.getItem(position) != null) {
+                        CoinBBSDetailsActivity.open(SearchCoinBBSActivity.this, coinBBSListAdapter.getItem(position).getCode());
+                    }
+                });
+
 
                 coinBBSListAdapter.setOnItemChildClickListener((adapter, view, position) -> {
                     if (!SPUtilHelpr.isLogin(SearchCoinBBSActivity.this, false)) {
@@ -361,6 +369,7 @@ public class SearchCoinBBSActivity extends AbsBaseLoadActivity {
         });
 
     }
+
     /**
      * 接受搜索历史通知开始搜索
      *

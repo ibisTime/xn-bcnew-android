@@ -23,6 +23,7 @@ import com.cdkj.link_community.adapters.CoinBBSListAdapter;
 import com.cdkj.link_community.adapters.MyCoinBBSListAdapter;
 import com.cdkj.link_community.api.MyApiServer;
 import com.cdkj.link_community.model.CoinBBSListModel;
+import com.cdkj.link_community.module.coin_bbs.search.SearchCoinBBSActivity;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -87,6 +88,12 @@ public class MyFocuseOnCoinBBSListFragment extends AbsRefreshListFragment {
     @Override
     public RecyclerView.Adapter getListAdapter(List listData) {
         MyCoinBBSListAdapter coinBBSListAdapter = new MyCoinBBSListAdapter(listData);
+
+        coinBBSListAdapter.setOnItemClickListener((adapter, view, position) -> {
+            if (coinBBSListAdapter.getItem(position) != null) {
+                CoinBBSDetailsActivity.open(mActivity, coinBBSListAdapter.getItem(position).getCode());
+            }
+        });
 
         coinBBSListAdapter.setOnItemChildClickListener((adapter, view, position) -> {
             focuseonRequest(coinBBSListAdapter, position);

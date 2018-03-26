@@ -9,6 +9,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
+import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
 import android.view.View;
 import android.view.ViewTreeObserver;
@@ -79,7 +80,9 @@ public class FastMessageToShareActivity extends AbsBaseLoadActivity {
 
             mBinding.tvMsg.setText(span);
 
-            mBinding.tvTime.setText(DateUtil.getWeekOfDate(new Date(fastMessage.getShowDatetime())) + " " + DateUtil.formatStringData(fastMessage.getShowDatetime(), DateUtil.DATE_YYMMddHHmm));
+            if (!TextUtils.isEmpty(fastMessage.getShowDatetime())) {
+                mBinding.tvTime.setText(DateUtil.getWeekOfDate(new Date(fastMessage.getShowDatetime())) + " " + DateUtil.formatStringData(fastMessage.getShowDatetime(), DateUtil.DATE_YYMMddHHmm));
+            }
 
         }
 

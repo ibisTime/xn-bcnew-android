@@ -4,6 +4,7 @@ import com.cdkj.baselibrary.api.BaseResponseListModel;
 import com.cdkj.baselibrary.api.BaseResponseModel;
 import com.cdkj.baselibrary.api.ResponseInListModel;
 import com.cdkj.link_community.model.AddMarketModel;
+import com.cdkj.link_community.model.CoinBBSDetails;
 import com.cdkj.link_community.model.CoinBBSListModel;
 import com.cdkj.link_community.model.CoinListModel;
 import com.cdkj.link_community.model.CoinPlatformType;
@@ -28,6 +29,18 @@ import retrofit2.http.POST;
  */
 
 public interface MyApiServer {
+
+
+    /**
+     * 获取币吧详情
+     *
+     * @param code
+     * @param json
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("api")
+    Call<BaseResponseModel<CoinBBSDetails>> getCoinBBsDetails(@Field("code") String code, @Field("json") String json);
 
 
     /**

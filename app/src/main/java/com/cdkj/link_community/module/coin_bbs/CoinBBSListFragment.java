@@ -95,6 +95,13 @@ public class CoinBBSListFragment extends AbsRefreshListFragment {
     public RecyclerView.Adapter getListAdapter(List listData) {
         CoinBBSListAdapter coinBBSListAdapter = new CoinBBSListAdapter(listData);
 
+        coinBBSListAdapter.setOnItemClickListener((adapter, view, position) -> {
+            if (coinBBSListAdapter.getItem(position) != null) {
+                CoinBBSDetailsActivity.open(mActivity, coinBBSListAdapter.getItem(position).getCode());
+            }
+        });
+
+
         coinBBSListAdapter.setOnItemChildClickListener((adapter, view, position) -> {
             focuseonRequest(coinBBSListAdapter, position);
         });

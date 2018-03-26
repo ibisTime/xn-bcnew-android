@@ -44,19 +44,20 @@
                         android:paddingTop="15dp">
 
                         <LinearLayout
-                            android:orientation="vertical"
                             android:id="@+id/lin_top"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
 
                             <TextView
+                                android:id="@+id/tv_name"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:paddingLeft="@dimen/layout_left_interval"
                                 android:paddingRight="@dimen/layout_right_interval"
-                                android:text="sdfsdfsfsd"
-                                android:textColor="@color/text_black_cd"
-                                android:textSize="18sp" />
+                                tools:text="sdfsdfsfsd"
+                                tools:textColor="@color/text_black_cd"
+                                tools:textSize="18sp" />
 
                             <LinearLayout
                                 android:layout_width="match_parent"
@@ -67,21 +68,24 @@
                                 android:paddingRight="@dimen/layout_right_interval">
 
                                 <TextView
+                                    android:id="@+id/tv_focus_on_num"
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:text="sdfsdfsfsd"
-                                    android:textColor="@color/text_black_cd"
-                                    android:textSize="15sp" />
+                                    tools:text="sdfsdfsfsd"
+                                    tools:textColor="@color/text_black_cd"
+                                    tools:textSize="15sp" />
 
                                 <TextView
+                                    android:layout_gravity="right"
+                                    android:id="@+id/tv_todayChange"
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:gravity="center|left"
-                                    android:text="sdfsdfssdfsdfsfsdsdfsdfsfsdsdfsdfsfsdsdfsdfsfsdfsd"
-                                    android:textColor="@color/app_text_gray"
-                                    android:textSize="15sp" />
+                                    android:gravity="center|right"
+                                    tools:text="sdfsdfssdfsdfsfsdsdfsdfsfsdsdfsdfsfsdsdfsdfsfsdfsd"
+                                    tools:textColor="@color/app_text_gray"
+                                    tools:textSize="15sp" />
 
 
                             </LinearLayout>
@@ -95,21 +99,23 @@
                                 android:paddingRight="@dimen/layout_right_interval">
 
                                 <TextView
+                                    android:id="@+id/tv_post_num"
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:text="sdfsdfsfsd"
-                                    android:textColor="@color/text_black_cd"
-                                    android:textSize="15sp" />
+                                    tools:text="sdfsdfsfsd"
+                                    tools:textColor="@color/text_black_cd"
+                                    tools:textSize="15sp" />
 
                                 <TextView
+                                    android:id="@+id/tv_today_vol"
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:gravity="center|left"
-                                    android:text="sdfsdfssdfsdfsfsdsdfsdfsfsdsdfsdfsfsdsdfsdfsfsdfsd"
-                                    android:textColor="@color/app_text_gray"
-                                    android:textSize="15sp" />
+                                    android:gravity="center|right"
+                                    tools:text="sdfsdfssdfsdfsfsdsdfsdfsfsdsdfsdfsfsdsdfsdfsfsdfsd"
+                                    tools:textColor="@color/app_text_gray"
+                                    tools:textSize="15sp" />
 
                             </LinearLayout>
 
@@ -122,21 +128,22 @@
                                 android:paddingRight="@dimen/layout_right_interval">
 
                                 <TextView
+                                    android:id="@+id/tv_today_num"
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:text="sdfsdfsfsd"
-                                    android:textColor="@color/text_black_cd"
-                                    android:textSize="15sp" />
+                                    tools:text="sdfsdfsfsd"
+                                    tools:textColor="@color/text_black_cd"
+                                    tools:textSize="15sp" />
 
                                 <TextView
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:gravity="center|left"
-                                    android:text="sdfsdfssdfsdfsfsdsdfsdfsfsdsdfsdfsfsdsdfsdfsfsdfsd"
-                                    android:textColor="@color/app_text_gray"
-                                    android:textSize="15sp" />
+                                    android:gravity="center|right"
+                                    tools:text="sdfsdfssdfsdfsfsdsdfsdfsfsdsdfsdfsfsdsdfsdfsfsdfsd"
+                                    tools:textColor="@color/app_text_gray"
+                                    tools:textSize="15sp" />
 
 
                             </LinearLayout>
@@ -161,9 +168,9 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginLeft="10dp"
                                     android:layout_marginRight="10dp"
-                                    android:textColor="#666666"
-                                    android:textSize="16sp"
-                                    tools:text="sdfdsfsdfsf" />
+                                    tools:text="sdfdsfsdfsf"
+                                    tools:textColor="#666666"
+                                    tools:textSize="16sp" />
 
                                 <LinearLayout
                                     android:id="@id/expand_collapse_layout"
@@ -177,9 +184,9 @@
                                         android:id="@id/expand_collapse_tv"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="@string/click_open"
-                                        android:textColor="@color/app_text_gray"
-                                        android:textSize="14sp" />
+                                        tools:text="@string/click_open"
+                                        tools:textColor="@color/app_text_gray"
+                                        tools:textSize="14sp" />
 
                                     <ImageView
                                         android:id="@id/expand_collapse"
@@ -209,15 +216,16 @@
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
                                     android:text="流通量"
-                                    android:textColor="@color/text_black_cd"
-                                    android:textSize="16sp" />
+                                    tools:textColor="@color/text_black_cd"
+                                    tools:textSize="16sp" />
 
                                 <TextView
+                                    android:id="@+id/tv_circulation"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="流通量"
-                                    android:textColor="@color/text_black_cd"
-                                    android:textSize="16sp" />
+                                    tools:text="流通量"
+                                    tools:textColor="@color/text_black_cd"
+                                    tools:textSize="16sp" />
 
 
                             </LinearLayout>
@@ -236,15 +244,16 @@
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
                                     android:text="发行总量"
-                                    android:textColor="@color/text_black_cd"
-                                    android:textSize="16sp" />
+                                    tools:textColor="@color/text_black_cd"
+                                    tools:textSize="16sp" />
 
                                 <TextView
+                                    android:id="@+id/tv_issue"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="流通量"
-                                    android:textColor="@color/text_black_cd"
-                                    android:textSize="16sp" />
+                                    tools:text="流通量"
+                                    tools:textColor="@color/text_black_cd"
+                                    tools:textSize="16sp" />
 
 
                             </LinearLayout>
@@ -264,15 +273,16 @@
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
                                     android:text="流通市值"
-                                    android:textColor="@color/text_black_cd"
-                                    android:textSize="16sp" />
+                                    tools:textColor="@color/text_black_cd"
+                                    tools:textSize="16sp" />
 
                                 <TextView
+                                    android:id="@+id/tv_issue_market"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="流通量"
-                                    android:textColor="@color/text_black_cd"
-                                    android:textSize="16sp" />
+                                    tools:text="流通量"
+                                    tools:textColor="@color/text_black_cd"
+                                    tools:textSize="16sp" />
 
 
                             </LinearLayout>
@@ -291,15 +301,16 @@
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
                                     android:text="市值排名"
-                                    android:textColor="@color/text_black_cd"
-                                    android:textSize="16sp" />
+                                    tools:textColor="@color/text_black_cd"
+                                    tools:textSize="16sp" />
 
                                 <TextView
+                                    android:id="@+id/tv_issue_rank"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="流通量"
-                                    android:textColor="@color/text_black_cd"
-                                    android:textSize="16sp" />
+                                    tools:text="流通量"
+                                    tools:textColor="@color/text_black_cd"
+                                    tools:textSize="16sp" />
 
 
                             </LinearLayout>
@@ -326,9 +337,7 @@
                             <com.cdkj.baselibrary.views.EnabledViewpager
                                 android:id="@+id/viewpager"
                                 android:layout_width="match_parent"
-                                android:layout_height="1dp">
-
-                            </com.cdkj.baselibrary.views.EnabledViewpager>
+                                android:layout_height="0.1dp" />
 
                             <android.support.v7.widget.RecyclerView
                                 android:id="@+id/recyclerView_left"
