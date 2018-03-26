@@ -1,4 +1,4 @@
-package com.cdkj.link_community.module.message;
+package com.cdkj.link_community.module.coin_bbs;
 
 import android.content.Context;
 import android.content.Intent;
@@ -6,7 +6,6 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 
@@ -26,14 +25,9 @@ import com.cdkj.link_community.adapters.ReplyCommentListAdapter;
 import com.cdkj.link_community.api.MyApiServer;
 import com.cdkj.link_community.databinding.ActivityMessageCommentDetailsBinding;
 import com.cdkj.link_community.dialog.CommentInputDialog;
-import com.cdkj.link_community.model.MessageDetails;
-import com.cdkj.link_community.model.MsgDetailsComment;
+import com.cdkj.link_community.model.CoinBBSHotCircular;
 import com.cdkj.link_community.model.ReplyComment;
-import com.cdkj.link_community.model.ReplyCommentEvent;
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.chad.library.adapter.base.BaseViewHolder;
-
-import org.greenrobot.eventbus.EventBus;
 
 import java.util.HashMap;
 import java.util.List;
@@ -46,11 +40,11 @@ import static com.cdkj.link_community.module.message.MessageDetailsActivity.COMM
 import static com.cdkj.link_community.module.message.MessageDetailsActivity.MSGCOMMENT;
 
 /**
- * 我的评论详情
+ * 币吧回复详情
  * Created by cdkj on 2018/3/24.
  */
 
-public class CommentDetailsActivity extends AbsBaseLoadActivity {
+public class BBSCommentDetailsActivity extends AbsBaseLoadActivity {
 
     private ActivityMessageCommentDetailsBinding mBinding;
 
@@ -64,7 +58,7 @@ public class CommentDetailsActivity extends AbsBaseLoadActivity {
         if (context == null) {
             return;
         }
-        Intent intent = new Intent(context, CommentDetailsActivity.class);
+        Intent intent = new Intent(context, BBSCommentDetailsActivity.class);
 
         intent.putExtra(CdRouteHelper.APPLOGIN, commentCode);
         context.startActivity(intent);
@@ -80,7 +74,7 @@ public class CommentDetailsActivity extends AbsBaseLoadActivity {
     @Override
     public void afterCreate(Bundle savedInstanceState) {
 
-        mBaseBinding.titleView.setMidTitle(getString(R.string.comment_detail));
+        mBaseBinding.titleView.setMidTitle("回复详情");
 
         if (getIntent() != null) {
             mCommentCode = getIntent().getStringExtra(CdRouteHelper.APPLOGIN);
@@ -88,8 +82,8 @@ public class CommentDetailsActivity extends AbsBaseLoadActivity {
 
         mBinding.getRoot().setVisibility(View.GONE);
 
+        //帖子评论
         mBinding.bottomLayout.linComment.setOnClickListener(view -> {
-
             commentPlayRequest(mCommentCode, "");
         });
 
@@ -116,16 +110,16 @@ public class CommentDetailsActivity extends AbsBaseLoadActivity {
         map.put("code", mCommentCode);
         map.put("userId", SPUtilHelpr.getUserId());
 
-        Call call = RetrofitUtils.createApi(MyApiServer.class).getMessageCommentDetails("628286", StringUtils.getJsonToString(map));
+        Call call = RetrofitUtils.createApi(MyApiServer.class).getBBSCommentDetails("628663", StringUtils.getJsonToString(map));
 
         addCall(call);
 
         showLoadingDialog();
 
-        call.enqueue(new BaseResponseModelCallBack<MsgDetailsComment>(this) {
+        call.enqueue(new BaseResponseModelCallBack<CoinBBSHotCircular>(this) {
 
             @Override
-            protected void onSuccess(MsgDetailsComment data, String SucMessage) {
+            protected void onSuccess(CoinBBSHotCircular data, String SucMessage) {
                 setShowData(data);
                 mBinding.getRoot().setVisibility(View.VISIBLE);
             }
@@ -138,7 +132,7 @@ public class CommentDetailsActivity extends AbsBaseLoadActivity {
         });
     }
 
-    private void setShowData(MsgDetailsComment messageDetails) {
+    private void setShowData(CoinBBSHotCircular messageDetails) {
 
         if (messageDetails == null) return;
 
@@ -146,10 +140,10 @@ public class CommentDetailsActivity extends AbsBaseLoadActivity {
         ImgUtils.loadQiniuLogo(this, messageDetails.getPhoto(), mBinding.replayCommentLayout.imgLogo);
 
         mBinding.replayCommentLayout.tvName.setText(messageDetails.getNickname());
-        mBinding.replayCommentLayout.tvTime.setText(DateUtil.formatStringData(messageDetails.getCommentDatetime(), DEFAULT_DATE_FMT));
+        mBinding.replayCommentLayout.tvTime.setText(DateUtil.formatStringData(messageDetails.getPublishDatetime(), DEFAULT_DATE_FMT));
         mBinding.replayCommentLayout.tvContent.setText(messageDetails.getContent());
 
-        if (messageDetails.getIsPoint() == 1) {
+        if (TextUtils.equals(messageDetails.getIsPoint(), "1")) {
             mBinding.replayCommentLayout.imgIsLike.setImageResource(R.drawable.gave_a_like_2);
         } else {
             mBinding.replayCommentLayout.imgIsLike.setImageResource(R.drawable.gave_a_like_2_un);
@@ -180,14 +174,10 @@ public class CommentDetailsActivity extends AbsBaseLoadActivity {
 
         ReplyCommentListAdapter replyCommentListAdapter = new ReplyCommentListAdapter(comments);
 
+        /*对评价进行回复*/
         replyCommentListAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-
-                if (!SPUtilHelpr.isLogin(CommentDetailsActivity.this, false)) {
-                    return;
-                }
-
                 commentPlayRequest(replyCommentListAdapter.getItem(position).getCode(), replyCommentListAdapter.getItem(position).getNickname());
             }
         });
@@ -217,19 +207,26 @@ public class CommentDetailsActivity extends AbsBaseLoadActivity {
     }
 
     /**
-     * 对评论进行回复
+     * 对帖子进行回复
      */
     private void commentPlayRequest(String code, String name) {
-        if (!SPUtilHelpr.isLogin(CommentDetailsActivity.this, false)) {
+        if (!SPUtilHelpr.isLogin(BBSCommentDetailsActivity.this, false)) {
             return;
         }
+
         CommentInputDialog commentInputDialog = new CommentInputDialog(this, name);
         commentInputDialog.setmSureListener(comment -> {
             if (TextUtils.isEmpty(comment)) {
-                UITipDialog.showFall(CommentDetailsActivity.this, getString(R.string.please_input_replycomment_info));
+                UITipDialog.showFall(BBSCommentDetailsActivity.this, getString(R.string.please_input_replycomment_info));
                 return;
             }
-            toCommentRequest(code, comment, COMMENTCOMMENT);
+
+            if (TextUtils.isEmpty(name)) {
+                toCommentRequest(code, comment, "1"); /*类型(Y 1 帖子 2 评论)*/
+            } else {
+                toCommentRequest(code, comment, "2");
+            }
+
         });
         commentInputDialog.show();
     }
@@ -244,7 +241,7 @@ public class CommentDetailsActivity extends AbsBaseLoadActivity {
             return;
         }
 
-        Map<String, String> map = new HashMap<>(); /*类型(Y 1 资讯 2 评论)*/
+        Map<String, String> map = new HashMap<>(); /*类型(Y 1 帖子 2 评论)*/
 
         map.put("type", type);
         map.put("objectCode", code);
@@ -252,7 +249,7 @@ public class CommentDetailsActivity extends AbsBaseLoadActivity {
         map.put("userId", SPUtilHelpr.getUserId());
 
         showLoadingDialog();
-        Call call = RetrofitUtils.getBaseAPiService().successRequest("628200", StringUtils.getJsonToString(map));
+        Call call = RetrofitUtils.getBaseAPiService().successRequest("628652", StringUtils.getJsonToString(map));
 
         addCall(call);
 
@@ -262,12 +259,12 @@ public class CommentDetailsActivity extends AbsBaseLoadActivity {
 
                 if (data.isSuccess()) {
                     if (TextUtils.equals(type, MSGCOMMENT)) {
-                        UITipDialog.showSuccess(CommentDetailsActivity.this, getString(R.string.comment_succ));
+                        UITipDialog.showSuccess(BBSCommentDetailsActivity.this, getString(R.string.comment_succ));
                     }
                     getCommentDetailRequest();
                 } else {
                     if (TextUtils.equals(type, MSGCOMMENT)) {
-                        UITipDialog.showSuccess(CommentDetailsActivity.this, getString(R.string.comment_fall));
+                        UITipDialog.showSuccess(BBSCommentDetailsActivity.this, getString(R.string.comment_fall));
                     }
 
                 }

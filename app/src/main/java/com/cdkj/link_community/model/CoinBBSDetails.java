@@ -1,5 +1,7 @@
 package com.cdkj.link_community.model;
 
+import java.util.List;
+
 /**
  * 币吧详情
  * Created by cdkj on 2018/3/26.
@@ -37,6 +39,15 @@ public class CoinBBSDetails {
     private int dayCommentCount;
     private CoinBean coin;
     private String isKeep;
+    private List<CoinBBSHotCircular> hotPostList;
+
+    public List<CoinBBSHotCircular> getHotPostList() {
+        return hotPostList;
+    }
+
+    public void setHotPostList(List<CoinBBSHotCircular> hotPostList) {
+        this.hotPostList = hotPostList;
+    }
 
     public String getCode() {
         return code;

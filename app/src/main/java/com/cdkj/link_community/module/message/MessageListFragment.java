@@ -133,6 +133,5 @@ public class MessageListFragment extends AbsRefreshListFragment {
             }
         });
 
-
     }
 }

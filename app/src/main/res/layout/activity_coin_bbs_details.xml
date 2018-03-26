@@ -77,10 +77,10 @@
                                     tools:textSize="15sp" />
 
                                 <TextView
-                                    android:layout_gravity="right"
                                     android:id="@+id/tv_todayChange"
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
+                                    android:layout_gravity="right"
                                     android:layout_weight="1"
                                     android:gravity="center|right"
                                     tools:text="sdfsdfssdfsdfsfsdsdfsdfsfsdsdfsdfsfsdsdfsdfsfsdfsd"
@@ -201,6 +201,7 @@
 
 
                             <LinearLayout
+                                android:id="@+id/lin_circulation"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="20dp"
@@ -231,6 +232,7 @@
                             </LinearLayout>
 
                             <LinearLayout
+                                android:id="@+id/lin_issue"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:orientation="horizontal"
@@ -259,6 +261,7 @@
                             </LinearLayout>
 
                             <LinearLayout
+                                android:id="@+id/lin_issue_market"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:background="@color/page_bg"
@@ -288,6 +291,7 @@
                             </LinearLayout>
 
                             <LinearLayout
+                                android:id="@+id/lin_issue_rank"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:orientation="horizontal"
@@ -326,8 +330,11 @@
                             android:id="@+id/viewindicator"
                             android:layout_width="match_parent"
                             android:layout_height="40dp" />
+
+                        <View style="@style/style_split_line" />
+
                         <!--TODO 待优化-->
-                        <FrameLayout
+                        <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
                             android:layout_weight="1"
@@ -339,28 +346,72 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="0.1dp" />
 
-                            <android.support.v7.widget.RecyclerView
-                                android:id="@+id/recyclerView_left"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent">
 
-                            </android.support.v7.widget.RecyclerView>
+                            <RelativeLayout
+                                android:id="@+id/rela_left"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content">
+
+                                <TextView
+                                    android:id="@+id/tv_hot_title"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:paddingBottom="10dp"
+                                    android:paddingLeft="@dimen/layout_left_interval"
+                                    android:paddingTop="10dp"
+                                    android:text="热门圈子"
+                                    android:textColor="@color/text_black_cd"
+                                    android:textSize="17sp"
+                                    android:visibility="gone" />
+
+                                <android.support.v7.widget.RecyclerView
+                                    android:id="@+id/recyclerView_left"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_below="@+id/tv_hot_title"
+                                    android:visibility="gone">
+
+                                </android.support.v7.widget.RecyclerView>
+
+                                <TextView
+                                    android:id="@+id/tv_new_title"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_below="@+id/recyclerView_left"
+                                    android:paddingBottom="10dp"
+                                    android:paddingLeft="@dimen/layout_left_interval"
+                                    android:paddingTop="10dp"
+                                    android:text="最新圈子"
+                                    android:textColor="@color/text_black_cd"
+                                    android:textSize="17sp" />
+
+                                <android.support.v7.widget.RecyclerView
+                                    android:id="@+id/recyclerView_left_2"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_below="@+id/tv_new_title">
+
+                                </android.support.v7.widget.RecyclerView>
+                            </RelativeLayout>
+
 
                             <android.support.v7.widget.RecyclerView
                                 android:id="@+id/recyclerView_middel"
                                 android:layout_width="match_parent"
-                                android:layout_height="match_parent">
+                                android:layout_height="match_parent"
+                                android:visibility="gone">
 
                             </android.support.v7.widget.RecyclerView>
 
                             <android.support.v7.widget.RecyclerView
                                 android:id="@+id/recyclerView_right"
                                 android:layout_width="match_parent"
-                                android:layout_height="match_parent">
+                                android:layout_height="match_parent"
+                                android:visibility="gone">
 
                             </android.support.v7.widget.RecyclerView>
 
-                        </FrameLayout>
+                        </RelativeLayout>
 
 
                     </LinearLayout>
@@ -377,14 +428,15 @@
                 android:id="@+id/viewindicator_top"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:background="@color/white"
-                android:visibility="gone" />
+                android:background="@color/white" />
 
         </FrameLayout>
 
         <View style="@style/style_split_line" />
 
-        <include layout="@layout/layout_to_comment_bottom" />
+        <include
+            android:id="@+id/bottomLayout"
+            layout="@layout/layout_to_comment_bottom" />
 
     </LinearLayout>
 </layout>

@@ -10,6 +10,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.ViewGroup;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
 import com.cdkj.baselibrary.api.BaseResponseModel;
 import com.cdkj.baselibrary.api.ResponseInListModel;
@@ -117,10 +120,22 @@ public class MessageDetailsActivity extends AbsBaseLoadActivity {
 
         initRefreshHelper();
 
+        initWebView();
+
         initListener();
 
-        getMessageDetailRequest();
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getMessageDetailRequest();
+    }
+
+    private void initWebView() {
+        mBinding.contentLayout.webView.getSettings().setJavaScriptEnabled(true);
+        mBinding.contentLayout.webView.setWebViewClient(new MyWebViewClient());
     }
 
     private void initListener() {
@@ -596,15 +611,44 @@ public class MessageDetailsActivity extends AbsBaseLoadActivity {
 
     }
 
-    /**
-     * 登录成功 刷新界面
-     *
-     * @param loinSucc
-     */
-    @Subscribe
-    public void LoginEvent(LoinSucc loinSucc) {
-        getMessageDetailRequest();
+
+    private class MyWebViewClient extends WebViewClient {
+
+        @Override
+        public void onPageFinished(WebView view, String url) {
+            super.onPageFinished(view, url);
+            //  html加载完成之后，调用js的方法
+            imgReset();
+        }
+
+        @Override
+        public boolean shouldOverrideUrlLoading(WebView view, String url) {
+            view.loadUrl(url);
+            return true;
+        }
+
     }
 
 
+    private void imgReset() {
+        mBinding.contentLayout.webView.loadUrl("javascript:(function(){"
+                + "var objs = document.getElementsByTagName('img'); "
+                + "for(var i=0;i<objs.length;i++)  " + "{"
+                + "var img = objs[i];   "
+                + "    img.style.width = '100%';   "
+                + "    img.style.height = 'auto';   "
+                + "}" + "})()");
+    }
+
+    @Override
+    protected void onDestroy() {
+        mBinding.contentLayout.webView.clearHistory();
+        ((ViewGroup) mBinding.contentLayout.webView.getParent()).removeView(mBinding.contentLayout.webView);
+        mBinding.contentLayout.webView.loadUrl("about:blank");
+        mBinding.contentLayout.webView.stopLoading();
+        mBinding.contentLayout.webView.setWebChromeClient(null);
+        mBinding.contentLayout.webView.setWebViewClient(null);
+        mBinding.contentLayout.webView.destroy();
+        super.onDestroy();
+    }
 }

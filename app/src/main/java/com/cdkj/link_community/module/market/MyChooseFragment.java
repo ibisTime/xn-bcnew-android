@@ -96,6 +96,10 @@ public class MyChooseFragment extends BaseLazyFragment {
                 adapter.setOnItemChildClickListener((adapter1, view, position) -> {
                     switch (view.getId()) {
                         case R.id.btn_to_top: //置顶
+                            if (position == 0) {
+                                UITipDialog.showSuccess(mActivity, getString(R.string.set_to_top_succ));
+                                return;
+                            }
                             toTopAddMarketRequest(adapter, position);
                             break;
                         case R.id.btn_delete: //删除

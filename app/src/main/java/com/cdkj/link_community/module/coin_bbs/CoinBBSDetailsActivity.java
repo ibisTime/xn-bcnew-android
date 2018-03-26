@@ -4,32 +4,47 @@ import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver;
 
 import com.cdkj.baselibrary.adapters.ViewPagerAdapter;
+import com.cdkj.baselibrary.api.ResponseInListModel;
 import com.cdkj.baselibrary.appmanager.CdRouteHelper;
+import com.cdkj.baselibrary.appmanager.MyCdConfig;
 import com.cdkj.baselibrary.appmanager.SPUtilHelpr;
 import com.cdkj.baselibrary.base.AbsBaseLoadActivity;
+import com.cdkj.baselibrary.dialog.UITipDialog;
+import com.cdkj.baselibrary.interfaces.BaseRefreshCallBack;
+import com.cdkj.baselibrary.interfaces.RefreshHelper;
+import com.cdkj.baselibrary.model.CodeModel;
+import com.cdkj.baselibrary.model.IsSuccessModes;
 import com.cdkj.baselibrary.nets.BaseResponseModelCallBack;
 import com.cdkj.baselibrary.nets.RetrofitUtils;
 import com.cdkj.baselibrary.utils.DisplayHelper;
-import com.cdkj.baselibrary.utils.LogUtil;
 import com.cdkj.baselibrary.utils.StringUtils;
 import com.cdkj.link_community.R;
-import com.cdkj.link_community.adapters.MarketChooseListAdapter;
+import com.cdkj.link_community.adapters.BBSHotCommentListAdapter;
+import com.cdkj.link_community.adapters.CoinListAdapter;
+import com.cdkj.link_community.adapters.MessageListAdapter;
+import com.cdkj.link_community.adapters.MsgHotCommentListAdapter;
+import com.cdkj.link_community.adapters.PlatformListAdapter;
 import com.cdkj.link_community.api.MyApiServer;
 import com.cdkj.link_community.databinding.ActivityCoinBbsDetailsBinding;
+import com.cdkj.link_community.dialog.CommentInputDialog;
 import com.cdkj.link_community.model.CoinBBSDetails;
-import com.cdkj.link_community.module.message.FastMessageListFragment;
-import com.cdkj.link_community.module.message.MessageListFragment;
+import com.cdkj.link_community.model.CoinBBSHotCircular;
+import com.cdkj.link_community.model.CoinListModel;
+import com.cdkj.link_community.model.FastMessage;
+import com.cdkj.link_community.model.MsgDetailsComment;
+import com.cdkj.link_community.module.message.MessageDetailsActivity;
 import com.cdkj.link_community.views.MyScrollView;
 import com.cdkj.link_community.views.ViewPagerIndicator;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -47,9 +62,19 @@ public class CoinBBSDetailsActivity extends AbsBaseLoadActivity {
 
     private ActivityCoinBbsDetailsBinding mBinding;
 
-    private int moveHeight = 150;
 
     private String mBBSCode;//币吧编号
+
+    private String mToCoin;//用于获取相关连资讯 关联行情
+
+    private RefreshHelper mMessageRefreshHelper;//资讯刷新相关
+    private RefreshHelper mMarketRefreshHelper;//行情刷新相关
+    private RefreshHelper mNewBBSCirclularRefreshHelper;//最新圈子相关
+
+    private int mTabShowIndex;//底部显示页面 0 圈子 1 资讯 2行情
+
+    private ViewTreeObserver.OnGlobalLayoutListener mMoveHeightListener; //用于获取要移动的高度实现悬浮效果
+    private int moveHeight = 550;
 
     /**
      * @param context
@@ -80,43 +105,74 @@ public class CoinBBSDetailsActivity extends AbsBaseLoadActivity {
 
         mBaseBinding.titleView.setMidTitle(getString(R.string.coin_bbs));
 
-        mBinding.refreshLayout.setEnableRefresh(false);
-        mBinding.refreshLayout.setEnableLoadmore(true);
-        mBinding.refreshLayout.setEnableLoadmoreWhenContentNotFull(true);
 
-        //设置fragment数据
-        ArrayList fragments = new ArrayList<>();
+        /*防止局部刷新闪烁*/
+        ((DefaultItemAnimator) mBinding.recyclerViewLeft.getItemAnimator()).setSupportsChangeAnimations(false);
+        ((DefaultItemAnimator) mBinding.recyclerViewLeft.getItemAnimator()).setSupportsChangeAnimations(false);
 
-        fragments.add(FastMessageListFragment.getInstanse(0, false));
-        fragments.add(FastMessageListFragment.getInstanse(0, false));
-        fragments.add(FastMessageListFragment.getInstanse(0, false));
+        initViewPagerAndIndicator();
+        initRefreshLayout();
+        initMoveListener();
+        initBBSCirclularRefresh();
+        initMessageRefresh();
+        initMarketRefresh();
 
-        mBinding.viewpager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager(), fragments));
-        mBinding.viewpager.setOffscreenPageLimit(fragments.size());
+        initListener();
 
-        mBinding.viewindicator.setmLinWidth(25);
-        mBinding.viewindicator.setVisibleTabCount(fragments.size());
-        mBinding.viewindicator.setTabItemTitles(Arrays.asList(getString(R.string.bbs_circular), getString(R.string.msg), getString(R.string.market)));
-        mBinding.viewindicator.setViewPager(mBinding.viewpager, 0);
+    }
 
+    private void initListener() {
 
-        mBinding.viewindicatorTop.setmLinWidth(25);
-        mBinding.viewindicatorTop.setVisibleTabCount(fragments.size());
-        mBinding.viewindicatorTop.setTabItemTitles(Arrays.asList(getString(R.string.bbs_circular), getString(R.string.msg), getString(R.string.market)));
-        mBinding.viewindicatorTop.setViewPager(mBinding.viewpager, 0);
-        mBinding.viewindicatorTop.setVisibility(View.GONE);
+        //资讯评论
+        mBinding.bottomLayout.linComment.setOnClickListener(view -> {
 
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false) {
-            @Override
-            public boolean canScrollVertically() {
-                return false;
+            if (!SPUtilHelpr.isLogin(this, false)) {
+                return;
             }
-        };
 
-        mBinding.recyclerViewLeft.setLayoutManager(linearLayoutManager);
+            CommentInputDialog commentInputDialog = new CommentInputDialog(this, "");
+            commentInputDialog.setmSureListener(comment -> {
+                if (TextUtils.isEmpty(comment)) {
+                    UITipDialog.showFall(CoinBBSDetailsActivity.this, getString(R.string.please_input_info));
+                    return;
+                }
 
-        mBinding.recyclerViewLeft.setAdapter(new MarketChooseListAdapter(new ArrayList<>()));
+                toPostBBSRequest(mBBSCode, comment);
 
+            });
+            commentInputDialog.show();
+        });
+
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getBBSDetails();
+        mNewBBSCirclularRefreshHelper.onDefaluteMRefresh(false);
+    }
+
+    @Override
+    protected void onDestroy() {
+        mBinding.linTop.getViewTreeObserver().removeGlobalOnLayoutListener(mMoveHeightListener);
+        super.onDestroy();
+    }
+
+    /**
+     * 获取移动距离 监听ScrollView
+     */
+    private void initMoveListener() {
+
+//        mMoveHeightListener =;
+        mBinding.linTop.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                moveHeight = mBinding.linTop.getHeight() + DisplayHelper.dpToPx(20);
+            }
+        });
+
+        //用于监听滚动实现 悬浮效果
         mBinding.scrollView.setOnScrollListener(new MyScrollView.MyOnScrollListener() {
             @Override
             public void onScroll(int y) {
@@ -133,15 +189,219 @@ public class CoinBBSDetailsActivity extends AbsBaseLoadActivity {
             }
         });
 
+    }
 
-        mBinding.linTop.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+    private void initRefreshLayout() {
+        mBinding.refreshLayout.setEnableRefresh(false);
+        mBinding.refreshLayout.setEnableLoadmore(true);
+        mBinding.refreshLayout.setEnableLoadmoreWhenContentNotFull(true);
+        mBinding.refreshLayout.setEnableScrollContentWhenLoaded(false);
+
+        mBinding.refreshLayout.setOnLoadmoreListener(refreshlayout -> {
+
+            switch (mTabShowIndex) {
+                case 0:
+                    mNewBBSCirclularRefreshHelper.onDefaluteMLoadMore(false);
+                    break;
+                case 1:
+                    mMessageRefreshHelper.onDefaluteMLoadMore(false);
+                    break;
+                case 2:
+                    mMarketRefreshHelper.onDefaluteMLoadMore(false);
+                    break;
+            }
+
+        });
+    }
+
+    /**
+     * 初始化底部tab切换
+     */
+    private void initViewPagerAndIndicator() {
+        //设置fragment数据
+        ArrayList fragments = new ArrayList<>();
+
+        fragments.add(EmptyFragment.getInstanse());
+        fragments.add(EmptyFragment.getInstanse());
+        fragments.add(EmptyFragment.getInstanse());
+
+        mBinding.viewpager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager(), fragments));
+        mBinding.viewpager.setOffscreenPageLimit(fragments.size());
+
+        mBinding.viewindicator.setmLinWidth(25);
+        mBinding.viewindicator.setVisibleTabCount(fragments.size());
+        mBinding.viewindicator.setTabItemTitles(Arrays.asList(getString(R.string.bbs_circular), getString(R.string.msg), getString(R.string.market)));
+        mBinding.viewindicator.setViewPager(mBinding.viewpager, 0);
+
+
+        mBinding.viewindicatorTop.setmLinWidth(25);
+        mBinding.viewindicatorTop.setVisibleTabCount(fragments.size());
+        mBinding.viewindicatorTop.setTabItemTitles(Arrays.asList(getString(R.string.bbs_circular), getString(R.string.msg), getString(R.string.market)));
+        mBinding.viewindicatorTop.setViewPager(mBinding.viewpager, 0);
+        mBinding.viewindicatorTop.post(() -> mBinding.viewindicatorTop.setVisibility(View.GONE));
+
+        mBinding.viewindicator.setOnPageChangeListener(new ViewPagerIndicator.PageOnchangeListener() {
             @Override
-            public void onGlobalLayout() {
-                moveHeight = mBinding.linTop.getHeight() + DisplayHelper.dpToPx(20);
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                mTabShowIndex = position;
+                switch (position) {
+                    case 0:
+                        mNewBBSCirclularRefreshHelper.onDefaluteMRefresh(true);
+                        mBinding.relaLeft.setVisibility(View.VISIBLE);
+                        mBinding.recyclerViewMiddel.setVisibility(View.GONE);
+                        mBinding.recyclerViewRight.setVisibility(View.GONE);
+                        mBinding.bottomLayout.linComment.setVisibility(View.VISIBLE);
+                        break;
+                    case 1:
+                        mMessageRefreshHelper.onDefaluteMRefresh(true);
+                        mBinding.relaLeft.setVisibility(View.GONE);
+                        mBinding.recyclerViewMiddel.setVisibility(View.VISIBLE);
+                        mBinding.recyclerViewRight.setVisibility(View.GONE);
+                        mBinding.bottomLayout.linComment.setVisibility(View.GONE);
+                        break;
+                    case 2:
+                        mMarketRefreshHelper.onDefaluteMRefresh(true);
+                        mBinding.relaLeft.setVisibility(View.GONE);
+                        mBinding.recyclerViewMiddel.setVisibility(View.GONE);
+                        mBinding.recyclerViewRight.setVisibility(View.VISIBLE);
+                        mBinding.bottomLayout.linComment.setVisibility(View.GONE);
+                        break;
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
             }
         });
+    }
 
-        getBBSDetails();
+    /**
+     * 初始化资讯刷新
+     */
+    private void initMessageRefresh() {
+
+        mMessageRefreshHelper = new RefreshHelper(this, new BaseRefreshCallBack(this) {
+            @Override
+            public View getRefreshLayout() {
+                return mBinding.refreshLayout;
+            }
+
+            @Override
+            public RecyclerView getRecyclerView() {
+                return mBinding.recyclerViewMiddel;
+            }
+
+            @Override
+            public RecyclerView.Adapter getAdapter(List listData) {
+                MessageListAdapter msgAdapter = new MessageListAdapter(listData);
+
+                msgAdapter.setOnItemClickListener((adapter, view, position) -> {
+                    MessageDetailsActivity.open(CoinBBSDetailsActivity.this, msgAdapter.getItem(position).getCode(), "");
+                });
+
+                return msgAdapter;
+            }
+
+            @Override
+            public void getListDataRequest(int pageindex, int limit, boolean isShowDialog) {
+                getMsgListRequest(pageindex, limit, isShowDialog);
+            }
+        });
+        mMessageRefreshHelper.init(MyCdConfig.LISTLIMIT);
+        mBinding.recyclerViewMiddel.setNestedScrollingEnabled(false);
+        mBinding.recyclerViewMiddel.setLayoutManager(getLinearLayoutManager());
+    }
+
+    /**
+     * 初始化行情资讯刷新
+     */
+    private void initMarketRefresh() {
+
+        mMarketRefreshHelper = new RefreshHelper(this, new BaseRefreshCallBack(this) {
+            @Override
+            public View getRefreshLayout() {
+                return mBinding.refreshLayout;
+            }
+
+            @Override
+            public RecyclerView getRecyclerView() {
+                return mBinding.recyclerViewRight;
+            }
+
+            @Override
+            public RecyclerView.Adapter getAdapter(List listData) {
+                if (isCoinType()) {
+                    ;
+                    return new CoinListAdapter(listData);
+                }
+                return new PlatformListAdapter(listData);
+            }
+
+            @Override
+            public void getListDataRequest(int pageindex, int limit, boolean isShowDialog) {
+                getMarketListRequest(pageindex, limit, isShowDialog);
+            }
+        });
+        mMarketRefreshHelper.init(MyCdConfig.LISTLIMIT);
+        mBinding.recyclerViewRight.setNestedScrollingEnabled(false);
+        mBinding.recyclerViewRight.setLayoutManager(getLinearLayoutManager());
+    }
+
+    /**
+     * 初始化圈子刷新
+     */
+    private void initBBSCirclularRefresh() {
+
+        mNewBBSCirclularRefreshHelper = new RefreshHelper(this, new BaseRefreshCallBack(this) {
+            @Override
+            public View getRefreshLayout() {
+                return mBinding.refreshLayout;
+            }
+
+            @Override
+            public RecyclerView getRecyclerView() {
+                return mBinding.recyclerViewLeft2;
+            }
+
+            @Override
+            public RecyclerView.Adapter getAdapter(List listData) {
+                return getCircularListAdapter(listData);
+            }
+
+            @Override
+            public void getListDataRequest(int pageindex, int limit, boolean isShowDialog) {
+                getNewCircularListRequest(pageindex, limit, isShowDialog);
+            }
+        });
+        mNewBBSCirclularRefreshHelper.init(MyCdConfig.LISTLIMIT);
+        mBinding.recyclerViewLeft2.setNestedScrollingEnabled(false);
+        mBinding.recyclerViewLeft2.setLayoutManager(getLinearLayoutManager());
+    }
+
+    /**
+     * 获取圈子评论
+     *
+     * @param listData
+     * @return
+     */
+    @NonNull
+    private BBSHotCommentListAdapter getCircularListAdapter(List listData) {
+        BBSHotCommentListAdapter bbsHotCommentListAdapter = new BBSHotCommentListAdapter(listData);
+
+        bbsHotCommentListAdapter.setOnItemClickListener((adapter, view, position) -> {
+            if (bbsHotCommentListAdapter.getItem(position) == null) return;
+            BBSCommentDetailsActivity.open(CoinBBSDetailsActivity.this, bbsHotCommentListAdapter.getItem(position).getCode());
+        });
+
+        bbsHotCommentListAdapter.setOnItemChildClickListener((adapter, view, position) -> {
+            circularLikeRequest(bbsHotCommentListAdapter, position);
+        });
+        return bbsHotCommentListAdapter;
     }
 
 
@@ -182,22 +442,352 @@ public class CoinBBSDetailsActivity extends AbsBaseLoadActivity {
 
         if (data == null) return;
 
-        mBinding.tvName.setText("#" + data.getName() + "#");
-        mBinding.tvFocusOnNum.setText(getString(R.string.focus_num) + data.getPostCount());
-        mBinding.tvPostNum.setText(getString(R.string.post_num) + data.getPostCount());
-        mBinding.tvTodayNum.setText(getString(R.string.bbs_today_num) + data.getDayCommentCount());
+        mToCoin = data.getToCoin();
+
+        if (isCoinType()) {
+            if (data.getCoin() != null) {
+                mBinding.tvTodayChange.setText("涨跌浮:" + data.getCoin().getTodayChange());
+                mBinding.tvTodayVol.setText("成交(24h):" + data.getCoin().getTodayVol());
+            }
+
+            mBinding.tvName.setText("#" + data.getName() + "#");
+            mBinding.tvFocusOnNum.setText(getString(R.string.focus_num) + data.getPostCount());
+            mBinding.tvPostNum.setText(getString(R.string.post_num) + data.getPostCount());
+            mBinding.tvTodayNum.setText(getString(R.string.bbs_today_num) + data.getDayCommentCount());
+
+            mBinding.linCirculation.setVisibility(View.VISIBLE);
+            mBinding.linIssue.setVisibility(View.VISIBLE);
+            mBinding.linIssueMarket.setVisibility(View.VISIBLE);
+            mBinding.linIssueRank.setVisibility(View.VISIBLE);
+        } else {
+            mBinding.linCirculation.setVisibility(View.GONE);
+            mBinding.linIssue.setVisibility(View.GONE);
+            mBinding.linIssueMarket.setVisibility(View.GONE);
+            mBinding.linIssueRank.setVisibility(View.GONE);
+        }
+
+
         mBinding.expandTextView.setText(data.getIntroduce() + "");
 
-        mBinding.tvTodayChange.setText("涨跌浮:" + data.getCoin().getTodayChange());
-        mBinding.tvTodayVol.setText("成交(24h):" + data.getCoin().getTodayVol());
 
-        if (data.getCoin() == null) return;
+        if (data.getCoin() != null) {
+            mBinding.tvCirculation.setText(data.getCoin().getTotalSupply());
+            mBinding.tvIssue.setText(data.getCoin().getMaxSupply());
+            mBinding.tvIssueMarket.setText(data.getCoin().getMarketCap());
+            mBinding.tvIssueRank.setText(data.getCoin().getRank());
+        }
 
-        mBinding.tvCirculation.setText(data.getCoin().getTotalSupply());
-        mBinding.tvIssue.setText(data.getCoin().getMaxSupply());
-        mBinding.tvIssueMarket.setText(data.getCoin().getMarketCap());
-        mBinding.tvIssueRank.setText(data.getCoin().getRank());
+        setHotCommentList(data.getHotPostList());
+    }
 
+    /**
+     * 是否是币种币吧
+     *
+     * @return
+     */
+    private boolean isCoinType() {
+        return !TextUtils.isEmpty(mToCoin);//如果为空说明是平台币吧 否则是币种币吧
+    }
+
+
+    /**
+     * 设置热门评价
+     *
+     * @param
+     */
+    private void setHotCommentList(List<CoinBBSHotCircular> hotCommentList) {
+        if (hotCommentList == null || hotCommentList.isEmpty()) {
+            mBinding.recyclerViewLeft.setVisibility(View.GONE);
+            mBinding.tvHotTitle.setVisibility(View.GONE);
+            return;
+        }
+
+        mBinding.recyclerViewLeft.setVisibility(View.VISIBLE);
+        mBinding.tvHotTitle.setVisibility(View.VISIBLE);
+
+        BBSHotCommentListAdapter msgHotCommentListAdapter = getCircularListAdapter(hotCommentList);
+        mBinding.recyclerViewLeft.setLayoutManager(getLinearLayoutManager());
+        mBinding.recyclerViewLeft.setAdapter(msgHotCommentListAdapter);
+
+    }
+
+    @NonNull
+    private LinearLayoutManager getLinearLayoutManager() {
+        return new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false) {
+            @Override
+            public boolean canScrollVertically() {  //禁止自滚动
+                return false;
+            }
+        };
+    }
+
+
+    /**
+     * 获取资讯请求
+     *
+     * @param pageindex
+     * @param limit
+     * @param isShowDialog
+     */
+    public void getMsgListRequest(int pageindex, int limit, boolean isShowDialog) {
+
+        if (TextUtils.isEmpty(mToCoin)) {
+            mMessageRefreshHelper.setData(new ArrayList(), getString(R.string.no_msg), 0);
+            return;
+        }
+
+        Map<String, String> map = new HashMap<>();
+
+        map.put("start", pageindex + "");
+        map.put("limit", limit + "");
+        map.put("toCoin", mToCoin);
+
+        if (isShowDialog) showLoadingDialog();
+
+        Call call = RetrofitUtils.createApi(MyApiServer.class).getMsgList("628205", StringUtils.getJsonToString(map));
+
+        addCall(call);
+
+        call.enqueue(new BaseResponseModelCallBack<ResponseInListModel<FastMessage>>(this) {
+            @Override
+            protected void onSuccess(ResponseInListModel<FastMessage> data, String SucMessage) {
+                mMessageRefreshHelper.setData(data.getList(), getString(R.string.no_msg), 0);
+            }
+
+            @Override
+            protected void onReqFailure(String errorCode, String errorMessage) {
+                super.onReqFailure(errorCode, errorMessage);
+                mMessageRefreshHelper.loadError(errorMessage, 0);
+            }
+
+            @Override
+            protected void onFinish() {
+                disMissLoading();
+            }
+        });
+    }
+
+    /**
+     * 获取行情列表请求
+     *
+     * @param pageindex
+     * @param limit
+     * @param isShowDialog
+     */
+    public void getMarketListRequest(int pageindex, int limit, boolean isShowDialog) {
+
+        if (TextUtils.isEmpty(mToCoin)) {
+            mMarketRefreshHelper.setData(new ArrayList(), getString(R.string.no_add_market), 0);
+            return;
+        }
+
+        Map<String, String> map = new HashMap<>();
+
+        if (isCoinType()) {
+            map.put("coinSymbol", mToCoin);
+        } else {
+            map.put("exchangeEname", mToCoin);
+        }
+
+        map.put("start", pageindex + "");
+        map.put("limit", limit + "");
+
+        if (isShowDialog) showLoadingDialog();
+
+        Call call = RetrofitUtils.createApi(MyApiServer.class).getCoinList("628340", StringUtils.getJsonToString(map));
+
+        addCall(call);
+
+        call.enqueue(new BaseResponseModelCallBack<ResponseInListModel<CoinListModel>>(this) {
+            @Override
+            protected void onSuccess(ResponseInListModel<CoinListModel> data, String SucMessage) {
+                mMarketRefreshHelper.setData(data.getList(), getString(R.string.no_add_market), 0);
+            }
+
+            @Override
+            protected void onReqFailure(String errorCode, String errorMessage) {
+                super.onReqFailure(errorCode, errorMessage);
+                mMarketRefreshHelper.loadError(errorMessage, 0);
+            }
+
+            @Override
+            protected void onFinish() {
+                disMissLoading();
+            }
+        });
+    }
+
+    /**
+     * 获取最新圈子
+     *
+     * @param pageindex
+     * @param limit
+     * @param isShowDialog
+     */
+    public void getNewCircularListRequest(int pageindex, int limit, boolean isShowDialog) {
+
+        if (TextUtils.isEmpty(mBBSCode)) {
+            mNewBBSCirclularRefreshHelper.setData(new ArrayList(), getString(R.string.no_bbs_circular), 0);
+            return;
+        }
+
+        Map<String, String> map = new HashMap<>();
+
+        map.put("plateCode", mBBSCode);
+        map.put("start", pageindex + "");
+        map.put("limit", limit + "");
+        map.put("userId", SPUtilHelpr.getUserId());
+
+        if (isShowDialog) showLoadingDialog();
+
+        Call call = RetrofitUtils.createApi(MyApiServer.class).getCoinBBSCircularList("628662", StringUtils.getJsonToString(map));
+
+        addCall(call);
+
+        call.enqueue(new BaseResponseModelCallBack<ResponseInListModel<CoinBBSHotCircular>>(this) {
+            @Override
+            protected void onSuccess(ResponseInListModel<CoinBBSHotCircular> data, String SucMessage) {
+                mNewBBSCirclularRefreshHelper.setData(data.getList(), getString(R.string.no_bbs_circular), 0);
+            }
+
+            @Override
+            protected void onReqFailure(String errorCode, String errorMessage) {
+                super.onReqFailure(errorCode, errorMessage);
+                mNewBBSCirclularRefreshHelper.loadError(errorMessage, 0);
+            }
+
+            @Override
+            protected void onFinish() {
+                disMissLoading();
+            }
+        });
+    }
+
+
+    /**
+     * 圈子点赞
+     */
+    private void circularLikeRequest(BBSHotCommentListAdapter adapter, int position) {
+
+        CoinBBSHotCircular coinBBSHotCircular = adapter.getItem(position);
+
+        if (TextUtils.isEmpty(coinBBSHotCircular.getCode())) {
+            return;
+        }
+
+        Map<String, String> map = new HashMap<>(); /*类型(Y 1 资讯 2 评论)*/
+
+        map.put("type", "1"); /*1 帖子，2评论*/
+        map.put("objectCode", coinBBSHotCircular.getCode());
+        map.put("userId", SPUtilHelpr.getUserId());
+
+        showLoadingDialog();
+        Call call = RetrofitUtils.getBaseAPiService().successRequest("628201", StringUtils.getJsonToString(map));
+
+        addCall(call);
+
+        call.enqueue(new BaseResponseModelCallBack<IsSuccessModes>(this) {
+            @Override
+            protected void onSuccess(IsSuccessModes data, String SucMessage) {
+
+                if (data.isSuccess()) {
+                    if (TextUtils.equals(coinBBSHotCircular.getIsPoint(), "1")) {
+                        coinBBSHotCircular.setPointCount(coinBBSHotCircular.getPointCount() - 1);
+                        coinBBSHotCircular.setIsPoint("0");
+                    } else {
+                        coinBBSHotCircular.setPointCount(coinBBSHotCircular.getPointCount() + 1);
+                        coinBBSHotCircular.setIsPoint("1");
+                    }
+                    adapter.notifyItemChanged(position);
+                }
+            }
+
+            @Override
+            protected void onFinish() {
+                disMissLoading();
+            }
+        });
+
+    }
+
+    /**
+     * 评论
+     */
+    private void toCommentRequest(String code, String content) {
+
+        if (TextUtils.isEmpty(code)) {
+            return;
+        }
+
+        Map<String, String> map = new HashMap<>(); /*类型(Y 1 帖子 2 评论)*/
+
+        map.put("type", "1");
+        map.put("objectCode", code);
+        map.put("content", content);
+        map.put("userId", SPUtilHelpr.getUserId());
+
+        showLoadingDialog();
+        Call call = RetrofitUtils.getBaseAPiService().successRequest("628652", StringUtils.getJsonToString(map));
+
+        addCall(call);
+
+        call.enqueue(new BaseResponseModelCallBack<IsSuccessModes>(this) {
+            @Override
+            protected void onSuccess(IsSuccessModes data, String SucMessage) {
+
+                if (data.isSuccess()) {
+                    UITipDialog.showSuccess(CoinBBSDetailsActivity.this, getString(R.string.comment_succ));
+                    mNewBBSCirclularRefreshHelper.onDefaluteMRefresh(false);
+                } else {
+                    UITipDialog.showSuccess(CoinBBSDetailsActivity.this, getString(R.string.comment_fall));
+                }
+            }
+
+            @Override
+            protected void onFinish() {
+                disMissLoading();
+            }
+        });
+
+    }
+
+    /**
+     * 发帖
+     */
+    private void toPostBBSRequest(String code, String content) {
+
+        if (TextUtils.isEmpty(code)) {
+            return;
+        }
+
+        Map<String, String> map = new HashMap<>(); /*类型(Y 1 帖子 2 评论)*/
+
+        map.put("plateCode", code);
+        map.put("content", content);
+        map.put("userId", SPUtilHelpr.getUserId());
+
+        showLoadingDialog();
+        Call call = RetrofitUtils.getBaseAPiService().codeRequest("628650", StringUtils.getJsonToString(map));
+
+        addCall(call);
+
+        call.enqueue(new BaseResponseModelCallBack<CodeModel>(this) {
+            @Override
+            protected void onSuccess(CodeModel data, String SucMessage) {
+
+                if (!TextUtils.isEmpty(data.getCode())) {
+                    UITipDialog.showSuccess(CoinBBSDetailsActivity.this, getString(R.string.release_succ));
+                    mNewBBSCirclularRefreshHelper.onDefaluteMRefresh(false);
+                } else {
+                    UITipDialog.showSuccess(CoinBBSDetailsActivity.this, getString(R.string.release_fail));
+                }
+            }
+
+            @Override
+            protected void onFinish() {
+                disMissLoading();
+            }
+        });
 
     }
 

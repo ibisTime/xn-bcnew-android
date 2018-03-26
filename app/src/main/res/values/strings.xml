@@ -65,13 +65,16 @@
     <string name="no_search_info">暂无搜索内容</string>
     <string name="no_platform_info">暂无平台信息</string>
     <string name="no_coin_bbs">暂无币吧</string>
-    <string name="no_add_market">暂无信息</string>
+    <string name="no_add_market">暂无行情</string>
+    <string name="no_bbs_circular">暂无圈子信息</string>
     <string name="author">作者:</string>
     <string name="message_frome">来源:</string>
     <string name="show_your_idea">说出你的看法</string>
     <string name="please_input_comment_info">请输入评论内容</string>
     <string name="please_input_replycomment_info">请输入回复内容</string>
     <string name="comment_succ">评价成功</string>
+    <string name="release_succ">发布成功</string>
+    <string name="release_fail">发布失败</string>
     <string name="comment_fall">评价失败</string>
     <string name="comment_detail">评论详情</string>
     <string name="come_here_sit">来,坐下谈谈</string>
@@ -88,5 +91,6 @@
     <string name="please_input_key">请输入关键字</string>
     <string name="bbs_circular">圈子</string>
     <string name="bbs_today_num">今日跟贴:</string>
+    <string name="please_input_info">请输入内容:</string>
 
 </resources>

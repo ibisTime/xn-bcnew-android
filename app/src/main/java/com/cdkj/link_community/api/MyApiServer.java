@@ -5,6 +5,7 @@ import com.cdkj.baselibrary.api.BaseResponseModel;
 import com.cdkj.baselibrary.api.ResponseInListModel;
 import com.cdkj.link_community.model.AddMarketModel;
 import com.cdkj.link_community.model.CoinBBSDetails;
+import com.cdkj.link_community.model.CoinBBSHotCircular;
 import com.cdkj.link_community.model.CoinBBSListModel;
 import com.cdkj.link_community.model.CoinListModel;
 import com.cdkj.link_community.model.CoinPlatformType;
@@ -75,6 +76,16 @@ public interface MyApiServer {
     @FormUrlEncoded
     @POST("api")
     Call<BaseResponseModel<ResponseInListModel<CoinBBSListModel>>> getCoinBBSList(@Field("code") String code, @Field("json") String json);
+    /**
+     * 获币圈圈子列表
+     *
+     * @param code
+     * @param json
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("api")
+    Call<BaseResponseModel<ResponseInListModel<CoinBBSHotCircular>>> getCoinBBSCircularList(@Field("code") String code, @Field("json") String json);
 
 
     /**
@@ -169,6 +180,16 @@ public interface MyApiServer {
     @FormUrlEncoded
     @POST("api")
     Call<BaseResponseModel<MsgDetailsComment>> getMessageCommentDetails(@Field("code") String code, @Field("json") String json);
+    /**
+     * 获取帖子评论详情
+     *
+     * @param code
+     * @param json
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("api")
+    Call<BaseResponseModel<CoinBBSHotCircular>> getBBSCommentDetails(@Field("code") String code, @Field("json") String json);
 
     /**
      * 获取用户信息详情

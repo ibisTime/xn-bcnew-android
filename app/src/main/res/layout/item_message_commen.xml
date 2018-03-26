@@ -3,9 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <LinearLayout
-        android:background="@color/white"
+        android:id="@+id/lin_bg"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/white"
         android:orientation="vertical"
         android:paddingBottom="20dp"
         android:paddingLeft="@dimen/layout_left_interval"
@@ -89,7 +90,7 @@
                         android:layout_width="20dp"
                         android:layout_height="20dp"
                         android:layout_marginLeft="7dp"
-                        android:src="@drawable/gave_a_like_un" />
+                        android:src="@drawable/gave_a_like_2_un" />
 
                 </LinearLayout>
 

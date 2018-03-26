@@ -62,8 +62,8 @@ public class FastMessageListAdapter extends BaseQuickAdapter<FastMessage, BaseVi
         textView.setOnClickListener(view -> {
             if (SPUtilHelpr.isLoginNoStart() && !TextUtils.equals(item.getIsRead(), "1")) {
                 setIsRead(item.getCode());
-                setReadedState(item, textView);
                 item.setIsRead("1");
+                setReadedState(item, textView);
             }
             setOpenState(item, textView);
             item.setOpen(!item.isOpen());
