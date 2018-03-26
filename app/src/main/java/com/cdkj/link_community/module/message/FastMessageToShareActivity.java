@@ -15,22 +15,34 @@ import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.ScrollView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.cdkj.baselibrary.appmanager.CdRouteHelper;
+import com.cdkj.baselibrary.appmanager.MyCdConfig;
 import com.cdkj.baselibrary.base.AbsBaseLoadActivity;
+import com.cdkj.baselibrary.model.IntroductionInfoModel;
+import com.cdkj.baselibrary.nets.BaseResponseModelCallBack;
+import com.cdkj.baselibrary.nets.RetrofitUtils;
 import com.cdkj.baselibrary.utils.DateUtil;
+import com.cdkj.baselibrary.utils.StringUtils;
 import com.cdkj.link_community.R;
 import com.cdkj.link_community.databinding.ActivityFastMessageShareBinding;
 import com.cdkj.link_community.model.FastMessage;
 import com.cdkj.link_community.utils.WxUtil;
+import com.uuzuche.lib_zxing.activity.CodeUtils;
 
 import org.greenrobot.eventbus.Subscribe;
 
+import java.io.ByteArrayOutputStream;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
+import retrofit2.Call;
 
 /**
  * 快讯分享
@@ -68,6 +80,8 @@ public class FastMessageToShareActivity extends AbsBaseLoadActivity {
 
     @Override
     public void afterCreate(Bundle savedInstanceState) {
+
+        getShareUrl();
 
         if (getIntent() != null) {
             FastMessage fastMessage = getIntent().getParcelableExtra(CdRouteHelper.DATASIGN);
@@ -107,6 +121,65 @@ public class FastMessageToShareActivity extends AbsBaseLoadActivity {
                 WxUtil.shareBitmapToWXPYQ(FastMessageToShareActivity.this, getBitmapByView(mBinding.scrollView));
             });
         });
+    }
+
+    public void getShareUrl() {
+
+        Map<String, String> map = new HashMap<>();
+        map.put("ckey", "h5DownUrl");
+        map.put("systemCode", MyCdConfig.SYSTEMCODE);
+        map.put("companyCode", MyCdConfig.COMPANYCODE);
+
+        Call call = RetrofitUtils.getBaseAPiService().getKeySystemInfo("628917", StringUtils.getJsonToString(map));
+
+        addCall(call);
+
+        showLoadingDialog();
+
+        call.enqueue(new BaseResponseModelCallBack<IntroductionInfoModel>(this) {
+            @Override
+            protected void onSuccess(IntroductionInfoModel data, String SucMessage) {
+
+                if (TextUtils.isEmpty(data.getCvalue())) {
+                    return;
+                }
+                createCodePhoto(data.getCvalue());
+            }
+
+            @Override
+            protected void onFinish() {
+                disMissLoading();
+            }
+        });
+
+    }
+
+    /**
+     * 生成二维码图片
+     *
+     * @param url
+     */
+    public void createCodePhoto(String url) {
+        mSubscription.add(Observable.just(url).map(s -> CodeUtils.createImage(s, 300, 300, null))
+                .subscribeOn(Schedulers.io())
+                .observeOn(Schedulers.io())
+                .filter(bitmap -> bitmap != null)
+                .map(bitmap -> {
+                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+                    byte[] bytes = baos.toByteArray();
+                    return bytes;
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(bytes -> {
+                    Glide.with(this)
+                            .load(bytes)
+                            .error(R.drawable.default_pic)
+                            .diskCacheStrategy(DiskCacheStrategy.NONE)
+                            .into(mBinding.imgUrl);
+
+                }, Throwable::printStackTrace));
+
     }
 
     /**

@@ -178,6 +178,7 @@ public class BBSCommentDetailsActivity extends AbsBaseLoadActivity {
         replyCommentListAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+
                 commentPlayRequest(replyCommentListAdapter.getItem(position).getCode(), replyCommentListAdapter.getItem(position).getNickname());
             }
         });
@@ -210,9 +211,11 @@ public class BBSCommentDetailsActivity extends AbsBaseLoadActivity {
      * 对帖子进行回复
      */
     private void commentPlayRequest(String code, String name) {
+
         if (!SPUtilHelpr.isLogin(BBSCommentDetailsActivity.this, false)) {
             return;
         }
+
 
         CommentInputDialog commentInputDialog = new CommentInputDialog(this, name);
         commentInputDialog.setmSureListener(comment -> {

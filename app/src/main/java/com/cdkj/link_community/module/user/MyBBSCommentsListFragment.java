@@ -32,11 +32,11 @@ import retrofit2.Call;
  * Created by cdkj on 2018/3/22.
  */
 
-public class MyCommentsList2Fragment extends AbsRefreshListFragment {
+public class MyBBSCommentsListFragment extends AbsRefreshListFragment {
 
 
-    public static MyCommentsList2Fragment getInstanse() {
-        MyCommentsList2Fragment fragment = new MyCommentsList2Fragment();
+    public static MyBBSCommentsListFragment getInstanse() {
+        MyBBSCommentsListFragment fragment = new MyBBSCommentsListFragment();
         Bundle bundle = new Bundle();
         fragment.setArguments(bundle);
         return fragment;

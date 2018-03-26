@@ -67,7 +67,8 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
 
     implementation 'com.github.mcxtzhang:SwipeDelMenuLayout:V1.3.0'
-
+// 二维码
+    implementation 'cn.yipianfengye.android:zxing-library:2.2'
     annotationProcessor rootProject.ext.arouterCompiler
     implementation rootProject.ext.arouterApi
     api project(':cdcommon')

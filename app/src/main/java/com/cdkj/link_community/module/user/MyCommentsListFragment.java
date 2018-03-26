@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -64,7 +65,15 @@ public class MyCommentsListFragment extends AbsRefreshListFragment {
         UserMyCommentListAdapter userMyCommentListAdapter = new UserMyCommentListAdapter(listData);
 
         userMyCommentListAdapter.setOnItemClickListener((adapter, view, position) -> {
-            MyCommentDetailsActivity.open(mActivity,userMyCommentListAdapter.getItem(position).getCode());
+
+            UserMyComment userMyComment = userMyCommentListAdapter.getItem(position);
+            if (userMyComment == null || TextUtils.isEmpty(userMyComment.getCode())) return;
+            String noteCode = "";
+            if (userMyComment.getNews() != null) {
+                noteCode = userMyComment.getNews().getCode();
+            }
+
+            MyCommentDetailsActivity.open(mActivity, userMyComment.getCode(), noteCode);
         });
 
         userMyCommentListAdapter.setOnItemChildClickListener((adapter, view, position) -> {

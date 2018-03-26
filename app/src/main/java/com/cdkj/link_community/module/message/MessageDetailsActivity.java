@@ -23,6 +23,7 @@ import com.cdkj.baselibrary.base.AbsBaseLoadActivity;
 import com.cdkj.baselibrary.dialog.UITipDialog;
 import com.cdkj.baselibrary.interfaces.BaseRefreshCallBack;
 import com.cdkj.baselibrary.interfaces.RefreshHelper;
+import com.cdkj.baselibrary.model.IntroductionInfoModel;
 import com.cdkj.baselibrary.model.IsSuccessModes;
 import com.cdkj.baselibrary.nets.BaseResponseModelCallBack;
 import com.cdkj.baselibrary.nets.RetrofitUtils;
@@ -38,6 +39,8 @@ import com.cdkj.link_community.model.LoinSucc;
 import com.cdkj.link_community.model.MessageDetails;
 import com.cdkj.link_community.model.MessageDetailsNoteList;
 import com.cdkj.link_community.model.MsgDetailsComment;
+import com.cdkj.link_community.module.user.ShareActivity;
+import com.cdkj.link_community.utils.WxUtil;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -173,6 +176,11 @@ public class MessageDetailsActivity extends AbsBaseLoadActivity {
             }
             toMsgCollectionRequest();
         });
+
+        //分享
+        mBinding.contentLayout.linWx.setOnClickListener(view -> getUrlToShare(0));
+        mBinding.contentLayout.linPyq.setOnClickListener(view -> getUrlToShare(1));
+        mBinding.imgShare.setOnClickListener(view -> getUrlToShare(3));
 
     }
 
@@ -638,6 +646,50 @@ public class MessageDetailsActivity extends AbsBaseLoadActivity {
                 + "    img.style.width = '100%';   "
                 + "    img.style.height = 'auto';   "
                 + "}" + "})()");
+    }
+
+
+    /**
+     * 获取链接并分享
+     *
+     * @param type 0 微信 1 朋友圈 3分享界面
+     */
+    public void getUrlToShare(int type) {
+
+        Map<String, String> map = new HashMap<>();
+        map.put("ckey", "h5ShareUrl");
+        map.put("systemCode", MyCdConfig.SYSTEMCODE);
+        map.put("companyCode", MyCdConfig.COMPANYCODE);
+
+        Call call = RetrofitUtils.getBaseAPiService().getKeySystemInfo("628917", StringUtils.getJsonToString(map));
+
+        addCall(call);
+
+        showLoadingDialog();
+
+        call.enqueue(new BaseResponseModelCallBack<IntroductionInfoModel>(this) {
+            @Override
+            protected void onSuccess(IntroductionInfoModel data, String SucMessage) {
+
+                if (TextUtils.isEmpty(data.getCvalue())) {
+                    return;
+                }
+                if (type == 0) {
+                    WxUtil.shareToWX(MessageDetailsActivity.this, data.getCvalue() + "?code=" + mCode, "标题", "内容");
+                } else if (type == 1) {
+                    WxUtil.shareToPYQ(MessageDetailsActivity.this, data.getCvalue() + "?code=" + mCode, "标题", "内容");
+                } else {
+                    ShareActivity.open(MessageDetailsActivity.this, data.getCvalue() + "?code=" + mCode, "标题", "内容");
+                }
+
+            }
+
+            @Override
+            protected void onFinish() {
+                disMissLoading();
+            }
+        });
+
     }
 
     @Override

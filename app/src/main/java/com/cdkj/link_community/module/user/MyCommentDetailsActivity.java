@@ -21,12 +21,13 @@ import com.cdkj.baselibrary.utils.DateUtil;
 import com.cdkj.baselibrary.utils.ImgUtils;
 import com.cdkj.baselibrary.utils.StringUtils;
 import com.cdkj.link_community.R;
-import com.cdkj.link_community.adapters.ReplyCommentListAdapter;
+import com.cdkj.link_community.adapters.UserMyCommentListAdapter2;
 import com.cdkj.link_community.api.MyApiServer;
 import com.cdkj.link_community.databinding.ActivityMessageCommentDetailsBinding;
 import com.cdkj.link_community.dialog.CommentInputDialog;
 import com.cdkj.link_community.model.MsgDetailsComment;
 import com.cdkj.link_community.model.ReplyComment;
+import com.cdkj.link_community.module.message.MessageDetailsActivity;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 
 import java.util.HashMap;
@@ -50,17 +51,20 @@ public class MyCommentDetailsActivity extends AbsBaseLoadActivity {
 
     private String mCommentCode;
 
+    private String mNoteCode;//关联文章编号
+
     /**
      * @param context
      * @param commentCode 评论编号
      */
-    public static void open(Context context, String commentCode) {
+    public static void open(Context context, String commentCode, String noteCode) {
         if (context == null) {
             return;
         }
         Intent intent = new Intent(context, MyCommentDetailsActivity.class);
 
         intent.putExtra(CdRouteHelper.APPLOGIN, commentCode);
+        intent.putExtra("noteCode", noteCode);
         context.startActivity(intent);
     }
 
@@ -72,9 +76,23 @@ public class MyCommentDetailsActivity extends AbsBaseLoadActivity {
     }
 
     @Override
+    public void topTitleViewRightClick() {
+        if (mNoteCode == null) return;
+        MessageDetailsActivity.open(this, mNoteCode, "");
+    }
+
+    @Override
     public void afterCreate(Bundle savedInstanceState) {
 
+        if (getIntent() != null) {
+            mNoteCode = getIntent().getStringExtra("noteCode");
+        }
+
         mBaseBinding.titleView.setMidTitle(getString(R.string.comment_detail));
+
+        if (!TextUtils.isEmpty(mNoteCode)) {
+            mBaseBinding.titleView.setRightTitle(getString(R.string.lod_note));
+        }
 
         if (getIntent() != null) {
             mCommentCode = getIntent().getStringExtra(CdRouteHelper.APPLOGIN);
@@ -88,7 +106,6 @@ public class MyCommentDetailsActivity extends AbsBaseLoadActivity {
             }
             commentPlayRequest(mCommentCode, "");
         });
-
     }
 
     @Override
@@ -174,7 +191,17 @@ public class MyCommentDetailsActivity extends AbsBaseLoadActivity {
 
         mBinding.replayCommentLayout.recyclerComment.setLayoutManager(getLinearLayoutManager());
 
-        ReplyCommentListAdapter replyCommentListAdapter = new ReplyCommentListAdapter(comments);
+        UserMyCommentListAdapter2 replyCommentListAdapter = new UserMyCommentListAdapter2(comments);
+
+        replyCommentListAdapter.setOnItemChildClickListener((adapter, view, position) -> {
+
+            if (!SPUtilHelpr.isLogin(MyCommentDetailsActivity.this, false)) {
+                return;
+            }
+
+            toMsgLikeRequest(replyCommentListAdapter, position);
+
+        });
 
         replyCommentListAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
@@ -273,5 +300,55 @@ public class MyCommentDetailsActivity extends AbsBaseLoadActivity {
         });
 
     }
+
+    /**
+     * 资讯点赞
+     */
+    private void toMsgLikeRequest(UserMyCommentListAdapter2 adapter2, int postition) {
+
+        ReplyComment replyComment = adapter2.getItem(postition);
+
+        if (replyComment == null || TextUtils.isEmpty(replyComment.getCode())) {
+            return;
+        }
+
+        Map<String, String> map = new HashMap<>(); /*类型(Y 1 资讯 2 评论)*/
+
+        map.put("type", "2");
+        map.put("objectCode", replyComment.getCode());
+        map.put("userId", SPUtilHelpr.getUserId());
+
+        showLoadingDialog();
+        Call call = RetrofitUtils.getBaseAPiService().successRequest("628201", StringUtils.getJsonToString(map));
+
+        addCall(call);
+
+        call.enqueue(new BaseResponseModelCallBack<IsSuccessModes>(this) {
+            @Override
+            protected void onSuccess(IsSuccessModes data, String SucMessage) {
+
+                if (data.isSuccess()) {
+
+                    if (replyComment != null) {
+                        if (TextUtils.equals(replyComment.getIsPoint(), "0")) {
+                            replyComment.setIsPoint("1");
+                            replyComment.setPointCount(replyComment.getPointCount() + 1);
+                        } else {
+                            replyComment.setIsPoint("0");
+                            replyComment.setPointCount(replyComment.getPointCount() - 1);
+                        }
+                    }
+                    adapter2.notifyItemChanged(postition);
+                }
+            }
+
+            @Override
+            protected void onFinish() {
+                disMissLoading();
+            }
+        });
+
+    }
+
 
 }

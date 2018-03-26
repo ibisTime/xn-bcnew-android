@@ -106,9 +106,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    tools:text="90"
                     android:textColor="@color/app_text_gray"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    tools:text="90" />
 
 
             </LinearLayout>
@@ -136,30 +136,49 @@
                     android:layout_height="0dp"
                     android:layout_weight="1" />
 
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:src="@drawable/share_we_chat" />
-
-                <TextView
+                <LinearLayout
+                    android:id="@+id/lin_wx"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:text="@string/we_chat"
-                    android:textColor="@color/text_black_cd" />
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
 
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_marginLeft="25dp"
-                    android:src="@drawable/share_we_pyq" />
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/share_we_chat" />
 
-                <TextView
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:text="@string/we_chat"
+                        android:textColor="@color/text_black_cd" />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/lin_pyq"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:text="@string/we_pyq"
-                    android:textColor="@color/text_black_cd" />
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_marginLeft="25dp"
+                        android:src="@drawable/share_we_pyq" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:text="@string/we_pyq"
+                        android:textColor="@color/text_black_cd" />
+
+                </LinearLayout>
 
 
             </LinearLayout>
@@ -249,8 +268,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingBottom="5dp"
-                    android:paddingTop="5dp"
                     android:paddingLeft="@dimen/layout_left_interval"
+                    android:paddingTop="5dp"
                     android:text="@string/bast_new_comments"
                     android:textColor="@color/text_black_cd"
                     android:textSize="17sp" />

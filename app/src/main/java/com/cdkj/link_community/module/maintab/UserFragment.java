@@ -21,7 +21,7 @@ import com.cdkj.link_community.databinding.FragmentUserBinding;
 import com.cdkj.link_community.manager.DataCleanManager;
 import com.cdkj.link_community.model.UserInfoModel;
 import com.cdkj.link_community.module.user.MyCollectionListActivity;
-import com.cdkj.link_community.module.user.MyCommentsActivity;
+import com.cdkj.link_community.module.user.MyMessageCommentsActivity;
 import com.cdkj.link_community.module.user.UserInfoUpdateActivity;
 
 import java.util.HashMap;
@@ -92,12 +92,20 @@ public class UserFragment extends BaseLazyFragment {
             MyCollectionListActivity.open(mActivity);
         });
 
-        /**/
+        /*币圈评论*/
         mBinding.rowCommentBbs.setOnClickListener(view -> {
             if (!SPUtilHelpr.isLogin(mActivity, false)) {
                 return;
             }
-            MyCommentsActivity.open(mActivity);
+            MyMessageCommentsActivity.open(mActivity);
+        });
+
+       /*币圈评论*/
+        mBinding.rowCommentMessage.setOnClickListener(view -> {
+            if (!SPUtilHelpr.isLogin(mActivity, false)) {
+                return;
+            }
+            MyMessageCommentsActivity.open(mActivity);
         });
 
         /*清除缓存*/

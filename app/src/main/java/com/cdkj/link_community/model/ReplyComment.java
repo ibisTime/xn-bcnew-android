@@ -22,7 +22,15 @@ public class ReplyComment {
     private String parentNickName;
     private String parentPhoto;
     private String isTop;
+    private String isPoint; //是否点赞
 
+    public String getIsPoint() {
+        return isPoint;
+    }
+
+    public void setIsPoint(String isPoint) {
+        this.isPoint = isPoint;
+    }
 
     public String getCode() {
         return code;

@@ -14,11 +14,11 @@ import com.cdkj.link_community.databinding.ActivityMyCommentBinding;
 import java.util.ArrayList;
 
 /**
- * 我的评论
+ * 我的币圈评论
  * Created by cdkj on 2018/3/22.
  */
 
-public class MyCommentsActivity extends AbsBaseLoadActivity {
+public class MyCoinBBSCommentsActivity extends AbsBaseLoadActivity {
 
     private ActivityMyCommentBinding mBinding;
 
@@ -26,7 +26,7 @@ public class MyCommentsActivity extends AbsBaseLoadActivity {
         if (context == null) {
             return;
         }
-        Intent intent = new Intent(context, MyCommentsActivity.class);
+        Intent intent = new Intent(context, MyCoinBBSCommentsActivity.class);
         context.startActivity(intent);
     }
 
