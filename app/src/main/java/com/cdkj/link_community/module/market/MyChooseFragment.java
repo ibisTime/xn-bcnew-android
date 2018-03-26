@@ -216,6 +216,7 @@ public class MyChooseFragment extends BaseLazyFragment {
                 if (data.isSuccess()) {
                     adapter.remove(position);
                     adapter.addData(0, market);
+                    adapter.notifyDataSetChanged();
                     UITipDialog.showSuccess(mActivity, getString(R.string.set_to_top_succ));
                 }
             }

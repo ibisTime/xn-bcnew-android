@@ -7,7 +7,7 @@ import com.cdkj.baselibrary.utils.DateUtil;
 import com.cdkj.baselibrary.utils.ImgUtils;
 import com.cdkj.baselibrary.utils.StringUtils;
 import com.cdkj.link_community.R;
-import com.cdkj.link_community.model.UserMyComment;
+import com.cdkj.link_community.model.UserMessageComment;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 
@@ -18,17 +18,17 @@ import java.util.List;
  * Created by cdkj on 2018/3/19.
  */
 
-public class UserMyCommentReplayListAdapter extends BaseQuickAdapter<UserMyComment, BaseViewHolder> {
+public class UserMyCommentReplayListAdapter extends BaseQuickAdapter<UserMessageComment, BaseViewHolder> {
 
 
-    public UserMyCommentReplayListAdapter(@Nullable List<UserMyComment> data) {
+    public UserMyCommentReplayListAdapter(@Nullable List<UserMessageComment> data) {
         super(R.layout.item_user_my_comments, data);
 
     }
 
 
     @Override
-    protected void convert(BaseViewHolder viewHolder, UserMyComment item) {
+    protected void convert(BaseViewHolder viewHolder, UserMessageComment item) {
         if (item == null) return;
 
         if (viewHolder.getLayoutPosition() % 2 == 0) {

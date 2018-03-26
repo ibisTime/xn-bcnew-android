@@ -6,30 +6,27 @@ import android.support.v4.content.ContextCompat;
 import com.cdkj.baselibrary.appmanager.SPUtilHelpr;
 import com.cdkj.baselibrary.utils.DateUtil;
 import com.cdkj.baselibrary.utils.ImgUtils;
-import com.cdkj.baselibrary.utils.StringUtils;
 import com.cdkj.link_community.R;
-import com.cdkj.link_community.model.UserMessageComment;
+import com.cdkj.link_community.model.UserBBSComment;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 
 import java.util.List;
 
 /**
- * 我的评论
+ * 我的币圈评论
  * Created by cdkj on 2018/3/19.
  */
 
-public class UserMyCommentListAdapter extends BaseQuickAdapter<UserMessageComment, BaseViewHolder> {
+public class UserBBSCommentListAdapter2 extends BaseQuickAdapter<UserBBSComment, BaseViewHolder> {
 
 
-    public UserMyCommentListAdapter(@Nullable List<UserMessageComment> data) {
-        super(R.layout.item_user_my_comments, data);
-
+    public UserBBSCommentListAdapter2(@Nullable List<UserBBSComment> data) {
+        super(R.layout.item_user_bbs_comments, data);
     }
 
-
     @Override
-    protected void convert(BaseViewHolder viewHolder, UserMessageComment item) {
+    protected void convert(BaseViewHolder viewHolder, UserBBSComment item) {
         if (item == null) return;
 
         if (viewHolder.getLayoutPosition() % 2 == 0) {
@@ -42,18 +39,12 @@ public class UserMyCommentListAdapter extends BaseQuickAdapter<UserMessageCommen
 
         viewHolder.setText(R.id.tv_name, SPUtilHelpr.getUserNickName());
         viewHolder.setText(R.id.tv_content, item.getContent());
-        viewHolder.setText(R.id.tv_replay_name, "回复 " + item.getParentNickName());
+        viewHolder.setText(R.id.tv_replay_name, "我 回复 " + item.getNickname());
         viewHolder.setText(R.id.tv_time, DateUtil.formatStringData(item.getCommentDatetime(), DateUtil.DEFAULT_DATE_FMT));
 
-        viewHolder.addOnClickListener(R.id.lin_msg);
 
-        if (item.getNews() != null) {
-
-            if (StringUtils.splitAsPicList(item.getNews().getAdvPic()).size() > 0) {
-                ImgUtils.loadQiniuRoundImg(mContext, StringUtils.splitAsPicList(item.getNews().getAdvPic()).get(0), viewHolder.getView(R.id.img_msg));
-            }
-            viewHolder.setText(R.id.tv_msg_title, item.getNews().getTitle());
-
+        if (item.getPost() != null) {
+            viewHolder.setText(R.id.tv_msg_title, item.getPost().getContent());
         }
 
     }

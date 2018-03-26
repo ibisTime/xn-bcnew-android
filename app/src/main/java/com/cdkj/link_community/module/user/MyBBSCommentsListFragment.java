@@ -16,10 +16,10 @@ import com.cdkj.baselibrary.nets.BaseResponseModelCallBack;
 import com.cdkj.baselibrary.nets.RetrofitUtils;
 import com.cdkj.baselibrary.utils.StringUtils;
 import com.cdkj.link_community.R;
-import com.cdkj.link_community.adapters.UserMyCommentReplayListAdapter;
+import com.cdkj.link_community.adapters.UserBBSCommentListAdapter;
 import com.cdkj.link_community.api.MyApiServer;
-import com.cdkj.link_community.model.UserMyComment;
-import com.cdkj.link_community.module.message.MessageDetailsActivity;
+import com.cdkj.link_community.model.UserBBSComment;
+import com.cdkj.link_community.module.coin_bbs.BBSCommentDetailsActivity;
 
 import java.util.HashMap;
 import java.util.List;
@@ -60,22 +60,13 @@ public class MyBBSCommentsListFragment extends AbsRefreshListFragment {
 
     @Override
     public RecyclerView.Adapter getListAdapter(List listData) {
-        UserMyCommentReplayListAdapter userMyCommentListAdapter = new UserMyCommentReplayListAdapter(listData);
-        userMyCommentListAdapter.setOnItemClickListener((adapter, view, position) -> {
-            UserMyComment userMyComment = userMyCommentListAdapter.getItem(position);
-            if (userMyComment == null || TextUtils.isEmpty(userMyComment.getCode())) return;
-            String noteCode = "";
-            if (userMyComment.getNews() != null) {
-                noteCode = userMyComment.getNews().getCode();
-            }
-            MyCommentDetailsActivity.open(mActivity, userMyComment.getCode(), noteCode);
-        });
+        UserBBSCommentListAdapter userMyCommentListAdapter = new UserBBSCommentListAdapter(listData);
 
-        userMyCommentListAdapter.setOnItemChildClickListener((adapter, view, position) -> {
-            UserMyComment userMyComment = userMyCommentListAdapter.getItem(position);
-            if (userMyComment == null || userMyComment.getNews() == null || TextUtils.isEmpty(userMyComment.getNews().getCode()))
+        userMyCommentListAdapter.setOnItemClickListener((adapter, view, position) -> {
+            UserBBSComment userMyComment = userMyCommentListAdapter.getItem(position);
+            if (userMyComment == null || userMyComment.getPost() == null || TextUtils.isEmpty(userMyComment.getPost().getCode()))
                 return;
-            MessageDetailsActivity.open(mActivity, userMyComment.getNews().getCode(), "");
+            BBSCommentDetailsActivity.open(mActivity, userMyComment.getPost().getCode());
         });
 
         return userMyCommentListAdapter;
@@ -93,14 +84,14 @@ public class MyBBSCommentsListFragment extends AbsRefreshListFragment {
 
         if (isShowDialog) showLoadingDialog();
 
-        Call call = RetrofitUtils.createApi(MyApiServer.class).getUserMyCommentList("628208", StringUtils.getJsonToString(map));
+        Call call = RetrofitUtils.createApi(MyApiServer.class).getUserBBSCommentList("628664", StringUtils.getJsonToString(map));
 
         addCall(call);
 
-        call.enqueue(new BaseResponseModelCallBack<ResponseInListModel<UserMyComment>>(mActivity) {
+        call.enqueue(new BaseResponseModelCallBack<ResponseInListModel<UserBBSComment>>(mActivity) {
             @Override
-            protected void onSuccess(ResponseInListModel<UserMyComment> data, String SucMessage) {
-                mRefreshHelper.setData(data.getList(), getString(R.string.no_fast_msg), 0);
+            protected void onSuccess(ResponseInListModel<UserBBSComment> data, String SucMessage) {
+                mRefreshHelper.setData(data.getList(), getString(R.string.no_comment), 0);
             }
 
             @Override

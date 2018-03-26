@@ -16,10 +16,11 @@ import com.cdkj.baselibrary.nets.BaseResponseModelCallBack;
 import com.cdkj.baselibrary.nets.RetrofitUtils;
 import com.cdkj.baselibrary.utils.StringUtils;
 import com.cdkj.link_community.R;
-import com.cdkj.link_community.adapters.UserMyCommentListAdapter;
+import com.cdkj.link_community.adapters.UserBBSCommentListAdapter;
+import com.cdkj.link_community.adapters.UserBBSCommentListAdapter2;
 import com.cdkj.link_community.api.MyApiServer;
-import com.cdkj.link_community.model.UserMessageComment;
-import com.cdkj.link_community.module.message.MessageDetailsActivity;
+import com.cdkj.link_community.model.UserBBSComment;
+import com.cdkj.link_community.module.coin_bbs.BBSCommentDetailsActivity;
 
 import java.util.HashMap;
 import java.util.List;
@@ -28,15 +29,15 @@ import java.util.Map;
 import retrofit2.Call;
 
 /**
- * 我的评论列表
+ * 我的评论列表 (我评论的)
  * Created by cdkj on 2018/3/22.
  */
 
-public class MyCommentsListFragment extends AbsRefreshListFragment {
+public class MyBBSCommentsList2Fragment extends AbsRefreshListFragment {
 
 
-    public static MyCommentsListFragment getInstanse() {
-        MyCommentsListFragment fragment = new MyCommentsListFragment();
+    public static MyBBSCommentsList2Fragment getInstanse() {
+        MyBBSCommentsList2Fragment fragment = new MyBBSCommentsList2Fragment();
         Bundle bundle = new Bundle();
         fragment.setArguments(bundle);
         return fragment;
@@ -49,7 +50,6 @@ public class MyCommentsListFragment extends AbsRefreshListFragment {
 
     @Override
     protected void onInvisible() {
-
     }
 
     @Override
@@ -61,24 +61,13 @@ public class MyCommentsListFragment extends AbsRefreshListFragment {
 
     @Override
     public RecyclerView.Adapter getListAdapter(List listData) {
-        UserMyCommentListAdapter userMyCommentListAdapter = new UserMyCommentListAdapter(listData);
+        UserBBSCommentListAdapter2 userMyCommentListAdapter = new UserBBSCommentListAdapter2(listData);
 
         userMyCommentListAdapter.setOnItemClickListener((adapter, view, position) -> {
-
-            UserMessageComment userMyComment = userMyCommentListAdapter.getItem(position);
-            if (userMyComment == null || TextUtils.isEmpty(userMyComment.getCode())) return;
-            String noteCode = "";
-            if (userMyComment.getNews() != null) {
-                noteCode = userMyComment.getNews().getCode();
-            }
-
-            MyCommentDetailsActivity.open(mActivity, userMyComment.getCode(), noteCode);
-        });
-
-        userMyCommentListAdapter.setOnItemChildClickListener((adapter, view, position) -> {
-            UserMessageComment userMyComment = userMyCommentListAdapter.getItem(position);
-            if (userMyComment == null || userMyComment.getNews() == null) return;
-            MessageDetailsActivity.open(mActivity, userMyComment.getNews().getCode(), "");
+            UserBBSComment userMyComment = userMyCommentListAdapter.getItem(position);
+            if (userMyComment == null || userMyComment.getPost() == null || TextUtils.isEmpty(userMyComment.getPost().getCode()))
+                return;
+            BBSCommentDetailsActivity.open(mActivity, userMyComment.getPost().getCode());
         });
 
         return userMyCommentListAdapter;
@@ -96,13 +85,13 @@ public class MyCommentsListFragment extends AbsRefreshListFragment {
 
         if (isShowDialog) showLoadingDialog();
 
-        Call call = RetrofitUtils.createApi(MyApiServer.class).getUserMyCommentList("628209", StringUtils.getJsonToString(map));
+        Call call = RetrofitUtils.createApi(MyApiServer.class).getUserBBSCommentList("628665", StringUtils.getJsonToString(map));
 
         addCall(call);
 
-        call.enqueue(new BaseResponseModelCallBack<ResponseInListModel<UserMessageComment>>(mActivity) {
+        call.enqueue(new BaseResponseModelCallBack<ResponseInListModel<UserBBSComment>>(mActivity) {
             @Override
-            protected void onSuccess(ResponseInListModel<UserMessageComment> data, String SucMessage) {
+            protected void onSuccess(ResponseInListModel<UserBBSComment> data, String SucMessage) {
                 mRefreshHelper.setData(data.getList(), getString(R.string.no_comment), 0);
             }
 

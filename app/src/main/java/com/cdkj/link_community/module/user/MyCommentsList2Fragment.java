@@ -18,7 +18,7 @@ import com.cdkj.baselibrary.utils.StringUtils;
 import com.cdkj.link_community.R;
 import com.cdkj.link_community.adapters.UserMyCommentReplayListAdapter;
 import com.cdkj.link_community.api.MyApiServer;
-import com.cdkj.link_community.model.UserMyComment;
+import com.cdkj.link_community.model.UserMessageComment;
 import com.cdkj.link_community.module.message.MessageDetailsActivity;
 
 import java.util.HashMap;
@@ -62,7 +62,7 @@ public class MyCommentsList2Fragment extends AbsRefreshListFragment {
     public RecyclerView.Adapter getListAdapter(List listData) {
         UserMyCommentReplayListAdapter userMyCommentListAdapter = new UserMyCommentReplayListAdapter(listData);
         userMyCommentListAdapter.setOnItemClickListener((adapter, view, position) -> {
-            UserMyComment userMyComment = userMyCommentListAdapter.getItem(position);
+            UserMessageComment userMyComment = userMyCommentListAdapter.getItem(position);
             if (userMyComment == null || TextUtils.isEmpty(userMyComment.getCode())) return;
             String noteCode = "";
             if (userMyComment.getNews() != null) {
@@ -72,7 +72,7 @@ public class MyCommentsList2Fragment extends AbsRefreshListFragment {
         });
 
         userMyCommentListAdapter.setOnItemChildClickListener((adapter, view, position) -> {
-            UserMyComment userMyComment = userMyCommentListAdapter.getItem(position);
+            UserMessageComment userMyComment = userMyCommentListAdapter.getItem(position);
             if (userMyComment == null || userMyComment.getNews() == null || TextUtils.isEmpty(userMyComment.getNews().getCode()))
                 return;
             MessageDetailsActivity.open(mActivity, userMyComment.getNews().getCode(), "");
@@ -97,10 +97,10 @@ public class MyCommentsList2Fragment extends AbsRefreshListFragment {
 
         addCall(call);
 
-        call.enqueue(new BaseResponseModelCallBack<ResponseInListModel<UserMyComment>>(mActivity) {
+        call.enqueue(new BaseResponseModelCallBack<ResponseInListModel<UserMessageComment>>(mActivity) {
             @Override
-            protected void onSuccess(ResponseInListModel<UserMyComment> data, String SucMessage) {
-                mRefreshHelper.setData(data.getList(), getString(R.string.no_fast_msg), 0);
+            protected void onSuccess(ResponseInListModel<UserMessageComment> data, String SucMessage) {
+                mRefreshHelper.setData(data.getList(), getString(R.string.no_comment), 0);
             }
 
             @Override

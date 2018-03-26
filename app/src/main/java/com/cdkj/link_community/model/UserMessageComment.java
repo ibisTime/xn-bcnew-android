@@ -7,7 +7,7 @@ import java.util.List;
  * Created by cdkj on 2018/3/24.
  */
 
-public class UserMyComment {
+public class UserMessageComment {
 
     /**
      * code : XQ20151029602582

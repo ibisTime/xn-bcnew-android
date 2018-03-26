@@ -36,6 +36,7 @@ android {
                     outputFileName = "_${defaultConfig.versionName}_${releaseTime()}.apk"
                 }
             }
+            signingConfig signingConfigs.config
         }
         debug {
             signingConfig signingConfigs.config

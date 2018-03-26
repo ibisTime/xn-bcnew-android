@@ -20,6 +20,7 @@ import com.cdkj.link_community.api.MyApiServer;
 import com.cdkj.link_community.databinding.FragmentUserBinding;
 import com.cdkj.link_community.manager.DataCleanManager;
 import com.cdkj.link_community.model.UserInfoModel;
+import com.cdkj.link_community.module.user.MyCoinBBSCommentsActivity;
 import com.cdkj.link_community.module.user.MyCollectionListActivity;
 import com.cdkj.link_community.module.user.MyMessageCommentsActivity;
 import com.cdkj.link_community.module.user.UserInfoUpdateActivity;
@@ -97,7 +98,7 @@ public class UserFragment extends BaseLazyFragment {
             if (!SPUtilHelpr.isLogin(mActivity, false)) {
                 return;
             }
-            MyMessageCommentsActivity.open(mActivity);
+            MyCoinBBSCommentsActivity.open(mActivity);
         });
 
        /*币圈评论*/

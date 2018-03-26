@@ -10,6 +10,7 @@ import com.cdkj.baselibrary.adapters.ViewPagerAdapter;
 import com.cdkj.baselibrary.base.AbsBaseLoadActivity;
 import com.cdkj.link_community.R;
 import com.cdkj.link_community.databinding.ActivityMyCommentBinding;
+import com.cdkj.link_community.module.coin_bbs.MyFocuseOnCoinBBSListFragment;
 
 import java.util.ArrayList;
 
@@ -75,8 +76,8 @@ public class MyCoinBBSCommentsActivity extends AbsBaseLoadActivity {
         //设置fragment数据
         ArrayList fragments = new ArrayList<>();
 
-        fragments.add(MyCommentsList2Fragment.getInstanse());
-        fragments.add(MyCommentsListFragment.getInstanse());
+        fragments.add(MyBBSCommentsListFragment.getInstanse());
+        fragments.add(MyBBSCommentsList2Fragment.getInstanse());
 
         mBinding.viewpager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager(), fragments));
         mBinding.viewpager.setOffscreenPageLimit(fragments.size());
