@@ -1,5 +1,6 @@
 package com.cdkj.link_community.module.market;
 
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -18,8 +19,11 @@ import com.cdkj.baselibrary.utils.StringUtils;
 import com.cdkj.link_community.R;
 import com.cdkj.link_community.adapters.CoinListAdapter;
 import com.cdkj.link_community.api.MyApiServer;
+import com.cdkj.link_community.databinding.LayoutToBbsBinding;
+import com.cdkj.link_community.model.CoinBBSInfoTotalCount;
 import com.cdkj.link_community.model.CoinListModel;
 import com.cdkj.link_community.model.MarketInterval;
+import com.cdkj.link_community.module.coin_bbs.CoinBBSDetailsIntoActivity;
 
 import org.greenrobot.eventbus.Subscribe;
 
@@ -41,7 +45,8 @@ public class CoinTypeListFragment extends AbsRefreshListFragment {
     private String mCoinType;
 
     private boolean isRequesting;
-
+    private CoinListAdapter coinListAdapte;
+    private LayoutToBbsBinding mToBBSBinding;//进吧布局
     /**
      * @param coinType 币种类型
      * @return
@@ -58,10 +63,12 @@ public class CoinTypeListFragment extends AbsRefreshListFragment {
 
     @Override
     protected void lazyLoad() {
-
-        if (mRefreshBinding == null || isFirstRequest) return;
-        isFirstRequest = true;
-        mRefreshHelper.onDefaluteMRefresh(true);
+        if (mRefreshBinding == null) return;
+        if (!isFirstRequest) {
+            isFirstRequest = true;
+            mRefreshHelper.onDefaluteMRefresh(true);
+        }
+        getToBBSinfoRequest();
 
     }
 
@@ -79,6 +86,11 @@ public class CoinTypeListFragment extends AbsRefreshListFragment {
             isFirstRequest = getArguments().getBoolean("isFirstRequest");
         }
 
+        mToBBSBinding = DataBindingUtil.inflate(getLayoutInflater(), R.layout.layout_to_bbs, null, false);
+
+        mToBBSBinding.tvName.setText(mCoinType);
+        mToBBSBinding.btnToBbs.setOnClickListener(view -> CoinBBSDetailsIntoActivity.open(mActivity, mCoinType));
+
         initRefreshHelper(MyCdConfig.LISTLIMIT);
 
         if (isFirstRequest) {
@@ -88,7 +100,7 @@ public class CoinTypeListFragment extends AbsRefreshListFragment {
 
     @Override
     public RecyclerView.Adapter getListAdapter(List listData) {
-        CoinListAdapter coinListAdapte = new CoinListAdapter(listData);
+        coinListAdapte = new CoinListAdapter(listData);
         coinListAdapte.setHeaderAndEmpty(true);
         return coinListAdapte;
     }
@@ -129,6 +141,46 @@ public class CoinTypeListFragment extends AbsRefreshListFragment {
             }
         });
 
+    }
+
+    /**
+     * 获取进吧信息
+     */
+    private void getToBBSinfoRequest() {
+
+        if (mCoinType == null) {
+            return;
+        }
+
+        Map<String, String> map = new HashMap<>();
+
+        map.put("toCoin", mCoinType);
+
+        Call call = RetrofitUtils.createApi(MyApiServer.class).getCoinBBsTotalCountDetails("628850", StringUtils.getJsonToString(map));
+
+        addCall(call);
+
+        showLoadingDialog();
+
+        call.enqueue(new BaseResponseModelCallBack<CoinBBSInfoTotalCount>(mActivity) {
+            @Override
+            protected void onSuccess(CoinBBSInfoTotalCount data, String SucMessage) {
+                if (TextUtils.equals(data.getIsExistPlate(), "1")) { //币吧存在
+                    if (coinListAdapte.getHeaderLayoutCount() == 0) {
+                        coinListAdapte.addHeaderView(mToBBSBinding.getRoot());
+                    }
+                } else {
+                    coinListAdapte.removeAllHeaderView();
+                }
+
+                mToBBSBinding.tvInfo.setText("现在有" + data.getTotalCount() + "个帖子在讨论，你也一起来吧!");
+            }
+
+            @Override
+            protected void onFinish() {
+                disMissLoading();
+            }
+        });
     }
 
     /**

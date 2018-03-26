@@ -46,8 +46,6 @@ public class PlatformListFragment extends AbsRefreshListFragment {
 
     private boolean isFirstRequest;//是否进行了第一次请求
 
-    private boolean isToBBSRequest;//是否进行了进吧信息请求
-
     private String mPlatformType;
 
     private boolean isRequesting;//是否正在请求中 用于轮询判断
