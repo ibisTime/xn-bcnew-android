@@ -31,7 +31,6 @@ import com.cdkj.link_community.R;
 import com.cdkj.link_community.adapters.BBSHotCommentListAdapter;
 import com.cdkj.link_community.adapters.CoinListAdapter;
 import com.cdkj.link_community.adapters.MessageListAdapter;
-import com.cdkj.link_community.adapters.MsgHotCommentListAdapter;
 import com.cdkj.link_community.adapters.PlatformListAdapter;
 import com.cdkj.link_community.api.MyApiServer;
 import com.cdkj.link_community.databinding.ActivityCoinBbsDetailsBinding;
@@ -40,7 +39,6 @@ import com.cdkj.link_community.model.CoinBBSDetails;
 import com.cdkj.link_community.model.CoinBBSHotCircular;
 import com.cdkj.link_community.model.CoinListModel;
 import com.cdkj.link_community.model.FastMessage;
-import com.cdkj.link_community.model.MsgDetailsComment;
 import com.cdkj.link_community.module.message.MessageDetailsActivity;
 import com.cdkj.link_community.views.MyScrollView;
 import com.cdkj.link_community.views.ViewPagerIndicator;
@@ -58,7 +56,7 @@ import retrofit2.Call;
  * Created by cdkj on 2018/3/21.
  */
 
-public class CoinBBSDetailsActivity extends AbsBaseLoadActivity {
+public class CoinBBSDetailsIntoActivity extends AbsBaseLoadActivity {
 
     private ActivityCoinBbsDetailsBinding mBinding;
 
@@ -66,13 +64,16 @@ public class CoinBBSDetailsActivity extends AbsBaseLoadActivity {
     private String mBBSCode;//币吧编号
 
     private String mToCoin;//用于获取相关连资讯 关联行情
+    private String mRequestToCoin;//请求币吧详情参数
 
     private RefreshHelper mMessageRefreshHelper;//资讯刷新相关
     private RefreshHelper mMarketRefreshHelper;//行情刷新相关
     private RefreshHelper mNewBBSCirclularRefreshHelper;//最新圈子相关
 
     private int mTabShowIndex;//底部显示页面 0 圈子 1 资讯 2行情
+
     private CoinBBSDetails.CoinBean mCoinBean;//币种类型 为空时说明是平台
+
     private ViewTreeObserver.OnGlobalLayoutListener mMoveHeightListener; //用于获取要移动的高度实现悬浮效果
     private int moveHeight = 550;
 
@@ -84,7 +85,7 @@ public class CoinBBSDetailsActivity extends AbsBaseLoadActivity {
         if (context == null) {
             return;
         }
-        Intent intent = new Intent(context, CoinBBSDetailsActivity.class);
+        Intent intent = new Intent(context, CoinBBSDetailsIntoActivity.class);
         intent.putExtra(CdRouteHelper.APPLOGIN, bbsCode);
         context.startActivity(intent);
     }
@@ -100,7 +101,7 @@ public class CoinBBSDetailsActivity extends AbsBaseLoadActivity {
     public void afterCreate(Bundle savedInstanceState) {
 
         if (getIntent() != null) {
-            mBBSCode = getIntent().getStringExtra(CdRouteHelper.APPLOGIN);
+            mRequestToCoin = getIntent().getStringExtra(CdRouteHelper.APPLOGIN);
         }
 
         mBaseBinding.titleView.setMidTitle(getString(R.string.coin_bbs));
@@ -133,7 +134,7 @@ public class CoinBBSDetailsActivity extends AbsBaseLoadActivity {
             CommentInputDialog commentInputDialog = new CommentInputDialog(this, "");
             commentInputDialog.setmSureListener(comment -> {
                 if (TextUtils.isEmpty(comment)) {
-                    UITipDialog.showFall(CoinBBSDetailsActivity.this, getString(R.string.please_input_info));
+                    UITipDialog.showFall(CoinBBSDetailsIntoActivity.this, getString(R.string.please_input_info));
                     return;
                 }
 
@@ -164,7 +165,7 @@ public class CoinBBSDetailsActivity extends AbsBaseLoadActivity {
      */
     private void initMoveListener() {
 
-        mMoveHeightListener =new ViewTreeObserver.OnGlobalLayoutListener() {
+        mMoveHeightListener = new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
                 moveHeight = mBinding.linTop.getHeight() + DisplayHelper.dpToPx(20);
@@ -301,7 +302,7 @@ public class CoinBBSDetailsActivity extends AbsBaseLoadActivity {
                 MessageListAdapter msgAdapter = new MessageListAdapter(listData);
 
                 msgAdapter.setOnItemClickListener((adapter, view, position) -> {
-                    MessageDetailsActivity.open(CoinBBSDetailsActivity.this, msgAdapter.getItem(position).getCode(), "");
+                    MessageDetailsActivity.open(CoinBBSDetailsIntoActivity.this, msgAdapter.getItem(position).getCode(), "");
                 });
 
                 return msgAdapter;
@@ -395,7 +396,7 @@ public class CoinBBSDetailsActivity extends AbsBaseLoadActivity {
 
         bbsHotCommentListAdapter.setOnItemClickListener((adapter, view, position) -> {
             if (bbsHotCommentListAdapter.getItem(position) == null) return;
-            BBSCommentDetailsActivity.open(CoinBBSDetailsActivity.this, bbsHotCommentListAdapter.getItem(position).getCode());
+            BBSCommentDetailsActivity.open(CoinBBSDetailsIntoActivity.this, bbsHotCommentListAdapter.getItem(position).getCode());
         });
 
         bbsHotCommentListAdapter.setOnItemChildClickListener((adapter, view, position) -> {
@@ -407,16 +408,16 @@ public class CoinBBSDetailsActivity extends AbsBaseLoadActivity {
 
     public void getBBSDetails() {
 
-        if (TextUtils.isEmpty(mBBSCode)) return;
+        if (TextUtils.isEmpty(mRequestToCoin)) return;
 
         Map<String, String> map = new HashMap<>();
 
-        map.put("code", mBBSCode);
+        map.put("toCoin", mRequestToCoin);
         map.put("userId", SPUtilHelpr.getUserId());
 
         showLoadingDialog();
 
-        Call call = RetrofitUtils.createApi(MyApiServer.class).getCoinBBsDetails("628238", StringUtils.getJsonToString(map));
+        Call call = RetrofitUtils.createApi(MyApiServer.class).getCoinBBsDetails("628239", StringUtils.getJsonToString(map));
 
         call.enqueue(new BaseResponseModelCallBack<CoinBBSDetails>(this) {
             @Override
@@ -443,6 +444,7 @@ public class CoinBBSDetailsActivity extends AbsBaseLoadActivity {
         if (data == null) return;
 
         mToCoin = data.getToCoin();
+        mBBSCode = data.getCode();
         mCoinBean = data.getCoin();
 
         if (isCoinType()) {
@@ -480,7 +482,7 @@ public class CoinBBSDetailsActivity extends AbsBaseLoadActivity {
      * @return
      */
     private boolean isCoinType() {
-        return mCoinBean!=null;//如果为空说明是平台币吧 否则是币种币吧
+        return mCoinBean != null;//如果为空说明是平台币吧 否则是币种币吧
     }
 
 
@@ -730,10 +732,10 @@ public class CoinBBSDetailsActivity extends AbsBaseLoadActivity {
             protected void onSuccess(IsSuccessModes data, String SucMessage) {
 
                 if (data.isSuccess()) {
-                    UITipDialog.showSuccess(CoinBBSDetailsActivity.this, getString(R.string.comment_succ));
+                    UITipDialog.showSuccess(CoinBBSDetailsIntoActivity.this, getString(R.string.comment_succ));
                     mNewBBSCirclularRefreshHelper.onDefaluteMRefresh(false);
                 } else {
-                    UITipDialog.showSuccess(CoinBBSDetailsActivity.this, getString(R.string.comment_fall));
+                    UITipDialog.showSuccess(CoinBBSDetailsIntoActivity.this, getString(R.string.comment_fall));
                 }
             }
 
@@ -770,10 +772,10 @@ public class CoinBBSDetailsActivity extends AbsBaseLoadActivity {
             protected void onSuccess(CodeModel data, String SucMessage) {
 
                 if (!TextUtils.isEmpty(data.getCode())) {
-                    UITipDialog.showSuccess(CoinBBSDetailsActivity.this, getString(R.string.release_succ));
+                    UITipDialog.showSuccess(CoinBBSDetailsIntoActivity.this, getString(R.string.release_succ));
                     mNewBBSCirclularRefreshHelper.onDefaluteMRefresh(false);
                 } else {
-                    UITipDialog.showSuccess(CoinBBSDetailsActivity.this, getString(R.string.release_fail));
+                    UITipDialog.showSuccess(CoinBBSDetailsIntoActivity.this, getString(R.string.release_fail));
                 }
             }
 

@@ -94,5 +94,6 @@
     <string name="please_input_info">请输入内容:</string>
     <string name="lod_note">原文</string>
     <string name="no_comment">暂无评论</string>
+    <string name="about_us">关于我们</string>
 
 </resources>

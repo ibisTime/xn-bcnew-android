@@ -7,6 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.cdkj.baselibrary.activitys.WebViewActivity;
+import com.cdkj.baselibrary.appmanager.CdRouteHelper;
 import com.cdkj.baselibrary.appmanager.SPUtilHelpr;
 import com.cdkj.baselibrary.base.BaseLazyFragment;
 import com.cdkj.baselibrary.dialog.CommonDialog;
@@ -101,12 +103,16 @@ public class UserFragment extends BaseLazyFragment {
             MyCoinBBSCommentsActivity.open(mActivity);
         });
 
-       /*币圈评论*/
+       /*资讯评论*/
         mBinding.rowCommentMessage.setOnClickListener(view -> {
             if (!SPUtilHelpr.isLogin(mActivity, false)) {
                 return;
             }
             MyMessageCommentsActivity.open(mActivity);
+        });
+
+        mBinding.rowAbout.setOnClickListener(view -> {
+            CdRouteHelper.openWebViewActivityForkey(getString(R.string.about_us), "about_us");
         });
 
         /*清除缓存*/

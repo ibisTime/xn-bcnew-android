@@ -6,6 +6,7 @@ import com.cdkj.baselibrary.api.ResponseInListModel;
 import com.cdkj.link_community.model.AddMarketModel;
 import com.cdkj.link_community.model.CoinBBSDetails;
 import com.cdkj.link_community.model.CoinBBSHotCircular;
+import com.cdkj.link_community.model.CoinBBSInfoTotalCount;
 import com.cdkj.link_community.model.CoinBBSListModel;
 import com.cdkj.link_community.model.CoinListModel;
 import com.cdkj.link_community.model.CoinPlatformType;
@@ -43,6 +44,16 @@ public interface MyApiServer {
     @FormUrlEncoded
     @POST("api")
     Call<BaseResponseModel<CoinBBSDetails>> getCoinBBsDetails(@Field("code") String code, @Field("json") String json);
+    /**
+     * 获取币吧统计信息
+     *
+     * @param code
+     * @param json
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("api")
+    Call<BaseResponseModel<CoinBBSInfoTotalCount>> getCoinBBsTotalCountDetails(@Field("code") String code, @Field("json") String json);
 
 
     /**

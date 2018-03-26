@@ -88,7 +88,9 @@ public class CoinTypeListFragment extends AbsRefreshListFragment {
 
     @Override
     public RecyclerView.Adapter getListAdapter(List listData) {
-        return new CoinListAdapter(listData);
+        CoinListAdapter coinListAdapte = new CoinListAdapter(listData);
+        coinListAdapte.setHeaderAndEmpty(true);
+        return coinListAdapte;
     }
 
     @Override

@@ -1,11 +1,13 @@
 package com.cdkj.link_community.module.market;
 
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import com.cdkj.baselibrary.api.ResponseInListModel;
@@ -20,8 +22,12 @@ import com.cdkj.link_community.R;
 import com.cdkj.link_community.adapters.CoinListAdapter;
 import com.cdkj.link_community.adapters.PlatformListAdapter;
 import com.cdkj.link_community.api.MyApiServer;
+import com.cdkj.link_community.databinding.LayoutToBbsBinding;
+import com.cdkj.link_community.model.CoinBBSInfoTotalCount;
 import com.cdkj.link_community.model.CoinListModel;
 import com.cdkj.link_community.model.MarketInterval;
+import com.cdkj.link_community.module.coin_bbs.CoinBBSDetailsActivity;
+import com.cdkj.link_community.module.coin_bbs.CoinBBSDetailsIntoActivity;
 
 import org.greenrobot.eventbus.Subscribe;
 
@@ -40,9 +46,15 @@ public class PlatformListFragment extends AbsRefreshListFragment {
 
     private boolean isFirstRequest;//是否进行了第一次请求
 
+    private boolean isToBBSRequest;//是否进行了进吧信息请求
+
     private String mPlatformType;
 
     private boolean isRequesting;//是否正在请求中 用于轮询判断
+
+    private LayoutToBbsBinding mToBBSBinding;//进吧布局
+    private PlatformListAdapter platformListAdapter;
+
 
     /**
      * @param platformType 币种类型
@@ -60,12 +72,14 @@ public class PlatformListFragment extends AbsRefreshListFragment {
 
     @Override
     protected void lazyLoad() {
-
-        if (mRefreshBinding == null || isFirstRequest) return;
-        isFirstRequest = true;
-        mRefreshHelper.onDefaluteMRefresh(true);
-
+        if (mRefreshBinding == null) return;
+        if (!isFirstRequest) {
+            isFirstRequest = true;
+            mRefreshHelper.onDefaluteMRefresh(true);
+        }
+        getToBBSinfoRequest();
     }
+
 
     @Override
     protected void onInvisible() {
@@ -81,16 +95,24 @@ public class PlatformListFragment extends AbsRefreshListFragment {
             isFirstRequest = getArguments().getBoolean("isFirstRequest");
         }
 
+        mToBBSBinding = DataBindingUtil.inflate(getLayoutInflater(), R.layout.layout_to_bbs, null, false);
+
+        mToBBSBinding.tvName.setText(mPlatformType);
+        mToBBSBinding.btnToBbs.setOnClickListener(view -> CoinBBSDetailsIntoActivity.open(mActivity, mPlatformType));
+
         initRefreshHelper(MyCdConfig.LISTLIMIT);
 
         if (isFirstRequest) {
             mRefreshHelper.onDefaluteMRefresh(true);
+            getToBBSinfoRequest();
         }
     }
 
     @Override
     public RecyclerView.Adapter getListAdapter(List listData) {
-        return new PlatformListAdapter(listData);
+        platformListAdapter = new PlatformListAdapter(listData);
+        platformListAdapter.setHeaderAndEmpty(true);
+        return platformListAdapter;
     }
 
     @Override
@@ -130,6 +152,47 @@ public class PlatformListFragment extends AbsRefreshListFragment {
         });
 
     }
+
+    /**
+     * 获取进吧信息
+     */
+    private void getToBBSinfoRequest() {
+
+        if (mPlatformType == null) {
+            return;
+        }
+
+        Map<String, String> map = new HashMap<>();
+
+        map.put("toCoin", mPlatformType);
+
+        Call call = RetrofitUtils.createApi(MyApiServer.class).getCoinBBsTotalCountDetails("628850", StringUtils.getJsonToString(map));
+
+        addCall(call);
+
+        showLoadingDialog();
+
+        call.enqueue(new BaseResponseModelCallBack<CoinBBSInfoTotalCount>(mActivity) {
+            @Override
+            protected void onSuccess(CoinBBSInfoTotalCount data, String SucMessage) {
+                if (TextUtils.equals(data.getIsExistPlate(), "1")) { //币吧存在
+                    if (platformListAdapter.getHeaderLayoutCount() == 0) {
+                        platformListAdapter.addHeaderView(mToBBSBinding.getRoot());
+                    }
+                } else {
+                    platformListAdapter.removeAllHeaderView();
+                }
+
+                mToBBSBinding.tvInfo.setText("现在有" + data.getTotalCount() + "个帖子在讨论，你也一起来吧!");
+            }
+
+            @Override
+            protected void onFinish() {
+                disMissLoading();
+            }
+        });
+    }
+
 
     /**
      * 轮询刷新

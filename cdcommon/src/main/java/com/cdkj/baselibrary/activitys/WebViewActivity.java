@@ -51,6 +51,7 @@ public class WebViewActivity extends AbsBaseLoadActivity {
     public static final String WEBVIEWURL = "url";
 
 
+
     @Override
     public View addMainView() {
         mBinding = DataBindingUtil.inflate(getLayoutInflater(), R.layout.activity_webview, null, false);
@@ -135,7 +136,7 @@ public class WebViewActivity extends AbsBaseLoadActivity {
         map.put("systemCode", MyCdConfig.SYSTEMCODE);
         map.put("companyCode", MyCdConfig.COMPANYCODE);
 
-        Call call = RetrofitUtils.getBaseAPiService().getKeySystemInfo("805917", StringUtils.getJsonToString(map));
+        Call call = RetrofitUtils.getBaseAPiService().getKeySystemInfo("628917", StringUtils.getJsonToString(map));
 
         addCall(call);
 
