@@ -29,6 +29,16 @@ public class UserMessageComment {
     private String commentDatetime;
     private String remark;
     private String photo;
+    private String isMyComment; //1 我回复别人
+
+    public String getIsMyComment() {
+        return isMyComment;
+    }
+
+    public void setIsMyComment(String isMyComment) {
+        this.isMyComment = isMyComment;
+    }
+
     private NewsBean news;
 
     public String getParentNickName() {

@@ -115,7 +115,7 @@ public class PlatformListFragment extends AbsRefreshListFragment {
 
     @Override
     public void getListRequest(int pageindex, int limit, boolean isShowDialog) {
-
+        getToBBSinfoRequest();
         if (TextUtils.isEmpty(mPlatformType)) return;
 
         Map<String, String> map = new HashMap<>();

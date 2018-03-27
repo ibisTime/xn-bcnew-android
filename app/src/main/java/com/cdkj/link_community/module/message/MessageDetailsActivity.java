@@ -120,6 +120,8 @@ public class MessageDetailsActivity extends AbsBaseLoadActivity {
         ((DefaultItemAnimator) mBinding.contentLayout.recyclerViewHotComment.getItemAnimator()).setSupportsChangeAnimations(false);
         ((DefaultItemAnimator) mBinding.contentLayout.recyclerViewRecommended.getItemAnimator()).setSupportsChangeAnimations(false);
 
+        mBinding.contentLayout.webView.setVerticalScrollBarEnabled(false); //垂直不显示滚动条
+
         initRefreshHelper();
         initListener();
     }

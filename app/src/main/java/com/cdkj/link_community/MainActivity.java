@@ -1,6 +1,8 @@
 package com.cdkj.link_community;
 
 
+import android.content.Context;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.IntDef;
@@ -56,6 +58,14 @@ public class MainActivity extends AbsBaseLoadActivity {
 
 
     private ActivityMainBinding mBinding;
+
+    public static void open(Context context) {
+        if (context == null) {
+            return;
+        }
+        Intent intent = new Intent(context, MainActivity.class);
+        context.startActivity(intent);
+    }
 
 
     /**

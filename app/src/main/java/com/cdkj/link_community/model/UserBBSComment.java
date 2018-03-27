@@ -35,7 +35,16 @@ public class UserBBSComment {
     private String status;
     private String nickname;
     private String photo;
+    private String isMyComment; //1 我回复别人
     private PostBean post;
+
+    public String getIsMyComment() {
+        return isMyComment;
+    }
+
+    public void setIsMyComment(String isMyComment) {
+        this.isMyComment = isMyComment;
+    }
 
     public String getCode() {
         return code;

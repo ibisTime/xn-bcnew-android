@@ -90,6 +90,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:background="@null"
+                    android:textColor="@color/app_hint_color"
                     android:hint="@string/validation_code"
                     android:textColorHint="@color/app_text_color"
                     android:textSize="15sp" />

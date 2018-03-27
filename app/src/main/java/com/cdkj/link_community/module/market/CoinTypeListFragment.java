@@ -108,7 +108,7 @@ public class CoinTypeListFragment extends AbsRefreshListFragment {
 
     @Override
     public void getListRequest(int pageindex, int limit, boolean isShowDialog) {
-
+        getToBBSinfoRequest();
         if (TextUtils.isEmpty(mCoinType)) return;
 
         Map<String, String> map = new HashMap<>();

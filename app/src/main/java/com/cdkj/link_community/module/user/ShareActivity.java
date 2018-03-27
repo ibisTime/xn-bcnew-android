@@ -95,6 +95,7 @@ public class ShareActivity extends Activity {
 
         mbinding.linShareToQq.setOnClickListener(view -> {
             QqShareUtil.shareMsg(this, mTitle, mContent, mShareUrl, mPhotoUrl);
+            finish();
         });
 
     }

@@ -129,6 +129,20 @@
             android:theme="@style/ActivityDialogStyleBottom"
             android:windowSoftInputMode="adjustPan" />
 
+        <!--用户中心 资讯评论 回复-->
+        <activity
+            android:name=".module.user.UserCenterMessageRepyListActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityDialogStyleBottom"
+            android:windowSoftInputMode="adjustPan" />
+
+        <!--用户中心 资讯评论 回复-->
+        <activity
+            android:name=".module.user.UserCenterBBSRepyListActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityDialogStyleBottom"
+            android:windowSoftInputMode="adjustPan" />
+
         <!-- 微信分享回调 -->
         <activity
             android:name="wxapi.WXEntryActivity"
@@ -143,8 +157,10 @@
             android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
+
                 <data android:scheme="1106791506" />
             </intent-filter>
         </activity>

@@ -2,13 +2,9 @@ package com.cdkj.link_community;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
 import android.widget.ImageView;
 
 import com.cdkj.baselibrary.base.BaseActivity;
-import com.cdkj.baselibrary.utils.UIStatusBarHelper;
-import com.cdkj.link_community.manager.MyRouteHelper;
-import com.cdkj.link_community.module.coin_bbs.CoinBBSDetailsActivity;
 
 import java.util.concurrent.TimeUnit;
 
@@ -44,7 +40,7 @@ public class WelcomeAcitivity extends BaseActivity {
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(aLong -> {
-                    MyRouteHelper.openMain();
+                    MainActivity.open(this);
                     finish();
                 }, Throwable::printStackTrace));
     }
