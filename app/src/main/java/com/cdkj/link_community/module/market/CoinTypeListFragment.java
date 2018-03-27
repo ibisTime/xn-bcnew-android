@@ -47,6 +47,7 @@ public class CoinTypeListFragment extends AbsRefreshListFragment {
     private boolean isRequesting;
     private CoinListAdapter coinListAdapte;
     private LayoutToBbsBinding mToBBSBinding;//进吧布局
+
     /**
      * @param coinType 币种类型
      * @return
@@ -160,7 +161,6 @@ public class CoinTypeListFragment extends AbsRefreshListFragment {
 
         addCall(call);
 
-        showLoadingDialog();
 
         call.enqueue(new BaseResponseModelCallBack<CoinBBSInfoTotalCount>(mActivity) {
             @Override
@@ -178,7 +178,6 @@ public class CoinTypeListFragment extends AbsRefreshListFragment {
 
             @Override
             protected void onFinish() {
-                disMissLoading();
             }
         });
     }

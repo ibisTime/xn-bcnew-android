@@ -76,7 +76,7 @@ public class BBSCommentDetailsActivity extends AbsBaseLoadActivity {
 
     @Override
     public void afterCreate(Bundle savedInstanceState) {
-        mBaseBinding.titleView.setMidTitle("回复详情");
+        mBaseBinding.titleView.setMidTitle(getString(R.string.commen_details));
 
         if (getIntent() != null) {
             mCommentCode = getIntent().getStringExtra(CdRouteHelper.APPLOGIN);

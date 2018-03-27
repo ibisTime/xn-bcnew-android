@@ -99,5 +99,6 @@
     <string name="birthday_update_succ">生日修改成功</string>
     <string name="collect_succ">收藏成功</string>
     <string name="collect_cancel_succ">取消收藏成功</string>
+    <string name="commen_details">评论详情</string>
 
 </resources>

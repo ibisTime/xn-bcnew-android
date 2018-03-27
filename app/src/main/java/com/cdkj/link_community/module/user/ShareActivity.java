@@ -20,6 +20,7 @@ import com.uuzuche.lib_zxing.decoding.Intents;
 
 
 /**
+ * 分享界面
  * Created by cdkj on 2017/8/1.
  */
 

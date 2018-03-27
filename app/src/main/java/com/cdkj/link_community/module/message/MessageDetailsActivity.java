@@ -75,6 +75,7 @@ public class MessageDetailsActivity extends AbsBaseLoadActivity {
     private MessageDetails messageDetails;
 
     private String mSharePhotoUrl;//要分分享的图片url
+    private String mShareContent;//要分享的内容
 
 
     /**
@@ -281,10 +282,10 @@ public class MessageDetailsActivity extends AbsBaseLoadActivity {
 
         if (data == null) return;
 
-        if(StringUtils.splitAsPicList(data.getAdvPic()).size()>0){
+        if (StringUtils.splitAsPicList(data.getAdvPic()).size() > 0) {
             mSharePhotoUrl = StringUtils.splitAsPicList(data.getAdvPic()).get(0);
         }
-
+        mShareContent = StringUtils.subString(data.getContent(), 0, 150);
 
         mBaseBinding.titleView.setMidTitle(data.getTypeName());
 
@@ -632,11 +633,11 @@ public class MessageDetailsActivity extends AbsBaseLoadActivity {
                 if (data.isSuccess()) {
                     if (messageDetails != null) {
                         if (TextUtils.equals(messageDetails.getIsCollect(), "0")) {
-                            UITipDialog.showSuccess(MessageDetailsActivity.this,getString(R.string.collect_succ));
+                            UITipDialog.showSuccess(MessageDetailsActivity.this, getString(R.string.collect_succ));
                             messageDetails.setIsCollect("1");
                             mBinding.imgCollection.setImageResource(R.drawable.user_collection);
                         } else {
-                            UITipDialog.showSuccess(MessageDetailsActivity.this,getString(R.string.collect_cancel_succ));
+                            UITipDialog.showSuccess(MessageDetailsActivity.this, getString(R.string.collect_cancel_succ));
                             messageDetails.setIsCollect("0");
                             mBinding.imgCollection.setImageResource(R.drawable.callection_un);
                         }
@@ -682,11 +683,11 @@ public class MessageDetailsActivity extends AbsBaseLoadActivity {
                 String shareTitle = mBinding.contentLayout.tvTitle.getText().toString();
 
                 if (type == 0) {
-                    WxUtil.shareToWX(MessageDetailsActivity.this, data.getCvalue() + "?code=" + mCode, shareTitle, "内容");
+                    WxUtil.shareToWX(MessageDetailsActivity.this, data.getCvalue() + "?code=" + mCode, shareTitle, mShareContent);
                 } else if (type == 1) {
-                    WxUtil.shareToPYQ(MessageDetailsActivity.this, data.getCvalue() + "?code=" + mCode, shareTitle, "内容");
+                    WxUtil.shareToPYQ(MessageDetailsActivity.this, data.getCvalue() + "?code=" + mCode, shareTitle, mShareContent);
                 } else {
-                    ShareActivity.open(MessageDetailsActivity.this, data.getCvalue() + "?code=" + mCode, shareTitle, "内容", mSharePhotoUrl);
+                    ShareActivity.open(MessageDetailsActivity.this, data.getCvalue() + "?code=" + mCode, shareTitle, mShareContent, mSharePhotoUrl);
                 }
 
             }

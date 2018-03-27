@@ -463,18 +463,19 @@ public class CoinBBSDetailsIntoActivity extends AbsBaseLoadActivity {
             mBinding.tvIssueMarket.setText(data.getCoin().getMarketCap());
             mBinding.tvIssueRank.setText(data.getCoin().getRank());
 
-            mBinding.linCirculation.setVisibility(View.VISIBLE);
-            mBinding.linIssue.setVisibility(View.VISIBLE);
-            mBinding.linIssueMarket.setVisibility(View.VISIBLE);
-            mBinding.linIssueRank.setVisibility(View.VISIBLE);
+
         } else {
-            mBinding.linCirculation.setVisibility(View.GONE);
-            mBinding.linIssue.setVisibility(View.GONE);
-            mBinding.linIssueMarket.setVisibility(View.GONE);
-            mBinding.linIssueRank.setVisibility(View.GONE);
+            mBinding.tvCirculation.setText("- -");
+            mBinding.tvIssue.setText("- -");
+            mBinding.tvIssueMarket.setText("- -");
+            mBinding.tvIssueRank.setText("- -");
+
+            mBinding.tvTodayChange.setText("");
+            mBinding.tvTodayVol.setText("");
+
         }
         mBinding.tvName.setText("#" + data.getName() + "#");
-        mBinding.tvFocusOnNum.setText(getString(R.string.focus_num) + data.getPostCount());
+        mBinding.tvFocusOnNum.setText(getString(R.string.focus_num) + data.getKeepCount());
         mBinding.tvPostNum.setText(getString(R.string.post_num) + data.getPostCount());
         mBinding.tvTodayNum.setText(data.getDayCommentCount() + "");
 

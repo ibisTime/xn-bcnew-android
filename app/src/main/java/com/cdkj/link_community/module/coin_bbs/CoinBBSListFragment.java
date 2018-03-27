@@ -184,8 +184,10 @@ public class CoinBBSListFragment extends AbsRefreshListFragment {
 
                     if (TextUtils.equals(coinBBSListModel.getIsKeep(), "1")) {
                         coinBBSListModel.setIsKeep("0");
+                        coinBBSListModel.setKeepCount(coinBBSListModel.getKeepCount() - 1);
                         UITipDialog.showSuccess(mActivity, getString(R.string.bbs_cancel_succ));
                     } else {
+                        coinBBSListModel.setKeepCount(coinBBSListModel.getKeepCount() + 1);
                         UITipDialog.showSuccess(mActivity, getString(R.string.bbs_focuse_on_succ));
                         coinBBSListModel.setIsKeep("1");
                     }

@@ -117,8 +117,6 @@ public class CoinBBSDetailsActivity extends AbsBaseLoadActivity {
         initMoveListener();
         initBBSCirclularRefresh();
         initMessageRefresh();
-        initMarketRefresh();
-
         initListener();
 
     }
@@ -266,6 +264,9 @@ public class CoinBBSDetailsActivity extends AbsBaseLoadActivity {
                         mBinding.bottomLayout.linComment.setVisibility(View.GONE);
                         break;
                     case 2:
+                        if (mMarketRefreshHelper == null) {
+                            initMarketRefresh();
+                        }
                         mMarketRefreshHelper.onDefaluteMRefresh(true);
                         mBinding.relaLeft.setVisibility(View.GONE);
                         mBinding.recyclerViewMiddel.setVisibility(View.GONE);
@@ -451,7 +452,7 @@ public class CoinBBSDetailsActivity extends AbsBaseLoadActivity {
         mCoinBean = data.getCoin();
 
         if (isCoinType()) {
-            mBinding.tvTodayChange.setText("涨跌浮:" + data.getCoin().getTodayChange());
+            mBinding.tvTodayChange.setText("涨跌幅:" + data.getCoin().getTodayChange());
             mBinding.tvTodayVol.setText("成交(24h):" + data.getCoin().getTodayVol());
 
             mBinding.tvCirculation.setText(data.getCoin().getTotalSupply());
@@ -459,20 +460,21 @@ public class CoinBBSDetailsActivity extends AbsBaseLoadActivity {
             mBinding.tvIssueMarket.setText(data.getCoin().getMarketCap());
             mBinding.tvIssueRank.setText(data.getCoin().getRank());
 
-            mBinding.linCirculation.setVisibility(View.VISIBLE);
-            mBinding.linIssue.setVisibility(View.VISIBLE);
-            mBinding.linIssueMarket.setVisibility(View.VISIBLE);
-            mBinding.linIssueRank.setVisibility(View.VISIBLE);
+
         } else {
-            mBinding.linCirculation.setVisibility(View.GONE);
-            mBinding.linIssue.setVisibility(View.GONE);
-            mBinding.linIssueMarket.setVisibility(View.GONE);
-            mBinding.linIssueRank.setVisibility(View.GONE);
+            mBinding.tvCirculation.setText("- -");
+            mBinding.tvIssue.setText("- -");
+            mBinding.tvIssueMarket.setText("- -");
+            mBinding.tvIssueRank.setText("- -");
+
+            mBinding.tvTodayChange.setText("");
+            mBinding.tvTodayVol.setText("");
+
         }
         mBinding.tvName.setText("#" + data.getName() + "#");
-        mBinding.tvFocusOnNum.setText(getString(R.string.focus_num) + data.getPostCount());
+        mBinding.tvFocusOnNum.setText(getString(R.string.focus_num) + data.getKeepCount());
         mBinding.tvPostNum.setText(getString(R.string.post_num) + data.getPostCount());
-        mBinding.tvTodayNum.setText(data.getDayCommentCount() + "");
+        mBinding.tvTodayNum.setText(data.getDayCommentCount() + "dfdf");
 
         mBinding.expandTextView.setText(data.getIntroduce() + "");
 

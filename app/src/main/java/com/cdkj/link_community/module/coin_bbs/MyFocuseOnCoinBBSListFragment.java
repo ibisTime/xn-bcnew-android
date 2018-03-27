@@ -19,11 +19,9 @@ import com.cdkj.baselibrary.nets.BaseResponseModelCallBack;
 import com.cdkj.baselibrary.nets.RetrofitUtils;
 import com.cdkj.baselibrary.utils.StringUtils;
 import com.cdkj.link_community.R;
-import com.cdkj.link_community.adapters.CoinBBSListAdapter;
 import com.cdkj.link_community.adapters.MyCoinBBSListAdapter;
 import com.cdkj.link_community.api.MyApiServer;
 import com.cdkj.link_community.model.CoinBBSListModel;
-import com.cdkj.link_community.module.coin_bbs.search.SearchCoinBBSActivity;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -57,7 +55,7 @@ public class MyFocuseOnCoinBBSListFragment extends AbsRefreshListFragment {
     @Override
     protected void lazyLoad() {
 
-        if (mRefreshBinding == null || isFirstRequest) {
+        if (mRefreshBinding == null) {
             return;
         }
         mRefreshHelper.onDefaluteMRefresh(true);
@@ -176,7 +174,7 @@ public class MyFocuseOnCoinBBSListFragment extends AbsRefreshListFragment {
                 if (data.isSuccess()) {
                     UITipDialog.showSuccess(mActivity, getString(R.string.bbs_cancel_succ));
                     adapter.remove(position);
-                    if (adapter.getData().isEmpty()) {
+                    if (adapter.getData().size() == 0) {
                         adapter.notifyDataSetChanged();
                     }
                 }

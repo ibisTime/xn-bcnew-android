@@ -168,7 +168,6 @@ public class PlatformListFragment extends AbsRefreshListFragment {
 
         addCall(call);
 
-        showLoadingDialog();
 
         call.enqueue(new BaseResponseModelCallBack<CoinBBSInfoTotalCount>(mActivity) {
             @Override
@@ -186,7 +185,6 @@ public class PlatformListFragment extends AbsRefreshListFragment {
 
             @Override
             protected void onFinish() {
-                disMissLoading();
             }
         });
     }

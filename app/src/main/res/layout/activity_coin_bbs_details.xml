@@ -55,9 +55,9 @@
                                 android:layout_height="wrap_content"
                                 android:paddingLeft="@dimen/layout_left_interval"
                                 android:paddingRight="@dimen/layout_right_interval"
-                                tools:text="sdfsdfsfsd"
-                                tools:textColor="@color/text_black_cd"
-                                tools:textSize="18sp" />
+                                android:textColor="@color/text_black_cd"
+                                android:textSize="18sp"
+                                tools:text="sdfsdfsfsd" />
 
                             <LinearLayout
                                 android:layout_width="match_parent"
@@ -72,9 +72,9 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    tools:text="sdfsdfsfsd"
-                                    tools:textColor="@color/text_black_cd"
-                                    tools:textSize="15sp" />
+                                    android:textColor="@color/text_black_cd"
+                                    android:textSize="15sp"
+                                    tools:text="sdfsdfsfsd" />
 
                                 <TextView
                                     android:id="@+id/tv_todayChange"
@@ -83,9 +83,9 @@
                                     android:layout_gravity="right"
                                     android:layout_weight="1"
                                     android:gravity="center|right"
-                                    tools:text="sdfsdfssdfsdfsfsdsdfsdfsfsdsdfsdfsfsdsdfsdfsfsdfsd"
-                                    tools:textColor="@color/app_text_gray"
-                                    tools:textSize="15sp" />
+                                    android:textColor="@color/app_text_gray"
+                                    android:textSize="15sp"
+                                    tools:text="sdfsdfssdfsdfsfsdsdfsdfsfsdsdfsdfsfsdsdfsdfsfsdfsd" />
 
 
                             </LinearLayout>
@@ -103,9 +103,9 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    tools:text="sdfsdfsfsd"
-                                    tools:textColor="@color/text_black_cd"
-                                    tools:textSize="15sp" />
+                                    android:textColor="@color/text_black_cd"
+                                    android:textSize="15sp"
+                                    tools:text="sdfsdfsfsd" />
 
                                 <TextView
                                     android:id="@+id/tv_today_vol"
@@ -113,9 +113,9 @@
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
                                     android:gravity="center|right"
-                                    tools:text="sdfsdfssdfsdfsfsdsdfsdfsfsdsdfsdfsfsdsdfsdfsfsdfsd"
-                                    tools:textColor="@color/app_text_gray"
-                                    tools:textSize="15sp" />
+                                    android:textColor="@color/app_text_gray"
+                                    android:textSize="15sp"
+                                    tools:text="sdfsdfssdfsdfsfsdsdfsdfsfsdsdfsdfsfsdsdfsdfsfsdfsd" />
 
                             </LinearLayout>
 
@@ -131,26 +131,26 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="@string/bbs_today_num"
-                                    tools:textColor="@color/text_black_cd"
-                                    tools:textSize="15sp" />
+                                    android:textColor="@color/text_black_cd"
+                                    android:textSize="15sp" />
 
                                 <TextView
                                     android:id="@+id/tv_today_num"
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    tools:text="sdfsdfsfsd"
-                                    tools:textColor="@color/red"
-                                    tools:textSize="15sp" />
+                                    android:textColor="@color/red"
+                                    android:textSize="15sp"
+                                    tools:text="sdfsdfsfsd" />
 
                                 <TextView
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
                                     android:gravity="center|right"
-                                    tools:text="sdfsdfssdfsdfsfsdsdfsdfsfsdsdfsdfsfsdsdfsdfsfsdfsd"
-                                    tools:textColor="@color/app_text_gray"
-                                    tools:textSize="15sp" />
+                                    android:textColor="@color/app_text_gray"
+                                    android:textSize="15sp"
+                                    tools:text="sdfsdfssdfsdfsfsdsdfsdfsfsdsdfsdfsfsdsdfsdfsfsdfsd" />
 
 
                             </LinearLayout>
@@ -175,9 +175,9 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginLeft="10dp"
                                     android:layout_marginRight="10dp"
-                                    tools:text="sdfdsfsdfsf"
-                                    tools:textColor="#666666"
-                                    tools:textSize="16sp" />
+                                    android:textColor="#666666"
+                                    android:textSize="16sp"
+                                    tools:text="sdfdsfsdfsf" />
 
                                 <LinearLayout
                                     android:id="@id/expand_collapse_layout"
@@ -191,9 +191,9 @@
                                         android:id="@id/expand_collapse_tv"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        tools:text="@string/click_open"
-                                        tools:textColor="@color/app_text_gray"
-                                        tools:textSize="14sp" />
+                                        android:textColor="@color/app_text_gray"
+                                        android:textSize="14sp"
+                                        tools:text="@string/click_open" />
 
                                     <ImageView
                                         android:id="@id/expand_collapse"
@@ -224,16 +224,16 @@
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
                                     android:text="流通量"
-                                    tools:textColor="@color/text_black_cd"
-                                    tools:textSize="16sp" />
+                                    android:textColor="@color/text_black_cd"
+                                    android:textSize="16sp" />
 
                                 <TextView
                                     android:id="@+id/tv_circulation"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    tools:text="流通量"
-                                    tools:textColor="@color/text_black_cd"
-                                    tools:textSize="16sp" />
+                                    android:textColor="@color/text_black_cd"
+                                    android:textSize="16sp"
+                                    tools:text="流通量" />
 
 
                             </LinearLayout>
@@ -253,16 +253,16 @@
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
                                     android:text="发行总量"
-                                    tools:textColor="@color/text_black_cd"
-                                    tools:textSize="16sp" />
+                                    android:textColor="@color/text_black_cd"
+                                    android:textSize="16sp" />
 
                                 <TextView
                                     android:id="@+id/tv_issue"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    tools:text="流通量"
-                                    tools:textColor="@color/text_black_cd"
-                                    tools:textSize="16sp" />
+                                    android:textColor="@color/text_black_cd"
+                                    android:textSize="16sp"
+                                    tools:text="流通量" />
 
 
                             </LinearLayout>
@@ -283,16 +283,16 @@
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
                                     android:text="流通市值"
-                                    tools:textColor="@color/text_black_cd"
-                                    tools:textSize="16sp" />
+                                    android:textColor="@color/text_black_cd"
+                                    android:textSize="16sp" />
 
                                 <TextView
                                     android:id="@+id/tv_issue_market"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    tools:text="流通量"
-                                    tools:textColor="@color/text_black_cd"
-                                    tools:textSize="16sp" />
+                                    android:textColor="@color/text_black_cd"
+                                    android:textSize="16sp"
+                                    tools:text="流通量" />
 
 
                             </LinearLayout>
@@ -312,16 +312,16 @@
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
                                     android:text="市值排名"
-                                    tools:textColor="@color/text_black_cd"
-                                    tools:textSize="16sp" />
+                                    android:textColor="@color/text_black_cd"
+                                    android:textSize="16sp" />
 
                                 <TextView
                                     android:id="@+id/tv_issue_rank"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    tools:text="流通量"
-                                    tools:textColor="@color/text_black_cd"
-                                    tools:textSize="16sp" />
+                                    android:textColor="@color/text_black_cd"
+                                    android:textSize="16sp"
+                                    tools:text="流通量" />
 
 
                             </LinearLayout>

@@ -32,7 +32,7 @@ public class PlatformListAdapter extends BaseQuickAdapter<CoinListModel, BaseVie
             viewHolder.setBackgroundColor(R.id.lin_bg, ContextCompat.getColor(mContext, R.color.white));
         }
 
-        viewHolder.setText(R.id.tv_platform, item.getCoinSymbol());
+        viewHolder.setText(R.id.tv_platform, item.getExchangeCname());
         viewHolder.setText(R.id.tv_coin_num, item.getToCoinSymbol() + "量:" + item.getVolume());
         viewHolder.setText(R.id.tv_price, mContext.getString(R.string.money_sing) + item.getLastCnyPrice());
         viewHolder.setText(R.id.tv_price_2, item.getLastPrice());

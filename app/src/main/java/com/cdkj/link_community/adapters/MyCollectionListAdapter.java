@@ -2,6 +2,7 @@ package com.cdkj.link_community.adapters;
 
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
+import android.text.TextUtils;
 
 import com.cdkj.link_community.R;
 import com.cdkj.link_community.model.CollectionList;
@@ -35,6 +36,8 @@ public class MyCollectionListAdapter extends BaseQuickAdapter<CollectionList, Ba
 
         viewHolder.setText(R.id.tv_title, item.getTitle());
         viewHolder.setText(R.id.tv_author, mContext.getString(R.string.author) + item.getAuther());
+
+        viewHolder.setGone(R.id.tv_author, !TextUtils.isEmpty(item.getAuther()));
 
     }
 
