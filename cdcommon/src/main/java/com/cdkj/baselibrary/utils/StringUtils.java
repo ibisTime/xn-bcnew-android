@@ -30,34 +30,6 @@ import java.util.regex.Pattern;
 
 public class StringUtils {
 
-    /**
-     * 监测发布状态
-     *
-     * @param data
-     */
-    private void checkReleaseState(Activity act, CodeModel data) {
-        String s = "filter";//是否包含敏感词汇
-        if (!TextUtils.isEmpty(data.getCode()) && !StringUtils.contains(data.getCode(), s)) {
-
-            UITipDialog.showSuccess(act, act.getString(R.string.release_succ), new DialogInterface.OnDismissListener() {
-                @Override
-                public void onDismiss(DialogInterface dialogInterface) {
-
-                }
-            });
-
-        } else if (StringUtils.contains(data.getCode(), s)) {
-
-            UITipDialog.showSuccess(act, act.getString(R.string.release_succ_1), new DialogInterface.OnDismissListener() {
-                @Override
-                public void onDismiss(DialogInterface dialogInterface) {
-
-                }
-            });
-        } else {
-            UITipDialog.showFall(act, act.getString(R.string.realse_fail));
-        }
-    }
 
     /**
      * 把一个对象序列化为json字符串 序列化操作应该进行线程处理

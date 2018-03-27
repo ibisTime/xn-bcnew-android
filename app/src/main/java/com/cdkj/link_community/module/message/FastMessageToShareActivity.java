@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.Html;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.TextUtils;
@@ -88,7 +89,7 @@ public class FastMessageToShareActivity extends AbsBaseLoadActivity {
 
             if (fastMessage == null) return;
 
-            SpannableStringBuilder span = new SpannableStringBuilder("缩" + "【" + getString(R.string.fast_msg) + "】 " + fastMessage.getContent());
+            SpannableStringBuilder span = new SpannableStringBuilder("缩" + "【" + getString(R.string.fast_msg) + "】 " + Html.fromHtml(fastMessage.getContent()));
             span.setSpan(new ForegroundColorSpan(Color.TRANSPARENT), 0, 1,
                     Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
 

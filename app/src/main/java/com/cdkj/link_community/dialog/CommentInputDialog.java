@@ -15,7 +15,7 @@ import com.cdkj.link_community.R;
 import com.cdkj.link_community.databinding.DialogCommentInputBinding;
 
 /**
- * Created by 李先俊 on 2018/3/20.
+ * Created by cdkj on 2018/3/20.
  */
 
 public class CommentInputDialog extends Dialog {

@@ -14,9 +14,12 @@ import com.cdkj.baselibrary.appmanager.SPUtilHelpr;
 import com.cdkj.baselibrary.base.AbsBaseLoadActivity;
 import com.cdkj.baselibrary.databinding.EmptyViewBinding;
 import com.cdkj.baselibrary.dialog.UITipDialog;
+import com.cdkj.baselibrary.interfaces.CheckInfoReleaseStateListener;
+import com.cdkj.baselibrary.model.CodeModel;
 import com.cdkj.baselibrary.model.IsSuccessModes;
 import com.cdkj.baselibrary.nets.BaseResponseModelCallBack;
 import com.cdkj.baselibrary.nets.RetrofitUtils;
+import com.cdkj.baselibrary.utils.CheckUtils;
 import com.cdkj.baselibrary.utils.DateUtil;
 import com.cdkj.baselibrary.utils.ImgUtils;
 import com.cdkj.baselibrary.utils.StringUtils;
@@ -252,25 +255,14 @@ public class BBSCommentDetailsActivity extends AbsBaseLoadActivity {
         map.put("userId", SPUtilHelpr.getUserId());
 
         showLoadingDialog();
-        Call call = RetrofitUtils.getBaseAPiService().successRequest("628652", StringUtils.getJsonToString(map));
+        Call call = RetrofitUtils.getBaseAPiService().codeRequest("628652", StringUtils.getJsonToString(map));
 
         addCall(call);
 
-        call.enqueue(new BaseResponseModelCallBack<IsSuccessModes>(this) {
+        call.enqueue(new BaseResponseModelCallBack<CodeModel>(this) {
             @Override
-            protected void onSuccess(IsSuccessModes data, String SucMessage) {
-
-                if (data.isSuccess()) {
-                    if (TextUtils.equals(type, MSGCOMMENT)) {
-                        UITipDialog.showSuccess(BBSCommentDetailsActivity.this, getString(R.string.comment_succ));
-                    }
-                    getCommentDetailRequest();
-                } else {
-                    if (TextUtils.equals(type, MSGCOMMENT)) {
-                        UITipDialog.showSuccess(BBSCommentDetailsActivity.this, getString(R.string.comment_fall));
-                    }
-
-                }
+            protected void onSuccess(CodeModel data, String SucMessage) {
+                checkRealseState(data, type);
             }
 
             @Override
@@ -279,6 +271,36 @@ public class BBSCommentDetailsActivity extends AbsBaseLoadActivity {
             }
         });
 
+    }
+
+    /**
+     * 检测发布状态
+     *
+     * @param data
+     * @param type
+     */
+    private void checkRealseState(CodeModel data, String type) {
+        CheckUtils.checkReleaseState(data.getCode(), new CheckInfoReleaseStateListener() {
+            @Override
+            public void succ() {
+                if (TextUtils.equals(type, MSGCOMMENT)) {
+                    UITipDialog.showSuccess(BBSCommentDetailsActivity.this, getString(R.string.comment_succ));
+                }
+                getCommentDetailRequest();
+            }
+
+            @Override
+            public void fail() {
+                if (TextUtils.equals(type, MSGCOMMENT)) {
+                    UITipDialog.showSuccess(BBSCommentDetailsActivity.this, getString(R.string.comment_fall));
+                }
+            }
+
+            @Override
+            public void haveSensitive(String str) {
+                UITipDialog.showInfo(BBSCommentDetailsActivity.this, str);
+            }
+        });
     }
 
 }

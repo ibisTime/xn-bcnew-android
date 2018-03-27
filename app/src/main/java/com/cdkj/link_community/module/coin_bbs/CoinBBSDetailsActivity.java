@@ -20,11 +20,13 @@ import com.cdkj.baselibrary.appmanager.SPUtilHelpr;
 import com.cdkj.baselibrary.base.AbsBaseLoadActivity;
 import com.cdkj.baselibrary.dialog.UITipDialog;
 import com.cdkj.baselibrary.interfaces.BaseRefreshCallBack;
+import com.cdkj.baselibrary.interfaces.CheckInfoReleaseStateListener;
 import com.cdkj.baselibrary.interfaces.RefreshHelper;
 import com.cdkj.baselibrary.model.CodeModel;
 import com.cdkj.baselibrary.model.IsSuccessModes;
 import com.cdkj.baselibrary.nets.BaseResponseModelCallBack;
 import com.cdkj.baselibrary.nets.RetrofitUtils;
+import com.cdkj.baselibrary.utils.CheckUtils;
 import com.cdkj.baselibrary.utils.DisplayHelper;
 import com.cdkj.baselibrary.utils.StringUtils;
 import com.cdkj.link_community.R;
@@ -52,6 +54,8 @@ import java.util.List;
 import java.util.Map;
 
 import retrofit2.Call;
+
+import static com.cdkj.link_community.module.message.MessageDetailsActivity.MSGCOMMENT;
 
 /**
  * 币吧详情
@@ -164,7 +168,7 @@ public class CoinBBSDetailsActivity extends AbsBaseLoadActivity {
      */
     private void initMoveListener() {
 
-        mMoveHeightListener =new ViewTreeObserver.OnGlobalLayoutListener() {
+        mMoveHeightListener = new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
                 moveHeight = mBinding.linTop.getHeight() + DisplayHelper.dpToPx(20);
@@ -467,7 +471,7 @@ public class CoinBBSDetailsActivity extends AbsBaseLoadActivity {
         mBinding.tvName.setText("#" + data.getName() + "#");
         mBinding.tvFocusOnNum.setText(getString(R.string.focus_num) + data.getPostCount());
         mBinding.tvPostNum.setText(getString(R.string.post_num) + data.getPostCount());
-        mBinding.tvTodayNum.setText(data.getDayCommentCount()+"");
+        mBinding.tvTodayNum.setText(data.getDayCommentCount() + "");
 
         mBinding.expandTextView.setText(data.getIntroduce() + "");
 
@@ -480,7 +484,7 @@ public class CoinBBSDetailsActivity extends AbsBaseLoadActivity {
      * @return
      */
     private boolean isCoinType() {
-        return mCoinBean!=null;//如果为空说明是平台币吧 否则是币种币吧
+        return mCoinBean != null;//如果为空说明是平台币吧 否则是币种币吧
     }
 
 
@@ -768,13 +772,7 @@ public class CoinBBSDetailsActivity extends AbsBaseLoadActivity {
         call.enqueue(new BaseResponseModelCallBack<CodeModel>(this) {
             @Override
             protected void onSuccess(CodeModel data, String SucMessage) {
-
-                if (!TextUtils.isEmpty(data.getCode())) {
-                    UITipDialog.showSuccess(CoinBBSDetailsActivity.this, getString(R.string.release_succ));
-                    mNewBBSCirclularRefreshHelper.onDefaluteMRefresh(false);
-                } else {
-                    UITipDialog.showSuccess(CoinBBSDetailsActivity.this, getString(R.string.release_fail));
-                }
+                checkRealseState(data);
             }
 
             @Override
@@ -784,5 +782,33 @@ public class CoinBBSDetailsActivity extends AbsBaseLoadActivity {
         });
 
     }
+
+    /**
+     * 检测发布状态
+     *
+     * @param data
+     * @param
+     */
+    private void checkRealseState(CodeModel data) {
+
+        CheckUtils.checkReleaseState(data.getCode(), new CheckInfoReleaseStateListener() {
+            @Override
+            public void succ() {
+                UITipDialog.showSuccess(CoinBBSDetailsActivity.this, getString(R.string.release_succ));
+                mNewBBSCirclularRefreshHelper.onDefaluteMRefresh(false);
+            }
+
+            @Override
+            public void fail() {
+                UITipDialog.showSuccess(CoinBBSDetailsActivity.this, getString(R.string.release_fail));
+            }
+
+            @Override
+            public void haveSensitive(String str) {
+                UITipDialog.showInfo(CoinBBSDetailsActivity.this, str);
+            }
+        });
+    }
+
 
 }
