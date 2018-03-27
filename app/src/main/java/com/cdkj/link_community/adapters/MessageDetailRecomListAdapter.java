@@ -37,7 +37,7 @@ public class MessageDetailRecomListAdapter extends BaseQuickAdapter<MessageDetai
     protected void convert(BaseViewHolder viewHolder, MessageDetailsNoteList item) {
         if (item == null) return;
         if (StringUtils.splitAsPicList(item.getAdvPic()).size() > 0) {
-            ImgUtils.loadQiniuRoundImg(mContext, StringUtils.splitAsPicList(item.getAdvPic()).get(0), viewHolder.getView(R.id.img));
+            ImgUtils.loadImg(mContext, StringUtils.splitAsPicList(item.getAdvPic()).get(0), viewHolder.getView(R.id.img));
         }
 
         setShowData(viewHolder, item);

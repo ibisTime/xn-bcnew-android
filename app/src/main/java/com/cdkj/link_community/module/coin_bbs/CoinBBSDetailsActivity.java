@@ -301,7 +301,7 @@ public class CoinBBSDetailsActivity extends AbsBaseLoadActivity {
                 MessageListAdapter msgAdapter = new MessageListAdapter(listData);
 
                 msgAdapter.setOnItemClickListener((adapter, view, position) -> {
-                    MessageDetailsActivity.open(CoinBBSDetailsActivity.this, msgAdapter.getItem(position).getCode(), "");
+                    MessageDetailsActivity.open(CoinBBSDetailsActivity.this, msgAdapter.getItem(position).getCode());
                 });
 
                 return msgAdapter;
@@ -467,7 +467,7 @@ public class CoinBBSDetailsActivity extends AbsBaseLoadActivity {
         mBinding.tvName.setText("#" + data.getName() + "#");
         mBinding.tvFocusOnNum.setText(getString(R.string.focus_num) + data.getPostCount());
         mBinding.tvPostNum.setText(getString(R.string.post_num) + data.getPostCount());
-        mBinding.tvTodayNum.setText(getString(R.string.bbs_today_num) + data.getDayCommentCount());
+        mBinding.tvTodayNum.setText(data.getDayCommentCount()+"");
 
         mBinding.expandTextView.setText(data.getIntroduce() + "");
 

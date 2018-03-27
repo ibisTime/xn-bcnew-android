@@ -29,10 +29,6 @@ public class ImgUtils {
         loadLogo(obj, MyCdConfig.QINIUURL + imgid, img);
     }
 
-    public static void loadQiniuRoundImg(Context obj, String imgid, ImageView img) {
-        Glide.with((Context) obj).load(MyCdConfig.QINIUURL +imgid).placeholder(R.drawable.default_pic).transform(new GlideRoundTransform(((Context) obj), 5)).error(R.drawable.default_pic).into(img);
-    }
-
     public static void loadImg(Object obj, Object imgid, ImageView img) {
 
         LogUtil.E("图片" + imgid);

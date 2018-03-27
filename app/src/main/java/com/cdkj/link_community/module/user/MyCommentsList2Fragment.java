@@ -75,7 +75,7 @@ public class MyCommentsList2Fragment extends AbsRefreshListFragment {
             UserMessageComment userMyComment = userMyCommentListAdapter.getItem(position);
             if (userMyComment == null || userMyComment.getNews() == null || TextUtils.isEmpty(userMyComment.getNews().getCode()))
                 return;
-            MessageDetailsActivity.open(mActivity, userMyComment.getNews().getCode(), "");
+            MessageDetailsActivity.open(mActivity, userMyComment.getNews().getCode());
         });
 
         return userMyCommentListAdapter;

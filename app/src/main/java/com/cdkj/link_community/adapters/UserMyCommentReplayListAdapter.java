@@ -46,7 +46,7 @@ public class UserMyCommentReplayListAdapter extends BaseQuickAdapter<UserMessage
         if (item.getNews() != null) {
 
             if (StringUtils.splitAsPicList(item.getNews().getAdvPic()).size() > 0) {
-                ImgUtils.loadQiniuRoundImg(mContext, StringUtils.splitAsPicList(item.getNews().getAdvPic()).get(0), viewHolder.getView(R.id.img_msg));
+                ImgUtils.loadImg(mContext, StringUtils.splitAsPicList(item.getNews().getAdvPic()).get(0), viewHolder.getView(R.id.img_msg));
             }
             viewHolder.setText(R.id.tv_msg_title, item.getNews().getTitle());
 

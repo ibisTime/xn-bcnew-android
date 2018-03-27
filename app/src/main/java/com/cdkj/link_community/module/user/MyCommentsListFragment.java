@@ -78,7 +78,7 @@ public class MyCommentsListFragment extends AbsRefreshListFragment {
         userMyCommentListAdapter.setOnItemChildClickListener((adapter, view, position) -> {
             UserMessageComment userMyComment = userMyCommentListAdapter.getItem(position);
             if (userMyComment == null || userMyComment.getNews() == null) return;
-            MessageDetailsActivity.open(mActivity, userMyComment.getNews().getCode(), "");
+            MessageDetailsActivity.open(mActivity, userMyComment.getNews().getCode());
         });
 
         return userMyCommentListAdapter;

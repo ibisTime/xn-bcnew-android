@@ -3,6 +3,7 @@ package com.cdkj.link_community.adapters;
 import android.graphics.Color;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
+import android.text.Html;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.TextUtils;
@@ -46,11 +47,12 @@ public class FastMessageListAdapter extends BaseQuickAdapter<FastMessage, BaseVi
 
         TextView textView = viewHolder.getView(R.id.tv_content);
         //设置首行缩进
-        SpannableStringBuilder span = new SpannableStringBuilder("缩" + "【" + mContext.getString(R.string.fast_msg) + "】 " + item.getContent());
-        span.setSpan(new ForegroundColorSpan(Color.TRANSPARENT), 0, 1,
-                Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
 
-        textView.setText(span);
+//        SpannableStringBuilder span = new SpannableStringBuilder("缩" + Html.fromHtml(item.getContent()));
+//        span.setSpan(new ForegroundColorSpan(Color.TRANSPARENT), 0, 1,
+//                Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+
+        textView.setText(Html.fromHtml(item.getContent()));
 
         viewHolder.setText(R.id.tv_date, DateUtil.formatStringData(item.getShowDatetime(), DateUtil.DATE_FMT_YMD));
         viewHolder.setText(R.id.tv_time, DateUtil.formatStringData(item.getShowDatetime(), "HH:mm:ss"));

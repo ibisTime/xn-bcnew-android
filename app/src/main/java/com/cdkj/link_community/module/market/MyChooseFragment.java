@@ -36,6 +36,7 @@ import com.cdkj.link_community.model.MyChooseMarket;
 
 import org.greenrobot.eventbus.Subscribe;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -70,6 +71,8 @@ public class MyChooseFragment extends BaseLazyFragment {
 
         if (SPUtilHelpr.isLoginNoStart()) { //未登录不用请求
             mRefreshHelper.onDefaluteMRefresh(true);
+        } else {
+            mRefreshHelper.setData(new ArrayList());
         }
 
         return mRefreshBinding.getRoot();
@@ -167,7 +170,7 @@ public class MyChooseFragment extends BaseLazyFragment {
 
                 if (data.isSuccess()) {
                     adapter.remove(position);
-                    if (adapter.getData().isEmpty()) {
+                    if (adapter.getData().size() == 0) {
                         adapter.notifyDataSetChanged();
                     }
                     UITipDialog.showSuccess(mActivity, getString(R.string.delete_succ));
@@ -238,6 +241,7 @@ public class MyChooseFragment extends BaseLazyFragment {
     private void getChooseListRequest(int pageindex, int limit, boolean isShowDialog) {
 
         if (!SPUtilHelpr.isLoginNoStart()) {
+            mRefreshHelper.setData(new ArrayList());
             return;
         }
 

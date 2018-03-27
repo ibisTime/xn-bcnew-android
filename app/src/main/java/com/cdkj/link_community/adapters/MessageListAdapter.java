@@ -55,18 +55,19 @@ public class MessageListAdapter extends BaseQuickAdapter<MessageModel, BaseViewH
         //Step.3
         switch (viewHolder.getItemViewType()) {
             case 1:
+                List<String> picList = StringUtils.splitAsPicList(item.getAdvPic());
 
-                if (StringUtils.splitAsPicList(item.getAdvPic()).size() > 2) {
-                    ImgUtils.loadQiniuRoundImg(mContext, StringUtils.splitAsPicList(item.getAdvPic()).get(0), viewHolder.getView(R.id.img_1));
-                    ImgUtils.loadQiniuRoundImg(mContext, StringUtils.splitAsPicList(item.getAdvPic()).get(1), viewHolder.getView(R.id.img_2));
-                    ImgUtils.loadQiniuRoundImg(mContext, StringUtils.splitAsPicList(item.getAdvPic()).get(2), viewHolder.getView(R.id.img_3));
+                if (picList.size() > 3) {
+                    ImgUtils.loadImg(mContext, picList.get(0), viewHolder.getView(R.id.img_1));
+                    ImgUtils.loadImg(mContext, picList.get(1), viewHolder.getView(R.id.img_2));
+                    ImgUtils.loadImg(mContext, picList.get(2), viewHolder.getView(R.id.img_3));
                 }
                 setShowData(viewHolder, item);
 
                 break;
             default:
                 if (StringUtils.splitAsPicList(item.getAdvPic()).size() > 0) {
-                    ImgUtils.loadQiniuRoundImg(mContext, StringUtils.splitAsPicList(item.getAdvPic()).get(0), viewHolder.getView(R.id.img));
+                    ImgUtils.loadImg(mContext, StringUtils.splitAsPicList(item.getAdvPic()).get(0), viewHolder.getView(R.id.img));
                 }
 
                 setShowData(viewHolder, item);

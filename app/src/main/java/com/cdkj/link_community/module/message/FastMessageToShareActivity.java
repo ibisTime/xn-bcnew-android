@@ -95,7 +95,7 @@ public class FastMessageToShareActivity extends AbsBaseLoadActivity {
             mBinding.tvMsg.setText(span);
 
             if (!TextUtils.isEmpty(fastMessage.getShowDatetime())) {
-                mBinding.tvTime.setText(DateUtil.getWeekOfDate(new Date(fastMessage.getShowDatetime())) + " " + DateUtil.formatStringData(fastMessage.getShowDatetime(), DateUtil.DATE_YYMMddHHmm));
+                mBinding.tvTime.setText(DateUtil.getWeekOfDate(new Date(fastMessage.getShowDatetime())) + " " + DateUtil.formatStringData(fastMessage.getShowDatetime(), DateUtil.DEFAULT_DATE_FMT));
             }
 
         }

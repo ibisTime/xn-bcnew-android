@@ -78,7 +78,7 @@ public class MyCommentDetailsActivity extends AbsBaseLoadActivity {
     @Override
     public void topTitleViewRightClick() {
         if (mNoteCode == null) return;
-        MessageDetailsActivity.open(this, mNoteCode, "");
+        MessageDetailsActivity.open(this, mNoteCode);
     }
 
     @Override

@@ -46,7 +46,7 @@ public class MyCollectionListActivity extends AbsRefreshListActivity {
 
         myCollectionListAdapter.setOnItemClickListener((adapter, view, position) -> {
 
-            MessageDetailsActivity.open(MyCollectionListActivity.this, myCollectionListAdapter.getItem(position).getCode(), "");
+            MessageDetailsActivity.open(MyCollectionListActivity.this, myCollectionListAdapter.getItem(position).getCode());
 
         });
 

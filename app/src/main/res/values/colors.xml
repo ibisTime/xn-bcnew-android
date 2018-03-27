@@ -23,5 +23,6 @@
     <color name="market_gray">#979797</color>
     <color name="market_green">#1fc07d</color>
     <color name="market_red">#ff5757</color>
+    <color name="red">#ff5757</color>
     <color name="bbs_state_color">#2f93ed</color>
 </resources>

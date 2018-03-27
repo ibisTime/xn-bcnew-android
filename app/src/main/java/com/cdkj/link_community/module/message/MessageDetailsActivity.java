@@ -11,8 +11,6 @@ import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
 
 import com.cdkj.baselibrary.api.BaseResponseModel;
 import com.cdkj.baselibrary.api.ResponseInListModel;
@@ -35,7 +33,6 @@ import com.cdkj.link_community.adapters.MsgHotCommentListAdapter;
 import com.cdkj.link_community.api.MyApiServer;
 import com.cdkj.link_community.databinding.ActivityMessageDetailBinding;
 import com.cdkj.link_community.dialog.CommentInputDialog;
-import com.cdkj.link_community.model.LoinSucc;
 import com.cdkj.link_community.model.MessageDetails;
 import com.cdkj.link_community.model.MessageDetailsNoteList;
 import com.cdkj.link_community.model.MsgDetailsComment;
@@ -43,7 +40,6 @@ import com.cdkj.link_community.module.user.ShareActivity;
 import com.cdkj.link_community.utils.WxUtil;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 
-import org.greenrobot.eventbus.Subscribe;
 
 import java.util.HashMap;
 import java.util.List;
@@ -52,7 +48,6 @@ import java.util.Map;
 import retrofit2.Call;
 
 import static com.cdkj.baselibrary.utils.DateUtil.DEFAULT_DATE_FMT;
-import static com.cdkj.link_community.module.message.MessageListFragment.TITLE;
 
 /**
  * 资讯详情
@@ -64,8 +59,6 @@ public class MessageDetailsActivity extends AbsBaseLoadActivity {
     private ActivityMessageDetailBinding mBinding;
 
     private String mCode;
-
-    private String mTitle;
 
     private RefreshHelper mNewCommentRefreshHelper; //最新评论刷新
 
@@ -80,13 +73,12 @@ public class MessageDetailsActivity extends AbsBaseLoadActivity {
      * @param context
      * @param msgCode 消息编号
      */
-    public static void open(Context context, String msgCode, String title) {
+    public static void open(Context context, String msgCode) {
         if (context == null) {
             return;
         }
         Intent intent = new Intent(context, MessageDetailsActivity.class);
         intent.putExtra(CdRouteHelper.DATASIGN, msgCode);
-        intent.putExtra(TITLE, title);
         context.startActivity(intent);
     }
 
@@ -103,8 +95,6 @@ public class MessageDetailsActivity extends AbsBaseLoadActivity {
 
         if (getIntent() != null) {
             mCode = getIntent().getStringExtra(CdRouteHelper.DATASIGN);
-            mTitle = getIntent().getStringExtra(TITLE);
-            mBaseBinding.titleView.setMidTitle(mTitle);
         }
 
         mBinding.refreshLayout.setEnableRefresh(false);
@@ -122,12 +112,7 @@ public class MessageDetailsActivity extends AbsBaseLoadActivity {
         ((DefaultItemAnimator) mBinding.contentLayout.recyclerViewRecommended.getItemAnimator()).setSupportsChangeAnimations(false);
 
         initRefreshHelper();
-
-        initWebView();
-
         initListener();
-
-
     }
 
     @Override
@@ -136,10 +121,6 @@ public class MessageDetailsActivity extends AbsBaseLoadActivity {
         getMessageDetailRequest();
     }
 
-    private void initWebView() {
-        mBinding.contentLayout.webView.getSettings().setJavaScriptEnabled(true);
-        mBinding.contentLayout.webView.setWebViewClient(new MyWebViewClient());
-    }
 
     private void initListener() {
 
@@ -290,7 +271,14 @@ public class MessageDetailsActivity extends AbsBaseLoadActivity {
 
         mBaseBinding.titleView.setMidTitle(data.getTypeName());
 
-        mBinding.contentLayout.webView.loadData(data.getContent(), "text/html; charset=UTF-8", null);
+        mBinding.contentLayout.webView.loadData("<style>\n" +           //设置图片自适应
+                " \n" +
+                "img{\n" +
+                " max-width:100%;\n" +
+                " height:auto;\n" +
+                "}\n" +
+                " \n" +
+                "</style>" + data.getContent(), "text/html; charset=UTF-8", null);
         mBinding.contentLayout.tvAuthor.setText(getString(R.string.author) + data.getAuther());
         mBinding.contentLayout.tvTime.setText(DateUtil.formatStringData(data.getShowDatetime(), DEFAULT_DATE_FMT));
         mBinding.contentLayout.tvFrom.setText(getString(R.string.message_frome) + data.getSource());
@@ -361,7 +349,7 @@ public class MessageDetailsActivity extends AbsBaseLoadActivity {
         MessageDetailRecomListAdapter messageDetailRecomListAdapter = new MessageDetailRecomListAdapter(refNewList);
 
         messageDetailRecomListAdapter.setOnItemClickListener((adapter, view, position) -> {
-            MessageDetailsActivity.open(this, messageDetailRecomListAdapter.getItem(position).getCode(), mTitle);
+            MessageDetailsActivity.open(this, messageDetailRecomListAdapter.getItem(position).getCode());
             finish();
         });
 
@@ -388,6 +376,11 @@ public class MessageDetailsActivity extends AbsBaseLoadActivity {
     }
 
 
+    /**
+     * 获取布局管理器
+     *
+     * @return
+     */
     @NonNull
     private LinearLayoutManager getLinearLayoutManager() {
         return new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false) {
@@ -620,35 +613,6 @@ public class MessageDetailsActivity extends AbsBaseLoadActivity {
     }
 
 
-    private class MyWebViewClient extends WebViewClient {
-
-        @Override
-        public void onPageFinished(WebView view, String url) {
-            super.onPageFinished(view, url);
-            //  html加载完成之后，调用js的方法
-            imgReset();
-        }
-
-        @Override
-        public boolean shouldOverrideUrlLoading(WebView view, String url) {
-            view.loadUrl(url);
-            return true;
-        }
-
-    }
-
-
-    private void imgReset() {
-        mBinding.contentLayout.webView.loadUrl("javascript:(function(){"
-                + "var objs = document.getElementsByTagName('img'); "
-                + "for(var i=0;i<objs.length;i++)  " + "{"
-                + "var img = objs[i];   "
-                + "    img.style.width = '100%';   "
-                + "    img.style.height = 'auto';   "
-                + "}" + "})()");
-    }
-
-
     /**
      * 获取链接并分享
      *
@@ -674,12 +638,15 @@ public class MessageDetailsActivity extends AbsBaseLoadActivity {
                 if (TextUtils.isEmpty(data.getCvalue())) {
                     return;
                 }
+
+                String shareTitle = mBinding.contentLayout.tvTitle.getText().toString();
+
                 if (type == 0) {
-                    WxUtil.shareToWX(MessageDetailsActivity.this, data.getCvalue() + "?code=" + mCode, "标题", "内容");
+                    WxUtil.shareToWX(MessageDetailsActivity.this, data.getCvalue() + "?code=" + mCode, shareTitle, "内容");
                 } else if (type == 1) {
-                    WxUtil.shareToPYQ(MessageDetailsActivity.this, data.getCvalue() + "?code=" + mCode, "标题", "内容");
+                    WxUtil.shareToPYQ(MessageDetailsActivity.this, data.getCvalue() + "?code=" + mCode, shareTitle, "内容");
                 } else {
-                    ShareActivity.open(MessageDetailsActivity.this, data.getCvalue() + "?code=" + mCode, "标题", "内容");
+                    ShareActivity.open(MessageDetailsActivity.this, data.getCvalue() + "?code=" + mCode, shareTitle, "内容");
                 }
 
             }

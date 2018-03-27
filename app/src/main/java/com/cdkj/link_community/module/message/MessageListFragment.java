@@ -38,7 +38,6 @@ public class MessageListFragment extends AbsRefreshListFragment {
     private String mTitle;//标题
 
     private final static String ISFRISTREQUEST = "isFristRequest";//是否创建时就进行请求
-    public final static String TITLE = "title";//标题
 
     /**
      * @param type 资讯类型
@@ -49,7 +48,6 @@ public class MessageListFragment extends AbsRefreshListFragment {
         Bundle bundle = new Bundle();
         bundle.putString(CdRouteHelper.DATASIGN, type);
         bundle.putBoolean(ISFRISTREQUEST, isFristRequest);
-        bundle.putString(TITLE, title);
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -77,7 +75,6 @@ public class MessageListFragment extends AbsRefreshListFragment {
         if (getArguments() != null) {
             mMessageType = getArguments().getString(CdRouteHelper.DATASIGN);
             mIsFristRequest = getArguments().getBoolean(ISFRISTREQUEST);
-            mTitle = getArguments().getString(TITLE);
         }
 
         initRefreshHelper(MyCdConfig.LISTLIMIT);
@@ -94,7 +91,7 @@ public class MessageListFragment extends AbsRefreshListFragment {
         MessageListAdapter msgAdapter = new MessageListAdapter(listData);
 
         msgAdapter.setOnItemClickListener((adapter, view, position) -> {
-            MessageDetailsActivity.open(mActivity, msgAdapter.getItem(position).getCode(), mTitle);
+            MessageDetailsActivity.open(mActivity, msgAdapter.getItem(position).getCode());
         });
 
         return msgAdapter;

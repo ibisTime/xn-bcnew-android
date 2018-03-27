@@ -2,6 +2,7 @@ package com.cdkj.link_community;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.widget.ImageView;
 
 import com.cdkj.baselibrary.base.BaseActivity;
@@ -39,13 +40,10 @@ public class WelcomeAcitivity extends BaseActivity {
         ImageView img = (ImageView) findViewById(R.id.img_start);
         img.setImageResource(R.drawable.start);
 
-        UIStatusBarHelper.translucent(this); //设置状态栏透明
-
         mSubscription.add(Observable.timer(2, TimeUnit.SECONDS)
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(aLong -> {
-//                    CoinBBSDetailsActivity.open(this);
                     MyRouteHelper.openMain();
                     finish();
                 }, Throwable::printStackTrace));

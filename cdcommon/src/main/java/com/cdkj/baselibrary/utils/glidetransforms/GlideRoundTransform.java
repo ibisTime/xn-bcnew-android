@@ -1,6 +1,7 @@
 package com.cdkj.baselibrary.utils.glidetransforms;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapShader;
 import android.graphics.Canvas;
@@ -23,7 +24,7 @@ public class GlideRoundTransform extends BitmapTransformation {
 
     public GlideRoundTransform(Context context, int dp) {
         super(context);
-//        this.radius = Resources.getSystem().getDisplayMetrics().density * dp;
+        this.radius = Resources.getSystem().getDisplayMetrics().density * dp;
     }
 
     @Override protected Bitmap transform(BitmapPool pool, Bitmap toTransform, int outWidth, int outHeight) {
