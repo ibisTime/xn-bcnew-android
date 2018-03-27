@@ -126,6 +126,7 @@
                 android:layout_weight="1" />
 
             <ImageView
+                android:id="@+id/img_qq"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:layout_gravity="center_vertical"

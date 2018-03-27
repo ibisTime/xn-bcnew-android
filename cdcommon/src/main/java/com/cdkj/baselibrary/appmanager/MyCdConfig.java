@@ -15,7 +15,7 @@ public class MyCdConfig {
 
     public final static String QINIUURL = "http://p5k7690z2.bkt.clouddn.com/";
 
-    public final static String PROJECTNAME = "cdcommon";
+    public final static String PROJECTNAME = "lxj";
 
     /**
      * 保存的SharedPreferences工具类文件名

@@ -3,10 +3,13 @@ package com.cdkj.baselibrary.utils;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Matrix;
 import android.media.ExifInterface;
 import android.net.Uri;
 import android.text.TextUtils;
+import android.widget.ScrollView;
 
 import com.cdkj.baselibrary.CdApplication;
 
@@ -279,7 +282,7 @@ public class BitmapUtils {
         } catch (Exception e) {
         }
 
-        return file.getPath();
+        return file.getAbsolutePath();
     }
 
 
@@ -303,5 +306,27 @@ public class BitmapUtils {
         return size;
     }
 
+    /**
+     * 截取scrollview的生产bitmap
+     *
+     * @param scrollView
+     * @return
+     */
+    public static Bitmap getBitmapByView(ScrollView scrollView) {
+        int h = 0;
+        Bitmap bitmap = null;
+        // 获取scrollview实际高度
+        for (int i = 0; i < scrollView.getChildCount(); i++) {
+            h += scrollView.getChildAt(i).getHeight();
+            scrollView.getChildAt(i).setBackgroundColor(
+                    Color.parseColor("#ffffff"));
+        }
+        // 创建对应大小的bitmap
+        bitmap = Bitmap.createBitmap(scrollView.getWidth(), h,
+                Bitmap.Config.ARGB_8888);
+        final Canvas canvas = new Canvas(bitmap);
+        scrollView.draw(canvas);
+        return bitmap;
+    }
 
 }

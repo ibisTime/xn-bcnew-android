@@ -36,6 +36,7 @@ import com.cdkj.link_community.adapters.MsgHotCommentListAdapter;
 import com.cdkj.link_community.api.MyApiServer;
 import com.cdkj.link_community.databinding.ActivityMessageDetailBinding;
 import com.cdkj.link_community.dialog.CommentInputDialog;
+import com.cdkj.link_community.interfaces.QQUiListener;
 import com.cdkj.link_community.model.MessageDetails;
 import com.cdkj.link_community.model.MessageDetailsNoteList;
 import com.cdkj.link_community.model.MsgDetailsComment;
@@ -43,6 +44,7 @@ import com.cdkj.link_community.module.coin_bbs.CoinBBSDetailsActivity;
 import com.cdkj.link_community.module.user.ShareActivity;
 import com.cdkj.link_community.utils.WxUtil;
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.tencent.tauth.Tencent;
 
 
 import java.util.HashMap;
@@ -71,6 +73,8 @@ public class MessageDetailsActivity extends AbsBaseLoadActivity {
     public static final String COMMENTCOMMENT = "2";/*类型(Y 1 资讯 2 评论)*/
 
     private MessageDetails messageDetails;
+
+    private String mSharePhotoUrl;//要分分享的图片url
 
 
     /**
@@ -222,6 +226,11 @@ public class MessageDetailsActivity extends AbsBaseLoadActivity {
 
         /*点赞*/
         msgHotCommentListAdapter.setOnItemChildClickListener((adapter, view, position) -> {
+
+            if (!SPUtilHelpr.isLogin(MessageDetailsActivity.this, false)) {
+                return;
+            }
+
             toCommentLikeRequest(msgHotCommentListAdapter, position);
         });
 
@@ -271,6 +280,10 @@ public class MessageDetailsActivity extends AbsBaseLoadActivity {
     private void setShowData(MessageDetails data) {
 
         if (data == null) return;
+
+        if(StringUtils.splitAsPicList(data.getAdvPic()).size()>0){
+            mSharePhotoUrl = StringUtils.splitAsPicList(data.getAdvPic()).get(0);
+        }
 
 
         mBaseBinding.titleView.setMidTitle(data.getTypeName());
@@ -671,7 +684,7 @@ public class MessageDetailsActivity extends AbsBaseLoadActivity {
                 } else if (type == 1) {
                     WxUtil.shareToPYQ(MessageDetailsActivity.this, data.getCvalue() + "?code=" + mCode, shareTitle, "内容");
                 } else {
-                    ShareActivity.open(MessageDetailsActivity.this, data.getCvalue() + "?code=" + mCode, shareTitle, "内容");
+                    ShareActivity.open(MessageDetailsActivity.this, data.getCvalue() + "?code=" + mCode, shareTitle, "内容", mSharePhotoUrl);
                 }
 
             }
@@ -682,6 +695,11 @@ public class MessageDetailsActivity extends AbsBaseLoadActivity {
             }
         });
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Tencent.onActivityResultData(requestCode, resultCode, data, new QQUiListener());
     }
 
     @Override

@@ -1,5 +1,7 @@
 package com.cdkj.link_community.module.message;
 
+import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
@@ -7,6 +9,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.text.Html;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
@@ -24,12 +27,21 @@ import com.cdkj.baselibrary.base.AbsBaseLoadActivity;
 import com.cdkj.baselibrary.model.IntroductionInfoModel;
 import com.cdkj.baselibrary.nets.BaseResponseModelCallBack;
 import com.cdkj.baselibrary.nets.RetrofitUtils;
+import com.cdkj.baselibrary.utils.BitmapUtils;
+import com.cdkj.baselibrary.utils.CameraHelper;
 import com.cdkj.baselibrary.utils.DateUtil;
+import com.cdkj.baselibrary.utils.LogUtil;
+import com.cdkj.baselibrary.utils.PermissionHelper;
 import com.cdkj.baselibrary.utils.StringUtils;
 import com.cdkj.link_community.R;
 import com.cdkj.link_community.databinding.ActivityFastMessageShareBinding;
+import com.cdkj.link_community.interfaces.QQUiListener;
 import com.cdkj.link_community.model.FastMessage;
+import com.cdkj.link_community.module.user.ShareActivity;
+import com.cdkj.link_community.utils.QqShareUtil;
 import com.cdkj.link_community.utils.WxUtil;
+import com.tencent.connect.share.QQShare;
+import com.tencent.tauth.Tencent;
 import com.uuzuche.lib_zxing.activity.CodeUtils;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -45,6 +57,8 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import retrofit2.Call;
 
+import static com.cdkj.baselibrary.utils.BitmapUtils.getBitmapByView;
+
 /**
  * 快讯分享
  * Created by cdkj on 2018/3/19.
@@ -53,6 +67,17 @@ import retrofit2.Call;
 public class FastMessageToShareActivity extends AbsBaseLoadActivity {
 
     private ActivityFastMessageShareBinding mBinding;
+
+    private PermissionHelper mPreHelper;//权限请求
+
+    private String mQQSharePhotoPath;//qq图片分享路径
+
+    //需要的权限
+    private String[] needLocationPermissions = {
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+    };
+
 
     /**
      * @param context
@@ -122,6 +147,18 @@ public class FastMessageToShareActivity extends AbsBaseLoadActivity {
                 WxUtil.shareBitmapToWXPYQ(FastMessageToShareActivity.this, getBitmapByView(mBinding.scrollView));
             });
         });
+
+        mBinding.imgQq.setOnClickListener(view -> {
+
+            if (CameraHelper.isNeedRequestPremission()) {
+                requestPermissions();
+                return;
+            }
+
+            mBinding.scrollView.post(() -> {
+                saveBitmapAndShare();
+            });
+        });
     }
 
     public void getShareUrl() {
@@ -183,27 +220,60 @@ public class FastMessageToShareActivity extends AbsBaseLoadActivity {
 
     }
 
-    /**
-     * 截取scrollview的生产bitmap
-     *
-     * @param scrollView
-     * @return
-     */
-    public Bitmap getBitmapByView(ScrollView scrollView) {
-        int h = 0;
-        Bitmap bitmap = null;
-        // 获取scrollview实际高度
-        for (int i = 0; i < scrollView.getChildCount(); i++) {
-            h += scrollView.getChildAt(i).getHeight();
-            scrollView.getChildAt(i).setBackgroundColor(
-                    Color.parseColor("#ffffff"));
+
+    public void saveBitmapAndShare() {
+
+        if (mQQSharePhotoPath != null) {
+            QqShareUtil.shareLocaPhoto(FastMessageToShareActivity.this, mQQSharePhotoPath);
+            return;
         }
-        // 创建对应大小的bitmap
-        bitmap = Bitmap.createBitmap(scrollView.getWidth(), h,
-                Bitmap.Config.ARGB_8888);
-        final Canvas canvas = new Canvas(bitmap);
-        scrollView.draw(canvas);
-        return bitmap;
+
+        mSubscription.add(Observable.just(getBitmapByView(mBinding.scrollView), TimeUnit.SECONDS, AndroidSchedulers.mainThread())
+                .observeOn(Schedulers.newThread())  //创建
+                .map(aLong -> BitmapUtils.saveBitmapFile(getBitmapByView(mBinding.scrollView), "share_qq"))
+                .observeOn(AndroidSchedulers.mainThread())
+                .filter(s -> !TextUtils.isEmpty(s))
+                .subscribe(path -> {
+                    mQQSharePhotoPath = path;
+                    QqShareUtil.shareLocaPhoto(FastMessageToShareActivity.this, path);
+                }, throwable -> {
+                    LogUtil.E(throwable.toString());
+                }));
+    }
+
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (mPreHelper != null) {
+            mPreHelper.handleRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
+    }
+
+    /**
+     * 请求权限
+     */
+    private void requestPermissions() {
+
+        if (mPreHelper == null) {
+            mPreHelper = new PermissionHelper(this);
+        }
+
+        mPreHelper.requestPermissions(new PermissionHelper.PermissionListener() {
+            @Override
+            public void doAfterGrand(String... permission) {
+                mBinding.scrollView.post(() -> {
+                    saveBitmapAndShare();
+                });
+            }
+
+            @Override
+            public void doAfterDenied(String... permission) {
+                showSureDialog("没有文件权限，无法分享快讯。", view -> {
+
+                });
+            }
+
+        }, needLocationPermissions);
     }
 
 }

@@ -102,13 +102,11 @@ public class CoinBBSDetailsActivity extends AbsBaseLoadActivity {
 
     @Override
     public void afterCreate(Bundle savedInstanceState) {
-
         if (getIntent() != null) {
             mBBSCode = getIntent().getStringExtra(CdRouteHelper.APPLOGIN);
         }
 
         mBaseBinding.titleView.setMidTitle(getString(R.string.coin_bbs));
-
 
         /*防止局部刷新闪烁*/
         ((DefaultItemAnimator) mBinding.recyclerViewLeft.getItemAnimator()).setSupportsChangeAnimations(false);
@@ -426,6 +424,9 @@ public class CoinBBSDetailsActivity extends AbsBaseLoadActivity {
             @Override
             protected void onSuccess(CoinBBSDetails data, String SucMessage) {
                 setShowData(data);
+                if (mBinding.getRoot().getVisibility() == View.GONE) {
+                    mBinding.getRoot().setVisibility(View.VISIBLE);
+                }
             }
 
             @Override

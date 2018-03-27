@@ -94,7 +94,7 @@ public class MyCommentDetailsActivity extends AbsBaseLoadActivity {
         mBaseBinding.titleView.setMidTitle(getString(R.string.comment_detail));
 
         if (!TextUtils.isEmpty(mNoteCode)) {
-            mBaseBinding.titleView.setRightTitle(getString(R.string.lod_note));
+            mBaseBinding.titleView.setRightTitle(getString(R.string.old_note));
         }
 
         if (getIntent() != null) {
@@ -275,7 +275,7 @@ public class MyCommentDetailsActivity extends AbsBaseLoadActivity {
         map.put("userId", SPUtilHelpr.getUserId());
 
         showLoadingDialog();
-        Call call = RetrofitUtils.getBaseAPiService().successRequest("628200", StringUtils.getJsonToString(map));
+        Call call = RetrofitUtils.getBaseAPiService().codeRequest("628200", StringUtils.getJsonToString(map));
 
         addCall(call);
 

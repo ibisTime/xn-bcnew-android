@@ -118,7 +118,7 @@ public class CoinBBSDetailsIntoActivity extends AbsBaseLoadActivity {
         initMoveListener();
         initBBSCirclularRefresh();
         initMessageRefresh();
-        initMarketRefresh();
+
 
         initListener();
 
@@ -267,6 +267,9 @@ public class CoinBBSDetailsIntoActivity extends AbsBaseLoadActivity {
                         mBinding.bottomLayout.linComment.setVisibility(View.GONE);
                         break;
                     case 2:
+                        if (mMarketRefreshHelper == null) {
+                            initMarketRefresh();
+                        }
                         mMarketRefreshHelper.onDefaluteMRefresh(true);
                         mBinding.relaLeft.setVisibility(View.GONE);
                         mBinding.recyclerViewMiddel.setVisibility(View.GONE);
@@ -339,7 +342,6 @@ public class CoinBBSDetailsIntoActivity extends AbsBaseLoadActivity {
             @Override
             public RecyclerView.Adapter getAdapter(List listData) {
                 if (isCoinType()) {
-                    ;
                     return new CoinListAdapter(listData);
                 }
                 return new PlatformListAdapter(listData);
@@ -425,6 +427,9 @@ public class CoinBBSDetailsIntoActivity extends AbsBaseLoadActivity {
             @Override
             protected void onSuccess(CoinBBSDetails data, String SucMessage) {
                 setShowData(data);
+                if (mBinding.getRoot().getVisibility() == View.GONE) {
+                    mBinding.getRoot().setVisibility(View.VISIBLE);
+                }
             }
 
             @Override
@@ -471,7 +476,7 @@ public class CoinBBSDetailsIntoActivity extends AbsBaseLoadActivity {
         mBinding.tvName.setText("#" + data.getName() + "#");
         mBinding.tvFocusOnNum.setText(getString(R.string.focus_num) + data.getPostCount());
         mBinding.tvPostNum.setText(getString(R.string.post_num) + data.getPostCount());
-        mBinding.tvTodayNum.setText(data.getDayCommentCount()+"");
+        mBinding.tvTodayNum.setText(data.getDayCommentCount() + "");
 
         mBinding.expandTextView.setText(data.getIntroduce() + "");
 

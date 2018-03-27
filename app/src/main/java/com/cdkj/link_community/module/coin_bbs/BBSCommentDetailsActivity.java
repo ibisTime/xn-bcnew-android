@@ -76,7 +76,6 @@ public class BBSCommentDetailsActivity extends AbsBaseLoadActivity {
 
     @Override
     public void afterCreate(Bundle savedInstanceState) {
-
         mBaseBinding.titleView.setMidTitle("回复详情");
 
         if (getIntent() != null) {
@@ -124,9 +123,10 @@ public class BBSCommentDetailsActivity extends AbsBaseLoadActivity {
             @Override
             protected void onSuccess(CoinBBSHotCircular data, String SucMessage) {
                 setShowData(data);
-                mBinding.getRoot().setVisibility(View.VISIBLE);
+                if (mBinding.getRoot().getVisibility() == View.GONE) {
+                    mBinding.getRoot().setVisibility(View.VISIBLE);
+                }
             }
-
 
             @Override
             protected void onFinish() {

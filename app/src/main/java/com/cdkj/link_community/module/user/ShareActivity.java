@@ -6,10 +6,17 @@ import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.view.View;
 
 import com.cdkj.link_community.R;
 import com.cdkj.link_community.databinding.ActivityShareBinding;
+import com.cdkj.link_community.interfaces.QQUiListener;
+import com.cdkj.link_community.utils.QqShareUtil;
 import com.cdkj.link_community.utils.WxUtil;
+import com.tencent.connect.common.Constants;
+import com.tencent.connect.share.QQShare;
+import com.tencent.tauth.Tencent;
+import com.uuzuche.lib_zxing.decoding.Intents;
 
 
 /**
@@ -21,13 +28,18 @@ public class ShareActivity extends Activity {
     private ActivityShareBinding mbinding;
 
     private String mShareUrl;//需要分享的URL
+    private String mPhotoUrl;//需要分享的URL
+
+    private String mTitle;//title
+    private String mContent;//content
+
 
     /**
      * 打开当前页面
      *
      * @param context
      */
-    public static void open(Context context, String shareUrl, String title, String content) {
+    public static void open(Context context, String shareUrl, String title, String content, String photoUrl) {
         if (context == null) {
             return;
         }
@@ -35,6 +47,7 @@ public class ShareActivity extends Activity {
         intent.putExtra("shareUrl", shareUrl);
         intent.putExtra("title", title);
         intent.putExtra("content", content);
+        intent.putExtra("photoUrl", photoUrl);
         context.startActivity(intent);
     }
 
@@ -45,10 +58,17 @@ public class ShareActivity extends Activity {
 
         if (getIntent() != null) {
             mShareUrl = getIntent().getStringExtra("shareUrl");
+            mTitle = getIntent().getStringExtra("title");
+            mContent = getIntent().getStringExtra("content");
+            mPhotoUrl = getIntent().getStringExtra("photoUrl");
         }
 
         initListener();
+    }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Tencent.onActivityResultData(requestCode, resultCode, data, new QQUiListener());
     }
 
     /**
@@ -60,17 +80,23 @@ public class ShareActivity extends Activity {
             finish();
         });
 
-        mbinding.imgPyq.setOnClickListener(v -> {
+        mbinding.linShareToPyq.setOnClickListener(v -> {
             WxUtil.shareToPYQ(ShareActivity.this, mShareUrl,
-                    getIntent().getStringExtra("title"), getIntent().getStringExtra("content"));
+                    mTitle, mContent);
             finish();
         });
 
-        mbinding.imgWx.setOnClickListener(v -> {
+        mbinding.linShareToWx.setOnClickListener(v -> {
             WxUtil.shareToWX(ShareActivity.this, mShareUrl,
-                    getIntent().getStringExtra("title"), getIntent().getStringExtra("content"));
+                    mTitle, mContent);
             finish();
+        });
+
+        mbinding.linShareToQq.setOnClickListener(view -> {
+            QqShareUtil.shareMsg(this, mTitle, mContent, mShareUrl, mPhotoUrl);
         });
 
     }
+
+
 }

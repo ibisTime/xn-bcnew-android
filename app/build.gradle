@@ -63,14 +63,14 @@ def releaseTime() {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
-
     implementation 'com.github.mcxtzhang:SwipeDelMenuLayout:V1.3.0'
-// 二维码
+    // 二维码
     implementation 'cn.yipianfengye.android:zxing-library:2.2'
     annotationProcessor rootProject.ext.arouterCompiler
     implementation rootProject.ext.arouterApi
     api project(':cdcommon')
+    implementation files('libs/open_sdk_r5990_lite.jar')
 }
