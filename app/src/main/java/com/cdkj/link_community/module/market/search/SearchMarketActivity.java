@@ -29,15 +29,12 @@ import com.cdkj.baselibrary.nets.BaseResponseModelCallBack;
 import com.cdkj.baselibrary.nets.RetrofitUtils;
 import com.cdkj.baselibrary.utils.StringUtils;
 import com.cdkj.link_community.R;
-import com.cdkj.link_community.adapters.AddMarketListAdapter;
 import com.cdkj.link_community.adapters.SearchMarketListAdapter;
 import com.cdkj.link_community.api.MyApiServer;
 import com.cdkj.link_community.databinding.ActivityMarketSearchBinding;
 import com.cdkj.link_community.model.CoinListModel;
 import com.cdkj.link_community.model.SearchHistoryModel;
 import com.cdkj.link_community.model.StartSearch;
-import com.cdkj.link_community.module.maintab.FirstPageFragment;
-import com.cdkj.link_community.module.maintab.MarketPageFragment;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -94,12 +91,12 @@ public class SearchMarketActivity extends AbsBaseLoadActivity {
     @Override
     public void afterCreate(Bundle savedInstanceState) {
 
+        mBinding.linTab.setVisibility(View.VISIBLE);
         initRefreshHeper();
         initViewPager();
         initTabView();
         initListener();
         initEditKeyPoard();
-
     }
 
     private void initRefreshHeper() {
@@ -147,13 +144,11 @@ public class SearchMarketActivity extends AbsBaseLoadActivity {
         //设置fragment数据
         ArrayList fragments = new ArrayList<>();
 
-        fragments.add(FirstPageFragment.getInstanse());
+        fragments.add(MarketHotSearchListFragment.getInstanse());
         fragments.add(SearchHistoryListFragment.getInstanse(SAVEKEYFORCOINTYPE));
 
         mBinding.viewpager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager(), fragments));
         mBinding.viewpager.setOffscreenPageLimit(fragments.size());
-
-        mBinding.viewpager.setCurrentItem(1);
 
     }
 
@@ -211,6 +206,7 @@ public class SearchMarketActivity extends AbsBaseLoadActivity {
                 if (TextUtils.isEmpty(charSequence.toString())) {
                     searchMarketListAdapter.replaceData(new ArrayList<>()); //清空搜索数据
                     mBinding.viewpager.setVisibility(View.VISIBLE);
+                    mBinding.linTab.setVisibility(View.VISIBLE);
                     mBinding.refreshLayout.setVisibility(View.GONE);
                 }
             }
@@ -256,6 +252,7 @@ public class SearchMarketActivity extends AbsBaseLoadActivity {
         }
 
         mBinding.viewpager.setVisibility(View.GONE);
+        mBinding.linTab.setVisibility(View.GONE);
         mBinding.refreshLayout.setVisibility(View.VISIBLE);
         mRefreshHelper.onDefaluteMRefresh(true);
         return false;

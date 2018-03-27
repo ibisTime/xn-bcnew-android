@@ -12,11 +12,12 @@
             layout="@layout/layout_market_search_bar" />
 
         <LinearLayout
+            android:visibility="gone"
+            android:id="@+id/lin_tab"
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:gravity="center"
             android:orientation="horizontal"
-            android:visibility="gone"
             android:weightSum="2">
 
             <View
