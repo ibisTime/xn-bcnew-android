@@ -95,5 +95,9 @@
     <string name="old_note">原文</string>
     <string name="no_comment">暂无评论</string>
     <string name="about_us">关于我们</string>
+    <string name="gender_update_succ">性别修改成功</string>
+    <string name="birthday_update_succ">生日修改成功</string>
+    <string name="collect_succ">收藏成功</string>
+    <string name="collect_cancel_succ">取消收藏成功</string>
 
 </resources>

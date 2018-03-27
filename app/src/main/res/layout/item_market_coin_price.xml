@@ -15,70 +15,64 @@
         android:orientation="horizontal">
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:orientation="vertical">
 
             <TextView
-                android:visibility="gone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="2dp"
                 android:ellipsize="end"
                 android:singleLine="true"
-                tools:text="sdfsdfsd"
                 android:textColor="@color/app_text_gray_3"
-                android:textSize="12sp" />
+                android:textSize="12sp"
+                android:visibility="gone"
+                tools:text="sdfsdfsd" />
 
             <TextView
                 android:id="@+id/tv_coin_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:ellipsize="end"
-                android:singleLine="true"
-                android:text="sdfsdfsd"
+                android:text="sdfsdfsdsdfsdfsdsdfsdfsdsdfsdfsd"
                 android:textColor="@color/text_black_cd"
-                android:textSize="17sp" />
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/tv_coin_info"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
-                android:ellipsize="end"
-                android:singleLine="true"
-                tools:text="sdfsdfsd"
                 android:textColor="@color/app_text_gray"
-                android:textSize="12sp" />
+                android:textSize="12sp"
+                tools:text="sdfsdfsd" />
 
         </LinearLayout>
 
-        <View
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
 
         <TextView
+            android:gravity="right"
             android:id="@+id/tv_price"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            tools:text="sdfsdfsdsdfsdfsd"
+            android:layout_weight="1"
             android:textColor="@color/text_black_cd"
-            android:textSize="17sp" />
+            android:textSize="16sp"
+            tools:text="dfdfdf" />
 
     </LinearLayout>
 
     <Button
         android:id="@+id/btn_state"
-        android:layout_gravity="center"
-        android:layout_width="wrap_content"
+        android:layout_width="@dimen/width_market_btn"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
+        android:layout_gravity="center"
+        android:layout_marginLeft="10dp"
         android:background="@drawable/market_green_bg"
-        tools:text="sdfsfs"
         android:textColor="@color/white"
-        android:textSize="15sp" />
+        android:textSize="15sp"
+        tools:text="sdfsfs" />
 
 
 </LinearLayout>

@@ -229,6 +229,7 @@ public class UserInfoUpdateActivity extends AbsBaseLoadActivity {
         call.enqueue(new BaseResponseModelCallBack<IsSuccessModes>(UserInfoUpdateActivity.this) {
             @Override
             protected void onSuccess(IsSuccessModes data, String SucMessage) {
+                UITipDialog.showSuccess(UserInfoUpdateActivity.this, getString(R.string.gender_update_succ));
                 mBinding.rowGender.setTvRight(getGenderStr(gender));
                 if (mUserInfo != null) {
                     mUserInfo.setGender(gender);
@@ -268,6 +269,7 @@ public class UserInfoUpdateActivity extends AbsBaseLoadActivity {
         call.enqueue(new BaseResponseModelCallBack<IsSuccessModes>(UserInfoUpdateActivity.this) {
             @Override
             protected void onSuccess(IsSuccessModes data, String SucMessage) {
+                UITipDialog.showSuccess(UserInfoUpdateActivity.this, getString(R.string.birthday_update_succ));
                 mBinding.rowBirthday.setTvRight(birthday);
                 if (mUserInfo != null) {
                     mUserInfo.setBirthday(birthday);

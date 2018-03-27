@@ -632,9 +632,11 @@ public class MessageDetailsActivity extends AbsBaseLoadActivity {
                 if (data.isSuccess()) {
                     if (messageDetails != null) {
                         if (TextUtils.equals(messageDetails.getIsCollect(), "0")) {
+                            UITipDialog.showSuccess(MessageDetailsActivity.this,getString(R.string.collect_succ));
                             messageDetails.setIsCollect("1");
                             mBinding.imgCollection.setImageResource(R.drawable.user_collection);
                         } else {
+                            UITipDialog.showSuccess(MessageDetailsActivity.this,getString(R.string.collect_cancel_succ));
                             messageDetails.setIsCollect("0");
                             mBinding.imgCollection.setImageResource(R.drawable.callection_un);
                         }

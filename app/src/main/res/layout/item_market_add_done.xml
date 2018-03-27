@@ -41,7 +41,7 @@
                         android:ellipsize="end"
                         android:singleLine="true"
                         android:textColor="@color/text_black_cd"
-                        android:textSize="17sp"
+                        android:textSize="16sp"
                         tools:text="sdfsdfsdsdfsdfsdfsdsdfsdfsdsdfsd" />
 
                     <TextView
@@ -92,7 +92,7 @@
                     android:ellipsize="end"
                     android:singleLine="true"
                     android:textColor="@color/text_black_cd"
-                    android:textSize="17sp"
+                    android:textSize="16sp"
                     tools:text="sdfsdfsd" />
 
                 <TextView
@@ -114,7 +114,7 @@
 
         <Button
             android:id="@+id/btn_state"
-            android:layout_width="wrap_content"
+            android:layout_width="@dimen/width_market_btn"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginLeft="15dp"
