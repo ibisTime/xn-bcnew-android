@@ -458,9 +458,10 @@ public class CoinBBSDetailsIntoActivity extends AbsBaseLoadActivity {
             mBinding.tvTodayChange.setText("涨跌浮:" + data.getCoin().getTodayChange());
             mBinding.tvTodayVol.setText("成交(24h):" + data.getCoin().getTodayVol());
 
-            mBinding.tvCirculation.setText(data.getCoin().getTotalSupply());
-            mBinding.tvIssue.setText(data.getCoin().getMaxSupply());
-            mBinding.tvIssueMarket.setText(data.getCoin().getMarketCap());
+            mBinding.tvCirculation.setText(StringUtils.formatNum(data.getCoin().getTotalSupply()));
+            mBinding.tvIssue.setText(StringUtils.formatNum(data.getCoin().getMaxSupply()));
+            mBinding.tvIssueMarket.setText(StringUtils.formatNum(data.getCoin().getMarketCap()));
+
             mBinding.tvIssueRank.setText(data.getCoin().getRank());
 
 
@@ -475,9 +476,10 @@ public class CoinBBSDetailsIntoActivity extends AbsBaseLoadActivity {
 
         }
         mBinding.tvName.setText("#" + data.getName() + "#");
-        mBinding.tvFocusOnNum.setText(getString(R.string.focus_num) + data.getKeepCount());
-        mBinding.tvPostNum.setText(getString(R.string.post_num) + data.getPostCount());
-        mBinding.tvTodayNum.setText(data.getDayCommentCount() + "");
+        mBinding.tvFocusOnNum.setText(getString(R.string.focus_num) + StringUtils.formatNum(data.getKeepCount()));
+        mBinding.tvPostNum.setText(getString(R.string.post_num) + StringUtils.formatNum(data.getPostCount()));
+
+        mBinding.tvTodayNum.setText(StringUtils.formatNum(data.getDayCommentCount()));
 
         mBinding.expandTextView.setText(data.getIntroduce() + "");
 

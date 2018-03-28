@@ -174,9 +174,7 @@ public class MyFocuseOnCoinBBSListFragment extends AbsRefreshListFragment {
                 if (data.isSuccess()) {
                     UITipDialog.showSuccess(mActivity, getString(R.string.bbs_cancel_succ));
                     adapter.remove(position);
-                    if (adapter.getData().size() == 0) {
-                        adapter.notifyDataSetChanged();
-                    }
+                    adapter.notifyDataSetChanged();
                 }
 
             }

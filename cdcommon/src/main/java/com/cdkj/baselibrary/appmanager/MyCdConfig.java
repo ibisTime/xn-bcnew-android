@@ -13,9 +13,9 @@ public class MyCdConfig {
 
     public final static String USERTYPE = "C";//用户类型
 
-    public final static String QINIUURL = "http://p5k7690z2.bkt.clouddn.com/";
+    public final static String QINIUURL = "http://p6aev1fk1.bkt.clouddn.com/";
 
-    public final static String PROJECTNAME = "lxj";
+    public final static String PROJECTNAME = "ljs";
 
     /**
      * 保存的SharedPreferences工具类文件名

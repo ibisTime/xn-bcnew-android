@@ -28,9 +28,11 @@ public class CoinBBSListModel {
     private String status;
     private String updater;
     private String updateDatetime;
+
     private int keepCount;
     private int postCount;
     private int dayCommentCount;
+
     private String isKeep;
 
     public String getCode() {

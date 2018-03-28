@@ -8,6 +8,7 @@ import android.view.View;
 
 import com.cdkj.baselibrary.utils.DateUtil;
 import com.cdkj.baselibrary.utils.ImgUtils;
+import com.cdkj.baselibrary.utils.StringUtils;
 import com.cdkj.link_community.R;
 import com.cdkj.link_community.model.MsgDetailsComment;
 import com.cdkj.link_community.model.ReplyCommentEvent;
@@ -19,6 +20,7 @@ import com.chad.library.adapter.base.BaseViewHolder;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import static com.cdkj.baselibrary.utils.DateUtil.DEFAULT_DATE_FMT;
@@ -57,11 +59,7 @@ public class MsgHotCommentListAdapter extends BaseQuickAdapter<MsgDetailsComment
         }
 
 
-        if (item.getPointCount() > 999) {
-            viewHolder.setText(R.id.tv_like_num, "999+");
-        } else {
-            viewHolder.setText(R.id.tv_like_num, item.getPointCount() + "");
-        }
+        viewHolder.setText(R.id.tv_like_num, StringUtils.formatNum(new BigDecimal(item.getPointCount())));
 
         viewHolder.addOnClickListener(R.id.lin_like);
 

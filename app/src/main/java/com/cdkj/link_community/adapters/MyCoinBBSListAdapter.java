@@ -4,11 +4,13 @@ import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 
+import com.cdkj.baselibrary.utils.StringUtils;
 import com.cdkj.link_community.R;
 import com.cdkj.link_community.model.CoinBBSListModel;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -29,9 +31,9 @@ public class MyCoinBBSListAdapter extends BaseQuickAdapter<CoinBBSListModel, Bas
         if (item == null) return;
 
         viewHolder.setText(R.id.tv_bbs_name, "#" + item.getName() + "#");
-        viewHolder.setText(R.id.tv_focus_on, mContext.getString(R.string.focus_num) + item.getKeepCount());
-        viewHolder.setText(R.id.tv_post_num, mContext.getString(R.string.post_num) + item.getPostCount());
-        viewHolder.setText(R.id.tv_today_num, "" + item.getDayCommentCount());
+        viewHolder.setText(R.id.tv_focus_on, mContext.getString(R.string.focus_num) + StringUtils.formatNum(new BigDecimal(item.getKeepCount())));
+        viewHolder.setText(R.id.tv_post_num, mContext.getString(R.string.post_num) + StringUtils.formatNum(new BigDecimal(item.getPostCount())));
+        viewHolder.setText(R.id.tv_today_num, StringUtils.formatNum(new BigDecimal(item.getDayCommentCount())));
 
         if (viewHolder.getLayoutPosition() % 2 == 0) {
             viewHolder.setBackgroundColor(R.id.lin_bg, ContextCompat.getColor(mContext, R.color.item_bg_other));

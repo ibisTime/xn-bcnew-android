@@ -33,6 +33,7 @@ import com.cdkj.link_community.model.ReplyComment;
 import com.cdkj.link_community.module.user.UserCenterMessageRepyListActivity;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -161,12 +162,7 @@ public class BBSCommentDetailsActivity extends AbsBaseLoadActivity {
             mBinding.replayCommentLayout.imgIsLike.setImageResource(R.drawable.gave_a_like_2_un);
         }
 
-
-        if (messageDetails.getPointCount() > 999) {
-            mBinding.replayCommentLayout.tvLikeNum.setText("999+");
-        } else {
-            mBinding.replayCommentLayout.tvLikeNum.setText(messageDetails.getPointCount() + "");
-        }
+        mBinding.replayCommentLayout.tvLikeNum.setText(StringUtils.formatNum(new BigDecimal(messageDetails.getPointCount())));
 
         setReplyData(messageDetails.getCommentList());
 

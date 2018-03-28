@@ -14,6 +14,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.chad.library.adapter.base.util.MultiTypeDelegate;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import static com.cdkj.baselibrary.utils.DateUtil.DEFAULT_DATE_FMT;
@@ -46,13 +47,9 @@ public class MessageDetailRecomListAdapter extends BaseQuickAdapter<MessageDetai
 
     private void setShowData(BaseViewHolder viewHolder, MessageDetailsNoteList item) {
         viewHolder.setText(R.id.tv_msg_title, item.getTitle());
-        viewHolder.setText(R.id.tv_date,  DateUtil.formatStringData(item.getShowDatetime(), DEFAULT_DATE_FMT));
+        viewHolder.setText(R.id.tv_date, DateUtil.formatStringData(item.getShowDatetime(), DEFAULT_DATE_FMT));
 
-        if (item.getCollectCount() <= 999) {
-            viewHolder.setText(R.id.tv_collection, item.getCollectCount() + mContext.getString(R.string.collection));
-        } else {
-            viewHolder.setText(R.id.tv_collection, "999+" + mContext.getString(R.string.collection));
-        }
+        viewHolder.setText(R.id.tv_collection, StringUtils.formatNum(new BigDecimal(item.getCollectCount())) + mContext.getString(R.string.collection));
     }
 
 }

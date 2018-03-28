@@ -60,11 +60,10 @@ public class CoinBBSListFragment extends AbsRefreshListFragment {
     @Override
     protected void lazyLoad() {
 
-        if (mRefreshBinding == null || isFirstRequest) {
+        if (mRefreshBinding == null) {
             return;
         }
         mRefreshHelper.onDefaluteMRefresh(true);
-        isFirstRequest = true;
 
     }
 
@@ -93,7 +92,7 @@ public class CoinBBSListFragment extends AbsRefreshListFragment {
 
     @Override
     public RecyclerView.Adapter getListAdapter(List listData) {
-        CoinBBSListAdapter coinBBSListAdapter = new CoinBBSListAdapter(listData);
+        CoinBBSListAdapter coinBBSListAdapter = new CoinBBSListAdapter(listData, TextUtils.equals(mBBSType, HOT));
 
         coinBBSListAdapter.setOnItemClickListener((adapter, view, position) -> {
             if (coinBBSListAdapter.getItem(position) != null) {

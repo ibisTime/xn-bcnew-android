@@ -6,12 +6,14 @@ import android.text.TextUtils;
 import com.cdkj.baselibrary.appmanager.SPUtilHelpr;
 import com.cdkj.baselibrary.utils.DateUtil;
 import com.cdkj.baselibrary.utils.ImgUtils;
+import com.cdkj.baselibrary.utils.StringUtils;
 import com.cdkj.link_community.R;
 import com.cdkj.link_community.model.ReplyComment;
 import com.cdkj.link_community.module.user.UserCenterMessageRepyListActivity;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -39,11 +41,7 @@ public class UserMyCommentListAdapter2 extends BaseQuickAdapter<ReplyComment, Ba
         viewHolder.setText(R.id.tv_replay_name, "回复  " + item.getParentNickName());
         viewHolder.setText(R.id.tv_time, DateUtil.formatStringData(item.getCommentDatetime(), DateUtil.DEFAULT_DATE_FMT));
 
-        if (item.getPointCount() > 999) {
-            viewHolder.setText(R.id.tv_like_num, "999+");
-        } else {
-            viewHolder.setText(R.id.tv_like_num, item.getPointCount()+"");
-        }
+        viewHolder.setText(R.id.tv_like_num, StringUtils.formatNum(new BigDecimal(item.getPointCount())));
 
         if (TextUtils.equals(item.getIsPoint(), "1")) {
             viewHolder.setImageResource(R.id.img_is_like, R.drawable.gave_a_like_2);

@@ -154,7 +154,8 @@
                 android:layout_height="32dp"
                 android:layout_gravity="center_vertical"
                 android:layout_marginRight="20dp"
-                android:src="@drawable/share_weibo" />
+                android:src="@drawable/share_weibo"
+                android:visibility="gone" />
 
 
         </LinearLayout>

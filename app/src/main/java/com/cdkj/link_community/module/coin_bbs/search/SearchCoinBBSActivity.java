@@ -122,7 +122,7 @@ public class SearchCoinBBSActivity extends AbsBaseLoadActivity {
 
             @Override
             public RecyclerView.Adapter getAdapter(List listData) {
-                coinBBSListAdapter = new CoinBBSListAdapter(listData);
+                coinBBSListAdapter = new CoinBBSListAdapter(listData,false);
 
                 coinBBSListAdapter.setOnItemClickListener((adapter, view, position) -> {
                     if (coinBBSListAdapter.getItem(position) != null) {

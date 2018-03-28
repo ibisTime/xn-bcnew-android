@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.text.InputFilter;
+import android.text.Spanned;
 import android.text.TextUtils;
 import android.view.View;
 
@@ -25,6 +27,8 @@ import org.greenrobot.eventbus.EventBus;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import retrofit2.Call;
 
@@ -70,6 +74,8 @@ public class NickNameUpdateActivity extends AbsBaseLoadActivity {
 
     @Override
     public void afterCreate(Bundle savedInstanceState) {
+
+        mBinding.edit.setFilters(new NameLengthFilter[]{new NameLengthFilter(16)});
 
         mBaseBinding.titleView.setMidTitle(getString(R.string.nick_name));
 
@@ -121,7 +127,62 @@ public class NickNameUpdateActivity extends AbsBaseLoadActivity {
                 disMissLoading();
             }
         });
+    }
 
+    public class NameLengthFilter implements InputFilter {
+        int MAX_EN;
+        String regEx = "[\\u4e00-\\u9fa5]";
+
+        public NameLengthFilter(int mAX_EN) {
+            super();
+            MAX_EN = mAX_EN;
+        }
+
+        @Override
+        public CharSequence filter(CharSequence source, int start, int end,
+                                   Spanned dest, int dstart, int dend) {
+            int destCount = dest.toString().length()
+                    + getChineseCount(dest.toString());
+            int sourceCount = source.toString().length()
+                    + getChineseCount(source.toString());
+            if (destCount + sourceCount > MAX_EN) {
+                int surplusCount = MAX_EN - destCount;
+                String result = "";
+                int index = 0;
+                while (surplusCount > 0) {
+                    char c = source.charAt(index);
+                    if (isChinest(c + "")) {
+                        if (sourceCount >= 2) {
+                            result += c;
+                        }
+                        surplusCount = surplusCount - 2;
+                    } else {
+                        result += c;
+                        surplusCount = surplusCount - 1;
+                    }
+                    index++;
+                }
+                return result;
+            } else {
+                return source;
+            }
+        }
+
+        private int getChineseCount(String str) {
+            int count = 0;
+            Pattern p = Pattern.compile(regEx);
+            Matcher m = p.matcher(str);
+            while (m.find()) {
+                for (int i = 0; i <= m.groupCount(); i++) {
+                    count = count + 1;
+                }
+            }
+            return count;
+        }
+
+        private boolean isChinest(String source) {
+            return Pattern.matches(regEx, source);
+        }
     }
 
 

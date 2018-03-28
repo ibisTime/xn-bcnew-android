@@ -9,6 +9,7 @@ import android.text.TextUtils;
 
 import com.cdkj.baselibrary.utils.DateUtil;
 import com.cdkj.baselibrary.utils.ImgUtils;
+import com.cdkj.baselibrary.utils.StringUtils;
 import com.cdkj.link_community.R;
 import com.cdkj.link_community.model.CoinBBSHotCircular;
 import com.cdkj.link_community.module.coin_bbs.BBSCommentDetailsActivity;
@@ -18,6 +19,7 @@ import com.cdkj.link_community.module.user.UserCenterMessageRepyListActivity;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import static com.cdkj.baselibrary.utils.DateUtil.DEFAULT_DATE_FMT;
@@ -61,13 +63,7 @@ public class BBSHotCommentListAdapter extends BaseQuickAdapter<CoinBBSHotCircula
             viewHolder.setImageResource(R.id.img_is_like, R.drawable.gave_a_like_2_un);
         }
 
-
-        if (item.getPointCount() > 999) {
-            viewHolder.setText(R.id.tv_like_num, "999+");
-        } else {
-            viewHolder.setText(R.id.tv_like_num, item.getPointCount() + "");
-        }
-
+        viewHolder.setText(R.id.tv_like_num, StringUtils.formatNum(new BigDecimal(item.getPointCount())));
         viewHolder.addOnClickListener(R.id.lin_like);
 
         viewHolder.getView(R.id.img_logo).setOnClickListener(view -> {

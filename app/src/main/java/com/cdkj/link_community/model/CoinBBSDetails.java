@@ -1,5 +1,6 @@
 package com.cdkj.link_community.model;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -34,9 +35,9 @@ public class CoinBBSDetails {
     private String status;
     private String updater;
     private String updateDatetime;
-    private int keepCount;
-    private int postCount;
-    private int dayCommentCount;
+    private BigDecimal keepCount;
+    private BigDecimal postCount;
+    private BigDecimal dayCommentCount;
     private CoinBean coin;
     private String isKeep;
     private List<CoinBBSHotCircular> hotPostList;
@@ -113,27 +114,27 @@ public class CoinBBSDetails {
         this.updateDatetime = updateDatetime;
     }
 
-    public int getKeepCount() {
+    public BigDecimal getKeepCount() {
         return keepCount;
     }
 
-    public void setKeepCount(int keepCount) {
+    public void setKeepCount(BigDecimal keepCount) {
         this.keepCount = keepCount;
     }
 
-    public int getPostCount() {
+    public BigDecimal getPostCount() {
         return postCount;
     }
 
-    public void setPostCount(int postCount) {
+    public void setPostCount(BigDecimal postCount) {
         this.postCount = postCount;
     }
 
-    public int getDayCommentCount() {
+    public BigDecimal getDayCommentCount() {
         return dayCommentCount;
     }
 
-    public void setDayCommentCount(int dayCommentCount) {
+    public void setDayCommentCount(BigDecimal dayCommentCount) {
         this.dayCommentCount = dayCommentCount;
     }
 
@@ -179,9 +180,11 @@ public class CoinBBSDetails {
         private String lastPrice;
         private String todayVol;
         private String todayChange;
-        private String totalSupply;
-        private String maxSupply;
-        private String marketCap;
+
+        private BigDecimal totalSupply;
+        private BigDecimal maxSupply;
+        private BigDecimal marketCap;
+
         private String rank;
 
         public String getId() {
@@ -256,27 +259,27 @@ public class CoinBBSDetails {
             this.todayChange = todayChange;
         }
 
-        public String getTotalSupply() {
+        public BigDecimal getTotalSupply() {
             return totalSupply;
         }
 
-        public void setTotalSupply(String totalSupply) {
+        public void setTotalSupply(BigDecimal totalSupply) {
             this.totalSupply = totalSupply;
         }
 
-        public String getMaxSupply() {
+        public BigDecimal getMaxSupply() {
             return maxSupply;
         }
 
-        public void setMaxSupply(String maxSupply) {
+        public void setMaxSupply(BigDecimal maxSupply) {
             this.maxSupply = maxSupply;
         }
 
-        public String getMarketCap() {
+        public BigDecimal getMarketCap() {
             return marketCap;
         }
 
-        public void setMarketCap(String marketCap) {
+        public void setMarketCap(BigDecimal marketCap) {
             this.marketCap = marketCap;
         }
 

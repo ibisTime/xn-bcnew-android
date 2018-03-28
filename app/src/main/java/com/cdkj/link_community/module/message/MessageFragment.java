@@ -130,7 +130,11 @@ public class MessageFragment extends AbsTablayoutFragment {
 
         initViewPager();
         mTabLayoutBinding.viewpager.setOffscreenPageLimit(4);
-        mTabLayoutBinding.tablayout.setTabMode(TabLayout.MODE_SCROLLABLE);
+        if (mTitleList.size() > 4) {
+            mTabLayoutBinding.tablayout.setTabMode(TabLayout.MODE_SCROLLABLE);
+        } else {
+            mTabLayoutBinding.tablayout.setTabMode(TabLayout.MODE_FIXED);
+        }
     }
 
 }

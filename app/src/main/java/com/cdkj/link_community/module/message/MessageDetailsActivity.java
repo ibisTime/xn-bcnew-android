@@ -29,6 +29,7 @@ import com.cdkj.baselibrary.nets.BaseResponseModelCallBack;
 import com.cdkj.baselibrary.nets.RetrofitUtils;
 import com.cdkj.baselibrary.utils.CheckUtils;
 import com.cdkj.baselibrary.utils.DateUtil;
+import com.cdkj.baselibrary.utils.LogUtil;
 import com.cdkj.baselibrary.utils.StringUtils;
 import com.cdkj.link_community.R;
 import com.cdkj.link_community.adapters.MessageDetailRecomListAdapter;
@@ -47,6 +48,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.tencent.tauth.Tencent;
 
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -257,7 +259,9 @@ public class MessageDetailsActivity extends AbsBaseLoadActivity {
 
         addCall(call);
 
-        showLoadingDialog();
+        if (messageDetails == null) {
+            showLoadingDialog();
+        }
 
         call.enqueue(new BaseResponseModelCallBack<MessageDetails>(this) {
 
@@ -287,7 +291,10 @@ public class MessageDetailsActivity extends AbsBaseLoadActivity {
         if (StringUtils.splitAsPicList(data.getAdvPic()).size() > 0) {
             mSharePhotoUrl = StringUtils.splitAsPicList(data.getAdvPic()).get(0);
         }
-        mShareContent = StringUtils.subString(data.getContent(), 0, 150);
+
+        mShareContent = subShareContent(StringUtils.delHTMLTag(data.getContent()));
+
+        LogUtil.E("sdf" + mShareContent);
 
         mBaseBinding.titleView.setMidTitle(data.getTypeName());
 
@@ -320,6 +327,7 @@ public class MessageDetailsActivity extends AbsBaseLoadActivity {
             mBinding.tvCommentNum.setText(data.getCommentCount() + "");
         }
 
+
         setRecommendedList(data.getRefNewList());
         setHotCommentList(data.getHotCommentList());
 
@@ -342,15 +350,7 @@ public class MessageDetailsActivity extends AbsBaseLoadActivity {
 
 
         /*点赞数量*/
-        if (data.getPointCount() > 0) {
-            if (data.getPointCount() > 999) {
-                mBinding.contentLayout.tvLikeNum.setText("999+");
-            } else {
-                mBinding.contentLayout.tvLikeNum.setText(data.getPointCount() + "");
-            }
-        } else {
-            mBinding.contentLayout.tvLikeNum.setText("0");
-        }
+        mBinding.contentLayout.tvLikeNum.setText(StringUtils.formatNum(new BigDecimal(data.getPointCount())));
     }
 
     /**
@@ -700,6 +700,20 @@ public class MessageDetailsActivity extends AbsBaseLoadActivity {
             }
         });
 
+    }
+
+    /**
+     * 截取要分享的内容
+     *
+     * @param shareContent
+     * @return
+     */
+    public String subShareContent(String shareContent) {
+
+        if (TextUtils.isEmpty(shareContent) || shareContent.length() < 60) {
+            return "";
+        }
+        return shareContent.substring(0, 60);
     }
 
     @Override

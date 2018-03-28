@@ -33,6 +33,7 @@ import com.cdkj.link_community.model.ReplyComment;
 import com.cdkj.link_community.module.message.MessageDetailsActivity;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -180,11 +181,7 @@ public class MyCommentDetailsActivity extends AbsBaseLoadActivity {
         }
 
 
-        if (messageDetails.getPointCount() > 999) {
-            mBinding.replayCommentLayout.tvLikeNum.setText("999+");
-        } else {
-            mBinding.replayCommentLayout.tvLikeNum.setText(messageDetails.getPointCount() + "");
-        }
+        mBinding.replayCommentLayout.tvLikeNum.setText(StringUtils.formatNum(new BigDecimal(messageDetails.getPointCount())));
 
         setReplyData(messageDetails.getCommentList());
 

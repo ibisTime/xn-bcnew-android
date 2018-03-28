@@ -344,19 +344,86 @@ public class StringUtils {
 
     }
 
-
     /**
-     * 查询是否包含敏感词汇
+     * 定义script的正则表达式
      */
-    public static boolean isFilterComments(String str) {
-        return str.indexOf("filter") == -1;
+    private static final String REGEX_SCRIPT = "<script[^>]*?>[\\s\\S]*?<\\/script>";
+    /**
+     * 定义style的正则表达式
+     */
+    private static final String REGEX_STYLE = "<style[^>]*?>[\\s\\S]*?<\\/style>";
+    /**
+     * 定义HTML标签的正则表达式
+     */
+    private static final String REGEX_HTML = "<[^>]+>";
+    /**
+     * 定义空格回车换行符
+     */
+    private static final String REGEX_SPACE = "\\s*|\t|\r|\n";
+
+    public static String delHTMLTag(String htmlStr) {
+        // 过滤script标签
+        Pattern p_script = Pattern.compile(REGEX_SCRIPT, Pattern.CASE_INSENSITIVE);
+        Matcher m_script = p_script.matcher(htmlStr);
+        htmlStr = m_script.replaceAll("");
+        // 过滤style标签
+        Pattern p_style = Pattern.compile(REGEX_STYLE, Pattern.CASE_INSENSITIVE);
+        Matcher m_style = p_style.matcher(htmlStr);
+        htmlStr = m_style.replaceAll("");
+        // 过滤html标签
+        Pattern p_html = Pattern.compile(REGEX_HTML, Pattern.CASE_INSENSITIVE);
+        Matcher m_html = p_html.matcher(htmlStr);
+        htmlStr = m_html.replaceAll("");
+        // 过滤空格回车标签
+        Pattern p_space = Pattern.compile(REGEX_SPACE, Pattern.CASE_INSENSITIVE);
+        Matcher m_space = p_space.matcher(htmlStr);
+        htmlStr = m_space.replaceAll("");
+        return htmlStr.trim(); // 返回文本字符串
     }
 
-    /**
-     * 根据状态查询是否展示评价
-     */
-    public static boolean isFilterCommentsByState(String state) {
-        return TextUtils.equals("A", state) || TextUtils.equals("B", state) || TextUtils.equals("AB", state);
+
+    public static String formatNum(BigDecimal num) {
+
+        if (num == null || num.intValue() == 0) return "0";
+
+        StringBuffer sb = new StringBuffer();
+        BigDecimal b1 = new BigDecimal("10000");
+        BigDecimal b2 = new BigDecimal("100000000");
+
+        String formatNumStr = "";
+        String unit = "";
+
+        // 以万为单位处理
+        if (num.compareTo(b1) == -1) {
+            formatNumStr = num.toString();
+        } else if ((num.compareTo(b1) == 0 && num.compareTo(b1) == 1)
+                || num.compareTo(b2) == -1) {
+            unit = "万";
+
+            formatNumStr = num.divide(b1).toString();
+        } else if (num.compareTo(b2) == 0 || num.compareTo(b2) == 1) {
+            unit = "亿";
+            formatNumStr = num.divide(b2).toString();
+
+        }
+        if (!"".equals(formatNumStr)) {
+            int i = formatNumStr.indexOf(".");
+            if (i == -1) {
+                sb.append(formatNumStr).append(unit);
+            } else {
+                i = i + 1;
+                String v = formatNumStr.substring(i, i + 1);
+                if (!v.equals("0")) {
+                    sb.append(formatNumStr.substring(0, i + 1)).append(unit);
+                } else {
+                    sb.append(formatNumStr.substring(0, i - 1)).append(unit);
+                }
+            }
+        }
+        if (sb.length() == 0)
+            return sb.append("0").toString();
+        return sb.toString();
     }
+
 
 }
