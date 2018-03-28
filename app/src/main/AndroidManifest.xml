@@ -133,14 +133,12 @@
         <activity
             android:name=".module.user.UserCenterMessageRepyListActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/ActivityDialogStyleBottom"
             android:windowSoftInputMode="adjustPan" />
 
         <!--用户中心 资讯评论 回复-->
         <activity
             android:name=".module.user.UserCenterBBSRepyListActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/ActivityDialogStyleBottom"
             android:windowSoftInputMode="adjustPan" />
 
         <!-- 微信分享回调 -->

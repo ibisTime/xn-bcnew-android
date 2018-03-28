@@ -2,6 +2,7 @@ package com.cdkj.link_community.adapters;
 
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
+import android.text.TextUtils;
 
 import com.cdkj.baselibrary.appmanager.SPUtilHelpr;
 import com.cdkj.baselibrary.utils.DateUtil;
@@ -44,8 +45,14 @@ public class UserMyCommentListAdapter extends BaseQuickAdapter<UserMessageCommen
 
         viewHolder.setText(R.id.tv_name, SPUtilHelpr.getUserNickName());
         viewHolder.setText(R.id.tv_content, item.getContent());
-        viewHolder.setText(R.id.tv_replay_name, "回复 " + item.getParentNickName());
         viewHolder.setText(R.id.tv_time, DateUtil.formatStringData(item.getCommentDatetime(), DateUtil.DEFAULT_DATE_FMT));
+
+        if (TextUtils.isEmpty(item.getParentNickName())) {
+            viewHolder.setText(R.id.tv_replay_name, "进行了评论");
+        } else {
+            viewHolder.setText(R.id.tv_replay_name, "回复 " + item.getParentNickName());
+        }
+
 
         viewHolder.addOnClickListener(R.id.lin_msg);
 

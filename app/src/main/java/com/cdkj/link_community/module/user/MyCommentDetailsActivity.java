@@ -106,6 +106,11 @@ public class MyCommentDetailsActivity extends AbsBaseLoadActivity {
 
         mBinding.getRoot().setVisibility(View.GONE);
 
+        initListener();
+
+    }
+
+    private void initListener() {
         mBinding.bottomLayout.linComment.setOnClickListener(view -> {
             if (!SPUtilHelpr.isLogin(MyCommentDetailsActivity.this, false)) {
                 return;
@@ -116,6 +121,13 @@ public class MyCommentDetailsActivity extends AbsBaseLoadActivity {
         mBinding.replayCommentLayout.imgLogo.setOnClickListener(view -> {
             if (msgDetailsComment == null) return;
             UserCenterMessageRepyListActivity.open(this, msgDetailsComment.getUserId(), msgDetailsComment.getNickname(), msgDetailsComment.getPhoto());
+        });
+
+        mBinding.replayCommentLayout.linLike.setOnClickListener(view -> {
+            if (!SPUtilHelpr.isLogin(this, false)) {
+                return;
+            }
+            toMsgLikeRequest();
         });
     }
 
@@ -329,6 +341,74 @@ public class MyCommentDetailsActivity extends AbsBaseLoadActivity {
         });
     }
 
+
+    /**
+     * 资讯点赞
+     */
+    private void toMsgLikeRequest() {
+
+        if (msgDetailsComment == null || TextUtils.isEmpty(msgDetailsComment.getCode())) {
+            return;
+        }
+
+        Map<String, String> map = new HashMap<>(); /*类型(Y 1 资讯 2 评论)*/
+
+        map.put("type", COMMENTCOMMENT);
+        map.put("objectCode", msgDetailsComment.getCode());
+        map.put("userId", SPUtilHelpr.getUserId());
+
+        showLoadingDialog();
+        Call call = RetrofitUtils.getBaseAPiService().successRequest("628201", StringUtils.getJsonToString(map));
+
+        addCall(call);
+
+        call.enqueue(new BaseResponseModelCallBack<IsSuccessModes>(this) {
+            @Override
+            protected void onSuccess(IsSuccessModes data, String SucMessage) {
+
+                if (data.isSuccess()) {
+
+                    if (msgDetailsComment != null) {
+                        if (msgDetailsComment.getIsPoint() == 0) {
+                            msgDetailsComment.setIsPoint(1);
+                            msgDetailsComment.setPointCount(msgDetailsComment.getPointCount() + 1);
+                        } else {
+                            msgDetailsComment.setIsPoint(0);
+                            msgDetailsComment.setPointCount(msgDetailsComment.getPointCount() - 1);
+                        }
+                    }
+                    setLikeInfo(msgDetailsComment);
+
+                }
+            }
+
+            @Override
+            protected void onFinish() {
+                disMissLoading();
+            }
+        });
+
+    }
+
+    /**
+     * 设置点赞信息
+     *
+     * @param data
+     */
+    private void setLikeInfo(MsgDetailsComment data) {
+    /*是否点赞*/
+
+        if (data.getIsPoint() == 1) {
+            mBinding.replayCommentLayout.imgIsLike.setImageResource(R.drawable.gave_a_like);
+        } else {
+            mBinding.replayCommentLayout.imgIsLike.setImageResource(R.drawable.gave_a_like_un);
+        }
+
+
+        /*点赞数量*/
+        mBinding.replayCommentLayout.tvLikeNum.setText(StringUtils.formatNum(new BigDecimal(data.getPointCount())));
+    }
+
     /**
      * 资讯点赞
      */
@@ -342,7 +422,7 @@ public class MyCommentDetailsActivity extends AbsBaseLoadActivity {
 
         Map<String, String> map = new HashMap<>(); /*类型(Y 1 资讯 2 评论)*/
 
-        map.put("type", "2");
+        map.put("type", COMMENTCOMMENT);
         map.put("objectCode", replyComment.getCode());
         map.put("userId", SPUtilHelpr.getUserId());
 

@@ -60,7 +60,13 @@ public class MyCommentsListFragment extends AbsRefreshListFragment {
     protected void afterCreate(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         initRefreshHelper(MyCdConfig.LISTLIMIT);
     }
-
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(getUserVisibleHint()){
+            mRefreshHelper.onDefaluteMRefresh(true);
+        }
+    }
 
     @Override
     public RecyclerView.Adapter getListAdapter(List listData) {

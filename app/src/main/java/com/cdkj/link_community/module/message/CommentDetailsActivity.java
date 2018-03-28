@@ -61,6 +61,8 @@ public class CommentDetailsActivity extends AbsBaseLoadActivity {
 
     private String mCommentCode;
 
+    private MsgDetailsComment msgDetailsComment;
+
     /**
      * @param context
      * @param commentCode 评论编号
@@ -93,11 +95,24 @@ public class CommentDetailsActivity extends AbsBaseLoadActivity {
 
         mBinding.getRoot().setVisibility(View.GONE);
 
-        mBinding.bottomLayout.linComment.setOnClickListener(view -> {
+        initListener();
 
+
+    }
+
+    private void initListener() {
+        //评论
+        mBinding.bottomLayout.linComment.setOnClickListener(view -> {
             commentPlayRequest(mCommentCode, "");
         });
 
+        //点赞
+        mBinding.replayCommentLayout.linLike.setOnClickListener(view -> {
+            if (!SPUtilHelpr.isLogin(this, false)) {
+                return;
+            }
+            toMsgLikeRequest();
+        });
     }
 
     @Override
@@ -131,6 +146,7 @@ public class CommentDetailsActivity extends AbsBaseLoadActivity {
 
             @Override
             protected void onSuccess(MsgDetailsComment data, String SucMessage) {
+                msgDetailsComment = data;
                 setShowData(data);
                 mBinding.getRoot().setVisibility(View.VISIBLE);
             }
@@ -260,7 +276,7 @@ public class CommentDetailsActivity extends AbsBaseLoadActivity {
         call.enqueue(new BaseResponseModelCallBack<CodeModel>(this) {
             @Override
             protected void onSuccess(CodeModel data, String SucMessage) {
-                checkRealseState(data,type);
+                checkRealseState(data, type);
             }
 
             @Override
@@ -299,6 +315,73 @@ public class CommentDetailsActivity extends AbsBaseLoadActivity {
                 UITipDialog.showInfo(CommentDetailsActivity.this, str);
             }
         });
+    }
+
+    /**
+     * 资讯点赞
+     */
+    private void toMsgLikeRequest() {
+
+        if (msgDetailsComment == null || TextUtils.isEmpty(msgDetailsComment.getCode())) {
+            return;
+        }
+
+        Map<String, String> map = new HashMap<>(); /*类型(Y 1 资讯 2 评论)*/
+
+        map.put("type", COMMENTCOMMENT);
+        map.put("objectCode", msgDetailsComment.getCode());
+        map.put("userId", SPUtilHelpr.getUserId());
+
+        showLoadingDialog();
+        Call call = RetrofitUtils.getBaseAPiService().successRequest("628201", StringUtils.getJsonToString(map));
+
+        addCall(call);
+
+        call.enqueue(new BaseResponseModelCallBack<IsSuccessModes>(this) {
+            @Override
+            protected void onSuccess(IsSuccessModes data, String SucMessage) {
+
+                if (data.isSuccess()) {
+
+                    if (msgDetailsComment != null) {
+                        if (msgDetailsComment.getIsPoint() == 0) {
+                            msgDetailsComment.setIsPoint(1);
+                            msgDetailsComment.setPointCount(msgDetailsComment.getPointCount() + 1);
+                        } else {
+                            msgDetailsComment.setIsPoint(0);
+                            msgDetailsComment.setPointCount(msgDetailsComment.getPointCount() - 1);
+                        }
+                    }
+                    setLikeInfo(msgDetailsComment);
+
+                }
+            }
+
+            @Override
+            protected void onFinish() {
+                disMissLoading();
+            }
+        });
+
+    }
+
+    /**
+     * 设置点赞信息
+     *
+     * @param data
+     */
+    private void setLikeInfo(MsgDetailsComment data) {
+    /*是否点赞*/
+
+        if (data.getIsPoint() == 1) {
+            mBinding.replayCommentLayout.imgIsLike.setImageResource(R.drawable.gave_a_like);
+        } else {
+            mBinding.replayCommentLayout.imgIsLike.setImageResource(R.drawable.gave_a_like_un);
+        }
+
+
+        /*点赞数量*/
+        mBinding.replayCommentLayout.tvLikeNum.setText(StringUtils.formatNum(new BigDecimal(data.getPointCount())));
     }
 
 }

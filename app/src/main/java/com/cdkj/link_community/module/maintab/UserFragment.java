@@ -22,6 +22,7 @@ import com.cdkj.link_community.api.MyApiServer;
 import com.cdkj.link_community.databinding.FragmentUserBinding;
 import com.cdkj.link_community.manager.DataCleanManager;
 import com.cdkj.link_community.model.UserInfoModel;
+import com.cdkj.link_community.module.user.LoginActivity;
 import com.cdkj.link_community.module.user.MyCoinBBSCommentsActivity;
 import com.cdkj.link_community.module.user.MyCollectionListActivity;
 import com.cdkj.link_community.module.user.MyMessageCommentsActivity;
@@ -131,7 +132,9 @@ public class UserFragment extends BaseLazyFragment {
         showDoubleWarnListen(getString(R.string.sure_logout), view -> {
             SPUtilHelpr.logOutClear();
             setShowState();
-            UITipDialog.showSuccess(mActivity, getString(R.string.logout_succ));
+            UITipDialog.showSuccess(mActivity, getString(R.string.logout_succ),dialogInterface -> {
+                LoginActivity.open(mActivity,false);
+            });
         });
     }
 

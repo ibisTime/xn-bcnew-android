@@ -31,12 +31,21 @@ public class UserBBSComment {
     private int pointCount;
     private String parentCode;
     private String parentUserId;
+    private String parentNickName;
     private String objectCode;
     private String status;
     private String nickname;
     private String photo;
     private String isMyComment; //1 我回复别人
     private PostBean post;
+
+    public String getParentNickName() {
+        return parentNickName;
+    }
+
+    public void setParentNickName(String parentNickName) {
+        this.parentNickName = parentNickName;
+    }
 
     public String getIsMyComment() {
         return isMyComment;

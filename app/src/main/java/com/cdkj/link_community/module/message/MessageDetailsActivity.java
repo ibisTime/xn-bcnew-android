@@ -254,6 +254,7 @@ public class MessageDetailsActivity extends AbsBaseLoadActivity {
         Map<String, String> map = new HashMap<>();
 
         map.put("code", mCode);
+        map.put("userId",SPUtilHelpr.getUserId());
 
         Call call = RetrofitUtils.createApi(MyApiServer.class).getMessageDetails("628206", StringUtils.getJsonToString(map));
 

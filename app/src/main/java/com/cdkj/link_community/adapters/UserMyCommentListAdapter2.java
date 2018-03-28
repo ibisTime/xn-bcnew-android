@@ -38,10 +38,14 @@ public class UserMyCommentListAdapter2 extends BaseQuickAdapter<ReplyComment, Ba
 
         viewHolder.setText(R.id.tv_name, SPUtilHelpr.getUserNickName());
         viewHolder.setText(R.id.tv_content, item.getContent());
-        viewHolder.setText(R.id.tv_replay_name, "回复  " + item.getParentNickName());
         viewHolder.setText(R.id.tv_time, DateUtil.formatStringData(item.getCommentDatetime(), DateUtil.DEFAULT_DATE_FMT));
 
         viewHolder.setText(R.id.tv_like_num, StringUtils.formatNum(new BigDecimal(item.getPointCount())));
+
+
+        viewHolder.setText(R.id.tv_replay_name, "回复  " + item.getParentNickName());
+        viewHolder.setGone(R.id.tv_replay_name, !TextUtils.isEmpty(item.getParentNickName()));
+
 
         if (TextUtils.equals(item.getIsPoint(), "1")) {
             viewHolder.setImageResource(R.id.img_is_like, R.drawable.gave_a_like_2);

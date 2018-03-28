@@ -24,6 +24,7 @@ import com.cdkj.baselibrary.utils.DateUtil;
 import com.cdkj.baselibrary.utils.ImgUtils;
 import com.cdkj.baselibrary.utils.StringUtils;
 import com.cdkj.link_community.R;
+import com.cdkj.link_community.adapters.BBSHotCommentListAdapter;
 import com.cdkj.link_community.adapters.ReplyCommentListAdapter;
 import com.cdkj.link_community.api.MyApiServer;
 import com.cdkj.link_community.databinding.ActivityMessageCommentDetailsBinding;
@@ -98,6 +99,58 @@ public class BBSCommentDetailsActivity extends AbsBaseLoadActivity {
             UserCenterMessageRepyListActivity.open(this, coinBBSHotCircular.getUserId(), coinBBSHotCircular.getNickname(), coinBBSHotCircular.getPhoto());
         });
 
+        mBinding.replayCommentLayout.linLike.setOnClickListener(view -> {
+            circularLikeRequest();
+        });
+
+    }
+
+    /**
+     * 圈子点赞
+     */
+    private void circularLikeRequest() {
+
+        if (!SPUtilHelpr.isLogin(this, false)) {
+            return;
+        }
+
+        if (coinBBSHotCircular == null || TextUtils.isEmpty(coinBBSHotCircular.getCode())) {
+            return;
+        }
+
+        Map<String, String> map = new HashMap<>(); /*类型(Y 1 资讯 2 评论)*/
+
+        map.put("type", "1"); /*1 帖子，2评论*/
+        map.put("objectCode", coinBBSHotCircular.getCode());
+        map.put("userId", SPUtilHelpr.getUserId());
+
+        showLoadingDialog();
+        Call call = RetrofitUtils.getBaseAPiService().successRequest("628653", StringUtils.getJsonToString(map));
+
+        addCall(call);
+
+        call.enqueue(new BaseResponseModelCallBack<IsSuccessModes>(this) {
+            @Override
+            protected void onSuccess(IsSuccessModes data, String SucMessage) {
+
+                if (data.isSuccess()) {
+                    if (TextUtils.equals(coinBBSHotCircular.getIsPoint(), "1")) {
+                        coinBBSHotCircular.setPointCount(coinBBSHotCircular.getPointCount() - 1);
+                        coinBBSHotCircular.setIsPoint("0");
+                    } else {
+                        coinBBSHotCircular.setPointCount(coinBBSHotCircular.getPointCount() + 1);
+                        coinBBSHotCircular.setIsPoint("1");
+                    }
+                    setPointNum(coinBBSHotCircular);
+                }
+            }
+
+            @Override
+            protected void onFinish() {
+                disMissLoading();
+            }
+        });
+
     }
 
     @Override
@@ -131,7 +184,7 @@ public class BBSCommentDetailsActivity extends AbsBaseLoadActivity {
 
             @Override
             protected void onSuccess(CoinBBSHotCircular data, String SucMessage) {
-                coinBBSHotCircular=data;
+                coinBBSHotCircular = data;
                 setShowData(data);
                 if (mBinding.getRoot().getVisibility() == View.GONE) {
                     mBinding.getRoot().setVisibility(View.VISIBLE);
@@ -156,6 +209,18 @@ public class BBSCommentDetailsActivity extends AbsBaseLoadActivity {
         mBinding.replayCommentLayout.tvTime.setText(DateUtil.formatStringData(messageDetails.getPublishDatetime(), DEFAULT_DATE_FMT));
         mBinding.replayCommentLayout.tvContent.setText(messageDetails.getContent());
 
+        setPointNum(messageDetails);
+
+        setReplyData(messageDetails.getCommentList());
+
+    }
+
+    /**
+     * 设置点赞数量
+     *
+     * @param messageDetails
+     */
+    private void setPointNum(CoinBBSHotCircular messageDetails) {
         if (TextUtils.equals(messageDetails.getIsPoint(), "1")) {
             mBinding.replayCommentLayout.imgIsLike.setImageResource(R.drawable.gave_a_like_2);
         } else {
@@ -163,9 +228,6 @@ public class BBSCommentDetailsActivity extends AbsBaseLoadActivity {
         }
 
         mBinding.replayCommentLayout.tvLikeNum.setText(StringUtils.formatNum(new BigDecimal(messageDetails.getPointCount())));
-
-        setReplyData(messageDetails.getCommentList());
-
     }
 
     /**

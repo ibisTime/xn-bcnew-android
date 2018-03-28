@@ -111,7 +111,7 @@ public class CoinBBSDetailsIntoActivity extends AbsBaseLoadActivity {
 
         /*防止局部刷新闪烁*/
         ((DefaultItemAnimator) mBinding.recyclerViewLeft.getItemAnimator()).setSupportsChangeAnimations(false);
-        ((DefaultItemAnimator) mBinding.recyclerViewLeft.getItemAnimator()).setSupportsChangeAnimations(false);
+        ((DefaultItemAnimator) mBinding.recyclerViewLeft2.getItemAnimator()).setSupportsChangeAnimations(false);
 
         initViewPagerAndIndicator();
         initRefreshLayout();
@@ -674,6 +674,9 @@ public class CoinBBSDetailsIntoActivity extends AbsBaseLoadActivity {
      * 圈子点赞
      */
     private void circularLikeRequest(BBSHotCommentListAdapter adapter, int position) {
+        if (SPUtilHelpr.isLogin(this, false)) {
+            return;
+        }
 
         CoinBBSHotCircular coinBBSHotCircular = adapter.getItem(position);
 
@@ -688,7 +691,7 @@ public class CoinBBSDetailsIntoActivity extends AbsBaseLoadActivity {
         map.put("userId", SPUtilHelpr.getUserId());
 
         showLoadingDialog();
-        Call call = RetrofitUtils.getBaseAPiService().successRequest("628201", StringUtils.getJsonToString(map));
+        Call call = RetrofitUtils.getBaseAPiService().successRequest("628653", StringUtils.getJsonToString(map));
 
         addCall(call);
 

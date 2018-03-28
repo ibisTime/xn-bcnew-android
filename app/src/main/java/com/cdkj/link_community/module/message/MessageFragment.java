@@ -36,7 +36,6 @@ import retrofit2.Call;
 
 public class MessageFragment extends AbsTablayoutFragment {
 
-    private boolean isFirstRequest;
     private List<String> mTitleList;
     private List<Fragment> mFragmentList;
 
@@ -60,11 +59,9 @@ public class MessageFragment extends AbsTablayoutFragment {
     @Override
     protected void lazyLoad() {
 
-        if (mTabLayoutBinding == null || isFirstRequest) {
+        if (mTabLayoutBinding == null || !mTitleList.isEmpty()) {
             return;
         }
-
-        isFirstRequest = true;
 
         getMessageTypeRequest();
 

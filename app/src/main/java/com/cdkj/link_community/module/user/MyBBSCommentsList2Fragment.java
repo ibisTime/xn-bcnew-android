@@ -50,7 +50,7 @@ public class MyBBSCommentsList2Fragment extends AbsRefreshListFragment {
         if (mRefreshBinding == null || isFirstRequest) {
             return;
         }
-        isFirstRequest=true;
+        isFirstRequest = true;
         mRefreshHelper.onDefaluteMRefresh(true);
     }
 
@@ -61,6 +61,14 @@ public class MyBBSCommentsList2Fragment extends AbsRefreshListFragment {
     @Override
     protected void afterCreate(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         initRefreshHelper(MyCdConfig.LISTLIMIT);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (getUserVisibleHint()) {
+            mRefreshHelper.onDefaluteMRefresh(true);
+        }
     }
 
 

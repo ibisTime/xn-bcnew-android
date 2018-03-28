@@ -52,6 +52,14 @@ public class MyCommentsList2Fragment extends AbsRefreshListFragment {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        if(getUserVisibleHint()){
+            mRefreshHelper.onDefaluteMRefresh(true);
+        }
+    }
+
+    @Override
     protected void afterCreate(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         initRefreshHelper(MyCdConfig.LISTLIMIT);
         mRefreshHelper.onDefaluteMRefresh(true);

@@ -57,6 +57,14 @@ public class MyBBSCommentsListFragment extends AbsRefreshListFragment {
         mRefreshHelper.onDefaluteMRefresh(true);
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(getUserVisibleHint()){
+            mRefreshHelper.onDefaluteMRefresh(true);
+        }
+    }
+
 
     @Override
     public RecyclerView.Adapter getListAdapter(List listData) {
@@ -71,6 +79,9 @@ public class MyBBSCommentsListFragment extends AbsRefreshListFragment {
 
         return userMyCommentListAdapter;
     }
+
+
+
 
     @Override
     public void getListRequest(int pageindex, int limit, boolean isShowDialog) {

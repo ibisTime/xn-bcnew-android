@@ -40,7 +40,7 @@ public class UserBBSCommentListAdapter2 extends BaseQuickAdapter<UserBBSComment,
 
         viewHolder.setText(R.id.tv_name, SPUtilHelpr.getUserNickName());
         viewHolder.setText(R.id.tv_content, item.getContent());
-        viewHolder.setText(R.id.tv_replay_name, "我 回复 " + item.getNickname());
+        viewHolder.setText(R.id.tv_replay_name, "我 回复 " + item.getParentNickName());
         viewHolder.setText(R.id.tv_time, DateUtil.formatStringData(item.getCommentDatetime(), DateUtil.DEFAULT_DATE_FMT));
 
 
@@ -50,7 +50,7 @@ public class UserBBSCommentListAdapter2 extends BaseQuickAdapter<UserBBSComment,
 
 
         viewHolder.getView(R.id.img_logo).setOnClickListener(view -> {
-            UserCenterBBSRepyListActivity.open(mContext, item.getUserId(), item.getNickname(), item.getPhoto());
+            UserCenterBBSRepyListActivity.open(mContext, item.getUserId(), item.getParentNickName(), item.getPhoto());
         });
 
     }
