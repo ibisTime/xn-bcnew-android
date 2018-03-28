@@ -397,59 +397,16 @@ public class StringUtils {
     public static String formatNum(BigDecimal num) {
 
         if (num == null || num.intValue() == 0) return "0";
-
-        if (num.doubleValue() < 10000) {
-            return num.toPlainString();
-        }
-
         NumberFormat nf = new DecimalFormat("#.##");
-
+        if (num.doubleValue() < 10000) {
+            return nf.format(num.doubleValue());
+        }
+        if (num.doubleValue() >= 100000000) {
+            return nf.format(num.divide(new BigDecimal(100000000), 2, RoundingMode.HALF_UP).doubleValue()) + "亿";
+        }
         return nf.format(num.divide(new BigDecimal(10000), 2, RoundingMode.HALF_UP).doubleValue()) + "万";
 
     }
-
-//    public static String formatNum(BigDecimal num) {
-//
-//        if (num == null || num.intValue() == 0) return "0";
-//
-//        StringBuffer sb = new StringBuffer();
-//        BigDecimal b1 = new BigDecimal("10000");
-//        BigDecimal b2 = new BigDecimal("100000000");
-//
-//        String formatNumStr = "";
-//        String unit = "";
-//
-//        // 以万为单位处理
-//        if (num.compareTo(b1) == -1) {
-//            formatNumStr = num.toString();
-//        } else if ((num.compareTo(b1) == 0 && num.compareTo(b1) == 1)
-//                || num.compareTo(b2) == -1) {
-//            unit = "万";
-//
-//            formatNumStr = num.divide(b1).toString();
-//        } else if (num.compareTo(b2) == 0 || num.compareTo(b2) == 1) {
-//            unit = "亿";
-//            formatNumStr = num.divide(b2).toString();
-//
-//        }
-//        if (!"".equals(formatNumStr)) {
-//            int i = formatNumStr.indexOf(".");
-//            if (i == -1) {
-//                sb.append(formatNumStr).append(unit);
-//            } else {
-//                i = i + 1;
-//                String v = formatNumStr.substring(i, i + 1);
-//                if (!v.equals("0")) {
-//                    sb.append(formatNumStr.substring(0, i + 1)).append(unit);
-//                } else {
-//                    sb.append(formatNumStr.substring(0, i - 1)).append(unit);
-//                }
-//            }
-//        }
-//        if (sb.length() == 0)
-//            return sb.append("0").toString();
-//        return sb.toString();
-//    }
 
 
 }

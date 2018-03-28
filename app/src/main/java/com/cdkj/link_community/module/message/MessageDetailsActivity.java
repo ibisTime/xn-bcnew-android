@@ -254,7 +254,7 @@ public class MessageDetailsActivity extends AbsBaseLoadActivity {
         Map<String, String> map = new HashMap<>();
 
         map.put("code", mCode);
-        map.put("userId",SPUtilHelpr.getUserId());
+        map.put("userId", SPUtilHelpr.getUserId());
 
         Call call = RetrofitUtils.createApi(MyApiServer.class).getMessageDetails("628206", StringUtils.getJsonToString(map));
 
@@ -307,10 +307,18 @@ public class MessageDetailsActivity extends AbsBaseLoadActivity {
                 "}\n" +
                 " \n" +
                 "</style>" + data.getContent(), "text/html; charset=UTF-8", null);
-        mBinding.contentLayout.tvAuthor.setText(getString(R.string.author) + data.getAuther());
+
         mBinding.contentLayout.tvTime.setText(DateUtil.formatStringData(data.getShowDatetime(), DEFAULT_DATE_FMT));
         mBinding.contentLayout.tvFrom.setText(getString(R.string.message_frome) + data.getSource());
         mBinding.contentLayout.tvTitle.setText(data.getTitle());
+
+        if (TextUtils.isEmpty(data.getAuther())) {
+            mBinding.contentLayout.tvAuthor.setText(getString(R.string.author) + "--");
+        } else {
+            mBinding.contentLayout.tvAuthor.setText(getString(R.string.author) + data.getAuther());
+        }
+
+
 
         /*收藏按钮*/
         if (TextUtils.equals(data.getIsCollect(), "0")) {
@@ -424,6 +432,7 @@ public class MessageDetailsActivity extends AbsBaseLoadActivity {
         map.put("objectCode", mCode);
         map.put("start", pageindex + "");
         map.put("limit", limit + "");
+        map.put("userId", SPUtilHelpr.getUserId());
 
         if (isShowDialog) showLoadingDialog();
 
@@ -580,6 +589,7 @@ public class MessageDetailsActivity extends AbsBaseLoadActivity {
         map.put("type", COMMENTCOMMENT);
         map.put("objectCode", msgDetailsComment.getCode());
         map.put("userId", SPUtilHelpr.getUserId());
+        map.put("token", SPUtilHelpr.getUserToken());
 
         showLoadingDialog();
         Call call = RetrofitUtils.getBaseAPiService().successRequest("628201", StringUtils.getJsonToString(map));

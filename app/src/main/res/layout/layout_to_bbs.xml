@@ -24,8 +24,6 @@
                     android:id="@+id/tv_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:ellipsize="end"
-                    android:singleLine="true"
                     android:textColor="@color/text_black_cd"
                     android:textSize="17sp"
                     tools:text="sdfsdfsd" />
@@ -35,11 +33,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:ellipsize="end"
-                    android:singleLine="true"
                     android:textColor="#3a3a3a"
                     android:textSize="14sp"
-                    tools:text="sdfsdfsd" />
+                    tools:text="sdfsdfsdsdfsdfsdsdfsdfsdsdfsdfsdsdfsdfsdsdfsdfsdsdfsdfsd" />
 
             </LinearLayout>
 
@@ -58,9 +54,9 @@
             android:layout_gravity="center"
             android:layout_marginLeft="15dp"
             android:background="@drawable/to_bbs_bg"
+            android:text="@string/in_to_bbs"
             android:textColor="@color/white"
-            android:textSize="15sp"
-            android:text="@string/in_to_bbs" />
+            android:textSize="15sp" />
 
 
     </LinearLayout>

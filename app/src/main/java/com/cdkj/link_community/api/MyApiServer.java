@@ -21,6 +21,7 @@ import com.cdkj.link_community.model.MyChooseMarket;
 import com.cdkj.link_community.model.UserBBSComment;
 import com.cdkj.link_community.model.UserInfoModel;
 import com.cdkj.link_community.model.UserMessageComment;
+import com.cdkj.link_community.model.VersionModel;
 
 import retrofit2.Call;
 import retrofit2.http.Field;
@@ -32,6 +33,16 @@ import retrofit2.http.POST;
  */
 
 public interface MyApiServer {
+    /**
+     * 获取版本
+     *
+     * @param code
+     * @param json
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("api")
+    Call<BaseResponseModel<VersionModel>> getVersion(@Field("code") String code, @Field("json") String json);
 
 
     /**
@@ -44,6 +55,7 @@ public interface MyApiServer {
     @FormUrlEncoded
     @POST("api")
     Call<BaseResponseModel<CoinBBSDetails>> getCoinBBsDetails(@Field("code") String code, @Field("json") String json);
+
     /**
      * 获取币吧统计信息
      *
@@ -78,6 +90,7 @@ public interface MyApiServer {
     @FormUrlEncoded
     @POST("api")
     Call<BaseResponseModel<ResponseInListModel<MyChooseMarket>>> getMyChooseMarketList(@Field("code") String code, @Field("json") String json);
+
     /**
      * 获币吧列表
      *
@@ -88,6 +101,7 @@ public interface MyApiServer {
     @FormUrlEncoded
     @POST("api")
     Call<BaseResponseModel<ResponseInListModel<CoinBBSListModel>>> getCoinBBSList(@Field("code") String code, @Field("json") String json);
+
     /**
      * 获币圈圈子列表
      *
@@ -133,6 +147,7 @@ public interface MyApiServer {
     @FormUrlEncoded
     @POST("api")
     Call<BaseResponseModel<ResponseInListModel<UserMessageComment>>> getUserMyCommentList(@Field("code") String code, @Field("json") String json);
+
     /**
      * 获取我的币圈评论
      *
@@ -168,7 +183,6 @@ public interface MyApiServer {
     Call<BaseResponseListModel<CoinPlatformType>> getCoinTypeList(@Field("code") String code, @Field("json") String json);
 
 
-
     /**
      * 获取资讯详情最新评论列表
      *
@@ -202,6 +216,7 @@ public interface MyApiServer {
     @FormUrlEncoded
     @POST("api")
     Call<BaseResponseModel<MsgDetailsComment>> getMessageCommentDetails(@Field("code") String code, @Field("json") String json);
+
     /**
      * 获取帖子评论详情
      *

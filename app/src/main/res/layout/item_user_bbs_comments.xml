@@ -33,9 +33,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:ellipsize="end"
-                    android:singleLine="true"
-                    tools:text="sdfsdfsfsdf"
+                    tools:text="sdfsdfsfsdfsdfsdfsfsdfsdfsdfsfsdfsdfsdfsfsdfsdfsdfsfsdfsdfsdfsfsdf"
                     android:textColor="@color/text_black_cd"
                     android:textSize="14sp" />
 

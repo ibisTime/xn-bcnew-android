@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import com.cdkj.baselibrary.appmanager.SPUtilHelpr;
 import com.cdkj.baselibrary.utils.DateUtil;
 import com.cdkj.baselibrary.utils.ImgUtils;
+import com.cdkj.baselibrary.utils.LogUtil;
 import com.cdkj.baselibrary.utils.StringUtils;
 import com.cdkj.link_community.R;
 import com.cdkj.link_community.model.ReplyComment;
@@ -46,6 +47,8 @@ public class UserMyCommentListAdapter2 extends BaseQuickAdapter<ReplyComment, Ba
         viewHolder.setText(R.id.tv_replay_name, "回复  " + item.getParentNickName());
         viewHolder.setGone(R.id.tv_replay_name, !TextUtils.isEmpty(item.getParentNickName()));
 
+
+        LogUtil.E("abcdd"+item.getIsPoint());
 
         if (TextUtils.equals(item.getIsPoint(), "1")) {
             viewHolder.setImageResource(R.id.img_is_like, R.drawable.gave_a_like_2);

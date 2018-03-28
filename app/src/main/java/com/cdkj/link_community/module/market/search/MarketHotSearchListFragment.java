@@ -93,7 +93,7 @@ public class MarketHotSearchListFragment extends AbsRefreshListFragment {
         call.enqueue(new BaseResponseModelCallBack<ResponseInListModel<CoinListModel>>(mActivity) {
             @Override
             protected void onSuccess(ResponseInListModel<CoinListModel> data, String SucMessage) {
-                mRefreshHelper.setData(data.getList(), getString(R.string.no_search_info), 0);
+                mRefreshHelper.setData(data.getList(), getString(R.string.no_hot_coin), 0);
             }
 
             @Override

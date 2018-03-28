@@ -1,5 +1,7 @@
 package com.cdkj.link_community.model;
 
+import java.math.BigDecimal;
+
 /**
  * Created by cdkj on 2018/3/25.
  */
@@ -28,9 +30,9 @@ public class CoinPrice {
     private String symbol;
     private String rank;
     private String priceUsd;
-    private String priceCny; //
+    private BigDecimal priceCny; //
     private String h24VolumeUsd;
-    private String h24VolumeCny;//
+    private BigDecimal h24VolumeCny;//
     private String marketCapUsd;
     private String marketCapCny;
     private String totalSuply;
@@ -77,11 +79,11 @@ public class CoinPrice {
         this.priceUsd = priceUsd;
     }
 
-    public String getPriceCny() {
+    public BigDecimal getPriceCny() {
         return priceCny;
     }
 
-    public void setPriceCny(String priceCny) {
+    public void setPriceCny(BigDecimal priceCny) {
         this.priceCny = priceCny;
     }
 
@@ -93,11 +95,11 @@ public class CoinPrice {
         this.h24VolumeUsd = h24VolumeUsd;
     }
 
-    public String getH24VolumeCny() {
+    public BigDecimal getH24VolumeCny() {
         return h24VolumeCny;
     }
 
-    public void setH24VolumeCny(String h24VolumeCny) {
+    public void setH24VolumeCny(BigDecimal h24VolumeCny) {
         this.h24VolumeCny = h24VolumeCny;
     }
 

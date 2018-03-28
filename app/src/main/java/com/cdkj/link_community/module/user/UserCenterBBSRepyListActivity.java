@@ -120,11 +120,9 @@ public class UserCenterBBSRepyListActivity extends AbsRefreshListActivity {
     public void afterCreate(Bundle savedInstanceState) {
 
         if (getIntent() != null) {
-//            mUserId = getIntent().getStringExtra(CdRouteHelper.APPLOGIN);
+            mUserId = getIntent().getStringExtra(CdRouteHelper.APPLOGIN);
             mUserLogo = getIntent().getStringExtra("userLogo");
             mUserName = getIntent().getStringExtra("userName");
-
-            mUserId = "U2018038107391626";
         }
 
         mBaseBinding.titleView.setBackgroundColor(ContextCompat.getColor(this, R.color.user_center_bg));

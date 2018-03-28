@@ -153,7 +153,6 @@ public class CoinBBSDetailsIntoActivity extends AbsBaseLoadActivity {
     protected void onResume() {
         super.onResume();
         getBBSDetails();
-        mNewBBSCirclularRefreshHelper.onDefaluteMRefresh(false);
     }
 
     @Override
@@ -427,6 +426,7 @@ public class CoinBBSDetailsIntoActivity extends AbsBaseLoadActivity {
             @Override
             protected void onSuccess(CoinBBSDetails data, String SucMessage) {
                 setShowData(data);
+                mNewBBSCirclularRefreshHelper.onDefaluteMRefresh(false);
                 if (mBinding.linTop.getVisibility() != View.VISIBLE) {
                     mBinding.linTop.setVisibility(View.VISIBLE);
                 }
