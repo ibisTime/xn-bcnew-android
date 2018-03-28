@@ -46,7 +46,7 @@ public class UserCenterBBSRePlyListAdapter extends BaseQuickAdapter<UserBBSComme
         if (TextUtils.equals(item.getIsMyComment(), "1")) {
             viewHolder.setText(R.id.tv_replay_name, "评论了");
         } else {
-            viewHolder.setText(R.id.tv_replay_name, item.getNickname() + "回复了他");
+            viewHolder.setText(R.id.tv_replay_name, item.getNickname() + "进行了回复");
         }
 
         viewHolder.setGone(R.id.cardview, false);

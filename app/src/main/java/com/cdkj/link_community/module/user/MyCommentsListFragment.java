@@ -33,7 +33,7 @@ import retrofit2.Call;
  */
 
 public class MyCommentsListFragment extends AbsRefreshListFragment {
-
+    public boolean isFirstRequest;
 
     public static MyCommentsListFragment getInstanse() {
         MyCommentsListFragment fragment = new MyCommentsListFragment();
@@ -44,7 +44,11 @@ public class MyCommentsListFragment extends AbsRefreshListFragment {
 
     @Override
     protected void lazyLoad() {
-
+        if (mRefreshBinding == null && isFirstRequest) {
+            return;
+        }
+        isFirstRequest = true;
+        mRefreshHelper.onDefaluteMRefresh(true);
     }
 
     @Override
@@ -55,7 +59,6 @@ public class MyCommentsListFragment extends AbsRefreshListFragment {
     @Override
     protected void afterCreate(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         initRefreshHelper(MyCdConfig.LISTLIMIT);
-        mRefreshHelper.onDefaluteMRefresh(true);
     }
 
 

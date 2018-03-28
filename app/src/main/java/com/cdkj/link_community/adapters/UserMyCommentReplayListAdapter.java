@@ -8,6 +8,7 @@ import com.cdkj.baselibrary.utils.ImgUtils;
 import com.cdkj.baselibrary.utils.StringUtils;
 import com.cdkj.link_community.R;
 import com.cdkj.link_community.model.UserMessageComment;
+import com.cdkj.link_community.module.user.UserCenterMessageRepyListActivity;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 
@@ -51,6 +52,10 @@ public class UserMyCommentReplayListAdapter extends BaseQuickAdapter<UserMessage
             viewHolder.setText(R.id.tv_msg_title, item.getNews().getTitle());
 
         }
+
+        viewHolder.getView(R.id.img_logo).setOnClickListener(view -> {
+            UserCenterMessageRepyListActivity.open(mContext, item.getUserId(), item.getNickname(), item.getPhoto());
+        });
 
     }
 

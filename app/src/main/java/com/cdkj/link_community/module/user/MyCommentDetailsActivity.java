@@ -56,6 +56,8 @@ public class MyCommentDetailsActivity extends AbsBaseLoadActivity {
 
     private String mNoteCode;//关联文章编号
 
+    private MsgDetailsComment msgDetailsComment;
+
     /**
      * @param context
      * @param commentCode 评论编号
@@ -109,6 +111,11 @@ public class MyCommentDetailsActivity extends AbsBaseLoadActivity {
             }
             commentPlayRequest(mCommentCode, "");
         });
+
+        mBinding.replayCommentLayout.imgLogo.setOnClickListener(view -> {
+            if (msgDetailsComment == null) return;
+            UserCenterMessageRepyListActivity.open(this, msgDetailsComment.getUserId(), msgDetailsComment.getNickname(), msgDetailsComment.getPhoto());
+        });
     }
 
     @Override
@@ -130,7 +137,7 @@ public class MyCommentDetailsActivity extends AbsBaseLoadActivity {
         Map<String, String> map = new HashMap<>();
 
         map.put("code", mCommentCode);
-        map.put("userId", mCommentCode);
+        map.put("userId", SPUtilHelpr.getUserId());
 
         Call call = RetrofitUtils.createApi(MyApiServer.class).getMessageCommentDetails("628286", StringUtils.getJsonToString(map));
 
@@ -142,6 +149,7 @@ public class MyCommentDetailsActivity extends AbsBaseLoadActivity {
 
             @Override
             protected void onSuccess(MsgDetailsComment data, String SucMessage) {
+                msgDetailsComment = data;
                 setShowData(data);
                 mBinding.getRoot().setVisibility(View.VISIBLE);
             }

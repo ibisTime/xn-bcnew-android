@@ -13,6 +13,8 @@ import com.cdkj.link_community.R;
 import com.cdkj.link_community.model.CoinBBSHotCircular;
 import com.cdkj.link_community.module.coin_bbs.BBSCommentDetailsActivity;
 import com.cdkj.link_community.module.message.CommentDetailsActivity;
+import com.cdkj.link_community.module.user.UserCenterBBSRepyListActivity;
+import com.cdkj.link_community.module.user.UserCenterMessageRepyListActivity;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 
@@ -67,6 +69,10 @@ public class BBSHotCommentListAdapter extends BaseQuickAdapter<CoinBBSHotCircula
         }
 
         viewHolder.addOnClickListener(R.id.lin_like);
+
+        viewHolder.getView(R.id.img_logo).setOnClickListener(view -> {
+            UserCenterBBSRepyListActivity.open(mContext, item.getUserId(), item.getNickname(), item.getPhoto());
+        });
 
 
     }

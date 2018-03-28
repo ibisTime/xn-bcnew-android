@@ -30,6 +30,7 @@ import com.cdkj.link_community.databinding.ActivityMessageCommentDetailsBinding;
 import com.cdkj.link_community.dialog.CommentInputDialog;
 import com.cdkj.link_community.model.CoinBBSHotCircular;
 import com.cdkj.link_community.model.ReplyComment;
+import com.cdkj.link_community.module.user.UserCenterMessageRepyListActivity;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 
 import java.util.HashMap;
@@ -52,6 +53,8 @@ public class BBSCommentDetailsActivity extends AbsBaseLoadActivity {
     private ActivityMessageCommentDetailsBinding mBinding;
 
     private String mCommentCode;
+
+    private CoinBBSHotCircular coinBBSHotCircular;
 
     /**
      * @param context
@@ -89,6 +92,11 @@ public class BBSCommentDetailsActivity extends AbsBaseLoadActivity {
             commentPlayRequest(mCommentCode, "");
         });
 
+        mBinding.replayCommentLayout.imgLogo.setOnClickListener(view -> {
+            if (coinBBSHotCircular == null) return;
+            UserCenterMessageRepyListActivity.open(this, coinBBSHotCircular.getUserId(), coinBBSHotCircular.getNickname(), coinBBSHotCircular.getPhoto());
+        });
+
     }
 
     @Override
@@ -122,6 +130,7 @@ public class BBSCommentDetailsActivity extends AbsBaseLoadActivity {
 
             @Override
             protected void onSuccess(CoinBBSHotCircular data, String SucMessage) {
+                coinBBSHotCircular=data;
                 setShowData(data);
                 if (mBinding.getRoot().getVisibility() == View.GONE) {
                     mBinding.getRoot().setVisibility(View.VISIBLE);

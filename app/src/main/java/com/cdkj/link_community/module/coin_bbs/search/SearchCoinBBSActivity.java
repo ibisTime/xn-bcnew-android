@@ -30,15 +30,13 @@ import com.cdkj.baselibrary.nets.RetrofitUtils;
 import com.cdkj.baselibrary.utils.StringUtils;
 import com.cdkj.link_community.R;
 import com.cdkj.link_community.adapters.CoinBBSListAdapter;
-import com.cdkj.link_community.adapters.SearchMarketListAdapter;
 import com.cdkj.link_community.api.MyApiServer;
 import com.cdkj.link_community.databinding.ActivityMarketSearchBinding;
 import com.cdkj.link_community.model.CoinBBSListModel;
-import com.cdkj.link_community.model.CoinListModel;
 import com.cdkj.link_community.model.SearchHistoryModel;
 import com.cdkj.link_community.model.StartSearch;
 import com.cdkj.link_community.module.coin_bbs.CoinBBSDetailsActivity;
-import com.cdkj.link_community.module.maintab.FirstPageFragment;
+import com.cdkj.link_community.module.coin_bbs.EmptyFragment;
 import com.cdkj.link_community.module.market.search.SearchHistoryListFragment;
 
 import org.greenrobot.eventbus.EventBus;
@@ -159,7 +157,7 @@ public class SearchCoinBBSActivity extends AbsBaseLoadActivity {
         //设置fragment数据
         ArrayList fragments = new ArrayList<>();
 
-        fragments.add(FirstPageFragment.getInstanse());
+        fragments.add(EmptyFragment.getInstanse());
         fragments.add(SearchHistoryListFragment.getInstanse(SAVEKEYFORBBS));
 
         mBinding.viewpager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager(), fragments));

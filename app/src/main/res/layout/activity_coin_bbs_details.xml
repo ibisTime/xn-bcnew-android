@@ -44,6 +44,7 @@
                         android:paddingTop="15dp">
 
                         <LinearLayout
+                            android:visibility="invisible"
                             android:id="@+id/lin_top"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"

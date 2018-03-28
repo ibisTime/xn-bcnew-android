@@ -106,6 +106,7 @@ public class CoinBBSDetailsActivity extends AbsBaseLoadActivity {
             mBBSCode = getIntent().getStringExtra(CdRouteHelper.APPLOGIN);
         }
 
+
         mBaseBinding.titleView.setMidTitle(getString(R.string.coin_bbs));
 
         /*防止局部刷新闪烁*/
@@ -425,8 +426,8 @@ public class CoinBBSDetailsActivity extends AbsBaseLoadActivity {
             @Override
             protected void onSuccess(CoinBBSDetails data, String SucMessage) {
                 setShowData(data);
-                if (mBinding.getRoot().getVisibility() == View.GONE) {
-                    mBinding.getRoot().setVisibility(View.VISIBLE);
+                if (mBinding.linTop.getVisibility() != View.VISIBLE) {
+                    mBinding.linTop.setVisibility(View.VISIBLE);
                 }
             }
 
@@ -474,7 +475,7 @@ public class CoinBBSDetailsActivity extends AbsBaseLoadActivity {
         mBinding.tvName.setText("#" + data.getName() + "#");
         mBinding.tvFocusOnNum.setText(getString(R.string.focus_num) + data.getKeepCount());
         mBinding.tvPostNum.setText(getString(R.string.post_num) + data.getPostCount());
-        mBinding.tvTodayNum.setText(data.getDayCommentCount() + "dfdf");
+        mBinding.tvTodayNum.setText(data.getDayCommentCount() + "");
 
         mBinding.expandTextView.setText(data.getIntroduce() + "");
 

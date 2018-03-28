@@ -427,8 +427,8 @@ public class CoinBBSDetailsIntoActivity extends AbsBaseLoadActivity {
             @Override
             protected void onSuccess(CoinBBSDetails data, String SucMessage) {
                 setShowData(data);
-                if (mBinding.getRoot().getVisibility() == View.GONE) {
-                    mBinding.getRoot().setVisibility(View.VISIBLE);
+                if (mBinding.linTop.getVisibility() != View.VISIBLE) {
+                    mBinding.linTop.setVisibility(View.VISIBLE);
                 }
             }
 

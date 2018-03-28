@@ -101,5 +101,6 @@
     <string name="collect_cancel_succ">取消收藏成功</string>
     <string name="commen_details">评论详情</string>
     <string name="no_user_info">暂无用户信息</string>
+    <string name="user_center">个人中心</string>
 
 </resources>

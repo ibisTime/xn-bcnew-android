@@ -29,40 +29,39 @@ public class ImgUtils {
         loadLogo(obj, MyCdConfig.QINIUURL + imgid, img);
     }
 
-    public static void loadImg(Object obj, Object imgid, ImageView img) {
 
-        LogUtil.E("图片" + imgid);
+    public static void loadImg(Object obj, String imgid, ImageView img) {
+        if (!isHaveHttp(imgid)) {                      //如果没有http头 则加上七牛头
+            loadQiniuImg(obj, imgid, img);
+            return;
+        }
+        if (obj instanceof Context) {
+            try {
+                Glide.with((Context) obj).load(imgid).placeholder(R.drawable.default_pic).error(R.drawable.default_pic).into(img);
+            } catch (Exception e) {
+                LogUtil.E("图片加载错误");
+            }
+        } else if (obj instanceof Activity) {
 
-        if (imgid instanceof Integer || imgid instanceof String) {
+            if (!AppUtils.isActivityExist((Activity) obj)) {
 
-            if (obj instanceof Context) {
-                try {
-                    Glide.with((Context) obj).load(imgid).placeholder(R.drawable.default_pic).error(R.drawable.default_pic).into(img);
-                } catch (Exception e) {
-                    LogUtil.E("图片加载错误");
-                }
-            } else if (obj instanceof Activity) {
+                LogUtil.E("图片加载界面销毁");
+                return;
+            }
+            if (obj == null || img == null) {
+                return;
+            }
+            try {
+                Glide.with((Activity) obj).load(imgid).placeholder(R.drawable.default_pic).error(R.drawable.default_pic).into(img);
+            } catch (Exception e) {
+                LogUtil.E("图片加载错误");
+            }
 
-                if (!AppUtils.isActivityExist((Activity) obj)) {
-
-                    LogUtil.E("图片加载界面销毁");
-                    return;
-                }
-                if (obj == null || img == null) {
-                    return;
-                }
-                try {
-                    Glide.with((Activity) obj).load(imgid).placeholder(R.drawable.default_pic).error(R.drawable.default_pic).into(img);
-                } catch (Exception e) {
-                    LogUtil.E("图片加载错误");
-                }
-
-            } else if (obj instanceof Fragment) {
-                try {
-                    Glide.with((Fragment) obj).load(imgid).placeholder(R.drawable.default_pic).error(R.drawable.default_pic).into(img);
-                } catch (Exception e) {
-                    LogUtil.E("图片加载错误");
-                }
+        } else if (obj instanceof Fragment) {
+            try {
+                Glide.with((Fragment) obj).load(imgid).placeholder(R.drawable.default_pic).error(R.drawable.default_pic).into(img);
+            } catch (Exception e) {
+                LogUtil.E("图片加载错误");
             }
         }
     }
@@ -192,7 +191,7 @@ public class ImgUtils {
     }
 
     /**
-     * 用于判断链接是否添加了七牛
+     * 用于判断链接是否添加了http
      *
      * @param url
      * @return

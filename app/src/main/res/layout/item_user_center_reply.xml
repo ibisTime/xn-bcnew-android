@@ -11,15 +11,6 @@
         android:orientation="horizontal"
         android:padding="15dp">
 
-        <TextView
-            android:id="@+id/tv_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:singleLine="true"
-            android:textColor="@color/app_text_gray"
-            android:textSize="14sp"
-            tools:text="1分钟前" />
 
         <LinearLayout
             android:layout_width="0dp"
@@ -28,14 +19,31 @@
             android:layout_weight="1"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/tv_replay_name"
+            <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textColor="@color/text_black_cd"
-                android:textSize="14sp"
-                tools:text="sdfsdfssdfsdfsfsdfsdfsdfsfsdfsdfsdfsfsdfsdfsdfsfsdfsdfsdfsfsdffsdf" />
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/tv_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="5dp"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:textColor="@color/app_text_gray"
+                    android:textSize="14sp"
+                    tools:text="1分钟前" />
+
+                <TextView
+                    android:id="@+id/tv_replay_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textColor="@color/text_black_cd"
+                    android:textSize="14sp"
+                    tools:text="sdfsdfssdfsdfsfsdfsdfsdfsfsdfsdfsdfsfsdfsdfsdfsfsdfsdfsdfsfsdffsdf" />
+
+            </LinearLayout>
 
 
             <TextView
@@ -78,9 +86,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginLeft="5dp"
                     android:ellipsize="end"
                     android:maxLines="2"
+                    android:paddingBottom="10dp"
+                    android:paddingLeft="10dp"
+                    android:paddingTop="10dp"
                     android:textColor="@color/text_black_cd"
                     android:textSize="14sp"
                     tools:text="回复 我回复 我回复 我回复 我回复 我回复 我回复 我回复 我回复 我回复 我" />

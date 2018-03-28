@@ -10,6 +10,7 @@ import com.cdkj.baselibrary.utils.StringUtils;
 import com.cdkj.link_community.R;
 import com.cdkj.link_community.model.UserBBSComment;
 import com.cdkj.link_community.model.UserMessageComment;
+import com.cdkj.link_community.module.user.UserCenterBBSRepyListActivity;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 
@@ -48,6 +49,9 @@ public class UserBBSCommentListAdapter extends BaseQuickAdapter<UserBBSComment, 
             viewHolder.setText(R.id.tv_msg_title, item.getPost().getContent());
         }
 
+        viewHolder.getView(R.id.img_logo).setOnClickListener(view -> {
+            UserCenterBBSRepyListActivity.open(mContext, item.getUserId(), item.getNickname(), item.getPhoto());
+        });
     }
 
 }

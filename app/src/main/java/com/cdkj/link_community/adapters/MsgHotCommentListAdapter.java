@@ -13,6 +13,7 @@ import com.cdkj.link_community.model.MsgDetailsComment;
 import com.cdkj.link_community.model.ReplyCommentEvent;
 import com.cdkj.link_community.module.message.CommentDetailsActivity;
 import com.cdkj.link_community.module.message.MessageDetailsActivity;
+import com.cdkj.link_community.module.user.UserCenterMessageRepyListActivity;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 
@@ -64,6 +65,9 @@ public class MsgHotCommentListAdapter extends BaseQuickAdapter<MsgDetailsComment
 
         viewHolder.addOnClickListener(R.id.lin_like);
 
+        viewHolder.getView(R.id.img_logo).setOnClickListener(view -> {
+            UserCenterMessageRepyListActivity.open(mContext, item.getUserId(), item.getNickname(), item.getPhoto());
+        });
 
     }
 

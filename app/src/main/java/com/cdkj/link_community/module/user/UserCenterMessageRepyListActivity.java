@@ -3,9 +3,12 @@ package com.cdkj.link_community.module.user;
 import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.view.View;
 
 import com.cdkj.baselibrary.api.ResponseInListModel;
 import com.cdkj.baselibrary.appmanager.CdRouteHelper;
@@ -38,6 +41,7 @@ public class UserCenterMessageRepyListActivity extends AbsRefreshListActivity {
     private String mUserId;
     private String mUserName;
     private String mUserLogo;
+    private LayoutUserCenterBinding mCenterBinding;
 
     /**
      * @param context
@@ -58,7 +62,7 @@ public class UserCenterMessageRepyListActivity extends AbsRefreshListActivity {
     @Override
     public RecyclerView.Adapter getListAdapter(List listData) {
         UserCenterMessageRePlyListAdapter userCenterMessageRePlyListAdapter = new UserCenterMessageRePlyListAdapter(listData);
-        LayoutUserCenterBinding mCenterBinding = DataBindingUtil.inflate(getLayoutInflater(), R.layout.layout_user_center, null, false);
+
         userCenterMessageRePlyListAdapter.addHeaderView(mCenterBinding.getRoot());
         userCenterMessageRePlyListAdapter.setHeaderAndEmpty(true);
         mCenterBinding.tvUserName.setText(mUserName);
@@ -124,14 +128,17 @@ public class UserCenterMessageRepyListActivity extends AbsRefreshListActivity {
     public void afterCreate(Bundle savedInstanceState) {
 
         if (getIntent() != null) {
-//            mUserId = getIntent().getStringExtra(CdRouteHelper.APPLOGIN);
+            mUserId = getIntent().getStringExtra(CdRouteHelper.APPLOGIN);
             mUserLogo = getIntent().getStringExtra("userLogo");
             mUserName = getIntent().getStringExtra("userName");
-
-            mUserId = "U2018038107391626";
         }
 
-        mBaseBinding.titleView.setMidTitle("个人中心");
+        mBaseBinding.titleView.setBackgroundColor(ContextCompat.getColor(this,R.color.user_center_bg));
+        mBaseBinding.titleView.setMidTitle(getString(R.string.user_center));
+        mBaseBinding.viewV.setVisibility(View.GONE);
+
+
+        mCenterBinding = DataBindingUtil.inflate(getLayoutInflater(), R.layout.layout_user_center, null, false);
 
         initRefreshHelper(MyCdConfig.LISTLIMIT);
 
