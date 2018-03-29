@@ -35,9 +35,12 @@ public class MyCollectionListAdapter extends BaseQuickAdapter<CollectionList, Ba
         }
 
         viewHolder.setText(R.id.tv_title, item.getTitle());
-        viewHolder.setText(R.id.tv_author, mContext.getString(R.string.author) + item.getAuther());
 
-        viewHolder.setGone(R.id.tv_author, !TextUtils.isEmpty(item.getAuther()));
+        if (!TextUtils.isEmpty(item.getAuther())) {
+            viewHolder.setText(R.id.tv_author, mContext.getString(R.string.author) + item.getAuther());
+        } else {
+            viewHolder.setText(R.id.tv_author, mContext.getString(R.string.author) + "--");
+        }
 
     }
 
