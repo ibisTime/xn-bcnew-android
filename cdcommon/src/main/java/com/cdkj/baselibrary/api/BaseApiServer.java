@@ -10,8 +10,6 @@ import com.cdkj.baselibrary.model.MyBankCardListMode;
 import com.cdkj.baselibrary.model.QiniuGetTokenModel;
 import com.cdkj.baselibrary.model.TypeInfoModel;
 import com.cdkj.baselibrary.model.UserLoginModel;
-import com.cdkj.baselibrary.model.pay.AliPayRequestMode;
-import com.cdkj.baselibrary.model.pay.WxPayRequestModel;
 
 import retrofit2.Call;
 import retrofit2.http.Field;
@@ -102,24 +100,6 @@ public interface BaseApiServer {
     @POST("api")
     Call<BaseResponseModel<Boolean>> booleanRequest(@Field("code") String code, @Field("json") String  json);
 
-
-    /**
-     * 支付(支付宝)
-     * @param code
-     * @param json
-     * @return
-     */
-    @FormUrlEncoded
-    @POST("api")
-    Call<BaseResponseModel<AliPayRequestMode>> aliPayRequest(@Field("code") String code, @Field("json") String  json);
-
-    /**
-     * 微信支付
-     * @return
-     */
-    @FormUrlEncoded
-    @POST("api")
-    Call<BaseResponseModel<WxPayRequestModel>> wxPayRequest(@Field("code") String code, @Field("json") String  json);
 
 
     /**

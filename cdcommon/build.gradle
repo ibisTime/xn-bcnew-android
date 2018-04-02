@@ -75,7 +75,7 @@ android {
         //微信支付
         api 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:+'
         ///高德定位
-        api 'com.amap.api:location:latest.integration'
+//        api 'com.amap.api:location:latest.integration'
         //支付宝
 //        api files('libs/alipaySingle-20170510.jar')
         api 'com.contrarywind:Android-PickerView:3.2.6'
