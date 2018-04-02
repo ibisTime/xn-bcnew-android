@@ -455,8 +455,8 @@ public class CoinBBSDetailsIntoActivity extends AbsBaseLoadActivity {
         mCoinBean = data.getCoin();
 
         if (isCoinType()) {
-            mBinding.tvTodayChange.setText("涨跌浮:" + data.getCoin().getTodayChange());
-            mBinding.tvTodayVol.setText("成交(24h):" + data.getCoin().getTodayVol());
+            mBinding.tvTodayChange.setText("涨跌幅:" + data.getCoin().getTodayChange() + "%");
+            mBinding.tvTodayVol.setText("成交(24h):" + StringUtils.formatNum(data.getCoin().getTodayVol()));
 
             mBinding.tvCirculation.setText(StringUtils.formatNum(data.getCoin().getTotalSupply()));
             mBinding.tvIssue.setText(StringUtils.formatNum(data.getCoin().getMaxSupply()));
@@ -674,7 +674,7 @@ public class CoinBBSDetailsIntoActivity extends AbsBaseLoadActivity {
      * 圈子点赞
      */
     private void circularLikeRequest(BBSHotCommentListAdapter adapter, int position) {
-        if (SPUtilHelpr.isLogin(this, false)) {
+        if (!SPUtilHelpr.isLogin(this, false)) {
             return;
         }
 

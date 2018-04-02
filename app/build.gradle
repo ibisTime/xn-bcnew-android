@@ -15,6 +15,18 @@ android {
             }
         }
 
+        ndk {
+            //选择要添加的对应cpu类型的.so库。
+            abiFilters 'armeabi', 'armeabi-v7a', 'arm64-v8a','x86'
+            // 还可以添加 'x86', 'x86_64', 'mips', 'mips64'
+        }
+
+        manifestPlaceholders = [
+                JPUSH_PKGNAME : rootProject.ext.applicationId,
+                JPUSH_APPKEY : "你的appkey", //JPush上注册的包名对应的appkey.
+                JPUSH_CHANNEL : "developer-default", //暂时填写默认值即可.
+        ]
+
     }
 
     signingConfigs {
@@ -73,4 +85,7 @@ dependencies {
     implementation rootProject.ext.arouterApi
     api project(':cdcommon')
     implementation files('libs/open_sdk_r5990_lite.jar')
+    //极光推送
+    compile 'cn.jiguang.sdk:jpush:3.1.1'  //
+    compile 'cn.jiguang.sdk:jcore:1.1.9'  //
 }

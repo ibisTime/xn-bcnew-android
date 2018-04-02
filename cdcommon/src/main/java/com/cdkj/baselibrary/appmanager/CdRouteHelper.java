@@ -3,8 +3,6 @@ package com.cdkj.baselibrary.appmanager;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.cdkj.baselibrary.model.BankCardModel;
 
-import static com.cdkj.baselibrary.activitys.PayPwdModifyActivity.ISSETPWD;
-import static com.cdkj.baselibrary.activitys.PayPwdModifyActivity.MOBILE;
 import static com.cdkj.baselibrary.activitys.WebViewActivity.WEBVIEWCODE;
 import static com.cdkj.baselibrary.activitys.WebViewActivity.WEBVIEWISZOOM;
 import static com.cdkj.baselibrary.activitys.WebViewActivity.WEBVIEWTITLE;
@@ -72,18 +70,6 @@ public class CdRouteHelper {
                 .navigation();
     }
 
-    /**
-     * 打开 修改支付密码
-     *
-     * @param isSetPwd //是否设置过支付密码
-     * @param mobile
-     */
-    public static void openPayPwdModifyActivity(boolean isSetPwd, String mobile) {
-        ARouter.getInstance().build(PAYPWDMODIFY)
-                .withString(MOBILE, mobile)
-                .withBoolean(ISSETPWD, isSetPwd)
-                .navigation();
-    }
 
     /**
      * 用 数据字典方式打开webViewWctivity

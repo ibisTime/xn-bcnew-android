@@ -12,7 +12,6 @@
             layout="@layout/layout_market_search_bar" />
 
         <LinearLayout
-            android:visibility="gone"
             android:id="@+id/lin_tab"
             android:layout_width="match_parent"
             android:layout_height="45dp"
@@ -20,14 +19,9 @@
             android:orientation="horizontal"
             android:weightSum="2">
 
-            <View
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_weight="1" />
-
             <LinearLayout
                 android:id="@+id/viewpagerIndicator"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center_vertical"
@@ -35,7 +29,7 @@
 
                 <LinearLayout
                     android:id="@+id/lin_tab_hot"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
@@ -51,7 +45,7 @@
 
                     <View
                         android:id="@+id/tab_index_1"
-                        android:layout_width="25dp"
+                        android:layout_width="55dp"
                         android:layout_height="4dp"
                         android:layout_marginTop="5dp"
                         android:background="@drawable/search_tab_bg" />
@@ -61,7 +55,7 @@
 
                 <LinearLayout
                     android:id="@+id/lin_tab_history"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
@@ -77,7 +71,7 @@
 
                     <View
                         android:id="@+id/tab_index_2"
-                        android:layout_width="25dp"
+                        android:layout_width="55dp"
                         android:layout_height="4dp"
                         android:layout_marginTop="5dp"
                         android:background="@drawable/search_tab_bg"

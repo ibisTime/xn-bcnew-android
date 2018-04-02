@@ -128,7 +128,6 @@ public class MainActivity extends AbsBaseLoadActivity {
             }
 
         });
-
     }
 
 
@@ -139,7 +138,7 @@ public class MainActivity extends AbsBaseLoadActivity {
      */
     public Disposable startMarketInterval() {
         isMarketInterval = true;
-        return Observable.interval(30, 30, TimeUnit.SECONDS, AndroidSchedulers.mainThread())    // 创建一个按照给定的时间间隔发射从0开始的整数序列
+        return Observable.interval(12, 12, TimeUnit.SECONDS, AndroidSchedulers.mainThread())    //
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<Long>() {
                                @Override

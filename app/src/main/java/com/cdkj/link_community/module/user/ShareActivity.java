@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
 
+import com.cdkj.baselibrary.dialog.UITipDialog;
+import com.cdkj.baselibrary.utils.LogUtil;
 import com.cdkj.link_community.R;
 import com.cdkj.link_community.databinding.ActivityShareBinding;
 import com.cdkj.link_community.interfaces.QQUiListener;
@@ -15,8 +17,16 @@ import com.cdkj.link_community.utils.QqShareUtil;
 import com.cdkj.link_community.utils.WxUtil;
 import com.tencent.connect.common.Constants;
 import com.tencent.connect.share.QQShare;
+import com.tencent.tauth.IUiListener;
 import com.tencent.tauth.Tencent;
+import com.tencent.tauth.UiError;
 import com.uuzuche.lib_zxing.decoding.Intents;
+
+import java.util.concurrent.TimeUnit;
+
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Consumer;
 
 
 /**
@@ -34,6 +44,8 @@ public class ShareActivity extends Activity {
     private String mTitle;//title
     private String mContent;//content
 
+    private IUiListener QQUiListener;
+    private UITipDialog tipDialog;
 
     /**
      * 打开当前页面
@@ -64,12 +76,41 @@ public class ShareActivity extends Activity {
             mPhotoUrl = getIntent().getStringExtra("photoUrl");
         }
 
+        QQUiListener = new IUiListener() {
+            @Override
+            public void onComplete(Object o) {
+                showDialog(0, getString(R.string.share_succ));
+            }
+
+            @Override
+            public void onError(UiError uiError) {
+                showDialog(1, getString(R.string.share_fail));
+            }
+
+            @Override
+            public void onCancel() {
+                showDialog(2, getString(R.string.share_cancel));
+            }
+        };
+
         initListener();
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        Tencent.onActivityResultData(requestCode, resultCode, data, new QQUiListener());
+
+        super.onActivityResult(requestCode, resultCode, data);
+
+        Tencent.onActivityResultData(requestCode, resultCode, data, QQUiListener);
+
+        if (requestCode == Constants.REQUEST_API) {
+            if (resultCode == Constants.REQUEST_QQ_SHARE ||
+                    resultCode == Constants.REQUEST_QZONE_SHARE ||
+                    resultCode == Constants.REQUEST_OLD_SHARE) {
+                Tencent.handleResultData(data, QQUiListener);
+            }
+        }
+
     }
 
     /**
@@ -94,11 +135,50 @@ public class ShareActivity extends Activity {
         });
 
         mbinding.linShareToQq.setOnClickListener(view -> {
-            QqShareUtil.shareMsg(this, mTitle, mContent, mShareUrl, mPhotoUrl);
-            finish();
+            QqShareUtil.shareMsg(this, mTitle, mContent, mShareUrl, mPhotoUrl, QQUiListener);
+            mbinding.layoutShare.setVisibility(View.GONE);
         });
 
     }
 
+    public void showDialog(int type, String info) {
+
+        if (type == 0) {
+            tipDialog = new UITipDialog.Builder(this)
+                    .setIconType(UITipDialog.Builder.ICON_TYPE_SUCCESS)
+                    .setTipWord(info)
+                    .create();
+            tipDialog.show();
+        } else if (type == 1) {
+            tipDialog = new UITipDialog.Builder(this)
+                    .setIconType(UITipDialog.Builder.ICON_TYPE_FAIL)
+                    .setTipWord(info)
+                    .create();
+
+        } else {
+            tipDialog = new UITipDialog.Builder(this)
+                    .setIconType(UITipDialog.Builder.ICON_TYPE_INFO)
+                    .setTipWord(info)
+                    .create();
+        }
+
+        tipDialog.show();
+
+        Observable.timer(1000, TimeUnit.MILLISECONDS)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<Long>() {
+                    @Override
+                    public void accept(Long aLong) throws Exception {
+                        tipDialog.dismiss();
+                        finish();
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        tipDialog.dismiss();
+                        finish();
+                    }
+                });
+    }
 
 }

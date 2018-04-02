@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.widget.Toast;
 
 import com.cdkj.baselibrary.base.BaseActivity;
+import com.cdkj.baselibrary.dialog.UITipDialog;
+import com.cdkj.link_community.R;
 import com.cdkj.link_community.utils.WxUtil;
 import com.tencent.mm.opensdk.constants.ConstantsAPI;
 import com.tencent.mm.opensdk.modelbase.BaseReq;
@@ -13,10 +15,17 @@ import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.IWXAPIEventHandler;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
+import java.util.concurrent.TimeUnit;
+
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Consumer;
+
 public class WXEntryActivity extends BaseActivity implements IWXAPIEventHandler {
 
     // IWXAPI 是第三方app和微信通信的openapi接口
     private IWXAPI api;
+    private UITipDialog tipDialog;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -54,31 +63,72 @@ public class WXEntryActivity extends BaseActivity implements IWXAPIEventHandler 
     @Override
     public void onResp(BaseResp resp) {
 
-        System.out.print("resp.getType()="+resp.getType());
+        System.out.print("resp.getType()=" + resp.getType());
 
         if (resp.getType() == ConstantsAPI.COMMAND_SENDMESSAGE_TO_WX) {// 分享
             String result = "";
-            System.out.println("resp.errCode="+resp.errCode);
+            System.out.println("resp.errCode=" + resp.errCode);
             switch (resp.errCode) {
                 case BaseResp.ErrCode.ERR_OK:
-
-                    result = "分享成功";
+                    result = getString(R.string.share_succ);
+                    showDialog(0, result);
                     break;
                 case BaseResp.ErrCode.ERR_USER_CANCEL:
-                    result = "分享取消";
+                    result = getString(R.string.share_cancel);
+                    showDialog(3, result);
                     break;
                 case BaseResp.ErrCode.ERR_AUTH_DENIED:
-                    result = "分享拒绝";
+                    result = "拒绝分享";
+                    showDialog(1, result);
                     break;
                 default:
-                    result = "分享失败";
+                    result = getString(R.string.share_fail);
+                    showDialog(1, result);
                     break;
             }
-            Toast.makeText(this, result, Toast.LENGTH_SHORT).show();
-            finish();
             return;
         }
 
+    }
+
+    public void showDialog(int type, String info) {
+
+        if (type == 0) {
+            tipDialog = new UITipDialog.Builder(this)
+                    .setIconType(UITipDialog.Builder.ICON_TYPE_SUCCESS)
+                    .setTipWord(info)
+                    .create();
+            tipDialog.show();
+        } else if (type == 1) {
+            tipDialog = new UITipDialog.Builder(this)
+                    .setIconType(UITipDialog.Builder.ICON_TYPE_FAIL)
+                    .setTipWord(info)
+                    .create();
+
+        } else {
+            tipDialog = new UITipDialog.Builder(this)
+                    .setIconType(UITipDialog.Builder.ICON_TYPE_INFO)
+                    .setTipWord(info)
+                    .create();
+        }
+
+        tipDialog.show();
+
+        Observable.timer(1500, TimeUnit.MILLISECONDS)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<Long>() {
+                    @Override
+                    public void accept(Long aLong) throws Exception {
+                        tipDialog.dismiss();
+                        finish();
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        tipDialog.dismiss();
+                        finish();
+                    }
+                });
     }
 
 

@@ -178,7 +178,7 @@ public class CoinBBSDetails {
         private String status;
         private String orderNo;
         private String lastPrice;
-        private String todayVol;
+        private BigDecimal todayVol;
         private String todayChange;
 
         private BigDecimal totalSupply;
@@ -243,11 +243,11 @@ public class CoinBBSDetails {
             this.lastPrice = lastPrice;
         }
 
-        public String getTodayVol() {
+        public BigDecimal getTodayVol() {
             return todayVol;
         }
 
-        public void setTodayVol(String todayVol) {
+        public void setTodayVol(BigDecimal todayVol) {
             this.todayVol = todayVol;
         }
 

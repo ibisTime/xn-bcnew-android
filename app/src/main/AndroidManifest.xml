@@ -141,12 +141,19 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
 
+        <!--资讯评论列表-->
+        <activity
+            android:name=".module.message.MessageCommentListActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
+
         <!-- 微信分享回调 -->
         <activity
-            android:name="wxapi.WXEntryActivity"
+            android:name="com.cdkj.link_community.wxapi.WXEntryActivity"
             android:exported="true"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityDialogStyleBottom" />
 
         <!--QQ 分享登录-->
         <activity
@@ -159,7 +166,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
-                <data android:scheme="1106791506" />
+                <data android:scheme="tencent1106791506" />
             </intent-filter>
         </activity>
         <!--QQ -->

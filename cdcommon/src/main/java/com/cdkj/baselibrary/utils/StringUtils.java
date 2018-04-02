@@ -102,7 +102,7 @@ public class StringUtils {
      * @return
      */
     public static String getAsPicListIndexOne(String s) {
-        List<String> strings = splitAsList(s, "\\|\\|");
+        List<String> strings = splitAsPicList(s);
         if (strings == null || strings.isEmpty()) {
             return s;
         }

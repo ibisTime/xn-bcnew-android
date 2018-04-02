@@ -60,7 +60,7 @@ public class MessageListFragment extends AbsRefreshListFragment {
             return;
         }
 
-        mRefreshHelper.onDefaluteMLoadMore(false);
+        mRefreshHelper.onDefaluteMLoadMore(true);
 
     }
 

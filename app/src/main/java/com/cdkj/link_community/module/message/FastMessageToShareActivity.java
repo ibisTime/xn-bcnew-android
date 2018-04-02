@@ -1,12 +1,10 @@
 package com.cdkj.link_community.module.message;
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
-import android.graphics.Canvas;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -16,8 +14,6 @@ import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
 import android.view.View;
-import android.view.ViewTreeObserver;
-import android.widget.ScrollView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -37,14 +33,13 @@ import com.cdkj.link_community.R;
 import com.cdkj.link_community.databinding.ActivityFastMessageShareBinding;
 import com.cdkj.link_community.interfaces.QQUiListener;
 import com.cdkj.link_community.model.FastMessage;
-import com.cdkj.link_community.module.user.ShareActivity;
 import com.cdkj.link_community.utils.QqShareUtil;
 import com.cdkj.link_community.utils.WxUtil;
-import com.tencent.connect.share.QQShare;
+import com.tencent.connect.common.Constants;
+import com.tencent.tauth.IUiListener;
 import com.tencent.tauth.Tencent;
+import com.tencent.tauth.UiError;
 import com.uuzuche.lib_zxing.activity.CodeUtils;
-
-import org.greenrobot.eventbus.Subscribe;
 
 import java.io.ByteArrayOutputStream;
 import java.util.Date;
@@ -77,7 +72,7 @@ public class FastMessageToShareActivity extends AbsBaseLoadActivity {
             Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
     };
-
+    private QQUiListener QQUiListener;
 
     /**
      * @param context
@@ -109,6 +104,8 @@ public class FastMessageToShareActivity extends AbsBaseLoadActivity {
 
         getShareUrl();
 
+        QQUiListener = new QQUiListener(this);
+
         if (getIntent() != null) {
             FastMessage fastMessage = getIntent().getParcelableExtra(CdRouteHelper.DATASIGN);
 
@@ -130,32 +127,45 @@ public class FastMessageToShareActivity extends AbsBaseLoadActivity {
 
     }
 
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        Tencent.onActivityResultData(requestCode, resultCode, data, QQUiListener);
+
+        if (requestCode == Constants.REQUEST_API) {
+            if (resultCode == Constants.REQUEST_QQ_SHARE ||
+                    resultCode == Constants.REQUEST_QZONE_SHARE ||
+                    resultCode == Constants.REQUEST_OLD_SHARE) {
+                Tencent.handleResultData(data, QQUiListener);
+            }
+        }
+    }
+
     private void ininListener() {
 
         //结束当前界面
         mBinding.fraToFinish.setOnClickListener(view -> finish());
 
+        mBinding.scrollView.post(() -> {
 
-        mBinding.imgWx.setOnClickListener(view -> {
-            mBinding.scrollView.post(() -> {
+            mBinding.imgWx.setOnClickListener(view -> {
                 WxUtil.shareBitmapToWX(FastMessageToShareActivity.this, getBitmapByView(mBinding.scrollView));
             });
-        });
 
-        mBinding.imgPyq.setOnClickListener(view -> {
-            mBinding.scrollView.post(() -> {
+            mBinding.imgPyq.setOnClickListener(view -> {
                 WxUtil.shareBitmapToWXPYQ(FastMessageToShareActivity.this, getBitmapByView(mBinding.scrollView));
             });
-        });
 
-        mBinding.imgQq.setOnClickListener(view -> {
 
-            if (CameraHelper.isNeedRequestPremission()) {
-                requestPermissions();
-                return;
-            }
+            mBinding.imgQq.setOnClickListener(view -> {
 
-            mBinding.scrollView.post(() -> {
+                if (CameraHelper.isNeedRequestPremission()) {
+                    requestPermissions();
+                    return;
+                }
+
                 saveBitmapAndShare();
             });
         });
@@ -224,18 +234,18 @@ public class FastMessageToShareActivity extends AbsBaseLoadActivity {
     public void saveBitmapAndShare() {
 
         if (mQQSharePhotoPath != null) {
-            QqShareUtil.shareLocaPhoto(FastMessageToShareActivity.this, mQQSharePhotoPath);
+            QqShareUtil.shareLocaPhoto(FastMessageToShareActivity.this, mQQSharePhotoPath, QQUiListener);
             return;
         }
 
         mSubscription.add(Observable.just(getBitmapByView(mBinding.scrollView), TimeUnit.SECONDS, AndroidSchedulers.mainThread())
                 .observeOn(Schedulers.newThread())  //创建
-                .map(aLong -> BitmapUtils.saveBitmapFile(getBitmapByView(mBinding.scrollView), "share_qq"))
+                .map(o -> BitmapUtils.saveBitmapFile((Bitmap) o, "share_qq"))
                 .observeOn(AndroidSchedulers.mainThread())
                 .filter(s -> !TextUtils.isEmpty(s))
                 .subscribe(path -> {
                     mQQSharePhotoPath = path;
-                    QqShareUtil.shareLocaPhoto(FastMessageToShareActivity.this, path);
+                    QqShareUtil.shareLocaPhoto(FastMessageToShareActivity.this, path, QQUiListener);
                 }, throwable -> {
                     LogUtil.E(throwable.toString());
                 }));
@@ -261,9 +271,7 @@ public class FastMessageToShareActivity extends AbsBaseLoadActivity {
         mPreHelper.requestPermissions(new PermissionHelper.PermissionListener() {
             @Override
             public void doAfterGrand(String... permission) {
-                mBinding.scrollView.post(() -> {
-                    saveBitmapAndShare();
-                });
+                saveBitmapAndShare();
             }
 
             @Override
@@ -276,4 +284,11 @@ public class FastMessageToShareActivity extends AbsBaseLoadActivity {
         }, needLocationPermissions);
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (QQUiListener != null) {
+            QQUiListener.onDestroy();
+        }
+    }
 }

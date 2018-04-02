@@ -96,6 +96,15 @@ public class CoinTypeListFragment extends AbsRefreshListFragment {
 
         if (isFirstRequest) {
             mRefreshHelper.onDefaluteMRefresh(true);
+            getToBBSinfoRequest();
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (getUserVisibleHint()) {
+            getToBBSinfoRequest();
         }
     }
 
@@ -108,7 +117,7 @@ public class CoinTypeListFragment extends AbsRefreshListFragment {
 
     @Override
     public void getListRequest(int pageindex, int limit, boolean isShowDialog) {
-        getToBBSinfoRequest();
+
         if (TextUtils.isEmpty(mCoinType)) return;
 
         Map<String, String> map = new HashMap<>();
@@ -127,6 +136,9 @@ public class CoinTypeListFragment extends AbsRefreshListFragment {
             @Override
             protected void onSuccess(ResponseInListModel<CoinListModel> data, String SucMessage) {
                 mRefreshHelper.setData(data.getList(), getString(R.string.no_coin_info), 0);
+                if(coinListAdapte.getData().size()>0){
+                    mRefreshBinding.rv.scrollToPosition(0);
+                }
             }
 
             @Override
@@ -174,6 +186,11 @@ public class CoinTypeListFragment extends AbsRefreshListFragment {
                 }
 
                 mToBBSBinding.tvInfo.setText("现在有" + data.getTotalCount() + "个帖子在讨论，你也一起来吧!");
+
+                if(coinListAdapte.getData().size()>0){
+                    mRefreshBinding.rv.scrollToPosition(0);
+                }
+
             }
 
             @Override

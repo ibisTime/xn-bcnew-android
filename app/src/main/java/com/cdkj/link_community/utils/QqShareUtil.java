@@ -3,9 +3,11 @@ package com.cdkj.link_community.utils;
 import android.app.Activity;
 import android.os.Bundle;
 
+import com.cdkj.baselibrary.utils.LogUtil;
 import com.cdkj.link_community.interfaces.QQUiListener;
 import com.cdkj.link_community.module.user.ShareActivity;
 import com.tencent.connect.share.QQShare;
+import com.tencent.tauth.IUiListener;
 import com.tencent.tauth.Tencent;
 
 /**
@@ -23,23 +25,26 @@ public class QqShareUtil {
      * @param act
      * @param photoPath
      */
-    public static void shareLocaPhoto(Activity act, String photoPath) {
+    public static void shareLocaPhoto(Activity act, String photoPath, IUiListener listener) {
+        LogUtil.E("QQfenx");
+        if (act == null) return;
         Bundle params = new Bundle();
         params.putString(QQShare.SHARE_TO_QQ_IMAGE_LOCAL_URL, photoPath);
         params.putInt(QQShare.SHARE_TO_QQ_KEY_TYPE, QQShare.SHARE_TO_QQ_TYPE_IMAGE);
-        Tencent.createInstance(QQAPPID, act.getApplicationContext()).shareToQQ(act, params, new QQUiListener());
+        Tencent.createInstance(QQAPPID, act.getApplicationContext()).shareToQQ(act, params, listener);
     }
 
 
     /**
      * 分享消息
+     *
      * @param act
      * @param title
      * @param content
      * @param openUrl
      * @param photoUrl
      */
-    public static void shareMsg(Activity act, String title, String content, String openUrl, String photoUrl) {
+    public static void shareMsg(Activity act, String title, String content, String openUrl, String photoUrl, IUiListener listener) {
 
         if (act == null) return;
 
@@ -54,7 +59,7 @@ public class QqShareUtil {
         /*图片路径*/
         params.putString(QQShare.SHARE_TO_QQ_IMAGE_URL, photoUrl);
 
-        Tencent.createInstance(QQAPPID, act.getApplicationContext()).shareToQQ(act, params, new QQUiListener());
+        Tencent.createInstance(QQAPPID, act.getApplicationContext()).shareToQQ(act, params, listener);
     }
 
 

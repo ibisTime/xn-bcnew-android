@@ -105,5 +105,8 @@
     <string name="update_tip">更新提示</string>
     <string name="update_now">立即更新</string>
     <string name="no_hot_coin">暂无热门币种</string>
+    <string name="share_succ">分享成功</string>
+    <string name="share_fail">分享失败</string>
+    <string name="share_cancel">取消分享</string>
 
 </resources>

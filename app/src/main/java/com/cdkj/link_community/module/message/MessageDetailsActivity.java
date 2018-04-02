@@ -5,12 +5,18 @@ import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.JavascriptInterface;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
+import android.widget.LinearLayout;
 
 import com.cdkj.baselibrary.api.BaseResponseModel;
 import com.cdkj.baselibrary.api.ResponseInListModel;
@@ -29,7 +35,6 @@ import com.cdkj.baselibrary.nets.BaseResponseModelCallBack;
 import com.cdkj.baselibrary.nets.RetrofitUtils;
 import com.cdkj.baselibrary.utils.CheckUtils;
 import com.cdkj.baselibrary.utils.DateUtil;
-import com.cdkj.baselibrary.utils.LogUtil;
 import com.cdkj.baselibrary.utils.StringUtils;
 import com.cdkj.link_community.R;
 import com.cdkj.link_community.adapters.MessageDetailRecomListAdapter;
@@ -66,7 +71,7 @@ public class MessageDetailsActivity extends AbsBaseLoadActivity {
 
     private ActivityMessageDetailBinding mBinding;
 
-    private String mCode;
+    private String mCode; //资讯编号
 
     private RefreshHelper mNewCommentRefreshHelper; //最新评论刷新
 
@@ -124,9 +129,19 @@ public class MessageDetailsActivity extends AbsBaseLoadActivity {
 
         mBinding.contentLayout.webView.setVerticalScrollBarEnabled(false); //垂直不显示滚动条
 
+        mBinding.contentLayout.webView.setWebViewClient(new WebViewClient() {
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                super.onPageFinished(view, url);
+                mBinding.getRoot().setVisibility(View.VISIBLE);   //当web内容加载完成时显示页面
+                disMissLoading();
+            }
+        });
+
         initRefreshHelper();
         initListener();
     }
+
 
     @Override
     protected void onResume() {
@@ -136,6 +151,11 @@ public class MessageDetailsActivity extends AbsBaseLoadActivity {
 
 
     private void initListener() {
+
+        mBinding.fraComment.setOnClickListener(view -> {
+            MessageCommentListActivity.open(this, mCode);
+        });
+
 
         //资讯评论
         mBinding.tvToComment.setOnClickListener(view -> {
@@ -270,14 +290,12 @@ public class MessageDetailsActivity extends AbsBaseLoadActivity {
             protected void onSuccess(MessageDetails data, String SucMessage) {
                 messageDetails = data;
                 setShowData(data);
-
-                mBinding.getRoot().setVisibility(View.VISIBLE);
             }
 
 
             @Override
             protected void onFinish() {
-                disMissLoading();
+
             }
         });
     }
@@ -287,15 +305,15 @@ public class MessageDetailsActivity extends AbsBaseLoadActivity {
      */
     private void setShowData(MessageDetails data) {
 
-        if (data == null) return;
-
-        if (StringUtils.splitAsPicList(data.getAdvPic()).size() > 0) {
-            mSharePhotoUrl = StringUtils.splitAsPicList(data.getAdvPic()).get(0);
+        if (data == null) {
+            disMissLoading();
+            mBinding.getRoot().setVisibility(View.VISIBLE);
+            return;
         }
 
-        mShareContent = subShareContent(StringUtils.delHTMLTag(data.getContent()));
+        mSharePhotoUrl = StringUtils.getAsPicListIndexOne(data.getAdvPic());
 
-        LogUtil.E("sdf" + mShareContent);
+        mShareContent = subShareContent(StringUtils.delHTMLTag(data.getContent()));
 
         mBaseBinding.titleView.setMidTitle(data.getTypeName());
 
@@ -306,7 +324,8 @@ public class MessageDetailsActivity extends AbsBaseLoadActivity {
                 " height:auto;\n" +
                 "}\n" +
                 " \n" +
-                "</style>" + data.getContent(), "text/html; charset=UTF-8", null);
+                "</style>" + data.getContent(), "text/html; charset=UTF-8", "utf-8");
+
 
         mBinding.contentLayout.tvTime.setText(DateUtil.formatStringData(data.getShowDatetime(), DEFAULT_DATE_FMT));
         mBinding.contentLayout.tvFrom.setText(getString(R.string.message_frome) + data.getSource());
@@ -340,7 +359,7 @@ public class MessageDetailsActivity extends AbsBaseLoadActivity {
         setRecommendedList(data.getRefNewList());
         setHotCommentList(data.getHotCommentList());
 
-        mNewCommentRefreshHelper.onDefaluteMRefresh(true);
+        mNewCommentRefreshHelper.onDefaluteMRefresh(false);
     }
 
     /**
@@ -349,12 +368,14 @@ public class MessageDetailsActivity extends AbsBaseLoadActivity {
      * @param data
      */
     private void setLikeInfo(MessageDetails data) {
-    /*是否点赞*/
+        /*是否点赞*/
 
         if (data.getIsPoint() == 1) {
             mBinding.contentLayout.imgLike.setImageResource(R.drawable.gave_a_like);
+            mBinding.contentLayout.tvLikeNum.setTextColor(ContextCompat.getColor(this, R.color.red));
         } else {
             mBinding.contentLayout.imgLike.setImageResource(R.drawable.gave_a_like_un);
+            mBinding.contentLayout.tvLikeNum.setTextColor(ContextCompat.getColor(this, R.color.app_text_gray));
         }
 
 
@@ -725,11 +746,6 @@ public class MessageDetailsActivity extends AbsBaseLoadActivity {
             return "";
         }
         return shareContent.substring(0, 60);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        Tencent.onActivityResultData(requestCode, resultCode, data, new QQUiListener());
     }
 
     @Override

@@ -67,6 +67,7 @@
                 android:paddingRight="10dp">
 
                 <FrameLayout
+                    android:id="@+id/fra_comment"
                     android:layout_width="30dp"
                     android:layout_height="match_parent">
 

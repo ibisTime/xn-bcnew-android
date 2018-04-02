@@ -51,16 +51,7 @@ public class MyCoinBBSListAdapter extends BaseQuickAdapter<CoinBBSListModel, Bas
             viewHolder.setTextColor(R.id.btn_state, ContextCompat.getColor(mContext, R.color.bbs_state_color));
         }
 
-        if (viewHolder.getLayoutPosition() == 0) {
-            viewHolder.setImageResource(R.id.img_top, R.drawable.top_1);
-        } else if (viewHolder.getLayoutPosition() == 1) {
-            viewHolder.setImageResource(R.id.img_top, R.drawable.top_2);
-        } else if (viewHolder.getLayoutPosition() == 2) {
-            viewHolder.setImageResource(R.id.img_top, R.drawable.top_3);
-
-        }
-
-        viewHolder.setVisible(R.id.img_top, viewHolder.getLayoutPosition() < 3);
+        viewHolder.setVisible(R.id.img_top, false);
 
 
         viewHolder.addOnClickListener(R.id.btn_state);

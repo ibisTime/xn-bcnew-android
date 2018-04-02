@@ -84,6 +84,19 @@ public class MyFocuseOnCoinBBSListFragment extends AbsRefreshListFragment {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        if (!getUserVisibleHint()) {
+            return;
+        }
+
+        if (mRefreshBinding == null) {
+            return;
+        }
+        mRefreshHelper.onDefaluteMRefresh(false);
+    }
+
+    @Override
     public RecyclerView.Adapter getListAdapter(List listData) {
         MyCoinBBSListAdapter coinBBSListAdapter = new MyCoinBBSListAdapter(listData);
 

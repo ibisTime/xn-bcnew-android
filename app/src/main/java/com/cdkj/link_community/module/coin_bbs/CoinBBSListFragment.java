@@ -90,6 +90,18 @@ public class CoinBBSListFragment extends AbsRefreshListFragment {
         ((DefaultItemAnimator) mRefreshBinding.rv.getItemAnimator()).setSupportsChangeAnimations(false);
     }
 
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (getUserVisibleHint()) {
+            if (mRefreshBinding == null) {
+                return;
+            }
+            mRefreshHelper.onDefaluteMRefresh(false);
+        }
+    }
+
     @Override
     public RecyclerView.Adapter getListAdapter(List listData) {
         CoinBBSListAdapter coinBBSListAdapter = new CoinBBSListAdapter(listData, TextUtils.equals(mBBSType, HOT));
