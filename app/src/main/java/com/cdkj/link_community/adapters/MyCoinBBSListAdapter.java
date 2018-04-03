@@ -14,7 +14,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 /**
- * 币吧 Fragment
+ * 我关注的币吧 Fragment
  * Created by cdkj on 2018/3/19.
  */
 
@@ -51,7 +51,7 @@ public class MyCoinBBSListAdapter extends BaseQuickAdapter<CoinBBSListModel, Bas
             viewHolder.setTextColor(R.id.btn_state, ContextCompat.getColor(mContext, R.color.bbs_state_color));
         }
 
-        viewHolder.setVisible(R.id.img_top, false);
+        viewHolder.setGone(R.id.img_top, false);
 
 
         viewHolder.addOnClickListener(R.id.btn_state);

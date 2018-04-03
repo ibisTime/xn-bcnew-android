@@ -13,6 +13,7 @@ import android.widget.ScrollView;
 
 import com.cdkj.baselibrary.CdApplication;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -80,13 +81,63 @@ public class BitmapUtils {
         return byteArray;
     }
 
+    /**
+     * 微信分享图片压缩
+     *
+     * @param image
+     * @return
+     */
+    public static byte[] WeChatBitmapToByteArray(Bitmap image) {
+
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+
+        final BitmapFactory.Options boptions = new BitmapFactory.Options();
+
+        image.compress(Bitmap.CompressFormat.JPEG, 100, baos);//质量压缩方法，这里100表示不压缩，把压缩后的数据存放到baos中
+
+        BitmapFactory.decodeByteArray(baos.toByteArray(), 0, baos.toByteArray().length, boptions);
+
+        boptions.inJustDecodeBounds = true;//只解析图片边沿，获取宽高
+        // 计算缩放比
+        boptions.inSampleSize = calculateInSampleSize(boptions);
+        // 完整解析图片返回bitmap
+        boptions.inJustDecodeBounds = false;
+
+        image = BitmapFactory.decodeByteArray(baos.toByteArray(), 0, baos.toByteArray().length, boptions);
+
+
+        if (image != null) {
+            int quality = 100;
+            image.compress(Bitmap.CompressFormat.JPEG, quality, baos);//质量压缩方法，这里100表示不压缩，把压缩后的数据存放到baos中
+            int options = 90;
+            while ((baos.toByteArray().length / 1024) > 32) {  //循环判断如果压缩后图片是否大于32kb,大于继续压缩
+                baos.reset();//重置baos即清空baos
+                image.compress(Bitmap.CompressFormat.JPEG, options, baos);//这里压缩options%，把压缩后的数据存放到baos中
+                options -= 10;//每次都减少10
+                if (options <= 10) {
+                    break;
+                }
+            }
+        }
+        byte[] byteArray = baos.toByteArray();
+        try {
+            if (baos != null) {
+                baos.close();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return byteArray;
+    }
+
 
     /*
-* 旋转图片
-* @param angle
-* @param bitmap
-* @return Bitmap
-*/
+     * 旋转图片
+     * @param angle
+     * @param bitmap
+     * @return Bitmap
+     */
     public static Bitmap rotaingImageView(int angle, Bitmap bitmap) {
         try {
             //旋转图片 动作
@@ -149,22 +200,6 @@ public class BitmapUtils {
         LogUtil.E("图片旋转角度" + degree);
         return degree;
     }
-
-/*
-
-    public static int calculateInSampleSize(BitmapFactory.Options options,
-                                            int reqWidth, int reqHeight) {
-        final int height = options.outHeight;
-        final int width = options.outWidth;
-        int inSampleSize = 1;
-        if (height > reqHeight || width > reqWidth) {
-            final int heightRatio = Math.round((float) height / (float) reqHeight);
-            final int widthRatio = Math.round((float) width / (float) reqWidth);
-            inSampleSize = heightRatio < widthRatio ? heightRatio : widthRatio;
-        }
-        return inSampleSize;
-    }
-*/
 
     private static int calculateInSampleSize(BitmapFactory.Options options, int reqWidth, int reqHeight) {
         // 源图片的高度和宽度
@@ -313,6 +348,7 @@ public class BitmapUtils {
      * @return
      */
     public static Bitmap getBitmapByView(ScrollView scrollView) {
+        LogUtil.E("aaa图片");
         int h = 0;
         Bitmap bitmap = null;
         // 获取scrollview实际高度
@@ -323,9 +359,10 @@ public class BitmapUtils {
         }
         // 创建对应大小的bitmap
         bitmap = Bitmap.createBitmap(scrollView.getWidth(), h,
-                Bitmap.Config.ARGB_8888);
+                Bitmap.Config.RGB_565);
         final Canvas canvas = new Canvas(bitmap);
         scrollView.draw(canvas);
+
         return bitmap;
     }
 

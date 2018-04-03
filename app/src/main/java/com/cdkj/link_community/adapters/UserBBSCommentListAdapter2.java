@@ -50,7 +50,7 @@ public class UserBBSCommentListAdapter2 extends BaseQuickAdapter<UserBBSComment,
 
 
         viewHolder.getView(R.id.img_logo).setOnClickListener(view -> {
-            UserCenterBBSRepyListActivity.open(mContext, item.getUserId(), item.getParentNickName(), item.getPhoto());
+            UserCenterBBSRepyListActivity.open(mContext, item.getUserId(), item.getNickname(), item.getPhoto());
         });
 
     }

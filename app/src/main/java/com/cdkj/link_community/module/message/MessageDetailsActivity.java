@@ -10,13 +10,10 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.JavascriptInterface;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.LinearLayout;
 
 import com.cdkj.baselibrary.api.BaseResponseModel;
 import com.cdkj.baselibrary.api.ResponseInListModel;
@@ -42,15 +39,12 @@ import com.cdkj.link_community.adapters.MsgHotCommentListAdapter;
 import com.cdkj.link_community.api.MyApiServer;
 import com.cdkj.link_community.databinding.ActivityMessageDetailBinding;
 import com.cdkj.link_community.dialog.CommentInputDialog;
-import com.cdkj.link_community.interfaces.QQUiListener;
 import com.cdkj.link_community.model.MessageDetails;
 import com.cdkj.link_community.model.MessageDetailsNoteList;
 import com.cdkj.link_community.model.MsgDetailsComment;
-import com.cdkj.link_community.module.coin_bbs.CoinBBSDetailsActivity;
 import com.cdkj.link_community.module.user.ShareActivity;
 import com.cdkj.link_community.utils.WxUtil;
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.tencent.tauth.Tencent;
 
 
 import java.math.BigDecimal;
@@ -167,7 +161,7 @@ public class MessageDetailsActivity extends AbsBaseLoadActivity {
             CommentInputDialog commentInputDialog = new CommentInputDialog(this, "");
             commentInputDialog.setmSureListener(comment -> {
                 if (TextUtils.isEmpty(comment)) {
-                    UITipDialog.showFall(MessageDetailsActivity.this, getString(R.string.please_input_comment_info));
+                    UITipDialog.showFail(MessageDetailsActivity.this, getString(R.string.please_input_comment_info));
                     return;
                 }
                 toCommentRequest(mCode, comment, MSGCOMMENT);
@@ -244,7 +238,7 @@ public class MessageDetailsActivity extends AbsBaseLoadActivity {
         msgHotCommentListAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                CommentDetailsActivity.open(MessageDetailsActivity.this, msgHotCommentListAdapter.getItem(position).getCode());
+                MessageCommentDetailsActivity.open(MessageDetailsActivity.this, msgHotCommentListAdapter.getItem(position).getCode());
 //                commentPlayRequest(msgHotCommentListAdapter.getItem(position).getCode());
             }
         });

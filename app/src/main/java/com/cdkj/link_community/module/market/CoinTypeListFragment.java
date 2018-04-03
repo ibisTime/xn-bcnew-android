@@ -136,7 +136,7 @@ public class CoinTypeListFragment extends AbsRefreshListFragment {
             @Override
             protected void onSuccess(ResponseInListModel<CoinListModel> data, String SucMessage) {
                 mRefreshHelper.setData(data.getList(), getString(R.string.no_coin_info), 0);
-                if(coinListAdapte.getData().size()>0){
+                if (coinListAdapte.getData().size() > 0) {
                     mRefreshBinding.rv.scrollToPosition(0);
                 }
             }
@@ -184,10 +184,9 @@ public class CoinTypeListFragment extends AbsRefreshListFragment {
                 } else {
                     coinListAdapte.removeAllHeaderView();
                 }
+                mToBBSBinding.tvInfo.setText(getString(R.string.into_bbs_title, StringUtils.formatNum(data.getTotalCount())));
 
-                mToBBSBinding.tvInfo.setText("现在有" + data.getTotalCount() + "个帖子在讨论，你也一起来吧!");
-
-                if(coinListAdapte.getData().size()>0){
+                if (coinListAdapte.getData().size() > 0) {
                     mRefreshBinding.rv.scrollToPosition(0);
                 }
 

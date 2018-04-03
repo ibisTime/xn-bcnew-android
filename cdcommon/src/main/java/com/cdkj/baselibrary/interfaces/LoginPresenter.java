@@ -3,14 +3,12 @@ package com.cdkj.baselibrary.interfaces;
 import android.content.Context;
 import android.text.TextUtils;
 
-import com.cdkj.baselibrary.api.BaseResponseModel;
 import com.cdkj.baselibrary.appmanager.MyCdConfig;
 import com.cdkj.baselibrary.dialog.UITipDialog;
 import com.cdkj.baselibrary.model.UserLoginModel;
 import com.cdkj.baselibrary.nets.BaseResponseModelCallBack;
 import com.cdkj.baselibrary.nets.RetrofitUtils;
 import com.cdkj.baselibrary.utils.StringUtils;
-import com.cdkj.baselibrary.utils.ToastUtil;
 
 import java.util.HashMap;
 
@@ -34,11 +32,11 @@ public class LoginPresenter {
     public void login(String username, String password, Context context) {
         this.mContext = context;
         if (TextUtils.isEmpty(username)) {
-            UITipDialog.showFall(context, "请输入手机号");
+            UITipDialog.showFail(context, "请输入手机号");
             return;
         }
         if (TextUtils.isEmpty(password)) {
-            UITipDialog.showFall(context, "请输入密码");
+            UITipDialog.showFail(context, "请输入密码");
             return;
         }
         HashMap<String, String> hashMap = new HashMap<>();

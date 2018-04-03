@@ -22,10 +22,10 @@ import java.util.List;
  * Created by cdkj on 2018/3/19.
  */
 
-public class UserMyCommentListAdapter2 extends BaseQuickAdapter<ReplyComment, BaseViewHolder> {
+public class UserMessageCommentListAdapter2 extends BaseQuickAdapter<ReplyComment, BaseViewHolder> {
 
 
-    public UserMyCommentListAdapter2(@Nullable List<ReplyComment> data) {
+    public UserMessageCommentListAdapter2(@Nullable List<ReplyComment> data) {
         super(R.layout.item_user_my_comments_2, data);
 
     }

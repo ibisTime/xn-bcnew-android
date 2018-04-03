@@ -35,9 +35,11 @@ import retrofit2.Call;
 
 public class FastMessageListAdapter extends BaseQuickAdapter<FastMessage, BaseViewHolder> {
 
+    private boolean isHotMessage;//是否是热门信息 热门信息 和 全部颜色不一样
 
-    public FastMessageListAdapter(@Nullable List<FastMessage> data) {
+    public FastMessageListAdapter(@Nullable List<FastMessage> data, boolean isHotMessage) {
         super(R.layout.item_fast_message, data);
+        this.isHotMessage = isHotMessage;
     }
 
 
@@ -146,7 +148,14 @@ public class FastMessageListAdapter extends BaseQuickAdapter<FastMessage, BaseVi
         if (TextUtils.equals(item.getIsRead(), "1")) {
             textView.setTextColor(ContextCompat.getColor(mContext, R.color.app_text_gray));
         } else {
-            textView.setTextColor(ContextCompat.getColor(mContext, R.color.app_text_color));
+            if (isHotMessage) {
+
+                textView.setTextColor(ContextCompat.getColor(mContext, R.color.app_text_color));
+
+            } else {
+
+                textView.setTextColor(ContextCompat.getColor(mContext, R.color.text_black_cd));
+            }
         }
     }
 

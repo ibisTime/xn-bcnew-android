@@ -4,21 +4,16 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
 
 import com.cdkj.baselibrary.utils.DateUtil;
 import com.cdkj.baselibrary.utils.ImgUtils;
 import com.cdkj.baselibrary.utils.StringUtils;
 import com.cdkj.link_community.R;
 import com.cdkj.link_community.model.MsgDetailsComment;
-import com.cdkj.link_community.model.ReplyCommentEvent;
-import com.cdkj.link_community.module.message.CommentDetailsActivity;
-import com.cdkj.link_community.module.message.MessageDetailsActivity;
+import com.cdkj.link_community.module.message.MessageCommentDetailsActivity;
 import com.cdkj.link_community.module.user.UserCenterMessageRepyListActivity;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-
-import org.greenrobot.eventbus.EventBus;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -85,7 +80,7 @@ public class MsgHotCommentListAdapter extends BaseQuickAdapter<MsgDetailsComment
         ReplyCommentListAdapter replyCommentListAdapter = new ReplyCommentListAdapter(item.getCommentList());
 
         replyCommentListAdapter.setOnItemClickListener((adapter, view, position) -> {
-            CommentDetailsActivity.open(mContext, item.getCode());
+            MessageCommentDetailsActivity.open(mContext, item.getCode());
         });
 
         recyclerView.setAdapter(replyCommentListAdapter);

@@ -16,7 +16,7 @@ import com.cdkj.baselibrary.nets.BaseResponseModelCallBack;
 import com.cdkj.baselibrary.nets.RetrofitUtils;
 import com.cdkj.baselibrary.utils.StringUtils;
 import com.cdkj.link_community.R;
-import com.cdkj.link_community.adapters.UserMyCommentListAdapter;
+import com.cdkj.link_community.adapters.UserMessageCommentListAdapter;
 import com.cdkj.link_community.api.MyApiServer;
 import com.cdkj.link_community.model.UserMessageComment;
 import com.cdkj.link_community.module.message.MessageDetailsActivity;
@@ -70,7 +70,7 @@ public class MyCommentsListFragment extends AbsRefreshListFragment {
 
     @Override
     public RecyclerView.Adapter getListAdapter(List listData) {
-        UserMyCommentListAdapter userMyCommentListAdapter = new UserMyCommentListAdapter(listData);
+        UserMessageCommentListAdapter userMyCommentListAdapter = new UserMessageCommentListAdapter(listData);
 
         userMyCommentListAdapter.setOnItemClickListener((adapter, view, position) -> {
 

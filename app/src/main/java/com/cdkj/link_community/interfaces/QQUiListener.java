@@ -1,16 +1,12 @@
 package com.cdkj.link_community.interfaces;
 
 import android.app.Activity;
-import android.content.Context;
 
 import com.cdkj.baselibrary.dialog.UITipDialog;
-import com.cdkj.baselibrary.utils.ToastUtil;
-import com.cdkj.link_community.BaseApplication;
+import com.cdkj.baselibrary.utils.LogUtil;
 import com.cdkj.link_community.R;
 import com.tencent.tauth.IUiListener;
 import com.tencent.tauth.UiError;
-
-import org.json.JSONObject;
 
 import java.lang.ref.SoftReference;
 
@@ -37,13 +33,14 @@ public class QQUiListener implements IUiListener {
     @Override
     public void onError(UiError e) {
         if (mActivity == null) return;
-        UITipDialog.showFall(mActivity, mActivity.getString(R.string.share_fail));
+        LogUtil.E("qq分享" + e.errorMessage);
+        UITipDialog.showFail(mActivity, mActivity.getString(R.string.share_fail) + e.errorMessage);
     }
 
     @Override
     public void onCancel() {
         if (mActivity == null) return;
-        UITipDialog.showFall(mActivity,  mActivity.getString(R.string.share_cancel));
+        UITipDialog.showFail(mActivity, mActivity.getString(R.string.share_cancel));
     }
 
     public void onDestroy() {

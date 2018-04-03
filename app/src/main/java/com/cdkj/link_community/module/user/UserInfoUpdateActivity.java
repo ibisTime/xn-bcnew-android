@@ -199,7 +199,7 @@ public class UserInfoUpdateActivity extends AbsBaseLoadActivity {
 
             @Override
             protected void onReqFailure(String errorCode, String errorMessage) {
-                UITipDialog.showFall(UserInfoUpdateActivity.this, errorMessage);
+                UITipDialog.showFail(UserInfoUpdateActivity.this, errorMessage);
             }
 
             @Override
@@ -238,7 +238,7 @@ public class UserInfoUpdateActivity extends AbsBaseLoadActivity {
 
             @Override
             protected void onReqFailure(String errorCode, String errorMessage) {
-                UITipDialog.showFall(UserInfoUpdateActivity.this, errorMessage);
+                UITipDialog.showFail(UserInfoUpdateActivity.this, errorMessage);
             }
 
             @Override
@@ -278,7 +278,7 @@ public class UserInfoUpdateActivity extends AbsBaseLoadActivity {
 
             @Override
             protected void onReqFailure(String errorCode, String errorMessage) {
-                UITipDialog.showFall(UserInfoUpdateActivity.this, errorMessage);
+                UITipDialog.showFail(UserInfoUpdateActivity.this, errorMessage);
             }
 
             @Override

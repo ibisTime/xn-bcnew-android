@@ -6,7 +6,6 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 
@@ -29,15 +28,11 @@ import com.cdkj.link_community.adapters.ReplyCommentListAdapter;
 import com.cdkj.link_community.api.MyApiServer;
 import com.cdkj.link_community.databinding.ActivityMessageCommentDetailsBinding;
 import com.cdkj.link_community.dialog.CommentInputDialog;
-import com.cdkj.link_community.model.MessageDetails;
 import com.cdkj.link_community.model.MsgDetailsComment;
 import com.cdkj.link_community.model.ReplyComment;
-import com.cdkj.link_community.model.ReplyCommentEvent;
-import com.cdkj.link_community.module.coin_bbs.BBSCommentDetailsActivity;
+import com.cdkj.link_community.module.user.UserCenterBBSRepyListActivity;
+import com.cdkj.link_community.module.user.UserCenterMessageRepyListActivity;
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.chad.library.adapter.base.BaseViewHolder;
-
-import org.greenrobot.eventbus.EventBus;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
@@ -55,7 +50,7 @@ import static com.cdkj.link_community.module.message.MessageDetailsActivity.MSGC
  * Created by cdkj on 2018/3/24.
  */
 
-public class CommentDetailsActivity extends AbsBaseLoadActivity {
+public class MessageCommentDetailsActivity extends AbsBaseLoadActivity {
 
     private ActivityMessageCommentDetailsBinding mBinding;
 
@@ -71,7 +66,7 @@ public class CommentDetailsActivity extends AbsBaseLoadActivity {
         if (context == null) {
             return;
         }
-        Intent intent = new Intent(context, CommentDetailsActivity.class);
+        Intent intent = new Intent(context, MessageCommentDetailsActivity.class);
 
         intent.putExtra(CdRouteHelper.APPLOGIN, commentCode);
         context.startActivity(intent);
@@ -113,6 +108,13 @@ public class CommentDetailsActivity extends AbsBaseLoadActivity {
             }
             toMsgLikeRequest();
         });
+
+        mBinding.replayCommentLayout.imgLogo.setOnClickListener(view -> {
+            if (msgDetailsComment == null) return;
+
+            UserCenterMessageRepyListActivity.open(this, msgDetailsComment.getUserId(), msgDetailsComment.getNickname(), msgDetailsComment.getPhoto());
+        });
+
     }
 
     @Override
@@ -201,7 +203,7 @@ public class CommentDetailsActivity extends AbsBaseLoadActivity {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
 
-                if (!SPUtilHelpr.isLogin(CommentDetailsActivity.this, false)) {
+                if (!SPUtilHelpr.isLogin(MessageCommentDetailsActivity.this, false)) {
                     return;
                 }
 
@@ -237,13 +239,13 @@ public class CommentDetailsActivity extends AbsBaseLoadActivity {
      * 对评论进行回复
      */
     private void commentPlayRequest(String code, String name) {
-        if (!SPUtilHelpr.isLogin(CommentDetailsActivity.this, false)) {
+        if (!SPUtilHelpr.isLogin(MessageCommentDetailsActivity.this, false)) {
             return;
         }
         CommentInputDialog commentInputDialog = new CommentInputDialog(this, name);
         commentInputDialog.setmSureListener(comment -> {
             if (TextUtils.isEmpty(comment)) {
-                UITipDialog.showFall(CommentDetailsActivity.this, getString(R.string.please_input_replycomment_info));
+                UITipDialog.showFail(MessageCommentDetailsActivity.this, getString(R.string.please_input_replycomment_info));
                 return;
             }
             toCommentRequest(code, comment, COMMENTCOMMENT);
@@ -298,7 +300,7 @@ public class CommentDetailsActivity extends AbsBaseLoadActivity {
             @Override
             public void succ() {
                 if (TextUtils.equals(type, MSGCOMMENT)) {
-                    UITipDialog.showSuccess(CommentDetailsActivity.this, getString(R.string.comment_succ));
+                    UITipDialog.showSuccess(MessageCommentDetailsActivity.this, getString(R.string.comment_succ));
                 }
                 getCommentDetailRequest();
             }
@@ -306,13 +308,13 @@ public class CommentDetailsActivity extends AbsBaseLoadActivity {
             @Override
             public void fail() {
                 if (TextUtils.equals(type, MSGCOMMENT)) {
-                    UITipDialog.showSuccess(CommentDetailsActivity.this, getString(R.string.comment_fall));
+                    UITipDialog.showSuccess(MessageCommentDetailsActivity.this, getString(R.string.comment_fall));
                 }
             }
 
             @Override
             public void haveSensitive(String str) {
-                UITipDialog.showInfo(CommentDetailsActivity.this, str);
+                UITipDialog.showInfo(MessageCommentDetailsActivity.this, str);
             }
         });
     }
@@ -371,7 +373,7 @@ public class CommentDetailsActivity extends AbsBaseLoadActivity {
      * @param data
      */
     private void setLikeInfo(MsgDetailsComment data) {
-    /*是否点赞*/
+        /*是否点赞*/
 
         if (data.getIsPoint() == 1) {
             mBinding.replayCommentLayout.imgIsLike.setImageResource(R.drawable.gave_a_like);

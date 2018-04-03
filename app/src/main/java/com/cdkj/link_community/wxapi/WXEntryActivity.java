@@ -114,7 +114,7 @@ public class WXEntryActivity extends BaseActivity implements IWXAPIEventHandler 
 
         tipDialog.show();
 
-        Observable.timer(1500, TimeUnit.MILLISECONDS)
+        Observable.timer(1200, TimeUnit.MILLISECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<Long>() {
                     @Override

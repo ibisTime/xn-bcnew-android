@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -15,8 +14,6 @@ import com.cdkj.baselibrary.appmanager.MyCdConfig;
 import com.cdkj.baselibrary.appmanager.SPUtilHelpr;
 import com.cdkj.baselibrary.base.AbsBaseLoadActivity;
 import com.cdkj.baselibrary.dialog.UITipDialog;
-import com.cdkj.baselibrary.interfaces.LoginInterface;
-import com.cdkj.baselibrary.interfaces.LoginPresenter;
 import com.cdkj.baselibrary.interfaces.SendCodeInterface;
 import com.cdkj.baselibrary.interfaces.SendPhoneCoodePresenter;
 import com.cdkj.baselibrary.model.UserLoginModel;
@@ -155,7 +152,7 @@ public class LoginActivity extends AbsBaseLoadActivity implements SendCodeInterf
      */
     private void checkPhoneNumAndSendCode() {
         if (TextUtils.isEmpty(mBinding.editUsername.getText().toString())) {
-            UITipDialog.showFall(LoginActivity.this, getString(R.string.please_input_phone));
+            UITipDialog.showFail(LoginActivity.this, getString(R.string.please_input_phone));
             return;
         }
         mSendCOdePresenter.sendCodeRequest(mBinding.editUsername.getText().toString(), "805173", MyCdConfig.USERTYPE, LoginActivity.this);
@@ -193,7 +190,7 @@ public class LoginActivity extends AbsBaseLoadActivity implements SendCodeInterf
 
     @Override
     public void CodeFailed(String code, String msg) {
-        UITipDialog.showFall(LoginActivity.this, msg);
+        UITipDialog.showFail(LoginActivity.this, msg);
     }
 
     @Override

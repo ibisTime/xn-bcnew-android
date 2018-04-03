@@ -12,6 +12,7 @@
             layout="@layout/layout_market_search_bar" />
 
         <LinearLayout
+            android:visibility="gone"
             android:id="@+id/lin_tab"
             android:layout_width="match_parent"
             android:layout_height="45dp"

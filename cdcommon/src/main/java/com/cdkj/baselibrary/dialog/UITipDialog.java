@@ -66,7 +66,7 @@ public class UITipDialog extends Dialog {
         timerDismiss();
     }
 
-    public static void showSuccess(Context context, String info,OnDismissListener listener) {
+    public static void showSuccess(Context context, String info, OnDismissListener listener) {
         if (tipDialog != null) {
             tipDialog.dismiss();
         }
@@ -75,7 +75,7 @@ public class UITipDialog extends Dialog {
                 .setIconType(UITipDialog.Builder.ICON_TYPE_SUCCESS)
                 .setTipWord(info)
                 .create();
-        if(listener!=null){
+        if (listener != null) {
             tipDialog.setOnDismissListener(listener);
         }
         tipDialog.show();
@@ -84,7 +84,7 @@ public class UITipDialog extends Dialog {
 
     private static void timerDismiss() {
         if (tipDialog == null) return;
-        Observable.timer(1000, TimeUnit.MILLISECONDS)
+        Observable.timer(1200, TimeUnit.MILLISECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<Long>() {
                     @Override
@@ -94,12 +94,12 @@ public class UITipDialog extends Dialog {
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(Throwable throwable) throws Exception {
-
+                        tipDialog.dismiss();
                     }
                 });
     }
 
-    public static void showFall(Context context, String info) {
+    public static void showFail(Context context, String info) {
         if (tipDialog != null) {
             tipDialog.dismiss();
         }

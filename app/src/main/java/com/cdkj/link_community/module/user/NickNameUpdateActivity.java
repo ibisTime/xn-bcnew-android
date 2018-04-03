@@ -16,11 +16,9 @@ import com.cdkj.baselibrary.dialog.UITipDialog;
 import com.cdkj.baselibrary.model.IsSuccessModes;
 import com.cdkj.baselibrary.nets.BaseResponseModelCallBack;
 import com.cdkj.baselibrary.nets.RetrofitUtils;
-import com.cdkj.baselibrary.utils.ImgUtils;
 import com.cdkj.baselibrary.utils.StringUtils;
 import com.cdkj.link_community.R;
 import com.cdkj.link_community.databinding.ActivityNicknameUpdateBinding;
-import com.cdkj.link_community.manager.MyRouteHelper;
 import com.cdkj.link_community.model.NickNameUpdateModel;
 
 import org.greenrobot.eventbus.EventBus;
@@ -119,7 +117,7 @@ public class NickNameUpdateActivity extends AbsBaseLoadActivity {
 
             @Override
             protected void onReqFailure(String errorCode, String errorMessage) {
-                UITipDialog.showFall(NickNameUpdateActivity.this, errorMessage);
+                UITipDialog.showFail(NickNameUpdateActivity.this, errorMessage);
             }
 
             @Override

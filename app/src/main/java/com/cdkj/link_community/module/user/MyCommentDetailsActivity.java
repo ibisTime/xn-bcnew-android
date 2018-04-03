@@ -24,7 +24,7 @@ import com.cdkj.baselibrary.utils.DateUtil;
 import com.cdkj.baselibrary.utils.ImgUtils;
 import com.cdkj.baselibrary.utils.StringUtils;
 import com.cdkj.link_community.R;
-import com.cdkj.link_community.adapters.UserMyCommentListAdapter2;
+import com.cdkj.link_community.adapters.UserMessageCommentListAdapter2;
 import com.cdkj.link_community.api.MyApiServer;
 import com.cdkj.link_community.databinding.ActivityMessageCommentDetailsBinding;
 import com.cdkj.link_community.dialog.CommentInputDialog;
@@ -211,7 +211,7 @@ public class MyCommentDetailsActivity extends AbsBaseLoadActivity {
 
         mBinding.replayCommentLayout.recyclerComment.setLayoutManager(getLinearLayoutManager());
 
-        UserMyCommentListAdapter2 replyCommentListAdapter = new UserMyCommentListAdapter2(comments);
+        UserMessageCommentListAdapter2 replyCommentListAdapter = new UserMessageCommentListAdapter2(comments);
 
         replyCommentListAdapter.setOnItemChildClickListener((adapter, view, position) -> {
 
@@ -266,7 +266,7 @@ public class MyCommentDetailsActivity extends AbsBaseLoadActivity {
         CommentInputDialog commentInputDialog = new CommentInputDialog(this, name);
         commentInputDialog.setmSureListener(comment -> {
             if (TextUtils.isEmpty(comment)) {
-                UITipDialog.showFall(MyCommentDetailsActivity.this, getString(R.string.please_input_replycomment_info));
+                UITipDialog.showFail(MyCommentDetailsActivity.this, getString(R.string.please_input_replycomment_info));
                 return;
             }
             toCommentRequest(code, comment, COMMENTCOMMENT);
@@ -412,7 +412,7 @@ public class MyCommentDetailsActivity extends AbsBaseLoadActivity {
     /**
      * 资讯点赞
      */
-    private void toMsgLikeRequest(UserMyCommentListAdapter2 adapter2, int postition) {
+    private void toMsgLikeRequest(UserMessageCommentListAdapter2 adapter2, int postition) {
 
         ReplyComment replyComment = adapter2.getItem(postition);
 

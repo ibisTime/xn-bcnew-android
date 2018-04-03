@@ -153,7 +153,7 @@ public class WebViewActivity extends AbsBaseLoadActivity {
 
             @Override
             protected void onReqFailure(String errorCode, String errorMessage) {
-                UITipDialog.showFall(WebViewActivity.this, errorMessage);
+                UITipDialog.showFail(WebViewActivity.this, errorMessage);
             }
 
             @Override

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -20,6 +21,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.cdkj.baselibrary.appmanager.CdRouteHelper;
 import com.cdkj.baselibrary.appmanager.MyCdConfig;
 import com.cdkj.baselibrary.base.AbsBaseLoadActivity;
+import com.cdkj.baselibrary.dialog.UITipDialog;
 import com.cdkj.baselibrary.model.IntroductionInfoModel;
 import com.cdkj.baselibrary.nets.BaseResponseModelCallBack;
 import com.cdkj.baselibrary.nets.RetrofitUtils;
@@ -36,11 +38,10 @@ import com.cdkj.link_community.model.FastMessage;
 import com.cdkj.link_community.utils.QqShareUtil;
 import com.cdkj.link_community.utils.WxUtil;
 import com.tencent.connect.common.Constants;
-import com.tencent.tauth.IUiListener;
 import com.tencent.tauth.Tencent;
-import com.tencent.tauth.UiError;
 import com.uuzuche.lib_zxing.activity.CodeUtils;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.util.Date;
 import java.util.HashMap;
@@ -120,11 +121,8 @@ public class FastMessageToShareActivity extends AbsBaseLoadActivity {
             if (!TextUtils.isEmpty(fastMessage.getShowDatetime())) {
                 mBinding.tvTime.setText(DateUtil.getWeekOfDate(new Date(fastMessage.getShowDatetime())) + " " + DateUtil.formatStringData(fastMessage.getShowDatetime(), DateUtil.DEFAULT_DATE_FMT));
             }
-
         }
-
         ininListener();
-
     }
 
 
@@ -151,11 +149,40 @@ public class FastMessageToShareActivity extends AbsBaseLoadActivity {
         mBinding.scrollView.post(() -> {
 
             mBinding.imgWx.setOnClickListener(view -> {
-                WxUtil.shareBitmapToWX(FastMessageToShareActivity.this, getBitmapByView(mBinding.scrollView));
+
+                showLoadingDialog();
+                mSubscription.add(Observable.just(getBitmapByView(mBinding.scrollView))
+                        .subscribeOn(AndroidSchedulers.mainThread())
+                        .observeOn(Schedulers.newThread())  //创建
+                        .map(o -> BitmapUtils.WeChatBitmapToByteArray(o))
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(path -> {
+                            WxUtil.shareBitmapToWX(FastMessageToShareActivity.this, path);
+                            disMissLoading();
+                        }, throwable -> {
+                            disMissLoading();
+                            UITipDialog.showFail(this, getString(R.string.share_fail));
+                            LogUtil.E("微信分享错误" + throwable.toString());
+                        }));
+
+
             });
 
             mBinding.imgPyq.setOnClickListener(view -> {
-                WxUtil.shareBitmapToWXPYQ(FastMessageToShareActivity.this, getBitmapByView(mBinding.scrollView));
+                showLoadingDialog();
+                mSubscription.add(Observable.just(getBitmapByView(mBinding.scrollView))
+                        .subscribeOn(AndroidSchedulers.mainThread())
+                        .observeOn(Schedulers.newThread())  //创建
+                        .map(o -> BitmapUtils.WeChatBitmapToByteArray(o))
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(path -> {
+                            WxUtil.shareBitmapToWXPYQ(FastMessageToShareActivity.this, path);
+                            disMissLoading();
+                        }, throwable -> {
+                            disMissLoading();
+                            UITipDialog.showFail(this, getString(R.string.share_fail));
+                            LogUtil.E("微信分享错误" + throwable.toString());
+                        }));
             });
 
 
@@ -237,17 +264,21 @@ public class FastMessageToShareActivity extends AbsBaseLoadActivity {
             QqShareUtil.shareLocaPhoto(FastMessageToShareActivity.this, mQQSharePhotoPath, QQUiListener);
             return;
         }
-
-        mSubscription.add(Observable.just(getBitmapByView(mBinding.scrollView), TimeUnit.SECONDS, AndroidSchedulers.mainThread())
+        showLoadingDialog();
+        mSubscription.add(Observable.just(getBitmapByView(mBinding.scrollView))
+                .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(Schedulers.newThread())  //创建
-                .map(o -> BitmapUtils.saveBitmapFile((Bitmap) o, "share_qq"))
+                .map(o -> BitmapUtils.saveBitmapFile(o, "share_qq"))
                 .observeOn(AndroidSchedulers.mainThread())
                 .filter(s -> !TextUtils.isEmpty(s))
                 .subscribe(path -> {
                     mQQSharePhotoPath = path;
+                    disMissLoading();
                     QqShareUtil.shareLocaPhoto(FastMessageToShareActivity.this, path, QQUiListener);
                 }, throwable -> {
-                    LogUtil.E(throwable.toString());
+                    disMissLoading();
+                    UITipDialog.showFail(this, getString(R.string.share_fail));
+                    LogUtil.E("QQfenx错误" + throwable.toString());
                 }));
     }
 
@@ -276,7 +307,7 @@ public class FastMessageToShareActivity extends AbsBaseLoadActivity {
 
             @Override
             public void doAfterDenied(String... permission) {
-                showSureDialog("没有文件权限，无法分享快讯。", view -> {
+                showSureDialog(getString(R.string.cant_share_message), view -> {
 
                 });
             }

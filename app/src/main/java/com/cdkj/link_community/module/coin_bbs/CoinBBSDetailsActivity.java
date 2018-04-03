@@ -30,10 +30,9 @@ import com.cdkj.baselibrary.utils.CheckUtils;
 import com.cdkj.baselibrary.utils.DisplayHelper;
 import com.cdkj.baselibrary.utils.StringUtils;
 import com.cdkj.link_community.R;
+import com.cdkj.link_community.adapters.BBSCoinMarketListAdapter;
 import com.cdkj.link_community.adapters.BBSHotCommentListAdapter;
-import com.cdkj.link_community.adapters.CoinListAdapter;
 import com.cdkj.link_community.adapters.MessageListAdapter;
-import com.cdkj.link_community.adapters.MsgHotCommentListAdapter;
 import com.cdkj.link_community.adapters.PlatformListAdapter;
 import com.cdkj.link_community.api.MyApiServer;
 import com.cdkj.link_community.databinding.ActivityCoinBbsDetailsBinding;
@@ -42,7 +41,6 @@ import com.cdkj.link_community.model.CoinBBSDetails;
 import com.cdkj.link_community.model.CoinBBSHotCircular;
 import com.cdkj.link_community.model.CoinListModel;
 import com.cdkj.link_community.model.FastMessage;
-import com.cdkj.link_community.model.MsgDetailsComment;
 import com.cdkj.link_community.module.message.MessageDetailsActivity;
 import com.cdkj.link_community.views.MyScrollView;
 import com.cdkj.link_community.views.ViewPagerIndicator;
@@ -54,8 +52,6 @@ import java.util.List;
 import java.util.Map;
 
 import retrofit2.Call;
-
-import static com.cdkj.link_community.module.message.MessageDetailsActivity.MSGCOMMENT;
 
 /**
  * 币吧详情
@@ -134,7 +130,7 @@ public class CoinBBSDetailsActivity extends AbsBaseLoadActivity {
             CommentInputDialog commentInputDialog = new CommentInputDialog(this, "");
             commentInputDialog.setmSureListener(comment -> {
                 if (TextUtils.isEmpty(comment)) {
-                    UITipDialog.showFall(CoinBBSDetailsActivity.this, getString(R.string.please_input_info));
+                    UITipDialog.showFail(CoinBBSDetailsActivity.this, getString(R.string.please_input_info));
                     return;
                 }
 
@@ -340,8 +336,7 @@ public class CoinBBSDetailsActivity extends AbsBaseLoadActivity {
             @Override
             public RecyclerView.Adapter getAdapter(List listData) {
                 if (isCoinType()) {
-                    ;
-                    return new CoinListAdapter(listData);
+                    return new BBSCoinMarketListAdapter(listData, mToCoin);
                 }
                 return new PlatformListAdapter(listData);
             }
@@ -453,8 +448,8 @@ public class CoinBBSDetailsActivity extends AbsBaseLoadActivity {
         mCoinBean = data.getCoin();
 
         if (isCoinType()) {
-            mBinding.tvTodayChange.setText("涨跌幅:" + data.getCoin().getTodayChange() + "%");
-            mBinding.tvTodayVol.setText("成交(24h):" + StringUtils.formatNum(data.getCoin().getTodayVol()));
+            mBinding.tvTodayChange.setText(getString(R.string.quote_change) + data.getCoin().getTodayChange() + "%");
+            mBinding.tvTodayVol.setText(getString(R.string.todayvol) + StringUtils.formatNum(data.getCoin().getTodayVol()));
 
             mBinding.tvCirculation.setText(StringUtils.formatNum(data.getCoin().getTotalSupply()));
             mBinding.tvIssue.setText(StringUtils.formatNum(data.getCoin().getMaxSupply()));

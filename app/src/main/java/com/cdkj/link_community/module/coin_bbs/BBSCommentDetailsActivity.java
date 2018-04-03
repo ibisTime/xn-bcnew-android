@@ -24,7 +24,6 @@ import com.cdkj.baselibrary.utils.DateUtil;
 import com.cdkj.baselibrary.utils.ImgUtils;
 import com.cdkj.baselibrary.utils.StringUtils;
 import com.cdkj.link_community.R;
-import com.cdkj.link_community.adapters.BBSHotCommentListAdapter;
 import com.cdkj.link_community.adapters.ReplyCommentListAdapter;
 import com.cdkj.link_community.api.MyApiServer;
 import com.cdkj.link_community.databinding.ActivityMessageCommentDetailsBinding;
@@ -42,7 +41,6 @@ import java.util.Map;
 import retrofit2.Call;
 
 import static com.cdkj.baselibrary.utils.DateUtil.DEFAULT_DATE_FMT;
-import static com.cdkj.link_community.module.message.MessageDetailsActivity.COMMENTCOMMENT;
 import static com.cdkj.link_community.module.message.MessageDetailsActivity.MSGCOMMENT;
 
 /**
@@ -290,7 +288,7 @@ public class BBSCommentDetailsActivity extends AbsBaseLoadActivity {
         CommentInputDialog commentInputDialog = new CommentInputDialog(this, name);
         commentInputDialog.setmSureListener(comment -> {
             if (TextUtils.isEmpty(comment)) {
-                UITipDialog.showFall(BBSCommentDetailsActivity.this, getString(R.string.please_input_replycomment_info));
+                UITipDialog.showFail(BBSCommentDetailsActivity.this, getString(R.string.please_input_replycomment_info));
                 return;
             }
 

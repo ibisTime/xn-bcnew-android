@@ -87,7 +87,7 @@ public class FastMessageListFragment extends AbsRefreshListFragment {
     @Override
     public RecyclerView.Adapter getListAdapter(List listData) {
 
-        FastMessageListAdapter fastMessageListAdapter = new FastMessageListAdapter(listData);
+        FastMessageListAdapter fastMessageListAdapter = new FastMessageListAdapter(listData, messageType == HOTMESSAGE);
 
         fastMessageListAdapter.setOnItemChildClickListener((adapter, view, position) -> {
             FastMessageToShareActivity.open(mActivity, fastMessageListAdapter.getItem(position));

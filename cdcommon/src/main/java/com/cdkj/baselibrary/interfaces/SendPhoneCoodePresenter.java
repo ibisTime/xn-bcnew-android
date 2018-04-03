@@ -33,7 +33,7 @@ public class SendPhoneCoodePresenter {
     public void sendCodeRequest(String phone, String bizType, String kind, Context context) {
         this.mContext = context;
         if (TextUtils.isEmpty(phone)) {
-            UITipDialog.showFall(context, "请输入手机号");
+            UITipDialog.showFail(context, "请输入手机号");
             return;
         }
 

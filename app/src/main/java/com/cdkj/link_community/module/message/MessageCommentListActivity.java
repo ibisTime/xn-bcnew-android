@@ -90,7 +90,7 @@ public class MessageCommentListActivity extends AbsRefreshListActivity {
         msgHotCommentListAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                CommentDetailsActivity.open(MessageCommentListActivity.this, msgHotCommentListAdapter.getItem(position).getCode());
+                MessageCommentDetailsActivity.open(MessageCommentListActivity.this, msgHotCommentListAdapter.getItem(position).getCode());
 //                commentPlayRequest(msgHotCommentListAdapter.getItem(position).getCode());
             }
         });

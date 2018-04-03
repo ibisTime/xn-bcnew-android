@@ -13,9 +13,7 @@ import com.cdkj.baselibrary.utils.StringUtils;
 import com.cdkj.link_community.R;
 import com.cdkj.link_community.model.CoinBBSHotCircular;
 import com.cdkj.link_community.module.coin_bbs.BBSCommentDetailsActivity;
-import com.cdkj.link_community.module.message.CommentDetailsActivity;
 import com.cdkj.link_community.module.user.UserCenterBBSRepyListActivity;
-import com.cdkj.link_community.module.user.UserCenterMessageRepyListActivity;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 

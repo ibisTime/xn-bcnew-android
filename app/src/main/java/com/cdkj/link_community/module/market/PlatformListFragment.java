@@ -144,7 +144,7 @@ public class PlatformListFragment extends AbsRefreshListFragment {
             @Override
             protected void onSuccess(ResponseInListModel<CoinListModel> data, String SucMessage) {
                 mRefreshHelper.setData(data.getList(), getString(R.string.no_platform_info), 0);
-                if(platformListAdapter.getData().size()>0){
+                if (platformListAdapter.getData().size() > 0) {
                     mRefreshBinding.rv.scrollToPosition(0);
                 }
             }
@@ -193,9 +193,9 @@ public class PlatformListFragment extends AbsRefreshListFragment {
                     platformListAdapter.removeAllHeaderView();
                 }
 
-                mToBBSBinding.tvInfo.setText("现在有" + data.getTotalCount() + "个帖子在讨论，你也一起来吧!");
+                mToBBSBinding.tvInfo.setText(getString(R.string.into_bbs_title, StringUtils.formatNum(data.getTotalCount())));
 
-                if(platformListAdapter.getData().size()>0){
+                if (platformListAdapter.getData().size() > 0) {
                     mRefreshBinding.rv.scrollToPosition(0);
                 }
             }

@@ -129,7 +129,7 @@ public class WxUtil {
      *
      * @param
      */
-    public static void shareBitmapToWX(Context context, Bitmap bitmap) {
+    public static void shareBitmapToWX(Context context, byte[] bitmap) {
 
         api = registToWx(context);
 
@@ -162,7 +162,7 @@ public class WxUtil {
      *
      * @param
      */
-    public static void shareBitmapToWXPYQ(Context context, Bitmap bitmap) {
+    public static void shareBitmapToWXPYQ(Context context, byte[] bitmap) {
 
         api = registToWx(context);
 

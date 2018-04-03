@@ -108,5 +108,9 @@
     <string name="share_succ">分享成功</string>
     <string name="share_fail">分享失败</string>
     <string name="share_cancel">取消分享</string>
+    <string name="cant_share_message">没有文件权限，无法分享快讯。</string>
+    <string name="quote_change">涨跌幅:</string>
+    <string name="todayvol">成交(24h):</string>
+    <string name="into_bbs_title">现在有%1$s个帖子在讨论，你也一起来吧!</string>
 
 </resources>
