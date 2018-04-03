@@ -404,7 +404,7 @@ public class QiNiuHelper {
     class DeflatCompreess implements ImageCompressInterface {
         @Override
         public byte[] onCompress(Context context, String path) {
-            return BitmapUtils.compressImage(path);
+            return BitmapUtils.compressLogoImage(path);
         }
     }
 

@@ -44,6 +44,9 @@ public class MyBBSCommentsListFragment extends AbsRefreshListFragment {
 
     @Override
     protected void lazyLoad() {
+        if (mRefreshBinding == null || mRefreshHelper == null) return;
+
+        mRefreshHelper.onDefaluteMRefresh(true);
 
     }
 
@@ -54,13 +57,12 @@ public class MyBBSCommentsListFragment extends AbsRefreshListFragment {
     @Override
     protected void afterCreate(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         initRefreshHelper(MyCdConfig.LISTLIMIT);
-        mRefreshHelper.onDefaluteMRefresh(true);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        if(getUserVisibleHint()){
+        if (getUserVisibleHint()) {
             mRefreshHelper.onDefaluteMRefresh(true);
         }
     }
@@ -79,8 +81,6 @@ public class MyBBSCommentsListFragment extends AbsRefreshListFragment {
 
         return userMyCommentListAdapter;
     }
-
-
 
 
     @Override

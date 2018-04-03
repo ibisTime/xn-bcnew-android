@@ -81,6 +81,54 @@ public class BitmapUtils {
         return byteArray;
     }
 
+
+    public static byte[] compressLogoImage(String filePath) {
+
+        if (TextUtils.isEmpty(filePath)) {
+            return new byte[0];
+        }
+
+        final BitmapFactory.Options boptions = new BitmapFactory.Options();
+        boptions.inJustDecodeBounds = true;//只解析图片边沿，获取宽高
+        BitmapFactory.decodeFile(filePath, boptions);
+        // 计算缩放比
+        boptions.inSampleSize = calculateInSampleSize(boptions);
+        // 完整解析图片返回bitmap
+        boptions.inJustDecodeBounds = false;
+
+        Bitmap image = BitmapFactory.decodeFile(filePath, boptions);
+
+        image = rotaingImageView(getBitmapDegree(filePath), image); //旋转图片
+
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        if (image != null) {
+            int quality = 100;
+            image.compress(Bitmap.CompressFormat.JPEG, quality, baos);//质量压缩方法，这里100表示不压缩，把压缩后的数据存放到baos中
+            int options = 90;
+            while ((baos.toByteArray().length / 1024) > 60) {  //循环判断如果压缩后图片是否大于150kb,大于继续压缩
+                baos.reset();//重置baos即清空baos
+                image.compress(Bitmap.CompressFormat.JPEG, options, baos);//这里压缩options%，把压缩后的数据存放到baos中
+                options -= 10;//每次都减少10
+                if (options <= 10) {
+                    break;
+                }
+            }
+        }
+        byte[] byteArray = baos.toByteArray();
+        try {
+            if (baos != null) {
+                baos.close();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        LogUtil.E("图片压缩");
+
+        return byteArray;
+    }
+
+
     /**
      * 微信分享图片压缩
      *
