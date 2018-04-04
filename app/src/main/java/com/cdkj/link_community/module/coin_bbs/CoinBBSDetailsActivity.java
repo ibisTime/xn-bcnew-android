@@ -298,7 +298,7 @@ public class CoinBBSDetailsActivity extends AbsBaseLoadActivity {
 
             @Override
             public RecyclerView.Adapter getAdapter(List listData) {
-                MessageListAdapter msgAdapter = new MessageListAdapter(listData);
+                MessageListAdapter msgAdapter = new MessageListAdapter(listData,CoinBBSDetailsActivity.this);
 
                 msgAdapter.setOnItemClickListener((adapter, view, position) -> {
                     MessageDetailsActivity.open(CoinBBSDetailsActivity.this, msgAdapter.getItem(position).getCode());

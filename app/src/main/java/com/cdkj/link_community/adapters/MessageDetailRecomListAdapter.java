@@ -1,5 +1,6 @@
 package com.cdkj.link_community.adapters;
 
+import android.app.Activity;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
@@ -14,6 +15,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.chad.library.adapter.base.util.MultiTypeDelegate;
 
+import java.lang.ref.SoftReference;
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -26,11 +28,13 @@ import static com.cdkj.baselibrary.utils.DateUtil.DEFAULT_DATE_FMT;
 
 public class MessageDetailRecomListAdapter extends BaseQuickAdapter<MessageDetailsNoteList, BaseViewHolder> {
 
-    private int THREETYPE = 1;
-    private int DEFTYPE = 0; //默认布局
+    private Activity activity;
 
-    public MessageDetailRecomListAdapter(@Nullable List<MessageDetailsNoteList> data) {
+    public MessageDetailRecomListAdapter(@Nullable List<MessageDetailsNoteList> data, Activity activity) {
         super(R.layout.item_message, data);
+        SoftReference<Activity> mS = new SoftReference<>(activity);
+        this.activity = mS.get();
+
 
     }
 
@@ -38,7 +42,7 @@ public class MessageDetailRecomListAdapter extends BaseQuickAdapter<MessageDetai
     protected void convert(BaseViewHolder viewHolder, MessageDetailsNoteList item) {
         if (item == null) return;
         if (StringUtils.splitAsPicList(item.getAdvPic()).size() > 0) {
-            ImgUtils.loadImg(mContext, StringUtils.splitAsPicList(item.getAdvPic()).get(0), viewHolder.getView(R.id.img));
+            ImgUtils.loadImg(this.activity, StringUtils.splitAsPicList(item.getAdvPic()).get(0), viewHolder.getView(R.id.img));
         }
 
         setShowData(viewHolder, item);

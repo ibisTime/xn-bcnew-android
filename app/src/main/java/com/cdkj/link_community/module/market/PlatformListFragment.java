@@ -47,6 +47,7 @@ public class PlatformListFragment extends AbsRefreshListFragment {
     private boolean isFirstRequest;//是否进行了第一次请求
 
     private String mPlatformType;
+    private String mBBSName;
 
     private boolean isRequesting;//是否正在请求中 用于轮询判断
 
@@ -58,11 +59,12 @@ public class PlatformListFragment extends AbsRefreshListFragment {
      * @param platformType 币种类型
      * @return
      */
-    public static PlatformListFragment getInstanse(String platformType, Boolean isFirstRequest) {
+    public static PlatformListFragment getInstanse(String platformType, Boolean isFirstRequest, String bbsName) {
         PlatformListFragment fragment = new PlatformListFragment();
         Bundle bundle = new Bundle();
         bundle.putString(CdRouteHelper.DATASIGN, platformType);
         bundle.putBoolean("isFirstRequest", isFirstRequest);
+        bundle.putString("bbsName", bbsName);
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -91,11 +93,12 @@ public class PlatformListFragment extends AbsRefreshListFragment {
         if (getArguments() != null) {
             mPlatformType = getArguments().getString(CdRouteHelper.DATASIGN);
             isFirstRequest = getArguments().getBoolean("isFirstRequest");
+            mBBSName = getArguments().getString("bbsName");
         }
 
         mToBBSBinding = DataBindingUtil.inflate(getLayoutInflater(), R.layout.layout_to_bbs, null, false);
 
-        mToBBSBinding.tvName.setText(mPlatformType);
+        mToBBSBinding.tvName.setText(mBBSName);
         mToBBSBinding.btnToBbs.setOnClickListener(view -> CoinBBSDetailsIntoActivity.open(mActivity, mPlatformType));
 
         initRefreshHelper(MyCdConfig.LISTLIMIT);

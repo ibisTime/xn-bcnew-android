@@ -30,6 +30,7 @@ import com.cdkj.link_community.databinding.ActivityMessageCommentDetailsBinding;
 import com.cdkj.link_community.dialog.CommentInputDialog;
 import com.cdkj.link_community.model.CoinBBSHotCircular;
 import com.cdkj.link_community.model.ReplyComment;
+import com.cdkj.link_community.module.user.UserCenterBBSRepyListActivity;
 import com.cdkj.link_community.module.user.UserCenterMessageRepyListActivity;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 
@@ -94,7 +95,7 @@ public class BBSCommentDetailsActivity extends AbsBaseLoadActivity {
 
         mBinding.replayCommentLayout.imgLogo.setOnClickListener(view -> {
             if (coinBBSHotCircular == null) return;
-            UserCenterMessageRepyListActivity.open(this, coinBBSHotCircular.getUserId(), coinBBSHotCircular.getNickname(), coinBBSHotCircular.getPhoto());
+            UserCenterBBSRepyListActivity.open(this, coinBBSHotCircular.getUserId(), coinBBSHotCircular.getNickname(), coinBBSHotCircular.getPhoto());
         });
 
         mBinding.replayCommentLayout.linLike.setOnClickListener(view -> {

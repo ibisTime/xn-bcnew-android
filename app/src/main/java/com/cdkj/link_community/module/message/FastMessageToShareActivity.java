@@ -243,13 +243,17 @@ public class FastMessageToShareActivity extends AbsBaseLoadActivity {
                     ByteArrayOutputStream baos = new ByteArrayOutputStream();
                     bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
                     byte[] bytes = baos.toByteArray();
+                    try {
+                        baos.close();
+                    } catch (Exception e) {
+                    }
+
                     return bytes;
                 })
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(bytes -> {
                     Glide.with(this)
                             .load(bytes)
-                            .error(R.drawable.default_pic)
                             .diskCacheStrategy(DiskCacheStrategy.NONE)
                             .into(mBinding.imgUrl);
 

@@ -312,12 +312,10 @@ public class MessageDetailsActivity extends AbsBaseLoadActivity {
         mBaseBinding.titleView.setMidTitle(data.getTypeName());
 
         mBinding.contentLayout.webView.loadData("<style>\n" +           //设置图片自适应
-                " \n" +
                 "img{\n" +
                 " max-width:100%;\n" +
                 " height:auto;\n" +
                 "}\n" +
-                " \n" +
                 "</style>" + data.getContent(), "text/html; charset=UTF-8", "utf-8");
 
 
@@ -390,7 +388,7 @@ public class MessageDetailsActivity extends AbsBaseLoadActivity {
             return;
         }
 
-        MessageDetailRecomListAdapter messageDetailRecomListAdapter = new MessageDetailRecomListAdapter(refNewList);
+        MessageDetailRecomListAdapter messageDetailRecomListAdapter = new MessageDetailRecomListAdapter(refNewList,this);
 
         messageDetailRecomListAdapter.setOnItemClickListener((adapter, view, position) -> {
             MessageDetailsActivity.open(this, messageDetailRecomListAdapter.getItem(position).getCode());
@@ -470,7 +468,9 @@ public class MessageDetailsActivity extends AbsBaseLoadActivity {
 
             @Override
             protected void onFinish() {
-                disMissLoading();
+                if (isShowDialog) {
+                    disMissLoading();
+                }
             }
         });
 

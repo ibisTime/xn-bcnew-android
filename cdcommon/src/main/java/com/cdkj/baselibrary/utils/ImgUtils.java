@@ -112,7 +112,7 @@ public class ImgUtils {
      */
     public static boolean isHaveHttp(String url) {
         if (TextUtils.isEmpty(url)) return false;
-        return url.indexOf("http:") != -1;
+        return url.indexOf("http") != -1;
     }
 
 

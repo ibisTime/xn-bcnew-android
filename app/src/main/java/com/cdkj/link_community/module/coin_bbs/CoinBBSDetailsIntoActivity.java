@@ -303,7 +303,7 @@ public class CoinBBSDetailsIntoActivity extends AbsBaseLoadActivity {
 
             @Override
             public RecyclerView.Adapter getAdapter(List listData) {
-                MessageListAdapter msgAdapter = new MessageListAdapter(listData);
+                MessageListAdapter msgAdapter = new MessageListAdapter(listData,CoinBBSDetailsIntoActivity.this);
 
                 msgAdapter.setOnItemClickListener((adapter, view, position) -> {
                     MessageDetailsActivity.open(CoinBBSDetailsIntoActivity.this, msgAdapter.getItem(position).getCode());
@@ -796,7 +796,6 @@ public class CoinBBSDetailsIntoActivity extends AbsBaseLoadActivity {
 
     /**
      * 检测发布状态
-     *
      * @param data
      * @param
      */

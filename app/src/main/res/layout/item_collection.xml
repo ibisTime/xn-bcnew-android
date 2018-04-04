@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <LinearLayout
         android:id="@+id/lin_bg"
@@ -14,17 +15,17 @@
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:maxLines="2"
-            android:text="sdfsdfsfsfsfsfsdfsfsfsfs"
+            android:text="sdfsdfsfsfsfsfsdfsfsfsfssdfsdfsfsfsfsfsdfsfsfsfssdfsdfsfsfsfsfsdfsfsfsfssdfsdfsfsfsfsfsdfsfsfsfs"
             android:textColor="@color/text_black_cd"
             android:textSize="17sp" />
 
         <TextView
-            android:visibility="gone"
+            android:layout_marginTop="5dp"
             android:id="@+id/tv_author"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right"
-            android:text="sdfsdfsfsfsdf"
+            tools:text="sdfsdfsfsfsdf"
             android:textColor="@color/app_text_gray"
             android:textSize="15sp" />
 

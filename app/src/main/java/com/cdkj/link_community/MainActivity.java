@@ -63,6 +63,8 @@ public class MainActivity extends AbsBaseLoadActivity {
     private boolean isMarketInterval;//行情是否开始轮询
 
 
+    private boolean isSume;//页面是否显示 用于轮询停止
+
     @IntDef({SHOWFIRST, SHOWINFO, SHOWINVITATION, SHOWADVICE, SHOWMY})
     @Retention(RetentionPolicy.SOURCE)
     public @interface showType {
@@ -101,6 +103,18 @@ public class MainActivity extends AbsBaseLoadActivity {
         initViewPager();
         initListener();
         getVersion();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        isSume = true;
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        isSume = false;
     }
 
     private void initListener() {
@@ -143,8 +157,9 @@ public class MainActivity extends AbsBaseLoadActivity {
                 .subscribe(new Consumer<Long>() {
                                @Override
                                public void accept(Long aLong) throws Exception {
-                                   LogUtil.E("a" + aLong);
-                                   EventBus.getDefault().post(new MarketInterval());
+                                   if (isSume) {
+                                       EventBus.getDefault().post(new MarketInterval());
+                                   }
 
                                }
                            }, throwable -> {

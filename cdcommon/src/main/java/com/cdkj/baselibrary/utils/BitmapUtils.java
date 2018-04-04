@@ -139,35 +139,34 @@ public class BitmapUtils {
 
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
-        final BitmapFactory.Options boptions = new BitmapFactory.Options();
-
         image.compress(Bitmap.CompressFormat.JPEG, 100, baos);//质量压缩方法，这里100表示不压缩，把压缩后的数据存放到baos中
 
-        BitmapFactory.decodeByteArray(baos.toByteArray(), 0, baos.toByteArray().length, boptions);
+        if (baos.toByteArray().length <= 32 * 1024) {
+            return baos.toByteArray();
+        }
 
-        boptions.inJustDecodeBounds = true;//只解析图片边沿，获取宽高
-        // 计算缩放比
-        boptions.inSampleSize = calculateInSampleSize(boptions);
-        // 完整解析图片返回bitmap
-        boptions.inJustDecodeBounds = false;
+//        final BitmapFactory.Options boptions = new BitmapFactory.Options();
 
-        image = BitmapFactory.decodeByteArray(baos.toByteArray(), 0, baos.toByteArray().length, boptions);
+//        boptions.inJustDecodeBounds = true;//只解析图片边沿，获取宽高
+//        // 计算缩放比
+//        boptions.inSampleSize = calculateInSampleSize(boptions);
+//        // 完整解析图片返回bitmap
+//        boptions.inJustDecodeBounds = false;
+//        image = BitmapFactory.decodeByteArray(baos.toByteArray(), 0, baos.toByteArray().length, boptions);
 
 
-        if (image != null) {
-            int quality = 100;
-            image.compress(Bitmap.CompressFormat.JPEG, quality, baos);//质量压缩方法，这里100表示不压缩，把压缩后的数据存放到baos中
-            int options = 90;
-            while ((baos.toByteArray().length / 1024) > 32) {  //循环判断如果压缩后图片是否大于32kb,大于继续压缩
-                baos.reset();//重置baos即清空baos
-                image.compress(Bitmap.CompressFormat.JPEG, options, baos);//这里压缩options%，把压缩后的数据存放到baos中
-                options -= 10;//每次都减少10
-                if (options <= 10) {
-                    break;
-                }
+        int options = 90;
+        while ((baos.toByteArray().length) > 32 * 1024) {  //循环判断如果压缩后图片是否大于32kb,大于继续压缩
+            baos.reset();//重置baos即清空baos
+            image.compress(Bitmap.CompressFormat.JPEG, options, baos);//这里压缩options%，把压缩后的数据存放到baos中
+            options -= 10;//每次都减少10
+            if (options <= 10) {
+                break;
             }
         }
+
         byte[] byteArray = baos.toByteArray();
+
         try {
             if (baos != null) {
                 baos.close();
@@ -407,7 +406,7 @@ public class BitmapUtils {
         }
         // 创建对应大小的bitmap
         bitmap = Bitmap.createBitmap(scrollView.getWidth(), h,
-                Bitmap.Config.RGB_565);
+                Bitmap.Config.ARGB_8888);
         final Canvas canvas = new Canvas(bitmap);
         scrollView.draw(canvas);
 

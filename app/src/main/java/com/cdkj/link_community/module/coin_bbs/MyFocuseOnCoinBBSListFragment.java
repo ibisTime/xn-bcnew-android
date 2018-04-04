@@ -86,11 +86,7 @@ public class MyFocuseOnCoinBBSListFragment extends AbsRefreshListFragment {
     @Override
     public void onResume() {
         super.onResume();
-        if (!getUserVisibleHint()) {
-            return;
-        }
-
-        if (mRefreshBinding == null) {
+        if (!getUserVisibleHint() || mRefreshBinding == null) {
             return;
         }
         mRefreshHelper.onDefaluteMRefresh(false);

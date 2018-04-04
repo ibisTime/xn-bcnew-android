@@ -1,8 +1,11 @@
 package com.cdkj.link_community.adapters;
 
+import android.app.Activity;
+import android.content.Context;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
+import com.bumptech.glide.manager.RequestManagerRetriever;
 import com.cdkj.baselibrary.utils.DateUtil;
 import com.cdkj.baselibrary.utils.ImgUtils;
 import com.cdkj.baselibrary.utils.LogUtil;
@@ -13,6 +16,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.chad.library.adapter.base.util.MultiTypeDelegate;
 
+import java.lang.ref.SoftReference;
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -28,8 +32,13 @@ public class MessageListAdapter extends BaseQuickAdapter<MessageModel, BaseViewH
     private int THREETYPE = 1;
     private int DEFTYPE = 0; //默认布局
 
-    public MessageListAdapter(@Nullable List<MessageModel> data) {
+    private Activity activity;
+
+    public MessageListAdapter(@Nullable List<MessageModel> data, Activity activity) {
         super(R.layout.item_message, data);
+
+        SoftReference<Activity> mS = new SoftReference<>(activity);
+        this.activity = mS.get();
 
         //Step.1
         setMultiTypeDelegate(new MultiTypeDelegate<MessageModel>() {
@@ -59,16 +68,16 @@ public class MessageListAdapter extends BaseQuickAdapter<MessageModel, BaseViewH
                 List<String> picList = StringUtils.splitAsPicList(item.getAdvPic());
 
                 if (picList.size() >= 3) {
-                    ImgUtils.loadImg(mContext, picList.get(0), viewHolder.getView(R.id.img_1));
-                    ImgUtils.loadImg(mContext, picList.get(1), viewHolder.getView(R.id.img_2));
-                    ImgUtils.loadImg(mContext, picList.get(2), viewHolder.getView(R.id.img_3));
+                    ImgUtils.loadImg(this.activity, picList.get(0), viewHolder.getView(R.id.img_1));
+                    ImgUtils.loadImg(this.activity, picList.get(1), viewHolder.getView(R.id.img_2));
+                    ImgUtils.loadImg(this.activity, picList.get(2), viewHolder.getView(R.id.img_3));
                 }
                 setShowData(viewHolder, item);
 
                 break;
             default:
                 if (StringUtils.splitAsPicList(item.getAdvPic()).size() > 0) {
-                    ImgUtils.loadImg(mContext, StringUtils.splitAsPicList(item.getAdvPic()).get(0), viewHolder.getView(R.id.img));
+                    ImgUtils.loadImg(this.activity, StringUtils.splitAsPicList(item.getAdvPic()).get(0), viewHolder.getView(R.id.img));
                 }
 
                 setShowData(viewHolder, item);

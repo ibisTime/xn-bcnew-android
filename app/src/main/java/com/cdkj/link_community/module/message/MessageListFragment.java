@@ -88,7 +88,7 @@ public class MessageListFragment extends AbsRefreshListFragment {
     @Override
     public RecyclerView.Adapter getListAdapter(List listData) {
 
-        MessageListAdapter msgAdapter = new MessageListAdapter(listData);
+        MessageListAdapter msgAdapter = new MessageListAdapter(listData, mActivity);
 
         msgAdapter.setOnItemClickListener((adapter, view, position) -> {
             MessageDetailsActivity.open(mActivity, msgAdapter.getItem(position).getCode());

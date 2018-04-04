@@ -61,7 +61,7 @@ public class UserCenterMessageRepyListActivity extends AbsRefreshListActivity {
 
     @Override
     public RecyclerView.Adapter getListAdapter(List listData) {
-        UserCenterMessageRePlyListAdapter userCenterMessageRePlyListAdapter = new UserCenterMessageRePlyListAdapter(listData);
+        UserCenterMessageRePlyListAdapter userCenterMessageRePlyListAdapter = new UserCenterMessageRePlyListAdapter(listData,this);
 
         userCenterMessageRePlyListAdapter.addHeaderView(mCenterBinding.getRoot());
         userCenterMessageRePlyListAdapter.setHeaderAndEmpty(true);

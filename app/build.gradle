@@ -45,7 +45,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             android.applicationVariants.all { variant ->
                 variant.outputs.all {
-                    outputFileName = "_${defaultConfig.versionName}_${releaseTime()}.apk"
+                    outputFileName = "_${rootProject.ext.android["versionName"]}_${releaseTime()}.apk"
                 }
             }
             signingConfig signingConfigs.config

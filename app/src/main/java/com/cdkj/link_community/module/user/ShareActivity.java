@@ -8,7 +8,9 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
 
+import com.cdkj.baselibrary.appmanager.MyCdConfig;
 import com.cdkj.baselibrary.dialog.UITipDialog;
+import com.cdkj.baselibrary.utils.ImgUtils;
 import com.cdkj.baselibrary.utils.LogUtil;
 import com.cdkj.link_community.R;
 import com.cdkj.link_community.databinding.ActivityShareBinding;
@@ -47,6 +49,7 @@ public class ShareActivity extends Activity {
     private IUiListener QQUiListener;
     private UITipDialog tipDialog;
 
+
     /**
      * 打开当前页面
      *
@@ -84,6 +87,7 @@ public class ShareActivity extends Activity {
 
             @Override
             public void onError(UiError uiError) {
+                LogUtil.E("qq分享错误" + uiError.errorCode + uiError.errorMessage + uiError.errorDetail);
                 showDialog(1, getString(R.string.share_fail));
             }
 
@@ -135,7 +139,12 @@ public class ShareActivity extends Activity {
         });
 
         mbinding.linShareToQq.setOnClickListener(view -> {
-            QqShareUtil.shareMsg(this, mTitle, mContent, mShareUrl, mPhotoUrl, QQUiListener);
+            if (ImgUtils.isHaveHttp(mPhotoUrl)) {
+                QqShareUtil.shareMsg(this, mTitle, mContent, mShareUrl, mPhotoUrl, QQUiListener);
+            } else {
+                QqShareUtil.shareMsg(this, mTitle, mContent, mShareUrl, MyCdConfig.QINIUURL + mPhotoUrl, QQUiListener);
+            }
+
             mbinding.layoutShare.setVisibility(View.GONE);
         });
 

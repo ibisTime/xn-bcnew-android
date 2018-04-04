@@ -1,5 +1,6 @@
 package com.cdkj.link_community.adapters;
 
+import android.app.Activity;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 
@@ -12,6 +13,7 @@ import com.cdkj.link_community.module.user.UserCenterMessageRepyListActivity;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 
+import java.lang.ref.SoftReference;
 import java.util.List;
 
 /**
@@ -21,10 +23,11 @@ import java.util.List;
 
 public class UserMyCommentReplayListAdapter extends BaseQuickAdapter<UserMessageComment, BaseViewHolder> {
 
-
-    public UserMyCommentReplayListAdapter(@Nullable List<UserMessageComment> data) {
+    private Activity activity;
+    public UserMyCommentReplayListAdapter(@Nullable List<UserMessageComment> data,Activity activity) {
         super(R.layout.item_user_my_comments, data);
-
+        SoftReference<Activity> mS = new SoftReference<>(activity);
+        this.activity = mS.get();
     }
 
 
@@ -47,7 +50,7 @@ public class UserMyCommentReplayListAdapter extends BaseQuickAdapter<UserMessage
         if (item.getNews() != null) {
 
             if (StringUtils.splitAsPicList(item.getNews().getAdvPic()).size() > 0) {
-                ImgUtils.loadImg(mContext, StringUtils.splitAsPicList(item.getNews().getAdvPic()).get(0), viewHolder.getView(R.id.img_msg));
+                ImgUtils.loadImg(this.activity, StringUtils.splitAsPicList(item.getNews().getAdvPic()).get(0), viewHolder.getView(R.id.img_msg));
             }
             viewHolder.setText(R.id.tv_msg_title, item.getNews().getTitle());
 
