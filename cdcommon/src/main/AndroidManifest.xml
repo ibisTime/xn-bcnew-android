@@ -2,7 +2,7 @@
     package="com.cdkj.baselibrary">
 
     <!--用于访问网络，网络定位需要上网-->
-    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <!--<uses-permission android:name="android.permission.CALL_PHONE" />-->
     <uses-permission android:name="android.permission.INTERNET" />
     <!--相机-->
     <uses-permission android:name="android.permission.CAMERA" />
