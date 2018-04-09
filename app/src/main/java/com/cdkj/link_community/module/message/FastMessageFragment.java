@@ -11,7 +11,9 @@ import com.cdkj.baselibrary.adapters.ViewPagerAdapter;
 import com.cdkj.baselibrary.base.BaseLazyFragment;
 import com.cdkj.link_community.R;
 import com.cdkj.link_community.databinding.FragmentFastMessageBinding;
-import com.cdkj.link_community.module.maintab.FirstPageFragment;
+import com.cdkj.link_community.model.TabCurrentModel;
+
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -63,6 +65,14 @@ public class FastMessageFragment extends BaseLazyFragment {
         mBinding.viewindicator.setTabItemTitles(Arrays.asList(getString(R.string.all), getString(R.string.hot_message)));
         mBinding.viewindicator.setViewPager(mBinding.viewpager, 0);
 
+    }
+
+    @Subscribe
+    public void setTabToHotMsgEvent(TabCurrentModel tabCurrentModel){
+        if (tabCurrentModel == null)
+            return;
+
+        mBinding.viewindicator.setViewPager(mBinding.viewpager, tabCurrentModel.getCurrent());
     }
 
     @Override

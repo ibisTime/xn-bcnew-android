@@ -251,6 +251,17 @@ public interface MyApiServer {
     Call<BaseResponseModel<ResponseInListModel<FastMessage>>> getFastMsgList(@Field("code") String code, @Field("json") String json);
 
     /**
+     * 获取快讯列表
+     *
+     * @param code
+     * @param json
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("api")
+    Call<BaseResponseModel<FastMessage>> getFastMsg(@Field("code") String code, @Field("json") String json);
+
+    /**
      * 获取资讯类型
      *
      * @param code

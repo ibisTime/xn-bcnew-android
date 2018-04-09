@@ -117,6 +117,21 @@ public abstract class BaseActivity extends AppCompatActivity {
         ToastUtil.show(this, str);
     }
 
+    protected void showPushListen(String title, String content, CommonDialog.OnPositiveListener onPositiveListener) {
+
+        if (isFinishing()) {
+            return;
+        }
+
+        CommonDialog pushDialog = new CommonDialog(this).builder()
+                .setTitle(title).setContentMsg(content)
+                .setPositiveBtn(getString(R.string.check), onPositiveListener)
+                .setNegativeBtn(getString(R.string.cancel), null, false);
+
+        pushDialog.show();
+    }
+
+
     protected void showDoubleWarnListen(String str, CommonDialog.OnPositiveListener onPositiveListener) {
 
         if (isFinishing()) {

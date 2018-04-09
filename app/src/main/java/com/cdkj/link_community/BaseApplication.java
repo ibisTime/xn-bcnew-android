@@ -5,6 +5,8 @@ import android.content.Context;
 
 import com.cdkj.baselibrary.CdApplication;
 
+import cn.jpush.android.api.JPushInterface;
+
 
 /**
  * Created by cdkj on 2018/1/31.
@@ -26,8 +28,8 @@ public class BaseApplication extends Application {
      * 初始化极光推送
      */
     private void initJPush() {
-//        JPushInterface.setDebugMode(BuildConfig.LOG_DEBUG);
-//        JPushInterface.init(this);
+        JPushInterface.setDebugMode(BuildConfig.LOG_DEBUG);
+        JPushInterface.init(this);
     }
 
     public static Context getInstance() {

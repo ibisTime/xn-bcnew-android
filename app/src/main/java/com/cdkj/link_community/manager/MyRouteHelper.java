@@ -9,7 +9,7 @@ import com.alibaba.android.arouter.launcher.ARouter;
 
 public class MyRouteHelper {
 
-    //跳转到登录页面
+    //跳转到主页
     public static final String APPMAIN = "/app/main";
 
     /**

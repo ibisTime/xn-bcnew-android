@@ -1,13 +1,9 @@
 package com.cdkj.link_community.adapters;
 
-import android.graphics.Color;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.text.Html;
-import android.text.SpannableStringBuilder;
-import android.text.Spanned;
 import android.text.TextUtils;
-import android.text.style.ForegroundColorSpan;
 import android.widget.TextView;
 
 import com.cdkj.baselibrary.appmanager.SPUtilHelpr;
@@ -154,7 +150,16 @@ public class FastMessageListAdapter extends BaseQuickAdapter<FastMessage, BaseVi
 
             } else {
 
-                textView.setTextColor(ContextCompat.getColor(mContext, R.color.text_black_cd));
+                // 全部快讯里如果有热点快讯，蓝色字体显示
+                if(TextUtils.equals(item.getType(),"1")){
+
+                    textView.setTextColor(ContextCompat.getColor(mContext, R.color.app_text_color));
+
+                }else {
+
+                    textView.setTextColor(ContextCompat.getColor(mContext, R.color.text_black_cd));
+
+                }
             }
         }
     }

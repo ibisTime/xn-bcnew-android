@@ -18,17 +18,19 @@ import com.cdkj.baselibrary.model.eventmodels.EventFinishAll;
 import com.cdkj.baselibrary.nets.BaseResponseModelCallBack;
 import com.cdkj.baselibrary.nets.RetrofitUtils;
 import com.cdkj.baselibrary.utils.AppUtils;
-import com.cdkj.baselibrary.utils.LogUtil;
 import com.cdkj.baselibrary.utils.StringUtils;
 import com.cdkj.link_community.api.MyApiServer;
 import com.cdkj.link_community.databinding.ActivityMainBinding;
 import com.cdkj.link_community.manager.MyRouteHelper;
+import com.cdkj.link_community.model.FastMessage;
 import com.cdkj.link_community.model.MarketInterval;
+import com.cdkj.link_community.model.TabCurrentModel;
 import com.cdkj.link_community.model.VersionModel;
 import com.cdkj.link_community.module.maintab.CoinBBSFragment;
 import com.cdkj.link_community.module.maintab.FirstPageFragment;
 import com.cdkj.link_community.module.maintab.MarketPageFragment;
 import com.cdkj.link_community.module.maintab.UserFragment;
+import com.cdkj.link_community.module.message.FastMessageToShareActivity;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -103,18 +105,83 @@ public class MainActivity extends AbsBaseLoadActivity {
         initViewPager();
         initListener();
         getVersion();
+
+        initPush();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         isSume = true;
+
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         isSume = false;
+    }
+
+    private void initPush() {
+        if (getIntent() == null) {
+            return;
+        }
+
+        if (getIntent().getStringExtra("extraValue") == null
+                || getIntent().getStringExtra("extraValue").equals("")) {
+            return;
+        }
+
+        getFastMessage(getIntent().getStringExtra("extraValue"));
+    }
+
+    private void getFastMessage(String code) {
+
+        Map<String, String> map = new HashMap<>();
+
+        map.put("companyCode", MyCdConfig.COMPANYCODE);
+        map.put("systemCode", MyCdConfig.SYSTEMCODE);
+        map.put("code", code);
+
+        Call call = RetrofitUtils.createApi(MyApiServer.class).getFastMsg("628096", StringUtils.getJsonToString(map));
+
+        addCall(call);
+
+        call.enqueue(new BaseResponseModelCallBack<FastMessage>(this) {
+
+            @Override
+            protected void onSuccess(FastMessage data, String SucMessage) {
+
+                int limit = 200;
+                String content;
+                if (data.getContent().length() > limit) { // 如果快讯内容长度大于limit，截取并加省略号
+                    content = data.getContent().substring(0, limit) + "......";
+                }else {
+                    content = data.getContent();
+                }
+
+                //通知FastMessageFragment 将tab切换到热门
+                TabCurrentModel tabCurrentModel = new TabCurrentModel();
+                tabCurrentModel.setCurrent(1);
+                EventBus.getDefault().post(tabCurrentModel);
+
+                showPushListen("推送信息", content, view -> {
+                    FastMessageToShareActivity.open(MainActivity.this, data);
+                });
+
+            }
+
+            @Override
+            protected void onReqFailure(String errorCode, String errorMessage) {
+                super.onReqFailure(errorCode, errorMessage);
+            }
+
+            @Override
+            protected void onFinish() {
+                disMissLoading();
+            }
+        });
+
     }
 
     private void initListener() {

@@ -5,7 +5,6 @@ import android.text.TextUtils;
 
 import com.cdkj.link_community.R;
 import com.cdkj.link_community.model.CoinListModel;
-import com.cdkj.link_community.model.CoinPlatformType;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 
@@ -32,7 +31,7 @@ public class AddMarketListAdapter extends BaseQuickAdapter<CoinListModel, BaseVi
         if (item == null) return;
 
         if (TextUtils.equals(type, "1")) {
-            viewHolder.setText(R.id.tv_name, item.getExchangeEname());
+            viewHolder.setText(R.id.tv_name, item.getExchangeCname());
         } else {
             viewHolder.setText(R.id.tv_name, item.getCoinSymbol());
         }

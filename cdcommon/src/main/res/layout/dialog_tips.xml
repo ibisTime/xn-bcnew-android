@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/dialog_tips_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -11,8 +10,9 @@
         android:id="@+id/dialog_tips_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="55dp"
-        android:layout_marginRight="55dp"
+        android:textStyle="bold"
+        android:layout_marginLeft="35dp"
+        android:layout_marginRight="35dp"
         android:layout_marginTop="23dp"
         android:gravity="center"
         android:textColor="@color/dialog_tips_title_txt"
@@ -21,16 +21,16 @@
         android:id="@+id/dialog_tips_content_msg"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="55dp"
-        android:layout_marginRight="55dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="10dp"
         android:gravity="center_vertical|left"
-        android:textColor="@color/dialog_tips_content_txt"
+        android:textColor="@color/dialog_tips_title_txt"
         android:textSize="14sp" />
 
     <View
        style="@style/style_split_line"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="15dp"
         />
 
     <LinearLayout
