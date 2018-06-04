@@ -12,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
@@ -19,7 +20,7 @@ import com.cdkj.baselibrary.api.BaseResponseModel;
 import com.cdkj.baselibrary.api.ResponseInListModel;
 import com.cdkj.baselibrary.appmanager.CdRouteHelper;
 import com.cdkj.baselibrary.appmanager.MyCdConfig;
-import com.cdkj.baselibrary.appmanager.SPUtilHelpr;
+import com.cdkj.baselibrary.appmanager.SPUtilHelper;
 import com.cdkj.baselibrary.base.AbsBaseLoadActivity;
 import com.cdkj.baselibrary.dialog.UITipDialog;
 import com.cdkj.baselibrary.interfaces.BaseRefreshCallBack;
@@ -45,7 +46,7 @@ import com.cdkj.link_community.model.MsgDetailsComment;
 import com.cdkj.link_community.module.user.ShareActivity;
 import com.cdkj.link_community.utils.WxUtil;
 import com.chad.library.adapter.base.BaseQuickAdapter;
-
+import com.just.agentweb.AgentWeb;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
@@ -70,7 +71,7 @@ public class MessageDetailsActivity extends AbsBaseLoadActivity {
     private RefreshHelper mNewCommentRefreshHelper; //最新评论刷新
 
 
-    public static final String MSGCOMMENT = "1";/*类型(Y 1 资讯 2 评论)*/
+    public static final String MSGCOMMENT = "1";/*类型MSGCOMMENT(Y 1 资讯 2 评论)*/
     public static final String COMMENTCOMMENT = "2";/*类型(Y 1 资讯 2 评论)*/
 
     private MessageDetails messageDetails;
@@ -78,6 +79,7 @@ public class MessageDetailsActivity extends AbsBaseLoadActivity {
     private String mSharePhotoUrl;//要分分享的图片url
     private String mShareContent;//要分享的内容
 
+    private AgentWeb mAgentWeb;
 
     /**
      * @param context
@@ -88,7 +90,7 @@ public class MessageDetailsActivity extends AbsBaseLoadActivity {
             return;
         }
         Intent intent = new Intent(context, MessageDetailsActivity.class);
-        intent.putExtra(CdRouteHelper.DATASIGN, msgCode);
+        intent.putExtra(CdRouteHelper.DATA_SIGN, msgCode);
         context.startActivity(intent);
     }
 
@@ -104,13 +106,24 @@ public class MessageDetailsActivity extends AbsBaseLoadActivity {
     public void afterCreate(Bundle savedInstanceState) {
 
         if (getIntent() != null) {
-            mCode = getIntent().getStringExtra(CdRouteHelper.DATASIGN);
+            mCode = getIntent().getStringExtra(CdRouteHelper.DATA_SIGN);
         }
+
+        mBaseBinding.titleView.setRightTitle("投稿");
+        mBaseBinding.titleView.setRightFraClickListener(view -> {
+            if (!SPUtilHelper.isLogin(this, false)) {
+                return;
+            }
+
+            //java调用JS方法
+            MessageReleaseActivity2.open(this);
+
+//            CdRouteHelper.openWebViewActivityForUrl("编辑资讯","http://47.96.161.183:2903/news/addNews.html?ownerId=U201804291940579421200");
+        });
 
         mBinding.refreshLayout.setEnableRefresh(false);
 
         mBinding.getRoot().setVisibility(View.GONE);
-
 
         mBinding.contentLayout.recyclerViewNewComment.setNestedScrollingEnabled(false);
         mBinding.contentLayout.recyclerViewHotComment.setNestedScrollingEnabled(false);
@@ -139,8 +152,17 @@ public class MessageDetailsActivity extends AbsBaseLoadActivity {
 
     @Override
     protected void onResume() {
-        super.onResume();
         getMessageDetailRequest();
+        if (mAgentWeb != null)
+            mAgentWeb.getWebLifeCycle().onResume();
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        if (mAgentWeb != null)
+            mAgentWeb.getWebLifeCycle().onPause();
+        super.onPause();
     }
 
 
@@ -154,7 +176,7 @@ public class MessageDetailsActivity extends AbsBaseLoadActivity {
         //资讯评论
         mBinding.tvToComment.setOnClickListener(view -> {
 
-            if (!SPUtilHelpr.isLogin(this, false)) {
+            if (!SPUtilHelper.isLogin(this, false)) {
                 return;
             }
 
@@ -171,7 +193,7 @@ public class MessageDetailsActivity extends AbsBaseLoadActivity {
 
         //点赞
         mBinding.contentLayout.imgLike.setOnClickListener(view -> {
-            if (!SPUtilHelpr.isLogin(this, false)) {
+            if (!SPUtilHelper.isLogin(this, false)) {
                 return;
             }
             toMsgLikeRequest();
@@ -179,7 +201,7 @@ public class MessageDetailsActivity extends AbsBaseLoadActivity {
 
         //收藏
         mBinding.imgCollection.setOnClickListener(view -> {
-            if (!SPUtilHelpr.isLogin(this, false)) {
+            if (!SPUtilHelper.isLogin(this, false)) {
                 return;
             }
             toMsgCollectionRequest();
@@ -238,7 +260,7 @@ public class MessageDetailsActivity extends AbsBaseLoadActivity {
         msgHotCommentListAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                MessageCommentDetailsActivity.open(MessageDetailsActivity.this, msgHotCommentListAdapter.getItem(position).getCode());
+                MessageCommentDetailsActivity.open(MessageDetailsActivity.this, msgHotCommentListAdapter.getItem(position).getCode(), false);
 //                commentPlayRequest(msgHotCommentListAdapter.getItem(position).getCode());
             }
         });
@@ -246,7 +268,7 @@ public class MessageDetailsActivity extends AbsBaseLoadActivity {
         /*点赞*/
         msgHotCommentListAdapter.setOnItemChildClickListener((adapter, view, position) -> {
 
-            if (!SPUtilHelpr.isLogin(MessageDetailsActivity.this, false)) {
+            if (!SPUtilHelper.isLogin(MessageDetailsActivity.this, false)) {
                 return;
             }
 
@@ -268,14 +290,14 @@ public class MessageDetailsActivity extends AbsBaseLoadActivity {
         Map<String, String> map = new HashMap<>();
 
         map.put("code", mCode);
-        map.put("userId", SPUtilHelpr.getUserId());
+        map.put("userId", SPUtilHelper.getUserId());
 
         Call call = RetrofitUtils.createApi(MyApiServer.class).getMessageDetails("628206", StringUtils.getJsonToString(map));
 
         addCall(call);
 
         if (messageDetails == null) {
-            showLoadingDialog();
+//            showLoadingDialog();
         }
 
         call.enqueue(new BaseResponseModelCallBack<MessageDetails>(this) {
@@ -284,6 +306,8 @@ public class MessageDetailsActivity extends AbsBaseLoadActivity {
             protected void onSuccess(MessageDetails data, String SucMessage) {
                 messageDetails = data;
                 setShowData(data);
+
+                toReadActiveRequest();
             }
 
 
@@ -306,22 +330,35 @@ public class MessageDetailsActivity extends AbsBaseLoadActivity {
         }
 
         mSharePhotoUrl = StringUtils.getAsPicListIndexOne(data.getAdvPic());
-
         mShareContent = subShareContent(StringUtils.delHTMLTag(data.getContent()));
 
         mBaseBinding.titleView.setMidTitle(data.getTypeName());
 
+        WebSettings webSettings = mBinding.contentLayout.webView.getSettings();
+        // 设置WebView属性，能够执行Javascript脚本
+        webSettings.setJavaScriptEnabled(true);
+        webSettings.setPluginState(WebSettings.PluginState.ON);// 可以使用插件
+        webSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NARROW_COLUMNS);
         mBinding.contentLayout.webView.loadData("<style>\n" +           //设置图片自适应
                 "img{\n" +
                 " max-width:100%;\n" +
                 " height:auto;\n" +
                 "}\n" +
                 "</style>" + data.getContent(), "text/html; charset=UTF-8", "utf-8");
+//
+//        mAgentWeb = AgentWeb.with(this)
+//                .setAgentWebParent(mBinding.contentLayout.llRoot, new LinearLayout.LayoutParams(-1, -1))
+//                .useDefaultIndicator()
+//                .createAgentWeb()
+//                .ready()
+//                .go(data.getContent());
 
 
         mBinding.contentLayout.tvTime.setText(DateUtil.formatStringData(data.getShowDatetime(), DEFAULT_DATE_FMT));
         mBinding.contentLayout.tvFrom.setText(getString(R.string.message_frome) + data.getSource());
         mBinding.contentLayout.tvTitle.setText(data.getTitle());
+
+        mBinding.contentLayout.tvCollection.setText(data.getReadCount()+"");
 
         if (TextUtils.isEmpty(data.getAuther())) {
             mBinding.contentLayout.tvAuthor.setText(getString(R.string.author) + "--");
@@ -433,6 +470,40 @@ public class MessageDetailsActivity extends AbsBaseLoadActivity {
         };
     }
 
+
+    /**
+     * 阅读资讯
+     */
+    private void toReadActiveRequest() {
+
+        if (TextUtils.isEmpty(mCode)) {
+            return;
+        }
+
+        Map<String, String> map = RetrofitUtils.getRequestMap();
+
+        map.put("objectCode", mCode);
+
+        showLoadingDialog();
+        Call call = RetrofitUtils.getBaseAPiService().successRequest("628203", StringUtils.getJsonToString(map));
+
+        addCall(call);
+
+        call.enqueue(new BaseResponseModelCallBack<IsSuccessModes>(this) {
+            @Override
+            protected void onSuccess(IsSuccessModes data, String SucMessage) {
+
+
+            }
+
+            @Override
+            protected void onFinish() {
+                disMissLoading();
+            }
+        });
+
+    }
+
     /**
      * 获取最新评论
      */
@@ -445,7 +516,7 @@ public class MessageDetailsActivity extends AbsBaseLoadActivity {
         map.put("objectCode", mCode);
         map.put("start", pageindex + "");
         map.put("limit", limit + "");
-        map.put("userId", SPUtilHelpr.getUserId());
+        map.put("userId", SPUtilHelper.getUserId());
 
         if (isShowDialog) showLoadingDialog();
 
@@ -492,7 +563,8 @@ public class MessageDetailsActivity extends AbsBaseLoadActivity {
         map.put("type", type);
         map.put("objectCode", code);
         map.put("content", content);
-        map.put("userId", SPUtilHelpr.getUserId());
+        map.put("userId", SPUtilHelper.getUserId());
+        map.put("token", SPUtilHelper.getUserToken());
 
         showLoadingDialog();
         Call call = RetrofitUtils.getBaseAPiService().codeRequest("628200", StringUtils.getJsonToString(map));
@@ -553,7 +625,7 @@ public class MessageDetailsActivity extends AbsBaseLoadActivity {
 
         map.put("type", MSGCOMMENT);
         map.put("objectCode", mCode);
-        map.put("userId", SPUtilHelpr.getUserId());
+        map.put("userId", SPUtilHelper.getUserId());
 
         showLoadingDialog();
         Call call = RetrofitUtils.getBaseAPiService().successRequest("628201", StringUtils.getJsonToString(map));
@@ -603,8 +675,8 @@ public class MessageDetailsActivity extends AbsBaseLoadActivity {
 
         map.put("type", COMMENTCOMMENT);
         map.put("objectCode", msgDetailsComment.getCode());
-        map.put("userId", SPUtilHelpr.getUserId());
-        map.put("token", SPUtilHelpr.getUserToken());
+        map.put("userId", SPUtilHelper.getUserId());
+        map.put("token", SPUtilHelper.getUserToken());
 
         showLoadingDialog();
         Call call = RetrofitUtils.getBaseAPiService().successRequest("628201", StringUtils.getJsonToString(map));
@@ -647,7 +719,7 @@ public class MessageDetailsActivity extends AbsBaseLoadActivity {
         Map<String, String> map = new HashMap<>(); /*类型(Y 1 资讯 2 评论)*/
 
         map.put("objectCode", mCode);
-        map.put("userId", SPUtilHelpr.getUserId());
+        map.put("userId", SPUtilHelper.getUserId());
 
         showLoadingDialog();
         Call call = RetrofitUtils.getBaseAPiService().successRequest("628202", StringUtils.getJsonToString(map));
@@ -690,7 +762,7 @@ public class MessageDetailsActivity extends AbsBaseLoadActivity {
     public void getUrlToShare(int type) {
 
         Map<String, String> map = new HashMap<>();
-        map.put("ckey", "h5ShareUrl");
+        map.put("ckey", "h5Url");
         map.put("systemCode", MyCdConfig.SYSTEMCODE);
         map.put("companyCode", MyCdConfig.COMPANYCODE);
 
@@ -711,11 +783,11 @@ public class MessageDetailsActivity extends AbsBaseLoadActivity {
                 String shareTitle = mBinding.contentLayout.tvTitle.getText().toString();
 
                 if (type == 0) {
-                    WxUtil.shareToWX(MessageDetailsActivity.this, data.getCvalue() + "?code=" + mCode, shareTitle, mShareContent);
+                    WxUtil.shareToWX(MessageDetailsActivity.this, data.getCvalue() + "/index.html?code=" + mCode, shareTitle, mShareContent);
                 } else if (type == 1) {
-                    WxUtil.shareToPYQ(MessageDetailsActivity.this, data.getCvalue() + "?code=" + mCode, shareTitle, mShareContent);
+                    WxUtil.shareToPYQ(MessageDetailsActivity.this, data.getCvalue() + "/index.html?code=" + mCode, shareTitle, mShareContent);
                 } else {
-                    ShareActivity.open(MessageDetailsActivity.this, data.getCvalue() + "?code=" + mCode, shareTitle, mShareContent, mSharePhotoUrl);
+                    ShareActivity.open(MessageDetailsActivity.this, data.getCvalue() + "/index.html?code=" + mCode, shareTitle, mShareContent, mSharePhotoUrl);
                 }
 
             }
@@ -751,6 +823,10 @@ public class MessageDetailsActivity extends AbsBaseLoadActivity {
         mBinding.contentLayout.webView.setWebChromeClient(null);
         mBinding.contentLayout.webView.setWebViewClient(null);
         mBinding.contentLayout.webView.destroy();
+
+        if (mAgentWeb != null)
+            mAgentWeb.getWebLifeCycle().onDestroy();
+
         super.onDestroy();
     }
 }

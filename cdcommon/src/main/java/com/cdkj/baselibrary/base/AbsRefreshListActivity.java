@@ -50,8 +50,8 @@ public abstract class AbsRefreshListActivity<T> extends AbsBaseLoadActivity {
             }
 
             @Override
-            public void getListDataRequest(int pageindex, int limit, boolean isShowDialog) {
-                getListRequest(pageindex, limit, isShowDialog);
+            public void getListDataRequest(int pageIndex, int limit, boolean isShowDialog) {
+                getListRequest(pageIndex, limit, isShowDialog);
             }
         });
         mRefreshHelper.init(limit);
@@ -61,7 +61,7 @@ public abstract class AbsRefreshListActivity<T> extends AbsBaseLoadActivity {
 
     abstract public RecyclerView.Adapter getListAdapter(List<T> listData);
 
-    abstract public void getListRequest(int pageindex, int limit, boolean isShowDialog);
+    abstract public void getListRequest(int pageIndex, int limit, boolean isShowDialog);
 
 
     @Override

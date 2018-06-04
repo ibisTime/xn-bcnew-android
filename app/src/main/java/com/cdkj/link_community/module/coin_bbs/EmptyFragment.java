@@ -16,7 +16,7 @@ import com.cdkj.link_community.R;
  */
 
 public class EmptyFragment extends BaseLazyFragment {
-    public static EmptyFragment getInstanse() {
+    public static EmptyFragment getInstance() {
         EmptyFragment fragment = new EmptyFragment();
         return fragment;
     }

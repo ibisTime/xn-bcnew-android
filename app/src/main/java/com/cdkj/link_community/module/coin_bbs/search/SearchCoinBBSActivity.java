@@ -19,7 +19,7 @@ import android.widget.TextView;
 import com.cdkj.baselibrary.adapters.ViewPagerAdapter;
 import com.cdkj.baselibrary.api.ResponseInListModel;
 import com.cdkj.baselibrary.appmanager.MyCdConfig;
-import com.cdkj.baselibrary.appmanager.SPUtilHelpr;
+import com.cdkj.baselibrary.appmanager.SPUtilHelper;
 import com.cdkj.baselibrary.base.AbsBaseLoadActivity;
 import com.cdkj.baselibrary.dialog.UITipDialog;
 import com.cdkj.baselibrary.interfaces.BaseRefreshCallBack;
@@ -132,7 +132,7 @@ public class SearchCoinBBSActivity extends AbsBaseLoadActivity {
 
 
                 coinBBSListAdapter.setOnItemChildClickListener((adapter, view, position) -> {
-                    if (!SPUtilHelpr.isLogin(SearchCoinBBSActivity.this, false)) {
+                    if (!SPUtilHelper.isLogin(SearchCoinBBSActivity.this, false)) {
                         return;
                     }
                     focuseonRequest(coinBBSListAdapter, position);
@@ -157,8 +157,8 @@ public class SearchCoinBBSActivity extends AbsBaseLoadActivity {
         //设置fragment数据
         ArrayList fragments = new ArrayList<>();
 
-        fragments.add(EmptyFragment.getInstanse());
-        fragments.add(SearchHistoryListFragment.getInstanse(SAVEKEYFORBBS));
+        fragments.add(EmptyFragment.getInstance());
+        fragments.add(SearchHistoryListFragment.getInstance(SAVEKEYFORBBS));
 
         mBinding.viewpager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager(), fragments));
         mBinding.viewpager.setOffscreenPageLimit(fragments.size());
@@ -283,7 +283,7 @@ public class SearchCoinBBSActivity extends AbsBaseLoadActivity {
         Map<String, String> map = new HashMap<>();
 
         map.put("keywords", mSearchKey);
-        map.put("userId", SPUtilHelpr.getUserId());
+        map.put("userId", SPUtilHelper.getUserId());
         map.put("start", pageindex + "");
         map.put("limit", limit + "");
 
@@ -323,7 +323,7 @@ public class SearchCoinBBSActivity extends AbsBaseLoadActivity {
      */
     public void focuseonRequest(CoinBBSListAdapter adapter, int position) {
 
-        if (!SPUtilHelpr.isLogin(this, false)) {
+        if (!SPUtilHelper.isLogin(this, false)) {
             return;
         }
 
@@ -333,7 +333,7 @@ public class SearchCoinBBSActivity extends AbsBaseLoadActivity {
 
         Map<String, String> map = new HashMap<>();
         map.put("code", coinBBSListModel.getCode());
-        map.put("userId", SPUtilHelpr.getUserId());
+        map.put("userId", SPUtilHelper.getUserId());
 
         Call call = RetrofitUtils.getBaseAPiService().successRequest("628240", StringUtils.getJsonToString(map));
 

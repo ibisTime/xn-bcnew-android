@@ -3,7 +3,7 @@ package com.cdkj.link_community.adapters;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 
-import com.cdkj.baselibrary.appmanager.SPUtilHelpr;
+import com.cdkj.baselibrary.appmanager.SPUtilHelper;
 import com.cdkj.baselibrary.utils.DateUtil;
 import com.cdkj.baselibrary.utils.ImgUtils;
 import com.cdkj.link_community.R;
@@ -38,7 +38,7 @@ public class UserBBSCommentListAdapter2 extends BaseQuickAdapter<UserBBSComment,
 
         ImgUtils.loadQiniuLogo(mContext, item.getPhoto(), viewHolder.getView(R.id.img_logo));
 
-        viewHolder.setText(R.id.tv_name, SPUtilHelpr.getUserNickName());
+        viewHolder.setText(R.id.tv_name, SPUtilHelper.getUserNickName());
         viewHolder.setText(R.id.tv_content, item.getContent());
         viewHolder.setText(R.id.tv_replay_name, "我 回复 " + item.getParentNickName());
         viewHolder.setText(R.id.tv_time, DateUtil.formatStringData(item.getCommentDatetime(), DateUtil.DEFAULT_DATE_FMT));

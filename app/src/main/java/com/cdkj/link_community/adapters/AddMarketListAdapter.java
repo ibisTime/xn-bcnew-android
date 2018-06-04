@@ -33,10 +33,10 @@ public class AddMarketListAdapter extends BaseQuickAdapter<CoinListModel, BaseVi
         if (TextUtils.equals(type, "1")) {
             viewHolder.setText(R.id.tv_name, item.getExchangeCname());
         } else {
-            viewHolder.setText(R.id.tv_name, item.getCoinSymbol());
+            viewHolder.setText(R.id.tv_name, item.getSymbol());
         }
 
-        viewHolder.setText(R.id.tv_name_2, item.getToCoinSymbol());
+        viewHolder.setText(R.id.tv_name_2, item.getToSymbol());
 
         if (TextUtils.equals(item.getIsChoice(), "1")) {
             viewHolder.setImageResource(R.id.img_add_state, R.drawable.add_market_done);

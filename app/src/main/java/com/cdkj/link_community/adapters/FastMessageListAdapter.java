@@ -6,7 +6,7 @@ import android.text.Html;
 import android.text.TextUtils;
 import android.widget.TextView;
 
-import com.cdkj.baselibrary.appmanager.SPUtilHelpr;
+import com.cdkj.baselibrary.appmanager.SPUtilHelper;
 import com.cdkj.baselibrary.nets.BaseResponseModelCallBack;
 import com.cdkj.baselibrary.nets.RetrofitUtils;
 import com.cdkj.baselibrary.utils.DateUtil;
@@ -60,7 +60,7 @@ public class FastMessageListAdapter extends BaseQuickAdapter<FastMessage, BaseVi
         setOpenState2(item, textView);
 
         textView.setOnClickListener(view -> {
-            if (SPUtilHelpr.isLoginNoStart() && !TextUtils.equals(item.getIsRead(), "1")) {
+            if (SPUtilHelper.isLoginNoStart() && !TextUtils.equals(item.getIsRead(), "1")) {
                 setIsRead(item.getCode());
                 item.setIsRead("1");
                 setReadedState(item, textView);
@@ -146,14 +146,14 @@ public class FastMessageListAdapter extends BaseQuickAdapter<FastMessage, BaseVi
         } else {
             if (isHotMessage) {
 
-                textView.setTextColor(ContextCompat.getColor(mContext, R.color.app_text_color));
+                textView.setTextColor(ContextCompat.getColor(mContext, R.color.app_text_color_yellow));
 
             } else {
 
                 // 全部快讯里如果有热点快讯，蓝色字体显示
                 if(TextUtils.equals(item.getType(),"1")){
 
-                    textView.setTextColor(ContextCompat.getColor(mContext, R.color.app_text_color));
+                    textView.setTextColor(ContextCompat.getColor(mContext, R.color.app_text_color_yellow));
 
                 }else {
 
@@ -169,7 +169,7 @@ public class FastMessageListAdapter extends BaseQuickAdapter<FastMessage, BaseVi
         Map<String, String> map = new HashMap<>();
 
         map.put("code", code);
-        map.put("userId", SPUtilHelpr.getUserId());
+        map.put("userId", SPUtilHelper.getUserId());
 
         Call call = RetrofitUtils.createApi(MyApiServer.class).getFastMsgList("628094", StringUtils.getJsonToString(map));
 

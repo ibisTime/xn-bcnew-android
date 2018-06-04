@@ -3,7 +3,7 @@ package com.cdkj.baselibrary.nets;
 
 import com.cdkj.baselibrary.api.BaseApiServer;
 import com.cdkj.baselibrary.appmanager.MyCdConfig;
-import com.cdkj.baselibrary.appmanager.SPUtilHelpr;
+import com.cdkj.baselibrary.appmanager.SPUtilHelper;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -25,6 +25,7 @@ public class RetrofitUtils {
 
 
     private RetrofitUtils() {
+
     }
 
     /**
@@ -66,11 +67,12 @@ public class RetrofitUtils {
     public static String getBaseURL(int urlType) {
         switch (urlType) {
             case DEBUG:
-                return "http://47.97.214.223:2301/forward-service/";//研发环境
+                return "http://47.75.175.18:2205/forward-service/";// 研发环境
+
             case TEST:
-                return "http://47.96.161.183:2201/forward-service/";//测试
+                return "http://47.75.175.18:2205/forward-service/";// 测试环境
         }
-        return "http://47.97.214.223:2201/forward-service/";//正式环境
+        return "http://47.75.175.18:2201/forward-service/";//正式环境
     }
 
     /**
@@ -82,7 +84,7 @@ public class RetrofitUtils {
         Map map = new HashMap();
         map.put("systemCode", MyCdConfig.SYSTEMCODE);
         map.put("companyCode", MyCdConfig.COMPANYCODE);
-        map.put("token", SPUtilHelpr.getUserToken());
+        map.put("token", SPUtilHelper.getUserToken());
         return map;
     }
 

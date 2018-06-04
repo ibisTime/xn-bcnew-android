@@ -17,6 +17,8 @@ import java.util.List;
 public class DateUtil {
     public static final String DEFAULT_DATE_FMT = "yyyy-MM-dd HH:mm:ss";
 
+    public static final String ACTIVE_DATE_FMT = "yyyy/MM/dd/HH:mm";
+
     public static final String DATE_FMT_YMD = "MM月dd日";
 
     public static final String DATE_MMddHHmm = "MM-dd HH:mm";

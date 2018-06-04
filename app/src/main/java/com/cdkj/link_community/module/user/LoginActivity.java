@@ -11,7 +11,7 @@ import android.widget.TextView;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.cdkj.baselibrary.appmanager.CdRouteHelper;
 import com.cdkj.baselibrary.appmanager.MyCdConfig;
-import com.cdkj.baselibrary.appmanager.SPUtilHelpr;
+import com.cdkj.baselibrary.appmanager.SPUtilHelper;
 import com.cdkj.baselibrary.base.AbsBaseLoadActivity;
 import com.cdkj.baselibrary.dialog.UITipDialog;
 import com.cdkj.baselibrary.interfaces.SendCodeInterface;
@@ -32,13 +32,13 @@ import org.greenrobot.eventbus.EventBus;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
+import cn.jpush.android.api.JPushInterface;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Consumer;
 import retrofit2.Call;
 
-import static com.cdkj.baselibrary.appmanager.CdRouteHelper.DATASIGN;
+import static com.cdkj.baselibrary.appmanager.CdRouteHelper.DATA_SIGN;
 
 /**
  * 登录
@@ -63,7 +63,7 @@ public class LoginActivity extends AbsBaseLoadActivity implements SendCodeInterf
             return;
         }
         Intent intent = new Intent(context, LoginActivity.class);
-        intent.putExtra(DATASIGN, canOpenMain);
+        intent.putExtra(DATA_SIGN, canOpenMain);
         context.startActivity(intent);
     }
 
@@ -85,7 +85,7 @@ public class LoginActivity extends AbsBaseLoadActivity implements SendCodeInterf
         mSendCOdePresenter = new SendPhoneCoodePresenter(this);
 
         if (getIntent() != null) {
-            canOpenMain = getIntent().getBooleanExtra(DATASIGN, false);
+            canOpenMain = getIntent().getBooleanExtra(DATA_SIGN, false);
         }
 
         initListener();
@@ -133,9 +133,9 @@ public class LoginActivity extends AbsBaseLoadActivity implements SendCodeInterf
         call.enqueue(new BaseResponseModelCallBack<UserLoginModel>(this) {
             @Override
             protected void onSuccess(UserLoginModel data, String SucMessage) {
-                SPUtilHelpr.saveUserId(data.getUserId());
-                SPUtilHelpr.saveUserToken(data.getToken());
-                SPUtilHelpr.saveUserPhoneNum(mBinding.editUsername.getText().toString());
+                SPUtilHelper.saveUserId(data.getUserId());
+                SPUtilHelper.saveUserToken(data.getToken());
+                SPUtilHelper.saveUserPhoneNum(mBinding.editUsername.getText().toString());
                 startNext();
             }
 
@@ -173,6 +173,11 @@ public class LoginActivity extends AbsBaseLoadActivity implements SendCodeInterf
      * 登录后操作
      */
     private void startNext() {
+
+        // sequence:用户自定义的操作序列号, 同操作结果一起返回，用来标识一次操作的唯一性。
+        // alias:每次调用设置有效的别名，覆盖之前的设置。有效的别名组成：字母（区分大小写）、数字、下划线、汉字、特殊字符@!#$&*+=.|。限制：alias 命名长度限制为 40 字节。（判断长度需采用UTF-8编码）
+
+        JPushInterface.setAlias(this, 101,SPUtilHelper.getUserId());
 
         EventBus.getDefault().post(new LoinSucc());
 
@@ -216,20 +221,14 @@ public class LoginActivity extends AbsBaseLoadActivity implements SendCodeInterf
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .take(count)//只发射开始的N项数据或者一定时间内的数据
-                .doOnSubscribe(new Consumer<Disposable>() {
-                    @Override
-                    public void accept(Disposable disposable) throws Exception {
-                        RxView.enabled(btn).accept(false);
-                        RxTextView.text(btn).accept(count + "");
-                    }
+                .doOnSubscribe(disposable -> {
+                    RxView.enabled(btn).accept(false);
+                    RxTextView.text(btn).accept(count + "");
                 })
-                .subscribe(new Consumer<Long>() {
-                               @Override
-                               public void accept(Long aLong) throws Exception {
-                                   RxView.enabled(btn).accept(false);
-                                   RxTextView.text(btn).accept((count - aLong) + "秒");
-                               }
-                           }, throwable -> {
+                .subscribe(aLong -> {
+                    RxView.enabled(btn).accept(false);
+                    RxTextView.text(btn).accept((count - aLong) + "秒");
+                }, throwable -> {
                             RxView.enabled(btn).accept(true);
                             RxTextView.text(btn).accept("验证码");
                         }, () -> {

@@ -36,7 +36,9 @@
 
 
     <color name="color_content_font">#979797</color>
-    <color name="bg_gray">#f0f0f0</color>
+    <color name="bg_gray">#E2E2E2</color>
+
+    <color name="bg_gray_e5e5e5">#e5e5e5</color>
 
 
     <color name="btn_white">#ffffff</color>
@@ -72,7 +74,11 @@
     <!--app模块 相同 -->
 
     <color name="line_gray_cd">#dedede</color>
+    <color name="text_gray_cd">#818181</color>
     <color name="text_black_cd">#3a3a3a</color>
     <color name="page_bg">#fafcff</color>
+
+    <color name="text_color_333333">#333333</color>
+    <color name="text_color_666666">#666666</color>
 
 </resources>

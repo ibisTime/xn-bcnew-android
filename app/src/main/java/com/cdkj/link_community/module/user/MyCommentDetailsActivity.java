@@ -10,7 +10,7 @@ import android.text.TextUtils;
 import android.view.View;
 
 import com.cdkj.baselibrary.appmanager.CdRouteHelper;
-import com.cdkj.baselibrary.appmanager.SPUtilHelpr;
+import com.cdkj.baselibrary.appmanager.SPUtilHelper;
 import com.cdkj.baselibrary.base.AbsBaseLoadActivity;
 import com.cdkj.baselibrary.databinding.EmptyViewBinding;
 import com.cdkj.baselibrary.dialog.UITipDialog;
@@ -55,7 +55,7 @@ public class MyCommentDetailsActivity extends AbsBaseLoadActivity {
 
     private String mCommentCode;
 
-    private String mNoteCode;//关联文章编号
+    private String mNoteCode;//关联资讯编号
 
     private MsgDetailsComment msgDetailsComment;
 
@@ -112,7 +112,7 @@ public class MyCommentDetailsActivity extends AbsBaseLoadActivity {
 
     private void initListener() {
         mBinding.bottomLayout.linComment.setOnClickListener(view -> {
-            if (!SPUtilHelpr.isLogin(MyCommentDetailsActivity.this, false)) {
+            if (!SPUtilHelper.isLogin(MyCommentDetailsActivity.this, false)) {
                 return;
             }
             commentPlayRequest(mCommentCode, "");
@@ -124,7 +124,7 @@ public class MyCommentDetailsActivity extends AbsBaseLoadActivity {
         });
 
         mBinding.replayCommentLayout.linLike.setOnClickListener(view -> {
-            if (!SPUtilHelpr.isLogin(this, false)) {
+            if (!SPUtilHelper.isLogin(this, false)) {
                 return;
             }
             toMsgLikeRequest();
@@ -150,7 +150,7 @@ public class MyCommentDetailsActivity extends AbsBaseLoadActivity {
         Map<String, String> map = new HashMap<>();
 
         map.put("code", mCommentCode);
-        map.put("userId", SPUtilHelpr.getUserId());
+        map.put("userId", SPUtilHelper.getUserId());
 
         Call call = RetrofitUtils.createApi(MyApiServer.class).getMessageCommentDetails("628286", StringUtils.getJsonToString(map));
 
@@ -215,7 +215,7 @@ public class MyCommentDetailsActivity extends AbsBaseLoadActivity {
 
         replyCommentListAdapter.setOnItemChildClickListener((adapter, view, position) -> {
 
-            if (!SPUtilHelpr.isLogin(MyCommentDetailsActivity.this, false)) {
+            if (!SPUtilHelper.isLogin(MyCommentDetailsActivity.this, false)) {
                 return;
             }
 
@@ -227,7 +227,7 @@ public class MyCommentDetailsActivity extends AbsBaseLoadActivity {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
 
-                if (!SPUtilHelpr.isLogin(MyCommentDetailsActivity.this, false)) {
+                if (!SPUtilHelper.isLogin(MyCommentDetailsActivity.this, false)) {
                     return;
                 }
 
@@ -289,7 +289,8 @@ public class MyCommentDetailsActivity extends AbsBaseLoadActivity {
         map.put("type", type);
         map.put("objectCode", code);
         map.put("content", content);
-        map.put("userId", SPUtilHelpr.getUserId());
+        map.put("token", SPUtilHelper.getUserToken());
+        map.put("userId", SPUtilHelper.getUserId());
 
         showLoadingDialog();
         Call call = RetrofitUtils.getBaseAPiService().codeRequest("628200", StringUtils.getJsonToString(map));
@@ -355,7 +356,7 @@ public class MyCommentDetailsActivity extends AbsBaseLoadActivity {
 
         map.put("type", COMMENTCOMMENT);
         map.put("objectCode", msgDetailsComment.getCode());
-        map.put("userId", SPUtilHelpr.getUserId());
+        map.put("userId", SPUtilHelper.getUserId());
 
         showLoadingDialog();
         Call call = RetrofitUtils.getBaseAPiService().successRequest("628201", StringUtils.getJsonToString(map));
@@ -424,7 +425,7 @@ public class MyCommentDetailsActivity extends AbsBaseLoadActivity {
 
         map.put("type", COMMENTCOMMENT);
         map.put("objectCode", replyComment.getCode());
-        map.put("userId", SPUtilHelpr.getUserId());
+        map.put("userId", SPUtilHelper.getUserId());
 
         showLoadingDialog();
         Call call = RetrofitUtils.getBaseAPiService().successRequest("628201", StringUtils.getJsonToString(map));

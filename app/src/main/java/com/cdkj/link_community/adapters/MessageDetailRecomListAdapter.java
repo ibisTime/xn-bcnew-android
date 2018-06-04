@@ -2,18 +2,14 @@ package com.cdkj.link_community.adapters;
 
 import android.app.Activity;
 import android.support.annotation.Nullable;
-import android.text.TextUtils;
 
 import com.cdkj.baselibrary.utils.DateUtil;
 import com.cdkj.baselibrary.utils.ImgUtils;
-import com.cdkj.baselibrary.utils.LogUtil;
 import com.cdkj.baselibrary.utils.StringUtils;
 import com.cdkj.link_community.R;
 import com.cdkj.link_community.model.MessageDetailsNoteList;
-import com.cdkj.link_community.model.MessageModel;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.chad.library.adapter.base.util.MultiTypeDelegate;
 
 import java.lang.ref.SoftReference;
 import java.math.BigDecimal;
@@ -35,7 +31,6 @@ public class MessageDetailRecomListAdapter extends BaseQuickAdapter<MessageDetai
         SoftReference<Activity> mS = new SoftReference<>(activity);
         this.activity = mS.get();
 
-
     }
 
     @Override
@@ -53,7 +48,7 @@ public class MessageDetailRecomListAdapter extends BaseQuickAdapter<MessageDetai
         viewHolder.setText(R.id.tv_msg_title, item.getTitle());
         viewHolder.setText(R.id.tv_date, DateUtil.formatStringData(item.getShowDatetime(), DEFAULT_DATE_FMT));
 
-        viewHolder.setText(R.id.tv_collection, StringUtils.formatNum(new BigDecimal(item.getCollectCount())) + mContext.getString(R.string.collection));
+        viewHolder.setText(R.id.tv_collection, StringUtils.formatNum(new BigDecimal(item.getReadCount())) );
     }
 
 }

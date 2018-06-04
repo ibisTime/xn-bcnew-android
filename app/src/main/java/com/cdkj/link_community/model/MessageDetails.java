@@ -45,12 +45,21 @@ public class MessageDetails {
     private int commentCount;
     private int collectCount;
     private int pointCount;
+    private int readCount;
     private int isPoint;
     private String isCollect;
     private String typeName;
 
     private List<MessageDetailsNoteList> refNewList;
     private List<MsgDetailsComment> hotCommentList;
+
+    public int getReadCount() {
+        return readCount;
+    }
+
+    public void setReadCount(int readCount) {
+        this.readCount = readCount;
+    }
 
     public String getTypeName() {
         return typeName;

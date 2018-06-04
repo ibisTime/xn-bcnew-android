@@ -30,9 +30,18 @@ public class FastMessage implements Parcelable {
     private String updater;
     private String updateDatetime;
     private String isRead;
+    private String isTop;
     private String showDatetime;
 
     private boolean isOpen;// 是否展开状态 用于
+
+    public String getIsTop() {
+        return isTop;
+    }
+
+    public void setIsTop(String isTop) {
+        this.isTop = isTop;
+    }
 
     public boolean isOpen() {
         return isOpen;

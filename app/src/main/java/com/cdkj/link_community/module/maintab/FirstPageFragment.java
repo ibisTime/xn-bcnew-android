@@ -13,9 +13,9 @@ import com.cdkj.link_community.R;
 import com.cdkj.link_community.databinding.FragmentFirstPageBinding;
 import com.cdkj.link_community.module.message.FastMessageFragment;
 import com.cdkj.link_community.module.message.MessageFragment;
+import com.cdkj.link_community.module.search.SearchActivity;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 /**
  * 首页 资讯
@@ -27,7 +27,7 @@ public class FirstPageFragment extends BaseLazyFragment {
     private FragmentFirstPageBinding mBinding;
 
 
-    public static FirstPageFragment getInstanse() {
+    public static FirstPageFragment getInstance() {
         FirstPageFragment fragment = new FirstPageFragment();
         Bundle bundle = new Bundle();
         fragment.setArguments(bundle);
@@ -48,6 +48,9 @@ public class FirstPageFragment extends BaseLazyFragment {
 
     private void initTopTitle() {
 
+        //搜索
+        mBinding.topLayout.fraToSearch.setOnClickListener(view -> SearchActivity.open(mActivity));
+
         mBinding.topLayout.radiogroup.setOnCheckedChangeListener((radioGroup, i) -> {
 
             switch (i) {
@@ -67,12 +70,11 @@ public class FirstPageFragment extends BaseLazyFragment {
         //设置fragment数据
         ArrayList fragments = new ArrayList<>();
 
-        fragments.add(FastMessageFragment.getInstanse());
-        fragments.add(MessageFragment.getInstanse());
+        fragments.add(MessageFragment.getInstance());
+        fragments.add(FastMessageFragment.getInstance());
 
         mBinding.viewpager.setAdapter(new ViewPagerAdapter(getChildFragmentManager(), fragments));
         mBinding.viewpager.setOffscreenPageLimit(fragments.size());
-
 
     }
 

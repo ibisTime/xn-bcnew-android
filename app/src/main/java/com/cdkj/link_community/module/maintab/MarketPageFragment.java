@@ -8,15 +8,15 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.cdkj.baselibrary.adapters.ViewPagerAdapter;
-import com.cdkj.baselibrary.appmanager.SPUtilHelpr;
+import com.cdkj.baselibrary.appmanager.SPUtilHelper;
 import com.cdkj.baselibrary.base.BaseLazyFragment;
 import com.cdkj.link_community.R;
 import com.cdkj.link_community.databinding.FragmentMarketBinding;
 import com.cdkj.link_community.module.market.AddMarketActivity;
-import com.cdkj.link_community.module.market.CoinTypeFragment;
+import com.cdkj.link_community.module.market.CoinTypeFragment2;
 import com.cdkj.link_community.module.market.MyChooseFragment;
 import com.cdkj.link_community.module.market.PlatformFragment;
-import com.cdkj.link_community.module.market.search.SearchMarketActivity;
+import com.cdkj.link_community.module.search.SearchActivity;
 
 import java.util.ArrayList;
 
@@ -30,7 +30,7 @@ public class MarketPageFragment extends BaseLazyFragment {
     private FragmentMarketBinding mBinding;
 
 
-    public static MarketPageFragment getInstanse() {
+    public static MarketPageFragment getInstance() {
         MarketPageFragment fragment = new MarketPageFragment();
         Bundle bundle = new Bundle();
         fragment.setArguments(bundle);
@@ -55,7 +55,7 @@ public class MarketPageFragment extends BaseLazyFragment {
         mBinding.titleLayout.fraAddMarket.setOnClickListener(view -> addClick());
 
         //搜索
-        mBinding.titleLayout.fraToSearch.setOnClickListener(view -> SearchMarketActivity.open(mActivity));
+        mBinding.titleLayout.fraToSearch.setOnClickListener(view -> SearchActivity.open(mActivity));
 
         mBinding.titleLayout.radiogroup.setOnCheckedChangeListener((radioGroup, i) -> {
 
@@ -79,7 +79,7 @@ public class MarketPageFragment extends BaseLazyFragment {
      * 行情添加
      */
     private void addClick() {
-        if (!SPUtilHelpr.isLogin(mActivity, false)) {
+        if (!SPUtilHelper.isLogin(mActivity, false)) {
             return;
         }
         AddMarketActivity.open(mActivity);
@@ -89,9 +89,9 @@ public class MarketPageFragment extends BaseLazyFragment {
         //设置fragment数据
         ArrayList fragments = new ArrayList<>();
 
-        fragments.add(MyChooseFragment.getInstanse());
-        fragments.add(PlatformFragment.getInstanse());
-        fragments.add(CoinTypeFragment.getInstanse());
+        fragments.add(PlatformFragment.getInstance());
+        fragments.add(CoinTypeFragment2.getInstance());
+        fragments.add(MyChooseFragment.getInstance());
 
         mBinding.viewpager.setAdapter(new ViewPagerAdapter(getChildFragmentManager(), fragments));
         mBinding.viewpager.setOffscreenPageLimit(fragments.size());

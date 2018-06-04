@@ -7,9 +7,6 @@ package com.cdkj.link_community.model;
 public class MessageModel {
 
 
-
-
-
     /**
      * code : NS201803820132154418
      * type : CA201803820628405408
@@ -39,10 +36,26 @@ public class MessageModel {
     private String showDatetime;
     private String updater;
     private String updateDatetime;
+    private int readCount;
     private int commentCount;
     private int collectCount;
+    private String isTop;
 
+    public String getIsTop() {
+        return isTop;
+    }
 
+    public void setIsTop(String isTop) {
+        this.isTop = isTop;
+    }
+
+    public int getReadCount() {
+        return readCount;
+    }
+
+    public void setReadCount(int readCount) {
+        this.readCount = readCount;
+    }
 
     public String getCode() {
         return code;

@@ -19,7 +19,7 @@ import android.widget.TextView;
 import com.cdkj.baselibrary.adapters.ViewPagerAdapter;
 import com.cdkj.baselibrary.api.ResponseInListModel;
 import com.cdkj.baselibrary.appmanager.MyCdConfig;
-import com.cdkj.baselibrary.appmanager.SPUtilHelpr;
+import com.cdkj.baselibrary.appmanager.SPUtilHelper;
 import com.cdkj.baselibrary.base.AbsBaseLoadActivity;
 import com.cdkj.baselibrary.dialog.UITipDialog;
 import com.cdkj.baselibrary.interfaces.BaseRefreshCallBack;
@@ -119,7 +119,7 @@ public class SearchMarketActivity extends AbsBaseLoadActivity {
                 searchMarketListAdapter = new SearchMarketListAdapter(listData);
 
                 searchMarketListAdapter.setOnItemClickListener((adapter, view, position) -> {
-                    if (!SPUtilHelpr.isLogin(SearchMarketActivity.this, false)) {
+                    if (!SPUtilHelper.isLogin(SearchMarketActivity.this, false)) {
                         return;
                     }
                     addMarketRequest(searchMarketListAdapter, position);
@@ -144,8 +144,8 @@ public class SearchMarketActivity extends AbsBaseLoadActivity {
         //设置fragment数据
         ArrayList fragments = new ArrayList<>();
 
-        fragments.add(MarketHotSearchListFragment.getInstanse());
-        fragments.add(SearchHistoryListFragment.getInstanse(SAVEKEYFORCOINTYPE));
+        fragments.add(MarketHotSearchListFragment.getInstance());
+        fragments.add(SearchHistoryListFragment.getInstance(SAVEKEYFORCOINTYPE));
 
         mBinding.viewpager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager(), fragments));
         mBinding.viewpager.setOffscreenPageLimit(fragments.size());
@@ -223,7 +223,6 @@ public class SearchMarketActivity extends AbsBaseLoadActivity {
 
                 if (startSearchByKey()) return false;
 
-
                 //通知SearchHistoryListFragnemt 保存搜索历史
                 SearchHistoryModel searchHistoryModel = new SearchHistoryModel();
                 searchHistoryModel.setHistory(mSearchKey);
@@ -269,14 +268,15 @@ public class SearchMarketActivity extends AbsBaseLoadActivity {
 
         Map<String, String> map = new HashMap<>();
 
+        map.put("percentPeriod", "24h");
         map.put("keywords", mSearchKey);
         map.put("start", pageindex + "");
         map.put("limit", limit + "");
-        map.put("userId", SPUtilHelpr.getUserId());
+        map.put("userId", SPUtilHelper.getUserId());
 
         if (isShowDialog) showLoadingDialog();
 
-        Call call = RetrofitUtils.createApi(MyApiServer.class).getCoinList("628340", StringUtils.getJsonToString(map));
+        Call call = RetrofitUtils.createApi(MyApiServer.class).getCoinList("628350", StringUtils.getJsonToString(map));
 
         addCall(call);
 
@@ -319,10 +319,10 @@ public class SearchMarketActivity extends AbsBaseLoadActivity {
 
         Map<String, String> map = new HashMap<>();
 
-        map.put("userId", SPUtilHelpr.getUserId());
+        map.put("userId", SPUtilHelper.getUserId());
         map.put("exchangeEname", model.getExchangeEname());
-        map.put("toCoin", model.getToCoinSymbol());
-        map.put("coin", model.getCoinSymbol());
+        map.put("toSymbol", model.getToSymbol());
+        map.put("symbol", model.getSymbol());
 
         Call call = RetrofitUtils.getBaseAPiService().successRequest("628330", StringUtils.getJsonToString(map));
 

@@ -6,4 +6,6 @@ package com.cdkj.link_community.model;
 
 public class MarketInterval {
 
+
+
 }

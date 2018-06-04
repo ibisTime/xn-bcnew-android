@@ -75,8 +75,8 @@ public class MyMessageCommentsActivity extends AbsBaseLoadActivity {
         //设置fragment数据
         ArrayList fragments = new ArrayList<>();
 
-        fragments.add(MyCommentsList2Fragment.getInstanse());
-        fragments.add(MyCommentsListFragment.getInstanse());
+        fragments.add(MyCommentsList2Fragment.getInstance());
+        fragments.add(MyCommentsListFragment.getInstance());
 
         mBinding.viewpager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager(), fragments));
         mBinding.viewpager.setOffscreenPageLimit(fragments.size());

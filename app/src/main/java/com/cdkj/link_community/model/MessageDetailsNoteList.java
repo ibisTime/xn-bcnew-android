@@ -1,7 +1,7 @@
 package com.cdkj.link_community.model;
 
 /**
- * 资讯详情推荐文章列表
+ * 资讯详情推荐资讯列表
  * Created by cdkj on 2018/3/23.
  */
 
@@ -40,6 +40,15 @@ public class MessageDetailsNoteList {
     private int pointCount;
     private int commentCount;
     private int collectCount;
+    private int readCount;
+
+    public int getReadCount() {
+        return readCount;
+    }
+
+    public void setReadCount(int readCount) {
+        this.readCount = readCount;
+    }
 
     public String getCode() {
         return code;

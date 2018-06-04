@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 import com.cdkj.baselibrary.api.ResponseInListModel;
 import com.cdkj.baselibrary.appmanager.CdRouteHelper;
 import com.cdkj.baselibrary.appmanager.MyCdConfig;
-import com.cdkj.baselibrary.appmanager.SPUtilHelpr;
+import com.cdkj.baselibrary.appmanager.SPUtilHelper;
 import com.cdkj.baselibrary.base.AbsRefreshListFragment;
 import com.cdkj.baselibrary.dialog.UITipDialog;
 import com.cdkj.baselibrary.model.IsSuccessModes;
@@ -47,10 +47,10 @@ public class AddMarketListFragment extends AbsRefreshListFragment {
      * @param
      * @return
      */
-    public static AddMarketListFragment getInstanse(AddMarketModel addMarketModel, Boolean isFirstRequest) {
+    public static AddMarketListFragment getInstance(AddMarketModel addMarketModel, Boolean isFirstRequest) {
         AddMarketListFragment fragment = new AddMarketListFragment();
         Bundle bundle = new Bundle();
-        bundle.putParcelable(CdRouteHelper.DATASIGN, addMarketModel);
+        bundle.putParcelable(CdRouteHelper.DATA_SIGN, addMarketModel);
         bundle.putBoolean("isFirstRequest", isFirstRequest);
         fragment.setArguments(bundle);
         return fragment;
@@ -76,7 +76,7 @@ public class AddMarketListFragment extends AbsRefreshListFragment {
     protected void afterCreate(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         if (getArguments() != null) {
-            marketModel = getArguments().getParcelable(CdRouteHelper.DATASIGN);
+            marketModel = getArguments().getParcelable(CdRouteHelper.DATA_SIGN);
             isFirstRequest = getArguments().getBoolean("isFirstRequest");
         }
         //防止局部刷新闪烁
@@ -107,17 +107,18 @@ public class AddMarketListFragment extends AbsRefreshListFragment {
         Map<String, String> map = new HashMap<>();
 
         if (TextUtils.equals(marketModel.getType(), "1")) {
-            map.put("coinSymbol", marketModel.getEname());//币种
+            map.put("symbol", marketModel.getEname());//币种
         } else {
             map.put("exchangeEname", marketModel.getEname());//平台
         }
         map.put("start", pageindex + "");
         map.put("limit", limit + "");
-        map.put("userId", SPUtilHelpr.getUserId());
+        map.put("userId", SPUtilHelper.getUserId());
+        map.put("percentPeriod", "24h");
 
         if (isShowDialog) showLoadingDialog();
 
-        Call call = RetrofitUtils.createApi(MyApiServer.class).getCoinList("628340", StringUtils.getJsonToString(map));
+        Call call = RetrofitUtils.createApi(MyApiServer.class).getCoinList("628350", StringUtils.getJsonToString(map));
 
         addCall(call);
 
@@ -151,7 +152,7 @@ public class AddMarketListFragment extends AbsRefreshListFragment {
 
         if (model == null) return;
 
-        if (!SPUtilHelpr.isLogin(mActivity, false)) {
+        if (!SPUtilHelper.isLogin(mActivity, false)) {
             return;
         }
 
@@ -162,10 +163,10 @@ public class AddMarketListFragment extends AbsRefreshListFragment {
 
         Map<String, String> map = new HashMap<>();
 
-        map.put("userId", SPUtilHelpr.getUserId());
+        map.put("userId", SPUtilHelper.getUserId());
         map.put("exchangeEname", model.getExchangeEname());
-        map.put("toCoin", model.getToCoinSymbol());
-        map.put("coin", model.getCoinSymbol());
+        map.put("toSymbol", model.getToSymbol());
+        map.put("symbol", model.getSymbol());
 
         Call call = RetrofitUtils.getBaseAPiService().successRequest("628330", StringUtils.getJsonToString(map));
 

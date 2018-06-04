@@ -17,6 +17,7 @@ import com.cdkj.baselibrary.dialog.LoadingDialog;
 import com.cdkj.baselibrary.model.eventmodels.EventFinishAll;
 import com.cdkj.baselibrary.utils.LogUtil;
 import com.cdkj.baselibrary.utils.ToastUtil;
+import com.umeng.analytics.MobclickAgent;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -50,6 +51,19 @@ public abstract class BaseActivity extends AppCompatActivity {
         mCallList = new ArrayList<>();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        MobclickAgent.onResume(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        MobclickAgent.onPause(this);
+    }
 
     protected void addCall(Call call) {
         mCallList.add(call);
@@ -87,6 +101,7 @@ public abstract class BaseActivity extends AppCompatActivity {
             loadingDialog.dismiss();
             loadingDialog = null;
         }
+
         EventBus.getDefault().unregister(this);
     }
 

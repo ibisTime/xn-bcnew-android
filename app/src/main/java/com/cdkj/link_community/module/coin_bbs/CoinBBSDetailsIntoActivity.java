@@ -16,7 +16,7 @@ import com.cdkj.baselibrary.adapters.ViewPagerAdapter;
 import com.cdkj.baselibrary.api.ResponseInListModel;
 import com.cdkj.baselibrary.appmanager.CdRouteHelper;
 import com.cdkj.baselibrary.appmanager.MyCdConfig;
-import com.cdkj.baselibrary.appmanager.SPUtilHelpr;
+import com.cdkj.baselibrary.appmanager.SPUtilHelper;
 import com.cdkj.baselibrary.base.AbsBaseLoadActivity;
 import com.cdkj.baselibrary.dialog.UITipDialog;
 import com.cdkj.baselibrary.interfaces.BaseRefreshCallBack;
@@ -129,7 +129,7 @@ public class CoinBBSDetailsIntoActivity extends AbsBaseLoadActivity {
         //资讯评论
         mBinding.bottomLayout.linComment.setOnClickListener(view -> {
 
-            if (!SPUtilHelpr.isLogin(this, false)) {
+            if (!SPUtilHelper.isLogin(this, false)) {
                 return;
             }
 
@@ -223,9 +223,9 @@ public class CoinBBSDetailsIntoActivity extends AbsBaseLoadActivity {
         //设置fragment数据
         ArrayList fragments = new ArrayList<>();
 
-        fragments.add(EmptyFragment.getInstanse());
-        fragments.add(EmptyFragment.getInstanse());
-        fragments.add(EmptyFragment.getInstanse());
+        fragments.add(EmptyFragment.getInstance());
+        fragments.add(EmptyFragment.getInstance());
+        fragments.add(EmptyFragment.getInstance());
 
         mBinding.viewpager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager(), fragments));
         mBinding.viewpager.setOffscreenPageLimit(fragments.size());
@@ -416,7 +416,7 @@ public class CoinBBSDetailsIntoActivity extends AbsBaseLoadActivity {
         Map<String, String> map = new HashMap<>();
 
         map.put("toCoin", mRequestToCoin);
-        map.put("userId", SPUtilHelpr.getUserId());
+        map.put("userId", SPUtilHelper.getUserId());
 
         showLoadingDialog();
 
@@ -590,17 +590,18 @@ public class CoinBBSDetailsIntoActivity extends AbsBaseLoadActivity {
         Map<String, String> map = new HashMap<>();
 
         if (isCoinType()) {
-            map.put("coinSymbol", mToCoin);
+            map.put("toSymbol", mToCoin);
         } else {
             map.put("exchangeEname", mToCoin);
         }
 
         map.put("start", pageindex + "");
         map.put("limit", limit + "");
+        map.put("percentPeriod", "24h");
 
         if (isShowDialog) showLoadingDialog();
 
-        Call call = RetrofitUtils.createApi(MyApiServer.class).getCoinList("628340", StringUtils.getJsonToString(map));
+        Call call = RetrofitUtils.createApi(MyApiServer.class).getCoinList("628350", StringUtils.getJsonToString(map));
 
         addCall(call);
 
@@ -642,7 +643,7 @@ public class CoinBBSDetailsIntoActivity extends AbsBaseLoadActivity {
         map.put("plateCode", mBBSCode);
         map.put("start", pageindex + "");
         map.put("limit", limit + "");
-        map.put("userId", SPUtilHelpr.getUserId());
+        map.put("userId", SPUtilHelper.getUserId());
 
         if (isShowDialog) showLoadingDialog();
 
@@ -674,7 +675,7 @@ public class CoinBBSDetailsIntoActivity extends AbsBaseLoadActivity {
      * 圈子点赞
      */
     private void circularLikeRequest(BBSHotCommentListAdapter adapter, int position) {
-        if (!SPUtilHelpr.isLogin(this, false)) {
+        if (!SPUtilHelper.isLogin(this, false)) {
             return;
         }
 
@@ -688,7 +689,7 @@ public class CoinBBSDetailsIntoActivity extends AbsBaseLoadActivity {
 
         map.put("type", "1"); /*1 帖子，2评论*/
         map.put("objectCode", coinBBSHotCircular.getCode());
-        map.put("userId", SPUtilHelpr.getUserId());
+        map.put("userId", SPUtilHelper.getUserId());
 
         showLoadingDialog();
         Call call = RetrofitUtils.getBaseAPiService().successRequest("628653", StringUtils.getJsonToString(map));
@@ -733,7 +734,7 @@ public class CoinBBSDetailsIntoActivity extends AbsBaseLoadActivity {
         map.put("type", "1");
         map.put("objectCode", code);
         map.put("content", content);
-        map.put("userId", SPUtilHelpr.getUserId());
+        map.put("userId", SPUtilHelper.getUserId());
 
         showLoadingDialog();
         Call call = RetrofitUtils.getBaseAPiService().successRequest("628652", StringUtils.getJsonToString(map));
@@ -773,7 +774,7 @@ public class CoinBBSDetailsIntoActivity extends AbsBaseLoadActivity {
 
         map.put("plateCode", code);
         map.put("content", content);
-        map.put("userId", SPUtilHelpr.getUserId());
+        map.put("userId", SPUtilHelper.getUserId());
 
         showLoadingDialog();
         Call call = RetrofitUtils.getBaseAPiService().codeRequest("628650", StringUtils.getJsonToString(map));

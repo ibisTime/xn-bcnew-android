@@ -34,7 +34,7 @@ public class PlatformFragment extends AbsTablayoutFragment {
     private List<String> mTitleList;
     private List<Fragment> mFragmentList;
 
-    public static PlatformFragment getInstanse() {
+    public static PlatformFragment getInstance() {
         PlatformFragment fragment = new PlatformFragment();
         Bundle bundle = new Bundle();
         fragment.setArguments(bundle);
@@ -49,20 +49,18 @@ public class PlatformFragment extends AbsTablayoutFragment {
         mTitleList = new ArrayList<>();
         mFragmentList = new ArrayList<>();
 
+        getTypeRequest();
+
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 
 
+
     @Override
     protected void lazyLoad() {
-
         if (mTabLayoutBinding == null || isFirstRequest) return;
 
-        getTypeRequest();
-
         isFirstRequest = true;
-
-
     }
 
     @Override
@@ -113,10 +111,22 @@ public class PlatformFragment extends AbsTablayoutFragment {
     private void initViewPagerData(List<CoinPlatformType> data) {
         int i = 0;
 
+        if (mTitleList == null){
+            mTitleList = new ArrayList<>();
+        }else {
+            mTitleList.clear();
+        }
+
+        if (mFragmentList == null){
+            mFragmentList = new ArrayList<>();
+        }else {
+            mFragmentList.clear();
+        }
+
         for (CoinPlatformType type : data) {
             if (type == null) continue;
             mTitleList.add(type.getCname());
-            mFragmentList.add(PlatformListFragment.getInstanse(type.getEname(), i == 0, type.getCname()));
+            mFragmentList.add(PlatformListFragment.getInstance(type.getEname(), i == 0));
             i++;
         }
 

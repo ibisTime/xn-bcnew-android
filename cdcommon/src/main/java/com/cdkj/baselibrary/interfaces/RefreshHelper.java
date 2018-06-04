@@ -161,6 +161,14 @@ public class RefreshHelper<T> {
 
     }
 
+    //刷新
+    public void onMRefresh(boolean isShowDialog) {
+        if (mRefreshInterface != null) {
+            mRefreshInterface.getListDataRequest(mPageIndex, mLimit , isShowDialog);
+        }
+
+    }
+
     //加载
     public void onMLoadMore(int pageIndex, int limit) {
         mPageIndex = pageIndex;
@@ -228,6 +236,44 @@ public class RefreshHelper<T> {
                 if (mAdapter != null) {
                     mAdapter.notifyDataSetChanged();
                 }
+            }
+        }
+
+        if (mEmptyView != null && mDataList.isEmpty()) {
+            if (mRefreshInterface != null) {
+                mRefreshInterface.showEmptyState(emp, img);
+            }
+            if (mAdapter != null) mAdapter.setEmptyView(mEmptyView);
+        }
+    }
+
+
+    /**
+     * 设置加载数据 实现分页逻辑
+     *
+     * @param datas
+     */
+    public void setData2(List<T> datas, String emp, int img) {
+        if (mRefreshLayout != null) {
+            if (mRefreshLayout.isRefreshing()) {
+                mRefreshLayout.finishRefresh();
+            }
+            if (mRefreshLayout.isLoading()) {
+                mRefreshLayout.finishLoadmore();
+            }
+        }
+
+        if (mPageIndex == 1) {         //如果当前加载的是第一页数据
+            if (datas != null) {
+                mDataList.clear();
+                mDataList.addAll(datas);
+            }
+
+        } else if (mPageIndex > 1) {
+            if (datas == null || datas.size() <= 0) {
+                mPageIndex--;
+            } else {
+                mDataList.addAll(datas);
             }
         }
 

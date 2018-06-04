@@ -4,11 +4,11 @@
 
     <RadioGroup
         android:id="@+id/radiogroup"
+        android:background="@color/gray_bg"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_gravity="bottom"
-        android:orientation="horizontal"
-        android:weightSum="4">
+        android:orientation="horizontal">
 
         <RadioButton
             android:id="@+id/radio_main_tab_1"
@@ -25,9 +25,9 @@
             android:drawableTop="@drawable/main_buttom_tab_2"
             android:text="@string/market" />
 
-
         <RadioButton
             android:id="@+id/radio_main_tab_3"
+            android:visibility="gone"
             style="@style/main_tab_radio"
             android:drawableTop="@drawable/main_buttom_tab_3"
             android:text="@string/coin_bbs" />
@@ -36,6 +36,12 @@
             android:id="@+id/radio_main_tab_4"
             style="@style/main_tab_radio"
             android:drawableTop="@drawable/main_buttom_tab_4"
+            android:text="@string/active" />
+
+        <RadioButton
+            android:id="@+id/radio_main_tab_5"
+            style="@style/main_tab_radio"
+            android:drawableTop="@drawable/main_buttom_tab_5"
             android:text="@string/mind" />
     </RadioGroup>
 </layout>

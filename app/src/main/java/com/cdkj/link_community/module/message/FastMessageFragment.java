@@ -29,7 +29,7 @@ public class FastMessageFragment extends BaseLazyFragment {
     private FragmentFastMessageBinding mBinding;
 
 
-    public static FastMessageFragment getInstanse() {
+    public static FastMessageFragment getInstance() {
         FastMessageFragment fragment = new FastMessageFragment();
         Bundle bundle = new Bundle();
         fragment.setArguments(bundle);
@@ -53,8 +53,8 @@ public class FastMessageFragment extends BaseLazyFragment {
         //设置fragment数据
         ArrayList fragments = new ArrayList<>();
 
-        fragments.add(FastMessageListFragment.getInstanse(FastMessageListFragment.ALLMESSAGE,true));
-        fragments.add(FastMessageListFragment.getInstanse(FastMessageListFragment.HOTMESSAGE,false));
+        fragments.add(FastMessageListFragment.getInstance(FastMessageListFragment.ALLMESSAGE,true));
+        fragments.add(FastMessageListFragment.getInstance(FastMessageListFragment.HOTMESSAGE,false));
 
         mBinding.viewpager.setAdapter(new ViewPagerAdapter(getChildFragmentManager(), fragments));
         mBinding.viewpager.setOffscreenPageLimit(fragments.size());

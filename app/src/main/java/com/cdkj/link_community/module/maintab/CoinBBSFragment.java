@@ -14,7 +14,6 @@ import com.cdkj.link_community.databinding.FragmentCoinBbsBinding;
 import com.cdkj.link_community.module.coin_bbs.CoinBBSListFragment;
 import com.cdkj.link_community.module.coin_bbs.MyFocuseOnCoinBBSListFragment;
 import com.cdkj.link_community.module.coin_bbs.search.SearchCoinBBSActivity;
-import com.cdkj.link_community.module.message.FastMessageListFragment;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -29,7 +28,7 @@ public class CoinBBSFragment extends BaseLazyFragment {
 
     private FragmentCoinBbsBinding mBinding;
 
-    public static CoinBBSFragment getInstanse() {
+    public static CoinBBSFragment getInstance() {
         CoinBBSFragment fragment = new CoinBBSFragment();
         Bundle bundle = new Bundle();
         fragment.setArguments(bundle);
@@ -55,9 +54,9 @@ public class CoinBBSFragment extends BaseLazyFragment {
         //设置fragment数据
         ArrayList fragments = new ArrayList<>();
 
-        fragments.add(CoinBBSListFragment.getInstanse("", true));
-        fragments.add(CoinBBSListFragment.getInstanse(CoinBBSListFragment.HOT, false));
-        fragments.add(MyFocuseOnCoinBBSListFragment.getInstanse(false));
+        fragments.add(CoinBBSListFragment.getInstance("", true));
+        fragments.add(CoinBBSListFragment.getInstance(CoinBBSListFragment.HOT, false));
+        fragments.add(MyFocuseOnCoinBBSListFragment.getInstance(false));
 
         mBinding.viewpager.setAdapter(new ViewPagerAdapter(getChildFragmentManager(), fragments));
         mBinding.viewpager.setOffscreenPageLimit(fragments.size());

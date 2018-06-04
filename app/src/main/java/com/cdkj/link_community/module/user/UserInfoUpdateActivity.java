@@ -11,7 +11,7 @@ import android.view.View;
 import com.bigkoo.pickerview.TimePickerView;
 import com.cdkj.baselibrary.activitys.ImageSelectActivity;
 import com.cdkj.baselibrary.appmanager.CdRouteHelper;
-import com.cdkj.baselibrary.appmanager.SPUtilHelpr;
+import com.cdkj.baselibrary.appmanager.SPUtilHelper;
 import com.cdkj.baselibrary.base.AbsBaseLoadActivity;
 import com.cdkj.baselibrary.dialog.UITipDialog;
 import com.cdkj.baselibrary.model.IsSuccessModes;
@@ -61,7 +61,7 @@ public class UserInfoUpdateActivity extends AbsBaseLoadActivity {
             return;
         }
         Intent intent = new Intent(context, UserInfoUpdateActivity.class);
-        intent.putExtra(CdRouteHelper.DATASIGN, userInfoModel);
+        intent.putExtra(CdRouteHelper.DATA_SIGN, userInfoModel);
         context.startActivity(intent);
     }
 
@@ -77,7 +77,7 @@ public class UserInfoUpdateActivity extends AbsBaseLoadActivity {
         mBaseBinding.titleView.setMidTitle(getString(R.string.edit_user_info));
 
         if (getIntent() != null) {
-            mUserInfo = getIntent().getParcelableExtra(CdRouteHelper.DATASIGN);
+            mUserInfo = getIntent().getParcelableExtra(CdRouteHelper.DATA_SIGN);
         }
 
         setShowData();
@@ -185,9 +185,9 @@ public class UserInfoUpdateActivity extends AbsBaseLoadActivity {
      */
     private void updateUserPhoto(final String key) {
         Map<String, String> map = new HashMap<String, String>();
-        map.put("userId", SPUtilHelpr.getUserId());
+        map.put("userId", SPUtilHelper.getUserId());
         map.put("photo", key);
-        map.put("token", SPUtilHelpr.getUserToken());
+        map.put("token", SPUtilHelper.getUserToken());
         Call call = RetrofitUtils.getBaseAPiService().successRequest("805080", StringUtils.getJsonToString(map));
         addCall(call);
         call.enqueue(new BaseResponseModelCallBack<IsSuccessModes>(UserInfoUpdateActivity.this) {
@@ -219,7 +219,7 @@ public class UserInfoUpdateActivity extends AbsBaseLoadActivity {
 
         Map<String, String> map = new HashMap<String, String>();
         map.put("gender", gender);
-        map.put("token", SPUtilHelpr.getUserToken());
+        map.put("token", SPUtilHelper.getUserToken());
         Call call = RetrofitUtils.getBaseAPiService().successRequest("805085", StringUtils.getJsonToString(map));
 
         addCall(call);
@@ -259,7 +259,7 @@ public class UserInfoUpdateActivity extends AbsBaseLoadActivity {
 
         Map<String, String> map = new HashMap<String, String>();
         map.put("birthday", birthday);
-        map.put("token", SPUtilHelpr.getUserToken());
+        map.put("token", SPUtilHelper.getUserToken());
         Call call = RetrofitUtils.getBaseAPiService().successRequest("805086", StringUtils.getJsonToString(map));
 
         addCall(call);

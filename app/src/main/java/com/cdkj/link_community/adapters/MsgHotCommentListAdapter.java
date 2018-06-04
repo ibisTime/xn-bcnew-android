@@ -80,7 +80,7 @@ public class MsgHotCommentListAdapter extends BaseQuickAdapter<MsgDetailsComment
         ReplyCommentListAdapter replyCommentListAdapter = new ReplyCommentListAdapter(item.getCommentList());
 
         replyCommentListAdapter.setOnItemClickListener((adapter, view, position) -> {
-            MessageCommentDetailsActivity.open(mContext, item.getCode());
+            MessageCommentDetailsActivity.open(mContext, item.getCode(), false);
         });
 
         recyclerView.setAdapter(replyCommentListAdapter);

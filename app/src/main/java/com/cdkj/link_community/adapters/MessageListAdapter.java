@@ -1,14 +1,11 @@
 package com.cdkj.link_community.adapters;
 
 import android.app.Activity;
-import android.content.Context;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
-import com.bumptech.glide.manager.RequestManagerRetriever;
 import com.cdkj.baselibrary.utils.DateUtil;
 import com.cdkj.baselibrary.utils.ImgUtils;
-import com.cdkj.baselibrary.utils.LogUtil;
 import com.cdkj.baselibrary.utils.StringUtils;
 import com.cdkj.link_community.R;
 import com.cdkj.link_community.model.MessageModel;
@@ -87,10 +84,16 @@ public class MessageListAdapter extends BaseQuickAdapter<MessageModel, BaseViewH
     }
 
     private void setShowData(BaseViewHolder viewHolder, MessageModel item) {
-        viewHolder.setText(R.id.tv_msg_title, item.getTitle());
-        viewHolder.setText(R.id.tv_date, DateUtil.formatStringData(item.getShowDatetime(), DEFAULT_DATE_FMT));
-        viewHolder.setText(R.id.tv_collection, StringUtils.formatNum(new BigDecimal(item.getCollectCount())) + mContext.getString(R.string.collection));
+        viewHolder.setGone(R.id.iv_top, TextUtils.equals(item.getIsTop(), "1"));
 
+        viewHolder.setText(R.id.tv_msg_title, item.getTitle());
+        viewHolder.setText(R.id.tv_collection, StringUtils.formatNum(new BigDecimal(item.getReadCount())));
+
+        if (TextUtils.equals(item.getStatus(), "0")){
+            viewHolder.setText(R.id.tv_date, DateUtil.formatStringData(item.getUpdateDatetime(), DEFAULT_DATE_FMT));
+        }else {
+            viewHolder.setText(R.id.tv_date, DateUtil.formatStringData(item.getShowDatetime(), DEFAULT_DATE_FMT));
+        }
     }
 
 }

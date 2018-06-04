@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 import com.cdkj.baselibrary.api.ResponseInListModel;
 import com.cdkj.baselibrary.appmanager.CdRouteHelper;
 import com.cdkj.baselibrary.appmanager.MyCdConfig;
-import com.cdkj.baselibrary.appmanager.SPUtilHelpr;
+import com.cdkj.baselibrary.appmanager.SPUtilHelper;
 import com.cdkj.baselibrary.base.AbsRefreshListFragment;
 import com.cdkj.baselibrary.dialog.UITipDialog;
 import com.cdkj.baselibrary.model.IsSuccessModes;
@@ -48,10 +48,10 @@ public class CoinBBSListFragment extends AbsRefreshListFragment {
      * @param isFirstRequest
      * @return
      */
-    public static CoinBBSListFragment getInstanse(String type, boolean isFirstRequest) {
+    public static CoinBBSListFragment getInstance(String type, boolean isFirstRequest) {
         CoinBBSListFragment fragment = new CoinBBSListFragment();
         Bundle bundle = new Bundle();
-        bundle.putBoolean(CdRouteHelper.DATASIGN, isFirstRequest);
+        bundle.putBoolean(CdRouteHelper.DATA_SIGN, isFirstRequest);
         bundle.putString(TYPE, type);
         fragment.setArguments(bundle);
         return fragment;
@@ -77,7 +77,7 @@ public class CoinBBSListFragment extends AbsRefreshListFragment {
 
         if (getArguments() != null) {
             mBBSType = getArguments().getString(TYPE);
-            isFirstRequest = getArguments().getBoolean(CdRouteHelper.DATASIGN);
+            isFirstRequest = getArguments().getBoolean(CdRouteHelper.DATA_SIGN);
         }
 
         initRefreshHelper(MyCdConfig.LISTLIMIT);
@@ -132,7 +132,7 @@ public class CoinBBSListFragment extends AbsRefreshListFragment {
             map.put("location", "0");
         }
 
-        map.put("userId", SPUtilHelpr.getUserId());
+        map.put("userId", SPUtilHelper.getUserId());
         map.put("start", pageindex + "");
         map.put("limit", limit + "");
 
@@ -169,7 +169,7 @@ public class CoinBBSListFragment extends AbsRefreshListFragment {
      */
     public void focuseonRequest(CoinBBSListAdapter adapter, int position) {
 
-        if (!SPUtilHelpr.isLogin(mActivity, false)) {
+        if (!SPUtilHelper.isLogin(mActivity, false)) {
             return;
         }
 
@@ -179,7 +179,7 @@ public class CoinBBSListFragment extends AbsRefreshListFragment {
 
         Map<String, String> map = new HashMap<>();
         map.put("code", coinBBSListModel.getCode());
-        map.put("userId", SPUtilHelpr.getUserId());
+        map.put("userId", SPUtilHelper.getUserId());
 
         Call call = RetrofitUtils.getBaseAPiService().successRequest("628240", StringUtils.getJsonToString(map));
 

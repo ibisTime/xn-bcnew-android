@@ -59,10 +59,10 @@ public class SearchHistoryListFragment extends BaseLazyFragment {
      * @param key 保存历史
      * @return
      */
-    public static SearchHistoryListFragment getInstanse(String key) {
+    public static SearchHistoryListFragment getInstance(String key) {
         SearchHistoryListFragment fragment = new SearchHistoryListFragment();
         Bundle bundle = new Bundle();
-        bundle.putString(CdRouteHelper.DATASIGN, key);
+        bundle.putString(CdRouteHelper.DATA_SIGN, key);
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -73,7 +73,7 @@ public class SearchHistoryListFragment extends BaseLazyFragment {
         mBinding = DataBindingUtil.inflate(getLayoutInflater(), R.layout.fragment_shearch_history, null, false);
 
         if (getArguments() != null) {
-            mSaveKey = getArguments().getString(CdRouteHelper.DATASIGN);
+            mSaveKey = getArguments().getString(CdRouteHelper.DATA_SIGN);
         }
 
         initAdapter();

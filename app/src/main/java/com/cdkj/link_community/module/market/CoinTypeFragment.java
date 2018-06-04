@@ -35,7 +35,7 @@ public class CoinTypeFragment extends AbsTablayoutFragment {
     private List<String> mTitleList;
     private List<Fragment> mFragmentList;
 
-    public static CoinTypeFragment getInstanse() {
+    public static CoinTypeFragment getInstance() {
         CoinTypeFragment fragment = new CoinTypeFragment();
         Bundle bundle = new Bundle();
         fragment.setArguments(bundle);
@@ -113,12 +113,12 @@ public class CoinTypeFragment extends AbsTablayoutFragment {
 
     private void initViewPagerData(List<CoinPlatformType> data) {
         mTitleList.add(getString(R.string.coin_price));
-        mFragmentList.add(CoinTypePriceListFragment.getInstanse(true));
+        mFragmentList.add(CoinTypePriceListFragment.getInstance(true));
 
         for (CoinPlatformType coinType : data) {
             if (coinType == null) continue;
             mTitleList.add(coinType.getSymbol());
-            mFragmentList.add(CoinTypeListFragment.getInstanse(coinType.getSymbol(), false));
+            mFragmentList.add(CoinTypeListFragment.getInstance(coinType.getSymbol(), false));
         }
 
         initViewPager();

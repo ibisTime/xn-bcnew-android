@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 
 import com.cdkj.baselibrary.api.ResponseInListModel;
 import com.cdkj.baselibrary.appmanager.MyCdConfig;
-import com.cdkj.baselibrary.appmanager.SPUtilHelpr;
+import com.cdkj.baselibrary.appmanager.SPUtilHelper;
 import com.cdkj.baselibrary.base.AbsRefreshListFragment;
 import com.cdkj.baselibrary.nets.BaseResponseModelCallBack;
 import com.cdkj.baselibrary.nets.RetrofitUtils;
@@ -35,7 +35,7 @@ import retrofit2.Call;
 public class MyCommentsListFragment extends AbsRefreshListFragment {
     public boolean isFirstRequest;
 
-    public static MyCommentsListFragment getInstanse() {
+    public static MyCommentsListFragment getInstance() {
         MyCommentsListFragment fragment = new MyCommentsListFragment();
         Bundle bundle = new Bundle();
         fragment.setArguments(bundle);
@@ -99,7 +99,7 @@ public class MyCommentsListFragment extends AbsRefreshListFragment {
 
         Map<String, String> map = new HashMap<>();
 
-        map.put("userId", SPUtilHelpr.getUserId());
+        map.put("userId", SPUtilHelper.getUserId());
         map.put("start", pageindex + "");
         map.put("limit", limit + "");
 

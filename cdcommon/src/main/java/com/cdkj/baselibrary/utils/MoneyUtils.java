@@ -12,6 +12,7 @@ import java.text.DecimalFormat;
 public class MoneyUtils {
 
     public static final String MONEYSING = "¥";
+    public static final String MONEYSING_USD = "$";
 
     /**
      * 发起请求的金额计算

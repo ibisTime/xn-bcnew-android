@@ -8,18 +8,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.cdkj.baselibrary.api.ResponseInListModel;
-import com.cdkj.baselibrary.appmanager.SPUtilHelpr;
-import com.cdkj.baselibrary.base.AbsRefreshListFragment;
 import com.cdkj.baselibrary.base.AbsTablayoutFragment;
-import com.cdkj.baselibrary.base.BaseLazyFragment;
 import com.cdkj.baselibrary.nets.BaseResponseListCallBack;
-import com.cdkj.baselibrary.nets.BaseResponseModelCallBack;
 import com.cdkj.baselibrary.nets.RetrofitUtils;
 import com.cdkj.baselibrary.utils.StringUtils;
-import com.cdkj.link_community.R;
 import com.cdkj.link_community.api.MyApiServer;
-import com.cdkj.link_community.model.FastMessage;
 import com.cdkj.link_community.model.MessageType;
 
 import java.util.ArrayList;
@@ -39,7 +32,7 @@ public class MessageFragment extends AbsTablayoutFragment {
     private List<String> mTitleList;
     private List<Fragment> mFragmentList;
 
-    public static MessageFragment getInstanse() {
+    public static MessageFragment getInstance() {
         MessageFragment fragment = new MessageFragment();
         Bundle bundle = new Bundle();
         fragment.setArguments(bundle);
@@ -52,6 +45,8 @@ public class MessageFragment extends AbsTablayoutFragment {
 
         mTitleList = new ArrayList<>();
         mFragmentList = new ArrayList<>();
+
+        getMessageTypeRequest();
 
         return super.onCreateView(inflater, container, savedInstanceState);
     }
@@ -121,11 +116,12 @@ public class MessageFragment extends AbsTablayoutFragment {
         for (MessageType datum : data) {
             if (datum == null) continue;
             mTitleList.add(datum.getName());
-            mFragmentList.add(MessageListFragment.getInstanse(datum.getCode(), i == 0, datum.getName()));
+            mFragmentList.add(MessageListFragment.getInstance(datum.getCode(), i == 0, datum.getName()));
             i++;
         }
 
         initViewPager();
+
         mTabLayoutBinding.viewpager.setOffscreenPageLimit(4);
         if (mTitleList.size() > 4) {
             mTabLayoutBinding.tablayout.setTabMode(TabLayout.MODE_SCROLLABLE);

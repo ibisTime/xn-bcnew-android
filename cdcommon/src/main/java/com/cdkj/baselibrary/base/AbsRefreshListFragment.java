@@ -49,6 +49,11 @@ public abstract class AbsRefreshListFragment<T> extends BaseLazyFragment {
             }
 
             @Override
+            public void onLoadMore(int pageindex, int limit) {
+                super.onLoadMore(pageindex, limit);
+            }
+
+            @Override
             public RecyclerView getRecyclerView() {
                 return mRefreshBinding.rv;
             }
@@ -59,8 +64,8 @@ public abstract class AbsRefreshListFragment<T> extends BaseLazyFragment {
             }
 
             @Override
-            public void getListDataRequest(int pageindex, int limit, boolean isShowDialog) {
-                getListRequest(pageindex, limit, isShowDialog);
+            public void getListDataRequest(int pageIndex, int limit, boolean isShowDialog) {
+                getListRequest(pageIndex, limit, isShowDialog);
             }
         });
         mRefreshHelper.init(limit);
@@ -70,7 +75,7 @@ public abstract class AbsRefreshListFragment<T> extends BaseLazyFragment {
 
     abstract public RecyclerView.Adapter getListAdapter(List<T> listData);
 
-    abstract public void getListRequest(int pageindex, int limit, boolean isShowDialog);
+    abstract public void getListRequest(int pageIndex, int limit, boolean isShowDialog);
 
 
     @Override

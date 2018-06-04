@@ -5,7 +5,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 
-import com.cdkj.baselibrary.appmanager.SPUtilHelpr;
 import com.cdkj.baselibrary.utils.DateUtil;
 import com.cdkj.baselibrary.utils.ImgUtils;
 import com.cdkj.baselibrary.utils.StringUtils;
@@ -43,7 +42,7 @@ public class UserCenterMessageRePlyListAdapter extends BaseQuickAdapter<UserMess
             viewHolder.setBackgroundColor(R.id.lin_bg, ContextCompat.getColor(mContext, R.color.white));
         }
 
-//        viewHolder.setText(R.id.tv_name, SPUtilHelpr.getUserNickName());
+//        viewHolder.setText(R.id.tv_name, SPUtilHelper.getUserNickName());
         viewHolder.setText(R.id.tv_content, item.getContent());
         viewHolder.setText(R.id.tv_time, DateUtil.formatStringData(item.getCommentDatetime(), DateUtil.DEFAULT_DATE_FMT));
 

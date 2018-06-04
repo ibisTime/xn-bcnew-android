@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 
 import com.cdkj.baselibrary.api.ResponseInListModel;
 import com.cdkj.baselibrary.appmanager.MyCdConfig;
-import com.cdkj.baselibrary.appmanager.SPUtilHelpr;
+import com.cdkj.baselibrary.appmanager.SPUtilHelper;
 import com.cdkj.baselibrary.base.AbsRefreshListFragment;
 import com.cdkj.baselibrary.dialog.UITipDialog;
 import com.cdkj.baselibrary.model.IsSuccessModes;
@@ -37,7 +37,7 @@ public class MarketHotSearchListFragment extends AbsRefreshListFragment {
 
     private SearchMarketListAdapter searchMarketListAdapter;
 
-    public static MarketHotSearchListFragment getInstanse() {
+    public static MarketHotSearchListFragment getInstance() {
         MarketHotSearchListFragment fragment = new MarketHotSearchListFragment();
         Bundle bundle = new Bundle();
         fragment.setArguments(bundle);
@@ -65,7 +65,7 @@ public class MarketHotSearchListFragment extends AbsRefreshListFragment {
         searchMarketListAdapter = new SearchMarketListAdapter(listData);
 
         searchMarketListAdapter.setOnItemClickListener((adapter, view, position) -> {
-            if (!SPUtilHelpr.isLogin(mActivity, false)) {
+            if (!SPUtilHelper.isLogin(mActivity, false)) {
                 return;
             }
             addMarketRequest(searchMarketListAdapter, position);
@@ -82,7 +82,7 @@ public class MarketHotSearchListFragment extends AbsRefreshListFragment {
 
         map.put("start", pageindex + "");
         map.put("limit", limit + "");
-        map.put("userId", SPUtilHelpr.getUserId());
+        map.put("userId", SPUtilHelper.getUserId());
 
         if (isShowDialog) showLoadingDialog();
 
@@ -126,10 +126,10 @@ public class MarketHotSearchListFragment extends AbsRefreshListFragment {
 
         Map<String, String> map = new HashMap<>();
 
-        map.put("userId", SPUtilHelpr.getUserId());
+        map.put("userId", SPUtilHelper.getUserId());
         map.put("exchangeEname", model.getExchangeEname());
-        map.put("toCoin", model.getToCoinSymbol());
-        map.put("coin", model.getCoinSymbol());
+        map.put("toSymbol", model.getToSymbol());
+        map.put("symbol", model.getSymbol());
 
         Call call = RetrofitUtils.getBaseAPiService().successRequest("628330", StringUtils.getJsonToString(map));
 

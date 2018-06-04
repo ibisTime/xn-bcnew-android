@@ -3,7 +3,6 @@ package com.cdkj.link_community.module.user;
 import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
@@ -90,7 +89,7 @@ public class UserCenterMessageRepyListActivity extends AbsRefreshListActivity {
     }
 
     @Override
-    public void getListRequest(int pageindex, int limit, boolean isShowDialog) {
+    public void getListRequest(int pageIndex, int limit, boolean isShowDialog) {
 
         if (TextUtils.isEmpty(mUserId)) {
             showSureDialog(getString(R.string.no_user_info), view -> {
@@ -102,7 +101,7 @@ public class UserCenterMessageRepyListActivity extends AbsRefreshListActivity {
         Map<String, String> map = new HashMap<>();
 
         map.put("userId", mUserId);
-        map.put("start", pageindex + "");
+        map.put("start", pageIndex + "");
         map.put("limit", limit + "");
 
         Call call = RetrofitUtils.createApi(MyApiServer.class).getUserMyCommentList("628210", StringUtils.getJsonToString(map));

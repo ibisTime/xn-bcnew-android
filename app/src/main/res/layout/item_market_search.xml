@@ -6,9 +6,9 @@
     android:layout_height="wrap_content"
     android:background="@color/white"
     android:orientation="horizontal"
-    android:paddingBottom="15dp"
+    android:paddingBottom="12dp"
     android:paddingLeft="15dp"
-    android:paddingTop="15dp">
+    android:paddingTop="12dp">
 
     <LinearLayout
         android:layout_width="0dp"
@@ -78,7 +78,7 @@
     <Button
         android:id="@+id/btn_state"
         android:layout_width="@dimen/width_market_btn"
-        android:layout_height="wrap_content"
+        android:layout_height="35dp"
         android:layout_gravity="center"
         android:layout_marginLeft="15dp"
         android:textColor="@color/white"
@@ -94,8 +94,8 @@
 
         <ImageView
             android:id="@+id/img_add_state"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
             android:layout_gravity="center"
             tools:src="@drawable/add_market_big" />
     </FrameLayout>

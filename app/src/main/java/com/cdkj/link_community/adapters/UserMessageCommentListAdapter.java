@@ -5,13 +5,12 @@ import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 
-import com.cdkj.baselibrary.appmanager.SPUtilHelpr;
+import com.cdkj.baselibrary.appmanager.SPUtilHelper;
 import com.cdkj.baselibrary.utils.DateUtil;
 import com.cdkj.baselibrary.utils.ImgUtils;
 import com.cdkj.baselibrary.utils.StringUtils;
 import com.cdkj.link_community.R;
 import com.cdkj.link_community.model.UserMessageComment;
-import com.cdkj.link_community.module.user.UserCenterBBSRepyListActivity;
 import com.cdkj.link_community.module.user.UserCenterMessageRepyListActivity;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -46,7 +45,7 @@ public class UserMessageCommentListAdapter extends BaseQuickAdapter<UserMessageC
 
         ImgUtils.loadQiniuLogo(mContext, item.getPhoto(), viewHolder.getView(R.id.img_logo));
 
-        viewHolder.setText(R.id.tv_name, SPUtilHelpr.getUserNickName());
+        viewHolder.setText(R.id.tv_name, SPUtilHelper.getUserNickName());
         viewHolder.setText(R.id.tv_content, item.getContent());
         viewHolder.setText(R.id.tv_time, DateUtil.formatStringData(item.getCommentDatetime(), DateUtil.DEFAULT_DATE_FMT));
 

@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import com.cdkj.baselibrary.api.ResponseInListModel;
 import com.cdkj.baselibrary.appmanager.CdRouteHelper;
 import com.cdkj.baselibrary.appmanager.MyCdConfig;
-import com.cdkj.baselibrary.appmanager.SPUtilHelpr;
+import com.cdkj.baselibrary.appmanager.SPUtilHelper;
 import com.cdkj.baselibrary.base.AbsRefreshListFragment;
 import com.cdkj.baselibrary.dialog.UITipDialog;
 import com.cdkj.baselibrary.model.IsSuccessModes;
@@ -44,10 +44,10 @@ public class MyFocuseOnCoinBBSListFragment extends AbsRefreshListFragment {
      * @param isFirstRequest
      * @return
      */
-    public static MyFocuseOnCoinBBSListFragment getInstanse(boolean isFirstRequest) {
+    public static MyFocuseOnCoinBBSListFragment getInstance(boolean isFirstRequest) {
         MyFocuseOnCoinBBSListFragment fragment = new MyFocuseOnCoinBBSListFragment();
         Bundle bundle = new Bundle();
-        bundle.putBoolean(CdRouteHelper.DATASIGN, isFirstRequest);
+        bundle.putBoolean(CdRouteHelper.DATA_SIGN, isFirstRequest);
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -72,7 +72,7 @@ public class MyFocuseOnCoinBBSListFragment extends AbsRefreshListFragment {
     protected void afterCreate(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         if (getArguments() != null) {
-            isFirstRequest = getArguments().getBoolean(CdRouteHelper.DATASIGN);
+            isFirstRequest = getArguments().getBoolean(CdRouteHelper.DATA_SIGN);
         }
 
         initRefreshHelper(MyCdConfig.LISTLIMIT);
@@ -112,7 +112,7 @@ public class MyFocuseOnCoinBBSListFragment extends AbsRefreshListFragment {
     @Override
     public void getListRequest(int pageindex, int limit, boolean isShowDialog) {
 
-        if (!SPUtilHelpr.isLoginNoStart()) {
+        if (!SPUtilHelper.isLoginNoStart()) {
             mRefreshHelper.setData(new ArrayList(), getString(R.string.no_coin_bbs), 0);
             return;
         }
@@ -120,7 +120,7 @@ public class MyFocuseOnCoinBBSListFragment extends AbsRefreshListFragment {
 
         Map<String, String> map = new HashMap<>();
 
-        map.put("userId", SPUtilHelpr.getUserId());
+        map.put("userId", SPUtilHelper.getUserId());
         map.put("start", pageindex + "");
         map.put("limit", limit + "");
 
@@ -158,7 +158,7 @@ public class MyFocuseOnCoinBBSListFragment extends AbsRefreshListFragment {
      */
     public void focuseonRequest(MyCoinBBSListAdapter adapter, int position) {
 
-        if (!SPUtilHelpr.isLogin(mActivity, false)) {
+        if (!SPUtilHelper.isLogin(mActivity, false)) {
             return;
         }
 
@@ -168,7 +168,7 @@ public class MyFocuseOnCoinBBSListFragment extends AbsRefreshListFragment {
 
         Map<String, String> map = new HashMap<>();
         map.put("code", coinBBSListModel.getCode());
-        map.put("userId", SPUtilHelpr.getUserId());
+        map.put("userId", SPUtilHelper.getUserId());
 
         Call call = RetrofitUtils.getBaseAPiService().successRequest("628240", StringUtils.getJsonToString(map));
 

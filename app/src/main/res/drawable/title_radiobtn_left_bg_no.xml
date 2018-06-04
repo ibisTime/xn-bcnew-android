@@ -3,7 +3,7 @@
     <corners
         android:bottomLeftRadius="@dimen/radiobtn_bg_radius"
         android:topLeftRadius="@dimen/radiobtn_bg_radius" />
-    <stroke
-        android:width="0.5dp"
-        android:color="@color/white" />
+    <!--<stroke-->
+        <!--android:width="0.5dp"-->
+        <!--android:color="@color/white" />-->
 </shape>

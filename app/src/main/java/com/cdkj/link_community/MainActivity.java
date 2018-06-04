@@ -26,6 +26,8 @@ import com.cdkj.link_community.model.FastMessage;
 import com.cdkj.link_community.model.MarketInterval;
 import com.cdkj.link_community.model.TabCurrentModel;
 import com.cdkj.link_community.model.VersionModel;
+import com.cdkj.link_community.model.event.EventMarketIntervalPause;
+import com.cdkj.link_community.module.maintab.ActiveFragment;
 import com.cdkj.link_community.module.maintab.CoinBBSFragment;
 import com.cdkj.link_community.module.maintab.FirstPageFragment;
 import com.cdkj.link_community.module.maintab.MarketPageFragment;
@@ -33,6 +35,7 @@ import com.cdkj.link_community.module.maintab.UserFragment;
 import com.cdkj.link_community.module.message.FastMessageToShareActivity;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -63,7 +66,6 @@ public class MainActivity extends AbsBaseLoadActivity {
     public static final int SHOWMY = 4;//显示我的界面
 
     private boolean isMarketInterval;//行情是否开始轮询
-
 
     private boolean isSume;//页面是否显示 用于轮询停止
 
@@ -137,6 +139,9 @@ public class MainActivity extends AbsBaseLoadActivity {
 
     private void getFastMessage(String code) {
 
+        if (TextUtils.equals(code,"notOpen"))
+            return;
+
         Map<String, String> map = new HashMap<>();
 
         map.put("companyCode", MyCdConfig.COMPANYCODE);
@@ -205,6 +210,9 @@ public class MainActivity extends AbsBaseLoadActivity {
                 case R.id.radio_main_tab_4:
                     mBinding.pagerMain.setCurrentItem(3);
                     break;
+                case R.id.radio_main_tab_5:
+                    mBinding.pagerMain.setCurrentItem(4);
+                    break;
                 default:
             }
 
@@ -219,7 +227,7 @@ public class MainActivity extends AbsBaseLoadActivity {
      */
     public Disposable startMarketInterval() {
         isMarketInterval = true;
-        return Observable.interval(12, 12, TimeUnit.SECONDS, AndroidSchedulers.mainThread())    //
+        return Observable.interval(10, 10, TimeUnit.SECONDS, AndroidSchedulers.mainThread())    //
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<Long>() {
                                @Override
@@ -235,6 +243,33 @@ public class MainActivity extends AbsBaseLoadActivity {
                 );
     }
 
+    @Subscribe
+    public void marketToStopInterval(EventMarketIntervalPause pause){
+        if (isSume){
+            isSume = false;
+            mSubscription.add(stopMarketInterval());
+
+        }else {
+
+        }
+
+    }
+
+    /**
+     * 停止行情轮询： 20S
+     *
+     * @return
+     */
+    public Disposable stopMarketInterval() {
+
+        return Observable.interval(0, 1, TimeUnit.SECONDS, AndroidSchedulers.mainThread())    //
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .take(20)
+                .subscribe(aLong -> {
+                }, throwable -> isSume = true);
+    }
+
     /**
      * 初始化ViewPager
      */
@@ -243,10 +278,11 @@ public class MainActivity extends AbsBaseLoadActivity {
         //设置fragment数据
         ArrayList fragments = new ArrayList<>();
 
-        fragments.add(FirstPageFragment.getInstanse());
-        fragments.add(MarketPageFragment.getInstanse());
-        fragments.add(CoinBBSFragment.getInstanse());
-        fragments.add(UserFragment.getInstanse());
+        fragments.add(FirstPageFragment.getInstance());
+        fragments.add(MarketPageFragment.getInstance());
+        fragments.add(CoinBBSFragment.getInstance());
+        fragments.add(ActiveFragment.getInstance());
+        fragments.add(UserFragment.getInstance());
 
         mBinding.pagerMain.setAdapter(new ViewPagerAdapter(getSupportFragmentManager(), fragments));
         mBinding.pagerMain.setOffscreenPageLimit(fragments.size());

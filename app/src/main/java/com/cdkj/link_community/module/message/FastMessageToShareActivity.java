@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -41,12 +40,10 @@ import com.tencent.connect.common.Constants;
 import com.tencent.tauth.Tencent;
 import com.uuzuche.lib_zxing.activity.CodeUtils;
 
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -84,7 +81,7 @@ public class FastMessageToShareActivity extends AbsBaseLoadActivity {
             return;
         }
         Intent intent = new Intent(context, FastMessageToShareActivity.class);
-        intent.putExtra(CdRouteHelper.DATASIGN, message);
+        intent.putExtra(CdRouteHelper.DATA_SIGN, message);
         context.startActivity(intent);
     }
 
@@ -108,7 +105,7 @@ public class FastMessageToShareActivity extends AbsBaseLoadActivity {
         QQUiListener = new QQUiListener(this);
 
         if (getIntent() != null) {
-            FastMessage fastMessage = getIntent().getParcelableExtra(CdRouteHelper.DATASIGN);
+            FastMessage fastMessage = getIntent().getParcelableExtra(CdRouteHelper.DATA_SIGN);
 
             if (fastMessage == null) return;
 
@@ -201,7 +198,7 @@ public class FastMessageToShareActivity extends AbsBaseLoadActivity {
     public void getShareUrl() {
 
         Map<String, String> map = new HashMap<>();
-        map.put("ckey", "h5DownUrl");
+        map.put("ckey", "h5Url");
         map.put("systemCode", MyCdConfig.SYSTEMCODE);
         map.put("companyCode", MyCdConfig.COMPANYCODE);
 
@@ -235,7 +232,7 @@ public class FastMessageToShareActivity extends AbsBaseLoadActivity {
      * @param url
      */
     public void createCodePhoto(String url) {
-        mSubscription.add(Observable.just(url).map(s -> CodeUtils.createImage(s, 300, 300, null))
+        mSubscription.add(Observable.just(url+"/download/download.html").map(s -> CodeUtils.createImage(s, 300, 300, null))
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.io())
                 .filter(bitmap -> bitmap != null)

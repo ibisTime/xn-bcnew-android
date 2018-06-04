@@ -12,7 +12,7 @@ import com.cdkj.baselibrary.api.BaseResponseModel;
 import com.cdkj.baselibrary.api.ResponseInListModel;
 import com.cdkj.baselibrary.appmanager.CdRouteHelper;
 import com.cdkj.baselibrary.appmanager.MyCdConfig;
-import com.cdkj.baselibrary.appmanager.SPUtilHelpr;
+import com.cdkj.baselibrary.appmanager.SPUtilHelper;
 import com.cdkj.baselibrary.base.AbsRefreshListActivity;
 import com.cdkj.baselibrary.model.IsSuccessModes;
 import com.cdkj.baselibrary.nets.BaseResponseModelCallBack;
@@ -50,7 +50,7 @@ public class MessageCommentListActivity extends AbsRefreshListActivity {
             return;
         }
         Intent intent = new Intent(context, MessageCommentListActivity.class);
-        intent.putExtra(CdRouteHelper.DATASIGN, msgCode);
+        intent.putExtra(CdRouteHelper.DATA_SIGN, msgCode);
         context.startActivity(intent);
     }
 
@@ -60,14 +60,14 @@ public class MessageCommentListActivity extends AbsRefreshListActivity {
     }
 
     @Override
-    public void getListRequest(int pageindex, int limit, boolean isShowDialog) {
-        getMsgDetailsNewCommentListRequest(pageindex, limit, isShowDialog);
+    public void getListRequest(int pageIndex, int limit, boolean isShowDialog) {
+        getMsgDetailsNewCommentListRequest(pageIndex, limit, isShowDialog);
     }
 
     @Override
     public void afterCreate(Bundle savedInstanceState) {
         if (getIntent() != null) {
-            mCode = getIntent().getStringExtra(CdRouteHelper.DATASIGN);
+            mCode = getIntent().getStringExtra(CdRouteHelper.DATA_SIGN);
         }
 
         mBaseBinding.titleView.setMidTitle("评论");
@@ -90,7 +90,7 @@ public class MessageCommentListActivity extends AbsRefreshListActivity {
         msgHotCommentListAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                MessageCommentDetailsActivity.open(MessageCommentListActivity.this, msgHotCommentListAdapter.getItem(position).getCode());
+                MessageCommentDetailsActivity.open(MessageCommentListActivity.this, msgHotCommentListAdapter.getItem(position).getCode(),false);
 //                commentPlayRequest(msgHotCommentListAdapter.getItem(position).getCode());
             }
         });
@@ -98,7 +98,7 @@ public class MessageCommentListActivity extends AbsRefreshListActivity {
         /*点赞*/
         msgHotCommentListAdapter.setOnItemChildClickListener((adapter, view, position) -> {
 
-            if (!SPUtilHelpr.isLogin(MessageCommentListActivity.this, false)) {
+            if (!SPUtilHelper.isLogin(MessageCommentListActivity.this, false)) {
                 return;
             }
 
@@ -123,8 +123,8 @@ public class MessageCommentListActivity extends AbsRefreshListActivity {
 
         map.put("type", COMMENTCOMMENT);
         map.put("objectCode", msgDetailsComment.getCode());
-        map.put("userId", SPUtilHelpr.getUserId());
-        map.put("token", SPUtilHelpr.getUserToken());
+        map.put("userId", SPUtilHelper.getUserId());
+        map.put("token", SPUtilHelper.getUserToken());
 
         showLoadingDialog();
         Call call = RetrofitUtils.getBaseAPiService().successRequest("628201", StringUtils.getJsonToString(map));
@@ -170,7 +170,7 @@ public class MessageCommentListActivity extends AbsRefreshListActivity {
         map.put("objectCode", mCode);
         map.put("start", pageindex + "");
         map.put("limit", limit + "");
-        map.put("userId", SPUtilHelpr.getUserId());
+        map.put("userId", SPUtilHelper.getUserId());
 
         if (isShowDialog) showLoadingDialog();
 

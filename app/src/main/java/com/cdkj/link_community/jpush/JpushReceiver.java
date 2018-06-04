@@ -33,7 +33,6 @@ public class JpushReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         try {
             Bundle bundle = intent.getExtras();
-            Log.d(TAG, "[MyReceiver] onReceive - " + intent.getAction() + ", extras: " + printBundle(bundle));
 
             if (JPushInterface.ACTION_REGISTRATION_ID.equals(intent.getAction())) {
                 String regId = bundle.getString(JPushInterface.EXTRA_REGISTRATION_ID);
@@ -51,6 +50,8 @@ public class JpushReceiver extends BroadcastReceiver {
             } else if (JPushInterface.ACTION_NOTIFICATION_OPENED.equals(intent.getAction())) {
 
                 Log.d(TAG, "[MyReceiver] 用户点击打开了通知");
+
+                Log.d(TAG, "[MyReceiver] onReceive - " + intent.getAction() + ", extras: " + printBundle(bundle));
 
                 //打开自定义的Activity
                 Intent i = new Intent(context, MainActivity.class);
@@ -98,7 +99,11 @@ public class JpushReceiver extends BroadcastReceiver {
                         sb.append("\nkey:" + key + ", value: [" +
                                 myKey + " - " + json.optString(myKey) + "]");
 
-                        extraValue = json.optString(myKey);
+                        if (TextUtils.equals(myKey, "flashCode")) {
+                            extraValue = json.optString(myKey);
+                        }else if(TextUtils.equals(myKey, "priceWarn")){
+                            extraValue = "notOpen";
+                        }
 
                         Log.e("JpushReceiver",extraValue);
                     }

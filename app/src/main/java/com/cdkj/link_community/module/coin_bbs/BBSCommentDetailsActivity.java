@@ -10,7 +10,7 @@ import android.text.TextUtils;
 import android.view.View;
 
 import com.cdkj.baselibrary.appmanager.CdRouteHelper;
-import com.cdkj.baselibrary.appmanager.SPUtilHelpr;
+import com.cdkj.baselibrary.appmanager.SPUtilHelper;
 import com.cdkj.baselibrary.base.AbsBaseLoadActivity;
 import com.cdkj.baselibrary.databinding.EmptyViewBinding;
 import com.cdkj.baselibrary.dialog.UITipDialog;
@@ -31,7 +31,6 @@ import com.cdkj.link_community.dialog.CommentInputDialog;
 import com.cdkj.link_community.model.CoinBBSHotCircular;
 import com.cdkj.link_community.model.ReplyComment;
 import com.cdkj.link_community.module.user.UserCenterBBSRepyListActivity;
-import com.cdkj.link_community.module.user.UserCenterMessageRepyListActivity;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 
 import java.math.BigDecimal;
@@ -109,7 +108,7 @@ public class BBSCommentDetailsActivity extends AbsBaseLoadActivity {
      */
     private void circularLikeRequest() {
 
-        if (!SPUtilHelpr.isLogin(this, false)) {
+        if (!SPUtilHelper.isLogin(this, false)) {
             return;
         }
 
@@ -121,7 +120,7 @@ public class BBSCommentDetailsActivity extends AbsBaseLoadActivity {
 
         map.put("type", "1"); /*1 帖子，2评论*/
         map.put("objectCode", coinBBSHotCircular.getCode());
-        map.put("userId", SPUtilHelpr.getUserId());
+        map.put("userId", SPUtilHelper.getUserId());
 
         showLoadingDialog();
         Call call = RetrofitUtils.getBaseAPiService().successRequest("628653", StringUtils.getJsonToString(map));
@@ -171,7 +170,7 @@ public class BBSCommentDetailsActivity extends AbsBaseLoadActivity {
         Map<String, String> map = new HashMap<>();
 
         map.put("code", mCommentCode);
-        map.put("userId", SPUtilHelpr.getUserId());
+        map.put("userId", SPUtilHelper.getUserId());
 
         Call call = RetrofitUtils.createApi(MyApiServer.class).getBBSCommentDetails("628663", StringUtils.getJsonToString(map));
 
@@ -281,7 +280,7 @@ public class BBSCommentDetailsActivity extends AbsBaseLoadActivity {
      */
     private void commentPlayRequest(String code, String name) {
 
-        if (!SPUtilHelpr.isLogin(BBSCommentDetailsActivity.this, false)) {
+        if (!SPUtilHelper.isLogin(BBSCommentDetailsActivity.this, false)) {
             return;
         }
 
@@ -318,7 +317,7 @@ public class BBSCommentDetailsActivity extends AbsBaseLoadActivity {
         map.put("type", type);
         map.put("objectCode", code);
         map.put("content", content);
-        map.put("userId", SPUtilHelpr.getUserId());
+        map.put("userId", SPUtilHelper.getUserId());
 
         showLoadingDialog();
         Call call = RetrofitUtils.getBaseAPiService().codeRequest("628652", StringUtils.getJsonToString(map));

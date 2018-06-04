@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.cdkj.baselibrary.appmanager.CdRouteHelper;
-import com.cdkj.baselibrary.appmanager.SPUtilHelpr;
+import com.cdkj.baselibrary.appmanager.SPUtilHelper;
 import com.cdkj.baselibrary.base.BaseLazyFragment;
 import com.cdkj.baselibrary.dialog.CommonDialog;
 import com.cdkj.baselibrary.dialog.UITipDialog;
@@ -21,11 +21,13 @@ import com.cdkj.link_community.api.MyApiServer;
 import com.cdkj.link_community.databinding.FragmentUserBinding;
 import com.cdkj.link_community.manager.DataCleanManager;
 import com.cdkj.link_community.model.UserInfoModel;
+import com.cdkj.link_community.module.active.MyActiveActivity;
 import com.cdkj.link_community.module.user.LoginActivity;
-import com.cdkj.link_community.module.user.MyCoinBBSCommentsActivity;
-import com.cdkj.link_community.module.user.MyCollectionListActivity;
+import com.cdkj.link_community.module.user.MyMessageActivity;
 import com.cdkj.link_community.module.user.MyMessageCommentsActivity;
+import com.cdkj.link_community.module.user.UserCollectListActivity;
 import com.cdkj.link_community.module.user.UserInfoUpdateActivity;
+import com.cdkj.link_community.module.user.UserPersonActivity;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -48,7 +50,7 @@ public class UserFragment extends BaseLazyFragment {
 
     private UserInfoModel mUserInfo;
 
-    public static UserFragment getInstanse() {
+    public static UserFragment getInstance() {
         UserFragment fragment = new UserFragment();
         Bundle bundle = new Bundle();
         fragment.setArguments(bundle);
@@ -72,16 +74,17 @@ public class UserFragment extends BaseLazyFragment {
          * 用户登录
          */
         mBinding.linUserHead.setOnClickListener(view -> {
-            if (!SPUtilHelpr.isLogin(mActivity, false)) {
+            if (!SPUtilHelper.isLogin(mActivity, false)) {
                 return;
             }
+            UserPersonActivity.open(mActivity, mUserInfo);
         });
 
         /**
          * 编辑
          */
         mBinding.tvEdit.setOnClickListener(view -> {
-            if (!SPUtilHelpr.isLogin(mActivity, false)) {
+            if (!SPUtilHelper.isLogin(mActivity, false)) {
                 return;
             }
             UserInfoUpdateActivity.open(mActivity, mUserInfo);
@@ -89,26 +92,40 @@ public class UserFragment extends BaseLazyFragment {
 
         //收藏
         mBinding.rowCollection.setOnClickListener(view -> {
-            if (!SPUtilHelpr.isLogin(mActivity, false)) {
+            if (!SPUtilHelper.isLogin(mActivity, false)) {
                 return;
             }
-            MyCollectionListActivity.open(mActivity);
+            UserCollectListActivity.open(mActivity);
         });
 
-        /*币圈评论*/
-        mBinding.rowCommentBbs.setOnClickListener(view -> {
-            if (!SPUtilHelpr.isLogin(mActivity, false)) {
+//        /*币圈评论*/
+//        mBinding.rowCommentBbs.setOnClickListener(view -> {
+//            if (!SPUtilHelper.isLogin(mActivity, false)) {
+//                return;
+//            }
+//            MyCoinBBSCommentsActivity.open(mActivity);
+//        });
+
+        mBinding.rowActive.setOnClickListener(view -> {
+            if (!SPUtilHelper.isLogin(mActivity, false)) {
                 return;
             }
-            MyCoinBBSCommentsActivity.open(mActivity);
+            MyActiveActivity.open(mActivity);
         });
 
        /*资讯评论*/
         mBinding.rowCommentMessage.setOnClickListener(view -> {
-            if (!SPUtilHelpr.isLogin(mActivity, false)) {
+            if (!SPUtilHelper.isLogin(mActivity, false)) {
                 return;
             }
             MyMessageCommentsActivity.open(mActivity);
+        });
+
+        mBinding.rowMessage.setOnClickListener(view -> {
+            if (!SPUtilHelper.isLogin(mActivity, false)) {
+                return;
+            }
+            MyMessageActivity.open(mActivity);
         });
 
         mBinding.rowAbout.setOnClickListener(view -> {
@@ -129,7 +146,7 @@ public class UserFragment extends BaseLazyFragment {
      */
     private void logOut() {
         showDoubleWarnListen(getString(R.string.sure_logout), view -> {
-            SPUtilHelpr.logOutClear();
+            SPUtilHelper.logOutClear();
             setShowState();
             UITipDialog.showSuccess(mActivity, getString(R.string.logout_succ),dialogInterface -> {
                 LoginActivity.open(mActivity,false);
@@ -168,7 +185,7 @@ public class UserFragment extends BaseLazyFragment {
         super.onResume();
         if (getUserVisibleHint()) {
             setShowState();
-            if (SPUtilHelpr.isLoginNoStart()) {
+            if (SPUtilHelper.isLoginNoStart()) {
                 getUserInfoRequest(true);
             }
         }
@@ -178,7 +195,7 @@ public class UserFragment extends BaseLazyFragment {
      * 根据登录显示状态
      */
     private void setShowState() {
-        if (!SPUtilHelpr.isLoginNoStart()) {   //没有登录
+        if (!SPUtilHelper.isLoginNoStart()) {   //没有登录
             mBinding.tvLogout.setVisibility(View.GONE);
             mBinding.tvEdit.setVisibility(View.GONE);
             mBinding.tvUserName.setText(R.string.fast_to_login);
@@ -196,7 +213,7 @@ public class UserFragment extends BaseLazyFragment {
         }
         setShowState();
         setShowCache();
-        if (SPUtilHelpr.isLoginNoStart()) {
+        if (SPUtilHelper.isLoginNoStart()) {
             getUserInfoRequest(false);
         }
 
@@ -224,14 +241,14 @@ public class UserFragment extends BaseLazyFragment {
      */
     public void getUserInfoRequest(final boolean isShowdialog) {
 
-        if (!SPUtilHelpr.isLoginNoStart()) {  //没有登录不用请求
+        if (!SPUtilHelper.isLoginNoStart()) {  //没有登录不用请求
             return;
         }
 
         Map<String, String> map = new HashMap<>();
 
-        map.put("userId", SPUtilHelpr.getUserId());
-        map.put("token", SPUtilHelpr.getUserToken());
+        map.put("userId", SPUtilHelper.getUserId());
+        map.put("token", SPUtilHelper.getUserToken());
 
         Call call = RetrofitUtils.createApi(MyApiServer.class).getUserInfoDetails("805121", StringUtils.getJsonToString(map));
 
@@ -245,10 +262,10 @@ public class UserFragment extends BaseLazyFragment {
                 mUserInfo = data;
                 mBinding.tvUserName.setText(data.getNickname());
                 ImgUtils.loadQiniuLogo(UserFragment.this, data.getPhoto(), mBinding.imgUserLogo);
-                SPUtilHelpr.saveUserPhoneNum(data.getMobile());
-                SPUtilHelpr.saveUserName(data.getRealName());
-                SPUtilHelpr.saveUserNickName(data.getNickname());
-                SPUtilHelpr.saveUserPhoto(data.getPhoto());
+                SPUtilHelper.saveUserPhoneNum(data.getMobile());
+                SPUtilHelper.saveUserName(data.getRealName());
+                SPUtilHelper.saveUserNickName(data.getNickname());
+                SPUtilHelper.saveUserPhoto(data.getPhoto());
 
             }
 

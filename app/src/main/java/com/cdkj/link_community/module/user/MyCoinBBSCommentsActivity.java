@@ -76,8 +76,8 @@ public class MyCoinBBSCommentsActivity extends AbsBaseLoadActivity {
         //设置fragment数据
         ArrayList fragments = new ArrayList<>();
 
-        fragments.add(MyBBSCommentsListFragment.getInstanse());
-        fragments.add(MyBBSCommentsList2Fragment.getInstanse());
+        fragments.add(MyBBSCommentsListFragment.getInstance());
+        fragments.add(MyBBSCommentsList2Fragment.getInstance());
 
         mBinding.viewpager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager(), fragments));
         mBinding.viewpager.setOffscreenPageLimit(fragments.size());

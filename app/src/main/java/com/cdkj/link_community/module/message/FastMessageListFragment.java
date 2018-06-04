@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import com.cdkj.baselibrary.api.ResponseInListModel;
 import com.cdkj.baselibrary.appmanager.CdRouteHelper;
 import com.cdkj.baselibrary.appmanager.MyCdConfig;
-import com.cdkj.baselibrary.appmanager.SPUtilHelpr;
+import com.cdkj.baselibrary.appmanager.SPUtilHelper;
 import com.cdkj.baselibrary.base.AbsRefreshListFragment;
 import com.cdkj.baselibrary.nets.BaseResponseModelCallBack;
 import com.cdkj.baselibrary.nets.RetrofitUtils;
@@ -20,7 +20,6 @@ import com.cdkj.link_community.adapters.FastMessageListAdapter;
 import com.cdkj.link_community.api.MyApiServer;
 import com.cdkj.link_community.model.FastMessage;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -47,10 +46,10 @@ public class FastMessageListFragment extends AbsRefreshListFragment {
      * @param isFirstRequest 是否在创建时就请求数据
      * @return
      */
-    public static FastMessageListFragment getInstanse(int messageType, boolean isFirstRequest) {
+    public static FastMessageListFragment getInstance(int messageType, boolean isFirstRequest) {
         FastMessageListFragment fragment = new FastMessageListFragment();
         Bundle bundle = new Bundle();
-        bundle.putInt(CdRouteHelper.DATASIGN, messageType);
+        bundle.putInt(CdRouteHelper.DATA_SIGN, messageType);
         bundle.putBoolean(ISFIRSTREQUEST, isFirstRequest);
         fragment.setArguments(bundle);
         return fragment;
@@ -73,7 +72,7 @@ public class FastMessageListFragment extends AbsRefreshListFragment {
     protected void afterCreate(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         if (getArguments() != null) {
-            messageType = getArguments().getInt(CdRouteHelper.DATASIGN);
+            messageType = getArguments().getInt(CdRouteHelper.DATA_SIGN);
             isFirstRequest = getArguments().getBoolean(ISFIRSTREQUEST);
         }
 
@@ -105,7 +104,7 @@ public class FastMessageListFragment extends AbsRefreshListFragment {
             map.put("type", "1");
         }
 
-        map.put("userId", SPUtilHelpr.getUserId());
+        map.put("userId", SPUtilHelper.getUserId());
         map.put("start", pageindex + "");
         map.put("limit", limit + "");
 

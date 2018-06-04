@@ -98,7 +98,7 @@ public class AddMarketActivity extends AbsTablayoutActivity {
         for (AddMarketModel type : data) {
             if (type == null) continue;
             mTitleList.add(type.getSname());
-            mFragmentList.add(AddMarketListFragment.getInstanse(type, i == 0));
+            mFragmentList.add(AddMarketListFragment.getInstance(type, i == 0));
             i++;
         }
 

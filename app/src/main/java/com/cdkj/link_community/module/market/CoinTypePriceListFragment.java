@@ -4,22 +4,18 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import com.cdkj.baselibrary.api.ResponseInListModel;
-import com.cdkj.baselibrary.appmanager.CdRouteHelper;
 import com.cdkj.baselibrary.appmanager.MyCdConfig;
 import com.cdkj.baselibrary.base.AbsRefreshListFragment;
 import com.cdkj.baselibrary.nets.BaseResponseModelCallBack;
 import com.cdkj.baselibrary.nets.RetrofitUtils;
 import com.cdkj.baselibrary.utils.StringUtils;
 import com.cdkj.link_community.R;
-import com.cdkj.link_community.adapters.CoinListAdapter;
 import com.cdkj.link_community.adapters.CoinPriceListAdapter;
 import com.cdkj.link_community.api.MyApiServer;
-import com.cdkj.link_community.model.CoinListModel;
 import com.cdkj.link_community.model.CoinPrice;
 import com.cdkj.link_community.model.MarketInterval;
 
@@ -44,7 +40,7 @@ public class CoinTypePriceListFragment extends AbsRefreshListFragment {
     /**
      * @return
      */
-    public static CoinTypePriceListFragment getInstanse(Boolean isFirstRequest) {
+    public static CoinTypePriceListFragment getInstance(Boolean isFirstRequest) {
         CoinTypePriceListFragment fragment = new CoinTypePriceListFragment();
         Bundle bundle = new Bundle();
         bundle.putBoolean("isFirstRequest", isFirstRequest);

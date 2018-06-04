@@ -10,7 +10,7 @@ import android.text.TextUtils;
 import android.view.View;
 
 import com.cdkj.baselibrary.appmanager.CdRouteHelper;
-import com.cdkj.baselibrary.appmanager.SPUtilHelpr;
+import com.cdkj.baselibrary.appmanager.SPUtilHelper;
 import com.cdkj.baselibrary.base.AbsBaseLoadActivity;
 import com.cdkj.baselibrary.dialog.UITipDialog;
 import com.cdkj.baselibrary.model.IsSuccessModes;
@@ -48,7 +48,7 @@ public class NickNameUpdateActivity extends AbsBaseLoadActivity {
             return;
         }
         Intent intent = new Intent(context, NickNameUpdateActivity.class);
-        intent.putExtra(CdRouteHelper.DATASIGN, nickName);
+        intent.putExtra(CdRouteHelper.DATA_SIGN, nickName);
         context.startActivity(intent);
     }
 
@@ -80,7 +80,7 @@ public class NickNameUpdateActivity extends AbsBaseLoadActivity {
         mBaseBinding.titleView.setRightTitle(getString(R.string.sure));
 
         if (getIntent() != null) {
-            mBinding.edit.setText(getIntent().getStringExtra(CdRouteHelper.DATASIGN));
+            mBinding.edit.setText(getIntent().getStringExtra(CdRouteHelper.DATA_SIGN));
         }
 
     }
@@ -95,7 +95,7 @@ public class NickNameUpdateActivity extends AbsBaseLoadActivity {
 
         Map<String, String> map = new HashMap<String, String>();
         map.put("nickname", string);
-        map.put("token", SPUtilHelpr.getUserToken());
+        map.put("token", SPUtilHelper.getUserToken());
         Call call = RetrofitUtils.getBaseAPiService().successRequest("805084", StringUtils.getJsonToString(map));
 
         addCall(call);

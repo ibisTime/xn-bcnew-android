@@ -5,7 +5,6 @@ import android.support.v4.content.ContextCompat;
 
 import com.cdkj.baselibrary.utils.StringUtils;
 import com.cdkj.link_community.R;
-import com.cdkj.link_community.model.CoinListModel;
 import com.cdkj.link_community.model.CoinPrice;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;

@@ -25,7 +25,7 @@ public class CdRouteHelper {
     public static final String WEBVIEWACTIVITY = "/commen/webView";
 
     //获取数据标志
-    public static final String DATASIGN = "dataSign";
+    public static final String DATA_SIGN = "dataSign";
 
 
     /**
@@ -35,7 +35,7 @@ public class CdRouteHelper {
      */
     public static void openLogin(boolean canopenmain) {
         ARouter.getInstance().build(APPLOGIN)
-                .withBoolean(DATASIGN, canopenmain)
+                .withBoolean(DATA_SIGN, canopenmain)
                 .greenChannel()                                       //不使用任何拦截器
                 .navigation();
     }
@@ -47,7 +47,7 @@ public class CdRouteHelper {
      */
     public static void openFindPwdActivity(String phoneNum) {
         ARouter.getInstance().build(FINDPWD)
-                .withString(DATASIGN, phoneNum)
+                .withString(DATA_SIGN, phoneNum)
                 .navigation();
     }
 
@@ -66,7 +66,7 @@ public class CdRouteHelper {
      */
     public static void openUpdateBankCardActivity(BankCardModel data) {
         ARouter.getInstance().build(UPDATEBANKCARD)
-                .withParcelable(DATASIGN, data)
+                .withParcelable(DATA_SIGN, data)
                 .navigation();
     }
 
@@ -93,8 +93,8 @@ public class CdRouteHelper {
      * @param url
      */
     public static void openWebViewActivityForUrl(String title, String url) {
-        ARouter.getInstance().build(APPLOGIN)
-                .withString(WEBVIEWACTIVITY, title)
+        ARouter.getInstance().build(WEBVIEWACTIVITY)
+                .withString(WEBVIEWTITLE, title)
                 .withString(WEBVIEWURL, url)
                 .withBoolean(WEBVIEWISZOOM, true)
                 .greenChannel()

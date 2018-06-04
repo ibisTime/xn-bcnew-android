@@ -2,15 +2,32 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.cdkj.link_community">
 
+    <!-- 允许程序打开网络套接字 -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <!-- 允许程序设置内置sd卡的写权限 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <!-- 允许程序获取网络状态 -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <!-- 允许程序访问WiFi网络信息 -->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <!-- 允许程序读写手机状态和身份 -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <!-- 允许程序访问CellID或WiFi热点来获取粗略的位置 -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <!-- 允许程序访问CellID或WiFi热点来获取粗略的位置 -->
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+
+    <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
         android:name=".BaseApplication"
         android:allowBackup="true"
         android:icon="@mipmap/logo"
         android:label="@string/app_name"
+        android:roundIcon="@mipmap/logo_round"
         android:supportsRtl="true"
+        android:hardwareAccelerated="true"
         android:theme="@style/AppTheme">
-
         <activity android:name=".WelcomeAcitivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -18,130 +35,129 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".MainActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
 
-        <!--快讯分享-->
+        <!-- 快讯分享 -->
         <activity
             android:name=".module.message.FastMessageToShareActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
-        <!--行情搜索-->
+        <!-- 行情搜索 -->
         <activity
             android:name=".module.market.search.SearchMarketActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
 
-        <!--币吧详情-->
+        <!-- 币吧详情 -->
         <activity
             android:name=".module.coin_bbs.CoinBBSDetailsActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
-        <!--币吧详情 进入-->
+        <!-- 币吧详情 进入 -->
         <activity
             android:name=".module.coin_bbs.CoinBBSDetailsIntoActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
 
-        <!--登录-->
+        <!-- 登录 -->
         <activity
             android:name=".module.user.LoginActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
 
-        <!--编辑资料-->
+        <!-- 编辑资料 -->
         <activity
             android:name=".module.user.UserInfoUpdateActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
 
-        <!--昵称-->
+        <!-- 昵称 -->
         <activity
             android:name=".module.user.NickNameUpdateActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
-        <!--性别选择-->
+        <!-- 性别选择 -->
         <activity
             android:name=".module.user.GenderChooseActivity"
             android:screenOrientation="portrait"
             android:theme="@style/ActivityDialogStyleBottom"
             android:windowSoftInputMode="adjustPan" />
-        <!--我的评论-->
+        <!-- 我的评论 -->
         <activity
             android:name=".module.user.MyMessageCommentsActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
 
-        <!--资讯详情-->
+        <!-- 资讯详情 -->
         <activity
             android:name=".module.message.MessageDetailsActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
 
-        <!--资讯评论详情-->
+        <!-- 资讯评论详情 -->
         <activity
             android:name=".module.message.MessageCommentDetailsActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
 
-        <!--收藏列表-->
+        <!-- 收藏列表 -->
         <activity
             android:name=".module.user.MyCollectionListActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
 
-        <!--我的评论详情-->
+        <!-- 我的评论详情 -->
         <activity
             android:name=".module.user.MyCommentDetailsActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
 
-        <!--添加行情自选-->
+        <!-- 添加行情自选 -->
         <activity
             android:name=".module.market.AddMarketActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
 
-        <!--币吧搜索-->
+        <!-- 币吧搜索 -->
         <activity
             android:name=".module.coin_bbs.search.SearchCoinBBSActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
 
-        <!--币吧回复详情-->
+        <!-- 币吧回复详情 -->
         <activity
             android:name=".module.coin_bbs.BBSCommentDetailsActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
 
-        <!--我的币吧回复-->
+        <!-- 我的币吧回复 -->
         <activity
             android:name=".module.user.MyCoinBBSCommentsActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
-        <!--分享-->
+        <!-- 分享 -->
         <activity
             android:name=".module.user.ShareActivity"
             android:screenOrientation="portrait"
             android:theme="@style/ActivityDialogStyleBottom"
             android:windowSoftInputMode="adjustPan" />
 
-        <!--用户中心 资讯评论 回复-->
+        <!-- 用户中心 资讯评论 回复 -->
         <activity
             android:name=".module.user.UserCenterMessageRepyListActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
 
-        <!--用户中心 资讯评论 回复-->
+        <!-- 用户中心 资讯评论 回复 -->
         <activity
             android:name=".module.user.UserCenterBBSRepyListActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
 
-        <!--资讯评论列表-->
+        <!-- 资讯评论列表 -->
         <activity
             android:name=".module.message.MessageCommentListActivity"
             android:screenOrientation="portrait"
@@ -149,13 +165,20 @@
 
         <!-- 微信分享回调 -->
         <activity
-            android:name="com.cdkj.link_community.wxapi.WXEntryActivity"
+            android:name=".wxapi.WXEntryActivity"
             android:exported="true"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/ActivityDialogStyleBottom" />
 
-        <!--QQ 分享登录-->
+        <!--拨打电话-->
+        <activity
+            android:name=".module.active.CallPhoneActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityDialogStyleBottom"
+            android:windowSoftInputMode="adjustPan" />
+
+        <!-- QQ 分享登录 -->
         <activity
             android:name="com.tencent.tauth.AuthActivity"
             android:launchMode="singleTask"
@@ -169,29 +192,53 @@
                 <data android:scheme="tencent1106791506" />
             </intent-filter>
         </activity>
-        <!--QQ -->
+        <!-- QQ -->
         <activity
             android:name="com.tencent.connect.common.AssistActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <activity android:name=".module.active.ActiveDetailsActivity" />
+        <activity android:name=".module.active.ActiveApproveActivity" />
+        <activity android:name=".module.active.ActiveMapActivity" />
 
-
-        <!-- 极光推送  用户自定义的广播接收器-->
+        <!-- 极光推送  用户自定义的广播接收器 -->
         <receiver
             android:name=".jpush.JpushReceiver"
             android:enabled="true"
             android:exported="false">
             <intent-filter>
-                <action android:name="cn.jpush.android.intent.REGISTRATION" /> <!--Required  用户注册SDK的intent-->
-                <action android:name="cn.jpush.android.intent.MESSAGE_RECEIVED" /> <!--Required  用户接收SDK消息的intent-->
-                <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED" /> <!--Required  用户接收SDK通知栏信息的intent-->
-                <action android:name="cn.jpush.android.intent.NOTIFICATION_OPENED" /> <!--Required  用户打开自定义通知栏的intent-->
-                <action android:name="cn.jpush.android.intent.CONNECTION" /><!-- 接收网络变化 连接/断开 since 1.6.3 -->
+                <action android:name="cn.jpush.android.intent.REGISTRATION" /> <!-- Required  用户注册SDK的intent -->
+                <action android:name="cn.jpush.android.intent.MESSAGE_RECEIVED" /> <!-- Required  用户接收SDK消息的intent -->
+                <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED" /> <!-- Required  用户接收SDK通知栏信息的intent -->
+                <action android:name="cn.jpush.android.intent.NOTIFICATION_OPENED" /> <!-- Required  用户打开自定义通知栏的intent -->
+                <action android:name="cn.jpush.android.intent.CONNECTION" /> <!-- 接收网络变化 连接/断开 since 1.6.3 -->
                 <category android:name="com.cdkj.link_community" />
             </intent-filter>
         </receiver>
 
+        <meta-data
+            android:name="com.amap.api.v2.apikey"
+            android:value="c132c3ff2f71a75d1966419ad1bba02e">
+            //开发者申请的key
+        </meta-data>
 
+        <activity android:name=".module.active.MyActiveActivity"></activity>
+        <activity android:name=".module.active.ActiveContactActivity" />
+        <activity android:name=".module.active.ActiveCommentActivity" />
+        <activity android:name=".module.user.UserCollectListActivity" />
+        <activity android:name=".module.user.UserPersonActivity" />
+        <activity android:name=".module.message.MessageReleaseActivity" />
+        <activity android:name=".module.message.MessageReleaseActivity2" />
+        <activity android:name=".module.market.MarketActivity" />
+        <activity android:name=".module.market.MarketWarnActivity" />
+        <activity android:name=".module.market.MarketKLineActivity"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
+            android:screenOrientation="landscape"/>
+        <activity android:name=".module.market.CoinTabSelectActivity" />
+        <activity android:name=".module.search.SearchActivity" />
+        <activity android:name=".module.user.MyMessageActivity" />
+        <activity android:name=".module.market.MarketProjectActivity" />
+        <activity android:name=".module.active.ActiveApproveUserActivity" />
     </application>
 
 </manifest>

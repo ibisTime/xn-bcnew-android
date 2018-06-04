@@ -5,7 +5,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/white"
     android:orientation="horizontal"
-    android:padding="15dp">
+    android:paddingBottom="12dp"
+    android:paddingLeft="15dp"
+    android:paddingRight="15dp"
+    android:paddingTop="12dp">
 
     <LinearLayout
         android:layout_width="0dp"
@@ -23,7 +26,7 @@
                 android:id="@+id/tv_platform"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:text="sdfsdfsd"
+                tools:text=""
                 android:textColor="@color/text_black_cd"
                 android:textSize="16sp" />
 
@@ -32,7 +35,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="7dp"
-                tools:text="sdfsdfsdsdfsdfsdsdfsdfsd"
+                tools:text=""
                 android:textColor="@color/app_text_gray"
                 android:textSize="15sp" />
 
@@ -53,7 +56,7 @@
 
     <Button
         android:layout_width="@dimen/width_market_btn"
-        android:layout_height="wrap_content"
+        android:layout_height="35dp"
         android:layout_gravity="center"
         android:layout_marginLeft="15dp"
         android:background="@drawable/market_green_bg"

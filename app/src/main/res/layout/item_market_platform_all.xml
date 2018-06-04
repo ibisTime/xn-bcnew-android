@@ -4,7 +4,10 @@
     android:layout_height="wrap_content"
     android:background="@color/white"
     android:orientation="horizontal"
-    android:padding="15dp">
+    android:paddingBottom="12dp"
+    android:paddingLeft="15dp"
+    android:paddingRight="15dp"
+    android:paddingTop="12dp">
 
     <TextView
         android:layout_width="0dp"
@@ -26,7 +29,7 @@
 
     <Button
         android:layout_width="@dimen/width_market_btn"
-        android:layout_height="wrap_content"
+        android:layout_height="35dp"
         android:layout_marginLeft="15dp"
         android:background="@drawable/market_green_bg"
         android:text="sdfsfs"

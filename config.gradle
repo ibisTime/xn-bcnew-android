@@ -4,8 +4,8 @@ ext {
             buildToolsVersion: "27.0.2",
             minSdkVersion    : 14,
             targetSdkVersion : 26,
-            versionCode      : 3,
-            versionName      : "1.1.1",
+            versionCode      : 6,
+            versionName      : "2.2.0",
     ]
 
     cdcommon = [
@@ -20,5 +20,6 @@ ext {
     arouterApi = 'com.alibaba:arouter-api:1.3.1'
     arouterCompiler = 'com.alibaba:arouter-compiler:1.1.4'
     applicationId = 'com.cdkj.link_community'
+    packageName = 'ljs'
 
 }

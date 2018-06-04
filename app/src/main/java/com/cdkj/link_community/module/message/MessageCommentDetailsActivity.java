@@ -10,7 +10,7 @@ import android.text.TextUtils;
 import android.view.View;
 
 import com.cdkj.baselibrary.appmanager.CdRouteHelper;
-import com.cdkj.baselibrary.appmanager.SPUtilHelpr;
+import com.cdkj.baselibrary.appmanager.SPUtilHelper;
 import com.cdkj.baselibrary.base.AbsBaseLoadActivity;
 import com.cdkj.baselibrary.databinding.EmptyViewBinding;
 import com.cdkj.baselibrary.dialog.UITipDialog;
@@ -30,7 +30,6 @@ import com.cdkj.link_community.databinding.ActivityMessageCommentDetailsBinding;
 import com.cdkj.link_community.dialog.CommentInputDialog;
 import com.cdkj.link_community.model.MsgDetailsComment;
 import com.cdkj.link_community.model.ReplyComment;
-import com.cdkj.link_community.module.user.UserCenterBBSRepyListActivity;
 import com.cdkj.link_community.module.user.UserCenterMessageRepyListActivity;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 
@@ -55,20 +54,21 @@ public class MessageCommentDetailsActivity extends AbsBaseLoadActivity {
     private ActivityMessageCommentDetailsBinding mBinding;
 
     private String mCommentCode;
-
+    private boolean isActiveComment;
     private MsgDetailsComment msgDetailsComment;
 
     /**
      * @param context
      * @param commentCode 评论编号
      */
-    public static void open(Context context, String commentCode) {
+    public static void open(Context context, String commentCode, boolean isActiveComment) {
         if (context == null) {
             return;
         }
         Intent intent = new Intent(context, MessageCommentDetailsActivity.class);
 
         intent.putExtra(CdRouteHelper.APPLOGIN, commentCode);
+        intent.putExtra("isActiveComment", isActiveComment);
         context.startActivity(intent);
     }
 
@@ -86,6 +86,7 @@ public class MessageCommentDetailsActivity extends AbsBaseLoadActivity {
 
         if (getIntent() != null) {
             mCommentCode = getIntent().getStringExtra(CdRouteHelper.APPLOGIN);
+            isActiveComment = getIntent().getBooleanExtra("isActiveComment" ,false);
         }
 
         mBinding.getRoot().setVisibility(View.GONE);
@@ -103,7 +104,7 @@ public class MessageCommentDetailsActivity extends AbsBaseLoadActivity {
 
         //点赞
         mBinding.replayCommentLayout.linLike.setOnClickListener(view -> {
-            if (!SPUtilHelpr.isLogin(this, false)) {
+            if (!SPUtilHelper.isLogin(this, false)) {
                 return;
             }
             toMsgLikeRequest();
@@ -136,7 +137,7 @@ public class MessageCommentDetailsActivity extends AbsBaseLoadActivity {
         Map<String, String> map = new HashMap<>();
 
         map.put("code", mCommentCode);
-        map.put("userId", SPUtilHelpr.getUserId());
+        map.put("userId", SPUtilHelper.getUserId());
 
         Call call = RetrofitUtils.createApi(MyApiServer.class).getMessageCommentDetails("628286", StringUtils.getJsonToString(map));
 
@@ -203,7 +204,7 @@ public class MessageCommentDetailsActivity extends AbsBaseLoadActivity {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
 
-                if (!SPUtilHelpr.isLogin(MessageCommentDetailsActivity.this, false)) {
+                if (!SPUtilHelper.isLogin(MessageCommentDetailsActivity.this, false)) {
                     return;
                 }
 
@@ -239,7 +240,7 @@ public class MessageCommentDetailsActivity extends AbsBaseLoadActivity {
      * 对评论进行回复
      */
     private void commentPlayRequest(String code, String name) {
-        if (!SPUtilHelpr.isLogin(MessageCommentDetailsActivity.this, false)) {
+        if (!SPUtilHelper.isLogin(MessageCommentDetailsActivity.this, false)) {
             return;
         }
         CommentInputDialog commentInputDialog = new CommentInputDialog(this, name);
@@ -268,10 +269,12 @@ public class MessageCommentDetailsActivity extends AbsBaseLoadActivity {
         map.put("type", type);
         map.put("objectCode", code);
         map.put("content", content);
-        map.put("userId", SPUtilHelpr.getUserId());
+        map.put("userId", SPUtilHelper.getUserId());
+        map.put("token", SPUtilHelper.getUserToken());
 
         showLoadingDialog();
-        Call call = RetrofitUtils.getBaseAPiService().codeRequest("628200", StringUtils.getJsonToString(map));
+
+        Call call = RetrofitUtils.getBaseAPiService().codeRequest(isActiveComment ? "628511" : "628200", StringUtils.getJsonToString(map));
 
         addCall(call);
 
@@ -332,7 +335,7 @@ public class MessageCommentDetailsActivity extends AbsBaseLoadActivity {
 
         map.put("type", COMMENTCOMMENT);
         map.put("objectCode", msgDetailsComment.getCode());
-        map.put("userId", SPUtilHelpr.getUserId());
+        map.put("userId", SPUtilHelper.getUserId());
 
         showLoadingDialog();
         Call call = RetrofitUtils.getBaseAPiService().successRequest("628201", StringUtils.getJsonToString(map));

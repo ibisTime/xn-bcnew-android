@@ -9,7 +9,7 @@
     <string name="we_pyq">朋友圈</string>
     <string name="bast_new_comments">最新评论</string>
     <string name="hot_comments">热门评论</string>
-    <string name="recommended_note">相关文章</string>
+    <string name="recommended_note">相关资讯</string>
     <string name="dont_touch">拜托，不要碰底线哦!</string>
     <string name="cancel">取消</string>
     <string name="realse">发布</string>
@@ -19,26 +19,31 @@
     <string name="delete">删除</string>
     <string name="to_top">置顶</string>
     <string name="in_to_bbs">进吧</string>
-    <string name="please_input_search_type">请输入平台/币种</string>
+    <string name="please_input_search_type">请输入关键字搜索</string>
     <string name="hot_coin">热门币种</string>
     <string name="search_history">搜索历史</string>
     <string name="clean_history">清除搜索历史</string>
     <string name="please_input_search_info">请输入搜索内容</string>
     <string name="no_search_history">暂无搜索历史</string>
     <string name="coin_bbs">币吧</string>
+    <string name="active">活动</string>
     <string name="mind">我的</string>
     <string name="market">行情</string>
     <string name="firstpage">首页</string>
     <string name="focus_on_done">已关注</string>
     <string name="all">全部</string>
     <string name="hot">热门</string>
+    <string name="enroll">报名</string>
+    <string name="end">已结束</string>
     <string name="focus_on">关注</string>
     <string name="hot_message">热点</string>
     <string name="edit">编辑</string>
     <string name="fast_to_login">快速登录</string>
     <string name="collection">收藏</string>
-    <string name="user_comment_1">圈子评论</string>
+    <string name="user_comment_1">评论</string>
+    <string name="user_active">我参与的活动</string>
     <string name="user_comment_2">资讯评论</string>
+    <string name="user_article">我的文章</string>
     <string name="abtou">关于</string>
     <string name="clear_cache">清除缓存</string>
     <string name="phone_number">手机号码</string>
@@ -60,11 +65,15 @@
     <string name="update_nick_name_succ">昵称修改成功</string>
     <string name="no_fast_msg">暂无快讯</string>
     <string name="no_msg">暂无资讯</string>
+    <string name="no_article">暂无文章</string>
     <string name="no_collection">暂无收藏</string>
+    <string name="no_my_active">暂无参与的活动</string>
     <string name="no_coin_info">暂无币种信息</string>
     <string name="no_search_info">暂无搜索内容</string>
     <string name="no_platform_info">暂无平台信息</string>
     <string name="no_coin_bbs">暂无币吧</string>
+    <string name="no_active">暂无活动</string>
+    <string name="no_approve_user">暂无报名用户</string>
     <string name="no_add_market">暂无行情</string>
     <string name="no_bbs_circular">暂无圈子信息</string>
     <string name="author">作者:</string>
@@ -94,6 +103,7 @@
     <string name="please_input_info">请输入内容:</string>
     <string name="old_note">原文</string>
     <string name="no_comment">暂无评论</string>
+    <string name="no_dynamic">暂无动态</string>
     <string name="about_us">关于我们</string>
     <string name="gender_update_succ">性别修改成功</string>
     <string name="birthday_update_succ">生日修改成功</string>
@@ -112,5 +122,7 @@
     <string name="quote_change">涨跌幅:</string>
     <string name="todayvol">成交(24h):</string>
     <string name="into_bbs_title">现在有%1$s个帖子在讨论，你也一起来吧!</string>
+
+    <string name="activity_nick_name">昵称</string>
 
 </resources>

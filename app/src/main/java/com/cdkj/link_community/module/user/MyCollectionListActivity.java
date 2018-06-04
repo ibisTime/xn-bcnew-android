@@ -7,7 +7,7 @@ import android.support.v7.widget.RecyclerView;
 
 import com.cdkj.baselibrary.api.ResponseInListModel;
 import com.cdkj.baselibrary.appmanager.MyCdConfig;
-import com.cdkj.baselibrary.appmanager.SPUtilHelpr;
+import com.cdkj.baselibrary.appmanager.SPUtilHelper;
 import com.cdkj.baselibrary.base.AbsRefreshListActivity;
 import com.cdkj.baselibrary.nets.BaseResponseModelCallBack;
 import com.cdkj.baselibrary.nets.RetrofitUtils;
@@ -54,11 +54,11 @@ public class MyCollectionListActivity extends AbsRefreshListActivity {
     }
 
     @Override
-    public void getListRequest(int pageindex, int limit, boolean isShowDialog) {
+    public void getListRequest(int pageIndex, int limit, boolean isShowDialog) {
         Map<String, String> map = new HashMap<>();
 
-        map.put("userId", SPUtilHelpr.getUserId());
-        map.put("start", pageindex + "");
+        map.put("userId", SPUtilHelper.getUserId());
+        map.put("start", pageIndex + "");
         map.put("limit", limit + "");
 
         if (isShowDialog) showLoadingDialog();

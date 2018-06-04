@@ -10,13 +10,12 @@ import android.view.ViewGroup;
 
 import com.cdkj.baselibrary.api.ResponseInListModel;
 import com.cdkj.baselibrary.appmanager.MyCdConfig;
-import com.cdkj.baselibrary.appmanager.SPUtilHelpr;
+import com.cdkj.baselibrary.appmanager.SPUtilHelper;
 import com.cdkj.baselibrary.base.AbsRefreshListFragment;
 import com.cdkj.baselibrary.nets.BaseResponseModelCallBack;
 import com.cdkj.baselibrary.nets.RetrofitUtils;
 import com.cdkj.baselibrary.utils.StringUtils;
 import com.cdkj.link_community.R;
-import com.cdkj.link_community.adapters.UserBBSCommentListAdapter;
 import com.cdkj.link_community.adapters.UserBBSCommentListAdapter2;
 import com.cdkj.link_community.api.MyApiServer;
 import com.cdkj.link_community.model.UserBBSComment;
@@ -38,7 +37,7 @@ public class MyBBSCommentsList2Fragment extends AbsRefreshListFragment {
     public boolean isFirstRequest;
 
 
-    public static MyBBSCommentsList2Fragment getInstanse() {
+    public static MyBBSCommentsList2Fragment getInstance() {
         MyBBSCommentsList2Fragment fragment = new MyBBSCommentsList2Fragment();
         Bundle bundle = new Bundle();
         fragment.setArguments(bundle);
@@ -92,7 +91,7 @@ public class MyBBSCommentsList2Fragment extends AbsRefreshListFragment {
 
         Map<String, String> map = new HashMap<>();
 
-        map.put("userId", SPUtilHelpr.getUserId());
+        map.put("userId", SPUtilHelper.getUserId());
         map.put("start", pageindex + "");
         map.put("limit", limit + "");
 

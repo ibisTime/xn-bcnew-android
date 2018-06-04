@@ -3,13 +3,10 @@ package com.cdkj.link_community.adapters;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 
-import com.cdkj.baselibrary.appmanager.SPUtilHelpr;
 import com.cdkj.baselibrary.utils.DateUtil;
 import com.cdkj.baselibrary.utils.ImgUtils;
-import com.cdkj.baselibrary.utils.StringUtils;
 import com.cdkj.link_community.R;
 import com.cdkj.link_community.model.UserBBSComment;
-import com.cdkj.link_community.model.UserMessageComment;
 import com.cdkj.link_community.module.user.UserCenterBBSRepyListActivity;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
