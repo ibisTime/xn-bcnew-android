@@ -15,7 +15,6 @@ import com.cdkj.baselibrary.base.AbsRefreshListFragment;
 import com.cdkj.baselibrary.nets.BaseResponseListCallBack;
 import com.cdkj.baselibrary.nets.BaseResponseModelCallBack;
 import com.cdkj.baselibrary.nets.RetrofitUtils;
-import com.cdkj.baselibrary.utils.LogUtil;
 import com.cdkj.baselibrary.utils.StringUtils;
 import com.cdkj.link_community.R;
 import com.cdkj.link_community.adapters.MessageListAdapter;
@@ -217,9 +216,6 @@ public class MessageListFragment extends AbsRefreshListFragment {
         mHeaderBinding.banner.setIndicatorGravity(BannerConfig.CENTER);
         //设置banner点击事件
         mHeaderBinding.banner.setOnBannerClickListener(position -> {
-            LogUtil.E("position="+position);
-            LogUtil.E("bannerData.get(position-1).getUrl()="+bannerData.get(position-1).getUrl());
-            LogUtil.E("bannerData.get(position-1).getContentType()="+bannerData.get(position-1).getContentType());
 
             if (bannerData.get(position-1).getContentType() == null)
                 return;

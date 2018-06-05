@@ -242,7 +242,7 @@ public class MyChooseFragment extends BaseLazyFragment {
 
         Map<String, String> map = new HashMap<>();
 
-        map.put("id", market.getId());
+        map.put("id", market.getChoiceId()+"");
 
         Call call = RetrofitUtils.getBaseAPiService().successRequest("628332", StringUtils.getJsonToString(map));
 

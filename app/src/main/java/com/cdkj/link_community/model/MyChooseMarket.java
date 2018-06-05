@@ -122,6 +122,15 @@ public class MyChooseMarket {
     private int percentChange24h;
     private String percentChange;
     private int choiceCount;
+    private int choiceId;
+
+    public int getChoiceId() {
+        return choiceId;
+    }
+
+    public void setChoiceId(int choiceId) {
+        this.choiceId = choiceId;
+    }
 
     public String getIsWarn() {
         return isWarn;

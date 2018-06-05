@@ -23,7 +23,6 @@ public class RetrofitUtils {
     public static final int DEBUG = 1;//研发环境
     public static final int TEST = 2;//测试环境
 
-
     private RetrofitUtils() {
 
     }

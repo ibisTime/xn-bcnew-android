@@ -8,8 +8,8 @@ import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 
 import com.cdkj.baselibrary.appmanager.MyCdConfig;
 import com.cdkj.baselibrary.appmanager.SPUtilHelper;
@@ -167,20 +167,20 @@ public class ActiveDetailsActivity extends AbsBaseLoadActivity {
             mBinding.flApproveUser.removeAllViews();
 
             // 此处需使用LinearLayout的LayoutParams
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(DeviceUtils.dip2px(this, 40f), LinearLayout.LayoutParams.MATCH_PARENT);
+            ImageView iv;
+            FrameLayout.LayoutParams params;
 
             int limit = model.getApprovedList().size() > 10 ? 10 : model.getApprovedList().size();
-
-            ImageView iv;
 
             for (int i = 0; i < limit; i++){
 
                 iv = new ImageView(ActiveDetailsActivity.this);
+                params = new FrameLayout.LayoutParams(DeviceUtils.dip2px(this, 40f), FrameLayout.LayoutParams.MATCH_PARENT);
+
                 if (i != 0){
                     params.setMargins(DeviceUtils.dip2px(this, i*25f),0,0,0);
                 }
-                iv.setLayoutParams(params);
-                mBinding.flApproveUser.addView(iv);
+                mBinding.flApproveUser.addView(iv,params);
 
                 ImgUtils.loadQiniuLogo(this, model.getApprovedList().get(i).getPhoto(), iv);
             }

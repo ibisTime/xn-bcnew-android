@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.widget.ImageView;
 
 import com.cdkj.baselibrary.base.BaseActivity;
+import com.cdkj.baselibrary.utils.UIStatusBarHelper;
 
 import java.util.concurrent.TimeUnit;
 
@@ -16,7 +17,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
  * Created by cdkj on 2017/6/8.
  */
 
-public class WelcomeAcitivity extends BaseActivity {
+public class WelcomeActivity extends BaseActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -35,6 +36,8 @@ public class WelcomeAcitivity extends BaseActivity {
         setContentView(R.layout.activity_welcom);
         ImageView img = (ImageView) findViewById(R.id.img_start);
         img.setImageResource(R.drawable.start);
+
+        UIStatusBarHelper.translucent(this);
 
         mSubscription.add(Observable.timer(2, TimeUnit.SECONDS)
                 .subscribeOn(AndroidSchedulers.mainThread())
