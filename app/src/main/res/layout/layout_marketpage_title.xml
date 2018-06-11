@@ -31,10 +31,10 @@
 
         <RadioGroup
             android:id="@+id/radiogroup"
-            android:background="@drawable/common_radiobtn_select_bg"
             android:layout_width="210dp"
             android:layout_height="30dp"
             android:layout_gravity="center_horizontal"
+            android:background="@drawable/common_radiobtn_select_bg"
             android:orientation="horizontal"
             android:weightSum="3">
 
@@ -47,7 +47,6 @@
                 android:button="@null"
                 android:checked="true"
                 android:gravity="center"
-                android:padding="5dp"
                 android:text="@string/platform"
                 android:textColor="@drawable/common_radiobtn_select_text_color"
                 android:textSize="@dimen/title_radiobutton_txt" />

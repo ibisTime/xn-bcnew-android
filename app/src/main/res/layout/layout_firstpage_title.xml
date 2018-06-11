@@ -27,7 +27,6 @@
                 android:button="@null"
                 android:checked="true"
                 android:gravity="center"
-                android:padding="5dp"
                 android:text="@string/msg"
                 android:textColor="@drawable/common_radiobtn_select_text_color"
                 android:textSize="@dimen/title_radiobutton_txt" />
