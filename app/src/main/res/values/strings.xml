@@ -124,5 +124,7 @@
     <string name="into_bbs_title">现在有%1$s个帖子在讨论，你也一起来吧!</string>
 
     <string name="activity_nick_name">昵称</string>
+    <string name="plate_hot">热门板块</string>
+    <string name="plate_all">全部板块</string>
 
 </resources>

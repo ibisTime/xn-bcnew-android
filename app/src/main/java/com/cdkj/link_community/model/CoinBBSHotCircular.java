@@ -3,7 +3,7 @@ package com.cdkj.link_community.model;
 import java.util.List;
 
 /**
- * Created by 李先俊 on 2018/3/26.
+ * Created by cdkj on 2018/3/26.
  */
 
 public class CoinBBSHotCircular {

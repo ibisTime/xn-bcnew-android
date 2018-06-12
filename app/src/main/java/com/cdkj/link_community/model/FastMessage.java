@@ -4,7 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 /**
- * Created by 李先俊 on 2018/3/23.
+ * Created by cdkj on 2018/3/23.
  */
 
 public class FastMessage implements Parcelable {

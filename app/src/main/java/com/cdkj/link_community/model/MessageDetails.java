@@ -4,7 +4,7 @@ import java.util.List;
 
 /**
  * 资讯详情
- * Created by 李先俊 on 2018/3/23.
+ * Created by cdkj on 2018/3/23.
  */
 
 public class MessageDetails {
