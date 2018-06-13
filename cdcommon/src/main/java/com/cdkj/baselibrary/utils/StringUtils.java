@@ -397,9 +397,10 @@ public class StringUtils {
      */
     public static String formatNum(BigDecimal num) {
 
-        if (num == null || num.intValue() == 0) return "0";
+        if (num == null) return "0";
+
         NumberFormat nf = new DecimalFormat("#.########");
-        if (num.doubleValue() < 10000) {
+        if (num.doubleValue() < 1000) {
             return nf.format(num.doubleValue());
         }
         if (num.doubleValue() >= 100000000) {
@@ -424,9 +425,6 @@ public class StringUtils {
         return nf.format(num);
 
     }
-
-
-
 
 
 }

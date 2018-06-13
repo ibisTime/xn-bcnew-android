@@ -41,7 +41,7 @@ public class UserDynamicListFragment extends AbsRefreshListFragment {
 
     @Override
     protected void lazyLoad() {
-        if (mRefreshBinding != null){
+        if (mRefreshBinding != null) {
             mRefreshHelper.onDefaluteMRefresh(true);
         }
     }
@@ -84,13 +84,15 @@ public class UserDynamicListFragment extends AbsRefreshListFragment {
         map.put("limit", limit + "");
 
         Call call = RetrofitUtils.createApi(MyApiServer.class).getUserBBSCommentList("628211", StringUtils.getJsonToString(map));
+
         addCall(call);
+
         if (isShowDialog) showLoadingDialog();
 
         call.enqueue(new BaseResponseModelCallBack<ResponseInListModel<UserBBSComment>>(mActivity) {
             @Override
             protected void onSuccess(ResponseInListModel<UserBBSComment> data, String SucMessage) {
-                mRefreshHelper.setData(data.getList(), getString(R.string.no_dynamic), 0);
+                mRefreshHelper.setData(data.getList(), getString(R.string.no_dynamic), R.drawable.no_dynamic);
             }
 
             @Override

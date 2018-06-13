@@ -25,6 +25,7 @@ import com.cdkj.link_community.api.MyApiServer;
 import com.cdkj.link_community.databinding.FragmentPlateBinding;
 import com.cdkj.link_community.model.PlateLlistModel;
 import com.cdkj.link_community.module.plate.PlateDetailsActivity;
+import com.cdkj.link_community.module.search.SearchActivity;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -54,6 +55,9 @@ public class PlateFragment extends BaseLazyFragment {
         mBinding.refreshLayout.setVisibility(View.GONE);
         iniRefreshHelper();
         initRecyclerView();
+
+        mBinding.fraToSearch.setOnClickListener(view -> SearchActivity.open(mActivity));
+
         return mBinding.getRoot();
     }
 

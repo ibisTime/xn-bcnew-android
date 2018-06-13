@@ -39,7 +39,7 @@ public class PlateDetailAdapter extends BaseQuickAdapter<PlateDetailsModel.ListB
         }
 
 
-        helper.setText(R.id.tv_count, "量:" + StringUtils.formatNum(item.getAmount()));
+        helper.setText(R.id.tv_count, "量:" + StringUtils.formatNum(item.getCount()));
 
         helper.setText(R.id.tv_price, MoneyUtils.MONEYSING + StringUtils.formatNum2(item.getLastCnyPrice()));
 

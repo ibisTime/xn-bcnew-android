@@ -215,7 +215,7 @@ public class PlateDetailsModel {
 
         private String symbol;
         private String toSymbol;
-        private BigDecimal amount;
+        private BigDecimal count;
         private BigDecimal lastPrice;
         private BigDecimal lastCnyPrice;
         private BigDecimal percentChange24h;
@@ -236,12 +236,12 @@ public class PlateDetailsModel {
             this.toSymbol = toSymbol;
         }
 
-        public BigDecimal getAmount() {
-            return amount;
+        public BigDecimal getCount() {
+            return count;
         }
 
-        public void setAmount(BigDecimal amount) {
-            this.amount = amount;
+        public void setCount(BigDecimal count) {
+            this.count = count;
         }
 
         public BigDecimal getLastPrice() {

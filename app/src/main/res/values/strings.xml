@@ -102,8 +102,8 @@
     <string name="bbs_today_num">今日跟贴:</string>
     <string name="please_input_info">请输入内容:</string>
     <string name="old_note">原文</string>
-    <string name="no_comment">暂无评论</string>
-    <string name="no_dynamic">暂无动态</string>
+    <string name="no_comment">暂时没有评论</string>
+    <string name="no_dynamic">暂时没有动态</string>
     <string name="about_us">关于我们</string>
     <string name="gender_update_succ">性别修改成功</string>
     <string name="birthday_update_succ">生日修改成功</string>

@@ -99,7 +99,7 @@ public class PlateDetailsActivity extends AbsBaseLoadActivity {
         call.enqueue(new BaseResponseModelCallBack<PlateDetailsModel>(this) {
             @Override
             protected void onSuccess(PlateDetailsModel data, String SucMessage) {
-                mPlateDetailsModel=data;
+                mPlateDetailsModel = data;
                 mBaseBinding.titleView.setMidTitle(data.getName());
                 setShowData(data);
             }
@@ -149,6 +149,7 @@ public class PlateDetailsActivity extends AbsBaseLoadActivity {
 
         mBinding.tvAcgChange.setTextColor(AccountUtil.getShowColor(data.getAvgChange()));
 
+        /*币种信息*/
         PlateDetailAdapter plateDetailAdapter = new PlateDetailAdapter(data.getList());
 
         mBinding.recyclerAll.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false) {
