@@ -1,5 +1,7 @@
 package com.cdkj.link_community.model;
 
+import java.math.BigDecimal;
+
 /**
  * Created by cdkj on 2018/6/12.
  */
@@ -27,9 +29,9 @@ public class PlateLlistModel {
 
     private String code;
     private String name;
-    private String avgChange;
-    private String bestChange;
-    private String worstChange;
+    private BigDecimal avgChange;
+    private BigDecimal bestChange;
+    private BigDecimal worstChange;
     private String bestSymbol;
     private String worstSymbol;
     private String description;
@@ -57,27 +59,27 @@ public class PlateLlistModel {
         this.name = name;
     }
 
-    public String getAvgChange() {
+    public BigDecimal getAvgChange() {
         return avgChange;
     }
 
-    public void setAvgChange(String avgChange) {
+    public void setAvgChange(BigDecimal avgChange) {
         this.avgChange = avgChange;
     }
 
-    public String getBestChange() {
+    public BigDecimal getBestChange() {
         return bestChange;
     }
 
-    public void setBestChange(String bestChange) {
+    public void setBestChange(BigDecimal bestChange) {
         this.bestChange = bestChange;
     }
 
-    public String getWorstChange() {
+    public BigDecimal getWorstChange() {
         return worstChange;
     }
 
-    public void setWorstChange(String worstChange) {
+    public void setWorstChange(BigDecimal worstChange) {
         this.worstChange = worstChange;
     }
 

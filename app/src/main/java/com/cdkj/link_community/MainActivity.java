@@ -279,12 +279,14 @@ public class MainActivity extends AbsBaseLoadActivity {
         //设置fragment数据
         ArrayList fragments = new ArrayList<>();
 
+
+        fragments.add(FirstPageFragment.getInstance());
+        fragments.add(MarketPageFragment.getInstance());
+        //        fragments.add(CoinBBSFragment.getInstance());
         fragments.add(PlateFragment.getInstance());
-        fragments.add(PlateFragment.getInstance());
-//        fragments.add(CoinBBSFragment.getInstance());
-        fragments.add(PlateFragment.getInstance());
-        fragments.add(PlateFragment.getInstance());
-        fragments.add(PlateFragment.getInstance());
+        fragments.add(ActiveFragment.getInstance());
+        fragments.add(UserFragment.getInstance());
+
 
         mBinding.pagerMain.setAdapter(new ViewPagerAdapter(getSupportFragmentManager(), fragments));
         mBinding.pagerMain.setOffscreenPageLimit(fragments.size());

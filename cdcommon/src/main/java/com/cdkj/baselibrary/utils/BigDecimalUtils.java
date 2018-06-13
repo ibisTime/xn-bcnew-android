@@ -33,6 +33,19 @@ public class BigDecimalUtils {
         return new BigDecimal(0);
     }
 
+    /**
+     * 判断是否比零大
+     *
+     * @return
+     */
+    public static boolean compareToZERO(BigDecimal bigDecimal) {
+
+        if (bigDecimal == null) return false;
+
+        return bigDecimal.compareTo(BigDecimal.ZERO) == 1;
+    }
+
+
     //乘法
     public static BigDecimal multiply(BigDecimal b, BigDecimal b1) {
         if (b != null && b1 != null) {

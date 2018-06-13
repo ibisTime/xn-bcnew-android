@@ -2,6 +2,7 @@ package com.cdkj.baselibrary.utils;
 
 import android.app.Activity;
 import android.content.DialogInterface;
+import android.support.v4.content.ContextCompat;
 import android.text.InputFilter;
 import android.text.Spanned;
 import android.text.TextUtils;
@@ -397,7 +398,7 @@ public class StringUtils {
     public static String formatNum(BigDecimal num) {
 
         if (num == null || num.intValue() == 0) return "0";
-        NumberFormat nf = new DecimalFormat("#.##");
+        NumberFormat nf = new DecimalFormat("#.########");
         if (num.doubleValue() < 10000) {
             return nf.format(num.doubleValue());
         }
@@ -407,6 +408,25 @@ public class StringUtils {
         return nf.format(num.divide(new BigDecimal(10000), 2, RoundingMode.HALF_UP).doubleValue()) + "万";
 
     }
+
+    /**
+     * 以万为单位显示格式化
+     *
+     * @param num
+     * @return
+     */
+    public static String formatNum2(BigDecimal num) {
+
+        if (num == null) return "0";
+
+        NumberFormat nf = new DecimalFormat("#.##");
+
+        return nf.format(num);
+
+    }
+
+
+
 
 
 }
