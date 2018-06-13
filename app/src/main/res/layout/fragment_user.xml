@@ -50,8 +50,8 @@
                 <LinearLayout
                     android:id="@+id/lin_user_head"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/app_title_bg"
+                    android:layout_height="110dp"
+                    android:background="@drawable/user_bg"
                     android:orientation="horizontal">
 
                     <ImageView

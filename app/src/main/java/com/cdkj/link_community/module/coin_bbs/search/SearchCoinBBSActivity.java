@@ -296,7 +296,7 @@ public class SearchCoinBBSActivity extends AbsBaseLoadActivity {
         call.enqueue(new BaseResponseModelCallBack<ResponseInListModel<CoinBBSListModel>>(this) {
             @Override
             protected void onSuccess(ResponseInListModel<CoinBBSListModel> data, String SucMessage) {
-                mRefreshHelper.setData(data.getList(), getString(R.string.no_search_info), 0);
+                mRefreshHelper.setData(data.getList(), getString(R.string.no_search_info), R.drawable.no_note);
             }
 
             @Override
