@@ -155,6 +155,18 @@ public class MarketActivity extends AbsBaseLoadActivity {
             if(model.getLastPrice() != null)
                 mBinding.tvPrice.setText(model.getLastPrice());
         });
+
+//        ArrayList<String> datas=new ArrayList<>();
+//        for (int i = 0; i < 15; i++) {
+//            datas.add("条目"+i);
+//        }
+//        PopupWindow timePopupWindow=new PopupWindow(this);
+//        RecyclerView recyclerView =new RecyclerView(this);
+//        recyclerView.setLayoutManager(new GridLayoutManager(this,5,GridLayoutManager.VERTICAL,false));
+//        timePopupWindow.setContentView(recyclerView);
+//        recyclerView.setAdapter(new TimePopAdapter(datas));
+//
+//        timePopupWindow.showAsDropDown();
     }
 
     private void getMarket(boolean isInitChart) {
