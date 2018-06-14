@@ -111,6 +111,7 @@ public class MessageFragment extends AbsTablayoutFragment {
      * @param data
      */
     private void initViewPagerData(List<MessageType> data) {
+
         int i = 0;
 
         for (MessageType datum : data) {
