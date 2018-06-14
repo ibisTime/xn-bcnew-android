@@ -80,12 +80,12 @@ public class ViewPagerIndicator extends LinearLayout {
             canvas.save();
             mLinWidth = Math.min(mLinWidth, getMeasuredWidth() / 2);
             // 画出一个矩形
-            RectF rect = new RectF(mTranslationX, getMeasuredHeight() - 20, mTranslationX + mLinWidth
+            RectF rect = new RectF(mTranslationX, getMeasuredHeight() - 10, mTranslationX + mLinWidth
                     , getMeasuredHeight() - 5);
 
             canvas.translate(getMeasuredWidth() / mTabVisibleCount / 2 - mLinWidth / 2, 0);   //计算偏移量
             //canvas.drawRect(rect, mPaint); // 绘制该矩形
-            canvas.drawRoundRect(rect, 20f, 20f, mPaint);
+            canvas.drawRoundRect(rect, 50f, 50f, mPaint);
             canvas.restore();
         }
 
