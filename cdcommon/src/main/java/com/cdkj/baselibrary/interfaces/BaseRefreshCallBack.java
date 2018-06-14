@@ -30,6 +30,9 @@ public abstract class BaseRefreshCallBack<T> implements RefreshInterface<T> {
             return null;
         }
         emptyViewBinding = DataBindingUtil.inflate(context.getLayoutInflater(), R.layout.empty_view, null, false);
+        emptyViewBinding.btnReload.setOnClickListener(view -> {
+            reLoad();
+        });
         return emptyViewBinding.getRoot();
     }
 
@@ -39,10 +42,10 @@ public abstract class BaseRefreshCallBack<T> implements RefreshInterface<T> {
             return;
         }
         emptyViewBinding.tv.setText(errorMsg);
-
-        if(TextUtils.isEmpty(errorMsg)){
+        emptyViewBinding.btnReload.setVisibility(View.VISIBLE);
+        if (TextUtils.isEmpty(errorMsg)) {
             emptyViewBinding.tv.setVisibility(View.GONE);
-        }else{
+        } else {
             emptyViewBinding.tv.setVisibility(View.VISIBLE);
         }
 
@@ -60,10 +63,11 @@ public abstract class BaseRefreshCallBack<T> implements RefreshInterface<T> {
         if (emptyViewBinding == null) {
             return;
         }
+        emptyViewBinding.btnReload.setVisibility(View.GONE);
         emptyViewBinding.tv.setText(errorMsg);
-        if(TextUtils.isEmpty(errorMsg)){
+        if (TextUtils.isEmpty(errorMsg)) {
             emptyViewBinding.tv.setVisibility(View.GONE);
-        }else{
+        } else {
             emptyViewBinding.tv.setVisibility(View.VISIBLE);
         }
 
@@ -74,6 +78,7 @@ public abstract class BaseRefreshCallBack<T> implements RefreshInterface<T> {
             emptyViewBinding.img.setVisibility(View.VISIBLE);
         }
 
+
     }
 
     @Override
@@ -83,6 +88,10 @@ public abstract class BaseRefreshCallBack<T> implements RefreshInterface<T> {
 
     @Override
     public void onLoadMore(int pageindex, int limit) {
+
+    }
+
+    public void reLoad() {
 
     }
 

@@ -51,15 +51,15 @@
     <color name="fontColor_hint">#aaaaaa</color>
 
 
-    <color name="btn_select_un">#2F93ED</color>
-    <color name="btn_select">#287ecc</color>
-    <color name="tablayout_select">#2F93ED</color>
+    <color name="btn_select_un">#022454</color>
+    <color name="btn_select">#124fa6</color>
+    <color name="tablayout_select">#124fa6</color>
     <color name="lineColor">#ebeaea</color>
 
 
-    <color name="updateProgress_bg">#E7E7E7</color>
+    <color name="updateProgress_bg">#022454</color>
 
-    <color name="updateProgress">#2F93ED</color>
+    <color name="updateProgress">#022454</color>
 
     <!--caijianView-->
     <color name="white_translucent">#AAFFFFFF</color>

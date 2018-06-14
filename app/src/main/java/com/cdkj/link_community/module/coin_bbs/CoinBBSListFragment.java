@@ -144,7 +144,7 @@ public class CoinBBSListFragment extends AbsRefreshListFragment {
         call.enqueue(new BaseResponseModelCallBack<ResponseInListModel<CoinBBSListModel>>(mActivity) {
             @Override
             protected void onSuccess(ResponseInListModel<CoinBBSListModel> data, String SucMessage) {
-                mRefreshHelper.setData(data.getList(), getString(R.string.no_coin_bbs), 0);
+                mRefreshHelper.setData(data.getList(), getString(R.string.no_coin_bbs), R.drawable.no_dynamic);
             }
 
             @Override

@@ -79,5 +79,6 @@
     <string name="realse_fail">发布失败</string>
 
     <string name="activity_nick_name">昵称</string>
+    <string name="reload">重新加载</string>
 
 </resources>

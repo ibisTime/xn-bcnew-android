@@ -124,7 +124,7 @@ public class MessageListFragment extends AbsRefreshListFragment {
         call.enqueue(new BaseResponseModelCallBack<ResponseInListModel<MessageModel>>(mActivity) {
             @Override
             protected void onSuccess(ResponseInListModel<MessageModel> data, String SucMessage) {
-                mRefreshHelper.setData(data.getList(), getString(R.string.no_msg), 0);
+                mRefreshHelper.setData(data.getList(), getString(R.string.no_msg), R.drawable.no_dynamic);
             }
 
             @Override

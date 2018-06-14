@@ -357,7 +357,7 @@ public class MyChooseFragment extends BaseLazyFragment {
 
                 if (marketChooseListAdapter.getData() == null || marketChooseListAdapter.getData().size() == 0 || isClearRefresh) {
 
-                    mRefreshHelper.setData(data.getList(), getString(R.string.no_coin_info), 0);
+                    mRefreshHelper.setData(data.getList(), getString(R.string.no_coin_info), R.drawable.no_dynamic);
                 }else {
 
                     if (mRefreshBinding.refreshLayout.isRefreshing()) { //停止刷新

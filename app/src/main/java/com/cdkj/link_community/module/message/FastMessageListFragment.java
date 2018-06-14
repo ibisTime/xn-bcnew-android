@@ -117,7 +117,7 @@ public class FastMessageListFragment extends AbsRefreshListFragment {
         call.enqueue(new BaseResponseModelCallBack<ResponseInListModel<FastMessage>>(mActivity) {
             @Override
             protected void onSuccess(ResponseInListModel<FastMessage> data, String SucMessage) {
-                mRefreshHelper.setData(data.getList(), getString(R.string.no_fast_msg), 0);
+                mRefreshHelper.setData(data.getList(), getString(R.string.no_fast_msg), R.drawable.no_dynamic);
             }
 
             @Override

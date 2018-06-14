@@ -113,7 +113,7 @@ public class MyFocuseOnCoinBBSListFragment extends AbsRefreshListFragment {
     public void getListRequest(int pageindex, int limit, boolean isShowDialog) {
 
         if (!SPUtilHelper.isLoginNoStart()) {
-            mRefreshHelper.setData(new ArrayList(), getString(R.string.no_coin_bbs), 0);
+            mRefreshHelper.setData(new ArrayList(), getString(R.string.no_coin_bbs), R.drawable.no_dynamic);
             return;
         }
 
@@ -132,7 +132,7 @@ public class MyFocuseOnCoinBBSListFragment extends AbsRefreshListFragment {
         call.enqueue(new BaseResponseModelCallBack<ResponseInListModel<CoinBBSListModel>>(mActivity) {
             @Override
             protected void onSuccess(ResponseInListModel<CoinBBSListModel> data, String SucMessage) {
-                mRefreshHelper.setData(data.getList(), getString(R.string.no_coin_bbs), 0);
+                mRefreshHelper.setData(data.getList(), getString(R.string.no_coin_bbs), R.drawable.no_dynamic);
             }
 
             @Override

@@ -276,6 +276,11 @@ public class MarketWarnActivity extends AbsBaseLoadActivity {
             public void getListDataRequest(int pageindex, int limit, boolean isShowDialog) {
                 getListRequest(pageindex, limit, isShowDialog);
             }
+
+            @Override
+            public void reLoad() {
+                mRefreshHelper.onDefaluteMRefresh(true);
+            }
         });
 
         mRefreshHelper.init(MyCdConfig.LISTLIMIT);
@@ -300,7 +305,7 @@ public class MarketWarnActivity extends AbsBaseLoadActivity {
         call.enqueue(new BaseResponseModelCallBack<ResponseInListModel<UserWarnModel>>(this) {
             @Override
             protected void onSuccess(ResponseInListModel<UserWarnModel> data, String SucMessage) {
-                mRefreshHelper.setData(data.getList(), "暂无预警", 0);
+                mRefreshHelper.setData(data.getList(), "暂无预警", R.drawable.no_dynamic);
             }
 
             @Override

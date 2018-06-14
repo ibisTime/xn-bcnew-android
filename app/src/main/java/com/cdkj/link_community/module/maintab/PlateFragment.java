@@ -131,6 +131,11 @@ public class PlateFragment extends BaseLazyFragment {
             public void getListDataRequest(int pageindex, int limit, boolean isShowDialog) {
                 getAllPlaceListRequest(pageindex, limit, isShowDialog);
             }
+
+            @Override
+            public void reLoad() {
+                mRefreshHelper.onDefaluteMRefresh(true);
+            }
         });
 
         mRefreshHelper.init(10);
@@ -201,7 +206,12 @@ public class PlateFragment extends BaseLazyFragment {
         call.enqueue(new BaseResponseModelCallBack<ResponseInListModel<PlateLlistModel>>(mActivity) {
             @Override
             protected void onSuccess(ResponseInListModel<PlateLlistModel> data, String SucMessage) {
-                mRefreshHelper.setData(data.getList(), "暂无行情", 0);
+                mRefreshHelper.setData(data.getList(), "暂无行情", R.drawable.no_dynamic);
+            }
+
+            @Override
+            protected void onReqFailure(String errorCode, String errorMessage) {
+                mRefreshHelper.loadError(errorMessage, 0);
             }
 
             @Override

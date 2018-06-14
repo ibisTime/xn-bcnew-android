@@ -108,9 +108,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:background="@null"
-                    android:hint="@string/validation_code"
-                    android:textColor="@color/app_hint_color"
-                    android:textColorHint="@color/app_text_color"
+                    android:text="@string/validation_code"
+                    android:textColor="@color/app_text_color_022454"
                     android:textSize="15sp" />
 
 

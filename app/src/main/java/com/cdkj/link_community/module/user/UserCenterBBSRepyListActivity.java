@@ -100,8 +100,14 @@ public class UserCenterBBSRepyListActivity extends AbsRefreshListActivity {
         call.enqueue(new BaseResponseModelCallBack<ResponseInListModel<UserBBSComment>>(this) {
             @Override
             protected void onSuccess(ResponseInListModel<UserBBSComment> data, String SucMessage) {
-                mRefreshHelper.setData(data.getList(), getString(R.string.no_comment), 0);
+                mRefreshHelper.setData(data.getList(), getString(R.string.no_comment), R.drawable.no_dynamic);
             }
+
+            @Override
+            protected void onReqFailure(String errorCode, String errorMessage) {
+                mRefreshHelper.loadError(errorMessage,0);
+            }
+
 
             @Override
             protected void onFinish() {

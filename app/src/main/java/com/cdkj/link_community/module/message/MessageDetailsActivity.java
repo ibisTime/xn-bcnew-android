@@ -250,6 +250,11 @@ public class MessageDetailsActivity extends AbsBaseLoadActivity {
             public void getListDataRequest(int pageindex, int limit, boolean isShowDialog) {
                 getMsgDetailsNewCommentListRequest(pageindex, limit, isShowDialog);
             }
+
+            @Override
+            public void reLoad() {
+                mNewCommentRefreshHelper.onDefaluteMRefresh(true);
+            }
         });
 
         mNewCommentRefreshHelper.init(MyCdConfig.LISTLIMIT);
@@ -544,7 +549,7 @@ public class MessageDetailsActivity extends AbsBaseLoadActivity {
                     mBinding.contentLayout.tvNewCommentTitle.setVisibility(View.VISIBLE);
                     mBinding.contentLayout.recyclerViewNewComment.setVisibility(View.VISIBLE);
                 }
-                mNewCommentRefreshHelper.setData(data.getList(), "", 0);
+                mNewCommentRefreshHelper.setData(data.getList(), "", R.drawable.no_dynamic);
             }
 
             @Override

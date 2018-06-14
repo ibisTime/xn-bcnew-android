@@ -133,6 +133,11 @@ public class SearchMarketActivity extends AbsBaseLoadActivity {
             public void getListDataRequest(int pageindex, int limit, boolean isShowDialog) {
                 getarketRequest(pageindex, limit, isShowDialog);
             }
+
+            @Override
+            public void reLoad() {
+                mRefreshHelper.onDefaluteMRefresh(true);
+            }
         });
 
         mRefreshHelper.init(MyCdConfig.LISTLIMIT);
@@ -283,7 +288,7 @@ public class SearchMarketActivity extends AbsBaseLoadActivity {
         call.enqueue(new BaseResponseModelCallBack<ResponseInListModel<CoinListModel>>(this) {
             @Override
             protected void onSuccess(ResponseInListModel<CoinListModel> data, String SucMessage) {
-                mRefreshHelper.setData(data.getList(), getString(R.string.no_search_info),  R.drawable.no_note);
+                mRefreshHelper.setData(data.getList(), getString(R.string.no_search_info), R.drawable.no_note);
             }
 
             @Override

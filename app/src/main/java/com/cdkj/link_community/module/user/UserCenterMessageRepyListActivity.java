@@ -111,7 +111,12 @@ public class UserCenterMessageRepyListActivity extends AbsRefreshListActivity {
         call.enqueue(new BaseResponseModelCallBack<ResponseInListModel<UserMessageComment>>(this) {
             @Override
             protected void onSuccess(ResponseInListModel<UserMessageComment> data, String SucMessage) {
-                mRefreshHelper.setData(data.getList(), getString(R.string.no_comment), 0);
+                mRefreshHelper.setData(data.getList(), getString(R.string.no_comment), R.drawable.no_dynamic);
+            }
+
+            @Override
+            protected void onReqFailure(String errorCode, String errorMessage) {
+                mRefreshHelper.loadError(errorMessage,0);
             }
 
             @Override

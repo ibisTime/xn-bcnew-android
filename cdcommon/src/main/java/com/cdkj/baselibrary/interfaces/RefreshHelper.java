@@ -5,6 +5,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import com.cdkj.baselibrary.R;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -164,7 +165,7 @@ public class RefreshHelper<T> {
     //刷新
     public void onMRefresh(boolean isShowDialog) {
         if (mRefreshInterface != null) {
-            mRefreshInterface.getListDataRequest(mPageIndex, mLimit , isShowDialog);
+            mRefreshInterface.getListDataRequest(mPageIndex, mLimit, isShowDialog);
         }
 
     }
@@ -181,6 +182,26 @@ public class RefreshHelper<T> {
 
     //加载错误布局
     public void loadError(String str, int img) {
+        loadError(str); //所有的加载错误界面都是一样
+//        if (mRefreshLayout != null) {
+//            if (mRefreshLayout.isRefreshing()) { //停止刷新
+//                mRefreshLayout.finishRefresh();
+//            }
+//            if (mRefreshLayout.isLoading()) {//停止加载
+//                mRefreshLayout.finishLoadmore();
+//            }
+//        }
+//
+//        if (mEmptyView != null && mDataList.isEmpty()) {
+//            if (mRefreshInterface != null) {
+//                mRefreshInterface.showErrorState(str, img);
+//            }
+//            if (mAdapter != null) mAdapter.setEmptyView(mEmptyView);
+//        }
+    }
+
+    //加载错误布局
+    public void loadError(String str) {
 
         if (mRefreshLayout != null) {
             if (mRefreshLayout.isRefreshing()) { //停止刷新
@@ -193,7 +214,7 @@ public class RefreshHelper<T> {
 
         if (mEmptyView != null && mDataList.isEmpty()) {
             if (mRefreshInterface != null) {
-                mRefreshInterface.showErrorState(str, img);
+                mRefreshInterface.showErrorState(str, R.drawable.load_error);
             }
             if (mAdapter != null) mAdapter.setEmptyView(mEmptyView);
         }

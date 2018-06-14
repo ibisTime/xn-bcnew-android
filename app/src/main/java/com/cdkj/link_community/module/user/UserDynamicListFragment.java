@@ -96,6 +96,11 @@ public class UserDynamicListFragment extends AbsRefreshListFragment {
             }
 
             @Override
+            protected void onReqFailure(String errorCode, String errorMessage) {
+                mRefreshHelper.loadError(errorMessage, R.drawable.load_error);
+            }
+
+            @Override
             protected void onFinish() {
                 disMissLoading();
             }

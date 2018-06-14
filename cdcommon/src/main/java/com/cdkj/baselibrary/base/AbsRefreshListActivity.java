@@ -53,6 +53,11 @@ public abstract class AbsRefreshListActivity<T> extends AbsBaseLoadActivity {
             public void getListDataRequest(int pageIndex, int limit, boolean isShowDialog) {
                 getListRequest(pageIndex, limit, isShowDialog);
             }
+
+            @Override
+            public void reLoad() {
+                mRefreshHelper.onDefaluteMRefresh(true);
+            }
         });
         mRefreshHelper.init(limit);
 

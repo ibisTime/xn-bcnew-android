@@ -146,6 +146,12 @@ public class SearchCoinBBSActivity extends AbsBaseLoadActivity {
             public void getListDataRequest(int pageindex, int limit, boolean isShowDialog) {
                 getarketRequest(pageindex, limit, isShowDialog);
             }
+
+            @Override
+            public void reLoad() {
+                mRefreshHelper.onDefaluteMRefresh(true);
+            }
+
         });
 
         mRefreshHelper.init(MyCdConfig.LISTLIMIT);

@@ -133,7 +133,7 @@ public class ActiveFragment extends BaseLazyFragment {
         call.enqueue(new BaseResponseModelCallBack<ResponseInListModel<ActiveModel>>(mActivity) {
             @Override
             protected void onSuccess(ResponseInListModel<ActiveModel> data, String SucMessage) {
-                mActiveRefreshHelper.setData(data.getList(), getString(R.string.no_active), 0);
+                mActiveRefreshHelper.setData(data.getList(), getString(R.string.no_active), R.drawable.no_dynamic);
             }
 
             @Override

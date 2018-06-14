@@ -125,7 +125,7 @@ public class AddMarketListFragment extends AbsRefreshListFragment {
         call.enqueue(new BaseResponseModelCallBack<ResponseInListModel<CoinListModel>>(mActivity) {
             @Override
             protected void onSuccess(ResponseInListModel<CoinListModel> data, String SucMessage) {
-                mRefreshHelper.setData(data.getList(), getString(R.string.no_add_market), 0);
+                mRefreshHelper.setData(data.getList(), getString(R.string.no_add_market), R.drawable.no_dynamic);
             }
 
             @Override

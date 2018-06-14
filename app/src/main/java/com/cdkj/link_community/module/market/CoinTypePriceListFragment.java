@@ -101,7 +101,7 @@ public class CoinTypePriceListFragment extends AbsRefreshListFragment {
         call.enqueue(new BaseResponseModelCallBack<ResponseInListModel<CoinPrice>>(mActivity) {
             @Override
             protected void onSuccess(ResponseInListModel<CoinPrice> data, String SucMessage) {
-                mRefreshHelper.setData(data.getList(), getString(R.string.no_coin_info), 0);
+                mRefreshHelper.setData(data.getList(), getString(R.string.no_coin_info), R.drawable.no_dynamic);
             }
 
             @Override

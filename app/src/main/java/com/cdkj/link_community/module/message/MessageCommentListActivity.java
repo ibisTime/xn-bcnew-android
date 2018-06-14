@@ -18,6 +18,7 @@ import com.cdkj.baselibrary.model.IsSuccessModes;
 import com.cdkj.baselibrary.nets.BaseResponseModelCallBack;
 import com.cdkj.baselibrary.nets.RetrofitUtils;
 import com.cdkj.baselibrary.utils.StringUtils;
+import com.cdkj.link_community.R;
 import com.cdkj.link_community.adapters.MsgHotCommentListAdapter;
 import com.cdkj.link_community.api.MyApiServer;
 import com.cdkj.link_community.model.MsgDetailsComment;
@@ -161,7 +162,7 @@ public class MessageCommentListActivity extends AbsRefreshListActivity {
     private void getMsgDetailsNewCommentListRequest(int pageindex, int limit, boolean isShowDialog) {
 
         if (mCode == null) {
-            mRefreshHelper.setData(new ArrayList(), "暂无评论", 0);
+            mRefreshHelper.setData(new ArrayList(), "暂无评论", R.drawable.no_dynamic);
             return;
         }
 
@@ -179,7 +180,7 @@ public class MessageCommentListActivity extends AbsRefreshListActivity {
         call.enqueue(new BaseResponseModelCallBack<ResponseInListModel<MsgDetailsComment>>(this) {
             @Override
             protected void onSuccess(ResponseInListModel<MsgDetailsComment> data, String SucMessage) {
-                mRefreshHelper.setData(data.getList(), "暂无评论", 0);
+                mRefreshHelper.setData(data.getList(), "暂无评论", R.drawable.no_dynamic);
             }
 
             @Override

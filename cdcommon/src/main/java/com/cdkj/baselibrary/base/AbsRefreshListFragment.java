@@ -67,6 +67,10 @@ public abstract class AbsRefreshListFragment<T> extends BaseLazyFragment {
             public void getListDataRequest(int pageIndex, int limit, boolean isShowDialog) {
                 getListRequest(pageIndex, limit, isShowDialog);
             }
+            @Override
+            public void reLoad() {
+                mRefreshHelper.onDefaluteMRefresh(true);
+            }
         });
         mRefreshHelper.init(limit);
 

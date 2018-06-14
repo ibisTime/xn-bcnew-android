@@ -110,7 +110,7 @@ public class ActiveApproveUserFragment extends AbsRefreshListFragment {
         call.enqueue(new BaseResponseModelCallBack<ResponseInListModel<ActiveUserModel>>(mActivity) {
             @Override
             protected void onSuccess(ResponseInListModel<ActiveUserModel> data, String SucMessage) {
-                mRefreshHelper.setData(data.getList(), getString(R.string.no_approve_user), 0);
+                mRefreshHelper.setData(data.getList(), getString(R.string.no_approve_user),R.drawable.no_dynamic);
             }
 
             @Override

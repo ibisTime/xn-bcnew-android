@@ -71,7 +71,7 @@ public class MyCollectionListActivity extends AbsRefreshListActivity {
         call.enqueue(new BaseResponseModelCallBack<ResponseInListModel<FastMessage>>(this) {
             @Override
             protected void onSuccess(ResponseInListModel<FastMessage> data, String SucMessage) {
-                mRefreshHelper.setData(data.getList(), getString(R.string.no_collection), 0);
+                mRefreshHelper.setData(data.getList(), getString(R.string.no_collection), R.drawable.no_dynamic);
             }
 
             @Override

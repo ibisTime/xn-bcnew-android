@@ -141,6 +141,12 @@ public class ActiveCommentActivity extends AbsBaseLoadActivity {
             public void getListDataRequest(int pageindex, int limit, boolean isShowDialog) {
                 getListRequest(pageindex, limit, isShowDialog);
             }
+
+            @Override
+            public void reLoad() {
+                mActiveRefreshHelper.onDefaluteMRefresh(true);
+            }
+
         });
 
         mActiveRefreshHelper.init(MyCdConfig.LISTLIMIT);
@@ -184,7 +190,12 @@ public class ActiveCommentActivity extends AbsBaseLoadActivity {
         call.enqueue(new BaseResponseModelCallBack<ResponseInListModel<MsgDetailsComment>>(this) {
             @Override
             protected void onSuccess(ResponseInListModel<MsgDetailsComment> data, String SucMessage) {
-                mActiveRefreshHelper.setData(data.getList(), "暂无评论", 0);
+                mActiveRefreshHelper.setData(data.getList(), "暂时没有评论", R.drawable.no_note);
+            }
+
+            @Override
+            protected void onReqFailure(String errorCode, String errorMessage) {
+                mActiveRefreshHelper.loadError( errorMessage, R.drawable.load_error);
             }
 
             @Override

@@ -21,13 +21,26 @@
             android:id="@+id/tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="80dp"
+            android:layout_marginBottom="15dp"
             android:layout_marginTop="23dp"
             android:maxLength="100"
             android:textColor="@color/text_color"
             android:textSize="13sp"
             android:visibility="gone"
             tools:text="暂无数据" />
+
+        <Button
+            android:id="@+id/btn_reload"
+            android:layout_width="120dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:layout_marginBottom="100dp"
+            android:background="@drawable/shape_blue_btn_radius"
+            android:text="@string/reload"
+            android:textColor="@color/white"
+            android:textSize="12sp"
+            android:visibility="gone" />
+
 
     </LinearLayout>
 </layout>

@@ -228,7 +228,7 @@ public class PlatformListFragment extends AbsRefreshListFragment {
 
 
                 if (platformListAdapter.getData() == null || platformListAdapter.getData().size() == 0 || isClearRefresh) {
-                    mRefreshHelper.setData(data.getList(), getString(R.string.no_platform_info), 0);
+                    mRefreshHelper.setData(data.getList(), getString(R.string.no_platform_info), R.drawable.no_dynamic);
                 }else {
 
                     //

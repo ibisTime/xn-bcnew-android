@@ -102,7 +102,7 @@ public class MyBBSCommentsListFragment extends AbsRefreshListFragment {
         call.enqueue(new BaseResponseModelCallBack<ResponseInListModel<UserBBSComment>>(mActivity) {
             @Override
             protected void onSuccess(ResponseInListModel<UserBBSComment> data, String SucMessage) {
-                mRefreshHelper.setData(data.getList(), getString(R.string.no_comment), 0);
+                mRefreshHelper.setData(data.getList(), getString(R.string.no_comment),R.drawable.no_dynamic);
             }
 
             @Override

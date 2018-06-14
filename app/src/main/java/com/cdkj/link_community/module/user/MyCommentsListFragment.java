@@ -112,7 +112,7 @@ public class MyCommentsListFragment extends AbsRefreshListFragment {
         call.enqueue(new BaseResponseModelCallBack<ResponseInListModel<UserMessageComment>>(mActivity) {
             @Override
             protected void onSuccess(ResponseInListModel<UserMessageComment> data, String SucMessage) {
-                mRefreshHelper.setData(data.getList(), getString(R.string.no_comment), 0);
+                mRefreshHelper.setData(data.getList(), getString(R.string.no_comment), R.drawable.no_dynamic);
             }
 
             @Override

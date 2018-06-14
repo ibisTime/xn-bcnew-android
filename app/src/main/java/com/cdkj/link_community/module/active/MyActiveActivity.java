@@ -81,7 +81,7 @@ public class MyActiveActivity extends AbsRefreshListActivity {
         call.enqueue(new BaseResponseModelCallBack<ResponseInListModel<MyActiveModel>>(this) {
             @Override
             protected void onSuccess(ResponseInListModel<MyActiveModel> data, String SucMessage) {
-                mRefreshHelper.setData(data.getList(), getString(R.string.no_my_active), 0);
+                mRefreshHelper.setData(data.getList(), getString(R.string.no_my_active), R.drawable.no_dynamic);
             }
 
             @Override

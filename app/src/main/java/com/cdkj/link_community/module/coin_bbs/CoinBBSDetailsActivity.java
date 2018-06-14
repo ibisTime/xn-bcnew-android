@@ -298,7 +298,7 @@ public class CoinBBSDetailsActivity extends AbsBaseLoadActivity {
 
             @Override
             public RecyclerView.Adapter getAdapter(List listData) {
-                MessageListAdapter msgAdapter = new MessageListAdapter(listData,CoinBBSDetailsActivity.this);
+                MessageListAdapter msgAdapter = new MessageListAdapter(listData, CoinBBSDetailsActivity.this);
 
                 msgAdapter.setOnItemClickListener((adapter, view, position) -> {
                     MessageDetailsActivity.open(CoinBBSDetailsActivity.this, msgAdapter.getItem(position).getCode());
@@ -310,6 +310,11 @@ public class CoinBBSDetailsActivity extends AbsBaseLoadActivity {
             @Override
             public void getListDataRequest(int pageindex, int limit, boolean isShowDialog) {
                 getMsgListRequest(pageindex, limit, isShowDialog);
+            }
+
+            @Override
+            public void reLoad() {
+                mMessageRefreshHelper.onDefaluteMRefresh(true);
             }
         });
         mMessageRefreshHelper.init(MyCdConfig.LISTLIMIT);
@@ -345,6 +350,11 @@ public class CoinBBSDetailsActivity extends AbsBaseLoadActivity {
             public void getListDataRequest(int pageindex, int limit, boolean isShowDialog) {
                 getMarketListRequest(pageindex, limit, isShowDialog);
             }
+
+            @Override
+            public void reLoad() {
+                mMarketRefreshHelper.onDefaluteMRefresh(true);
+            }
         });
         mMarketRefreshHelper.init(MyCdConfig.LISTLIMIT);
         mBinding.recyclerViewRight.setNestedScrollingEnabled(false);
@@ -375,6 +385,11 @@ public class CoinBBSDetailsActivity extends AbsBaseLoadActivity {
             @Override
             public void getListDataRequest(int pageindex, int limit, boolean isShowDialog) {
                 getNewCircularListRequest(pageindex, limit, isShowDialog);
+            }
+
+            @Override
+            public void reLoad() {
+                mNewBBSCirclularRefreshHelper.onDefaluteMRefresh(true);
             }
         });
         mNewBBSCirclularRefreshHelper.init(MyCdConfig.LISTLIMIT);
@@ -530,7 +545,7 @@ public class CoinBBSDetailsActivity extends AbsBaseLoadActivity {
     public void getMsgListRequest(int pageindex, int limit, boolean isShowDialog) {
 
         if (TextUtils.isEmpty(mBBSCode)) {
-            mMessageRefreshHelper.setData(new ArrayList(), getString(R.string.no_msg), 0);
+            mMessageRefreshHelper.setData(new ArrayList(), getString(R.string.no_msg), R.drawable.no_dynamic);
             return;
         }
 
@@ -549,7 +564,7 @@ public class CoinBBSDetailsActivity extends AbsBaseLoadActivity {
         call.enqueue(new BaseResponseModelCallBack<ResponseInListModel<FastMessage>>(this) {
             @Override
             protected void onSuccess(ResponseInListModel<FastMessage> data, String SucMessage) {
-                mMessageRefreshHelper.setData(data.getList(), getString(R.string.no_msg), 0);
+                mMessageRefreshHelper.setData(data.getList(), getString(R.string.no_msg), R.drawable.no_dynamic);
             }
 
             @Override
@@ -575,7 +590,7 @@ public class CoinBBSDetailsActivity extends AbsBaseLoadActivity {
     public void getMarketListRequest(int pageindex, int limit, boolean isShowDialog) {
 
         if (TextUtils.isEmpty(mToCoin)) {
-            mMarketRefreshHelper.setData(new ArrayList(), getString(R.string.no_add_market), 0);
+            mMarketRefreshHelper.setData(new ArrayList(), getString(R.string.no_add_market), R.drawable.no_dynamic);
             return;
         }
 
@@ -600,7 +615,7 @@ public class CoinBBSDetailsActivity extends AbsBaseLoadActivity {
         call.enqueue(new BaseResponseModelCallBack<ResponseInListModel<CoinListModel>>(this) {
             @Override
             protected void onSuccess(ResponseInListModel<CoinListModel> data, String SucMessage) {
-                mMarketRefreshHelper.setData(data.getList(), getString(R.string.no_add_market), 0);
+                mMarketRefreshHelper.setData(data.getList(), getString(R.string.no_add_market), R.drawable.no_dynamic);
             }
 
             @Override
@@ -626,7 +641,7 @@ public class CoinBBSDetailsActivity extends AbsBaseLoadActivity {
     public void getNewCircularListRequest(int pageindex, int limit, boolean isShowDialog) {
 
         if (TextUtils.isEmpty(mBBSCode)) {
-            mNewBBSCirclularRefreshHelper.setData(new ArrayList(), getString(R.string.no_bbs_circular), 0);
+            mNewBBSCirclularRefreshHelper.setData(new ArrayList(), getString(R.string.no_bbs_circular), R.drawable.no_dynamic);
             return;
         }
 
@@ -646,7 +661,7 @@ public class CoinBBSDetailsActivity extends AbsBaseLoadActivity {
         call.enqueue(new BaseResponseModelCallBack<ResponseInListModel<CoinBBSHotCircular>>(this) {
             @Override
             protected void onSuccess(ResponseInListModel<CoinBBSHotCircular> data, String SucMessage) {
-                mNewBBSCirclularRefreshHelper.setData(data.getList(), getString(R.string.no_bbs_circular), 0);
+                mNewBBSCirclularRefreshHelper.setData(data.getList(), getString(R.string.no_bbs_circular), R.drawable.no_dynamic);
             }
 
             @Override
