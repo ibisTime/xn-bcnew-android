@@ -1,7 +1,7 @@
 package com.cdkj.baselibrary.utils.update;
 
 /**
- * Created by 李先俊 on 2017/8/19.
+ * Created by cdkj on 2017/8/19.
  */
 
 public interface APKDownloadListener {

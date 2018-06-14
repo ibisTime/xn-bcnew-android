@@ -50,9 +50,8 @@
                 <LinearLayout
                     android:id="@+id/lin_user_head"
                     android:layout_width="match_parent"
-                    android:layout_height="120dp"
-                    android:background="@drawable/user_head_bg"
-                    android:gravity="center_vertical"
+                    android:layout_height="110dp"
+                    android:background="@drawable/user_bg"
                     android:orientation="horizontal">
 
                     <ImageView
@@ -130,11 +129,11 @@
                 <View style="@style/style_split_line" />
 
                 <FrameLayout
+                    android:visibility="gone"
                     android:id="@+id/fra_clear_cache"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
-                    android:background="@drawable/selector_gray"
-                    android:visibility="gone">
+                    android:background="@drawable/selector_gray">
 
                     <TextView
                         android:layout_width="wrap_content"

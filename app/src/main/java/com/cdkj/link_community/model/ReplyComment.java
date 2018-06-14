@@ -2,7 +2,7 @@ package com.cdkj.link_community.model;
 
 /**
  * 评论回复
- * Created by 李先俊 on 2018/3/24.
+ * Created by cdkj on 2018/3/24.
  */
 
 public class ReplyComment {

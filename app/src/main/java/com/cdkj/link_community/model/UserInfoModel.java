@@ -4,7 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 /**
- * Created by 李先俊 on 2017/8/8.
+ * Created by cdkj on 2017/8/8.
  */
 
 public class UserInfoModel implements Parcelable {

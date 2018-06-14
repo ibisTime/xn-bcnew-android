@@ -25,6 +25,8 @@ import com.cdkj.link_community.model.MessageType;
 import com.cdkj.link_community.model.MsgDetailsComment;
 import com.cdkj.link_community.model.MyActiveModel;
 import com.cdkj.link_community.model.MyChooseMarket;
+import com.cdkj.link_community.model.PlateDetailsModel;
+import com.cdkj.link_community.model.PlateLlistModel;
 import com.cdkj.link_community.model.UserBBSComment;
 import com.cdkj.link_community.model.UserInfoModel;
 import com.cdkj.link_community.model.UserMessageComment;
@@ -37,13 +39,14 @@ import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.POST;
 
 /**
- * Created by 李先俊 on 2018/3/22.
+ * Created by cdkj on 2018/3/22.
  */
 
 public interface MyApiServer {
 
     /**
      * 获取轮播图
+     *
      * @param code
      * @param json
      * @return
@@ -51,6 +54,30 @@ public interface MyApiServer {
     @FormUrlEncoded
     @POST("api")
     Call<BaseResponseListModel<BannerModel>> getBanner(@Field("code") String code, @Field("json") String json);
+
+
+    /**
+     * 获取板块列表
+     *
+     * @param code
+     * @param json
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("api")
+    Call<BaseResponseModel<ResponseInListModel<PlateLlistModel>>> getPlateList(@Field("code") String code, @Field("json") String json);
+
+
+    /**
+     * 获取板块列表
+     *
+     * @param code
+     * @param json
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("api")
+    Call<BaseResponseModel<PlateDetailsModel>> getPlateDetails(@Field("code") String code, @Field("json") String json);
 
     /**
      * 获取版本
@@ -308,7 +335,7 @@ public interface MyApiServer {
      * @param code
      * @param json
      * @return
-             */
+     */
     @FormUrlEncoded
     @POST("api")
     Call<BaseResponseModel<ResponseInListModel<ActiveModel>>> getActiveList(@Field("code") String code, @Field("json") String json);

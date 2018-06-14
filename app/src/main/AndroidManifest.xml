@@ -239,6 +239,8 @@
         <activity android:name=".module.user.MyMessageActivity" />
         <activity android:name=".module.market.MarketProjectActivity" />
         <activity android:name=".module.active.ActiveApproveUserActivity" />
+        <activity android:name=".module.plate.PlateDetailsActivity" />
+        <activity android:name=".module.plate.PlateIntroduceActivity" />
     </application>
 
 </manifest>

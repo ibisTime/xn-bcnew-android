@@ -53,7 +53,7 @@ public class MyReleaseMessageListFragment extends AbsRefreshListFragment {
 
     @Override
     protected void lazyLoad() {
-        if (mRefreshBinding == null ) return;
+        if (mRefreshBinding == null) return;
 
         mRefreshHelper.onDefaluteMRefresh(true);
     }
@@ -71,7 +71,7 @@ public class MyReleaseMessageListFragment extends AbsRefreshListFragment {
 
             initRefreshHelper(MyCdConfig.LISTLIMIT);
 
-            if (isFirstRequest){
+            if (isFirstRequest) {
                 mRefreshHelper.onDefaluteMRefresh(true);
             }
 
@@ -81,7 +81,7 @@ public class MyReleaseMessageListFragment extends AbsRefreshListFragment {
 
     @Override
     public RecyclerView.Adapter getListAdapter(List listData) {
-        MessageListAdapter msgAdapter = new MessageListAdapter(listData,mActivity);
+        MessageListAdapter msgAdapter = new MessageListAdapter(listData, mActivity);
 
         msgAdapter.setOnItemClickListener((adapter, view, position) -> {
             MessageDetailsActivity.open(mActivity, msgAdapter.getItem(position).getCode());
@@ -110,7 +110,7 @@ public class MyReleaseMessageListFragment extends AbsRefreshListFragment {
         call.enqueue(new BaseResponseModelCallBack<ResponseInListModel<FastMessage>>(mActivity) {
             @Override
             protected void onSuccess(ResponseInListModel<FastMessage> data, String SucMessage) {
-                mRefreshHelper.setData(data.getList(),  getString(R.string.no_article), 0);
+                mRefreshHelper.setData(data.getList(), getString(R.string.no_article), R.drawable.no_note);
             }
 
             @Override

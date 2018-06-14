@@ -2,10 +2,10 @@
 <resources>
     <color name="colorPrimary">#00ffffff</color>
     <color name="colorPrimaryDark">#00ffffff</color>
-    <color name="colorAccent">#2F93ED</color>
+    <color name="colorAccent">#022454</color>
 
     <color name="gray_bg">#f6f6f6</color>
-    <color name="title_bg">#2F93ED</color>
+    <color name="title_bg">#022454</color>
     <color name="title_left_tv">#ffffff</color>
     <color name="title_right_tv">#ffffff</color>
     <color name="title_mid_tv">#ffffff</color>
@@ -80,6 +80,7 @@
 
     <color name="text_color_333333">#333333</color>
     <color name="text_color_666666">#666666</color>
+    <color name="text_color_3A3A3A">#3A3A3A</color>
 
 
     <color name="gray_f7">#F7F7F7</color>

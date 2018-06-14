@@ -22,7 +22,7 @@ import retrofit2.Call;
 
 /**
  * apk下载更新管理
- * Created by 李先俊 on 2017/8/19.
+ * Created by cdkj on 2017/8/19.
  */
 
 public class UpdateManager {

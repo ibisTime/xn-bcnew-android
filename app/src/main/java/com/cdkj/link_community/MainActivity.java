@@ -31,6 +31,7 @@ import com.cdkj.link_community.module.maintab.ActiveFragment;
 import com.cdkj.link_community.module.maintab.CoinBBSFragment;
 import com.cdkj.link_community.module.maintab.FirstPageFragment;
 import com.cdkj.link_community.module.maintab.MarketPageFragment;
+import com.cdkj.link_community.module.maintab.PlateFragment;
 import com.cdkj.link_community.module.maintab.UserFragment;
 import com.cdkj.link_community.module.message.FastMessageToShareActivity;
 
@@ -139,7 +140,7 @@ public class MainActivity extends AbsBaseLoadActivity {
 
     private void getFastMessage(String code) {
 
-        if (TextUtils.equals(code,"notOpen"))
+        if (TextUtils.equals(code, "notOpen"))
             return;
 
         Map<String, String> map = new HashMap<>();
@@ -161,7 +162,7 @@ public class MainActivity extends AbsBaseLoadActivity {
                 String content;
                 if (data.getContent().length() > limit) { // 如果快讯内容长度大于limit，截取并加省略号
                     content = data.getContent().substring(0, limit) + "......";
-                }else {
+                } else {
                     content = data.getContent();
                 }
 
@@ -244,12 +245,12 @@ public class MainActivity extends AbsBaseLoadActivity {
     }
 
     @Subscribe
-    public void marketToStopInterval(EventMarketIntervalPause pause){
-        if (isSume){
+    public void marketToStopInterval(EventMarketIntervalPause pause) {
+        if (isSume) {
             isSume = false;
             mSubscription.add(stopMarketInterval());
 
-        }else {
+        } else {
 
         }
 
@@ -278,11 +279,14 @@ public class MainActivity extends AbsBaseLoadActivity {
         //设置fragment数据
         ArrayList fragments = new ArrayList<>();
 
+
         fragments.add(FirstPageFragment.getInstance());
         fragments.add(MarketPageFragment.getInstance());
-        fragments.add(CoinBBSFragment.getInstance());
+        //        fragments.add(CoinBBSFragment.getInstance());
+        fragments.add(PlateFragment.getInstance());
         fragments.add(ActiveFragment.getInstance());
         fragments.add(UserFragment.getInstance());
+
 
         mBinding.pagerMain.setAdapter(new ViewPagerAdapter(getSupportFragmentManager(), fragments));
         mBinding.pagerMain.setOffscreenPageLimit(fragments.size());
