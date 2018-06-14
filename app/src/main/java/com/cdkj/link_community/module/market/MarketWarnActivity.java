@@ -5,9 +5,11 @@ import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
 import android.text.InputFilter;
 import android.text.InputType;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 
@@ -27,6 +29,7 @@ import com.cdkj.baselibrary.utils.ToastUtil;
 import com.cdkj.link_community.R;
 import com.cdkj.link_community.adapters.UserWarnAdapter;
 import com.cdkj.link_community.api.MyApiServer;
+import com.cdkj.link_community.databinding.ActivityMarketWarn2Binding;
 import com.cdkj.link_community.databinding.ActivityMarketWarnBinding;
 import com.cdkj.link_community.model.CoinListModel;
 import com.cdkj.link_community.model.UserWarnModel;
@@ -45,7 +48,7 @@ import static com.cdkj.link_community.utils.AccountUtil.scale;
 
 public class MarketWarnActivity extends AbsBaseLoadActivity {
 
-    private ActivityMarketWarnBinding mBinding;
+    private ActivityMarketWarn2Binding mBinding;
 
     private RefreshHelper mRefreshHelper;
 
@@ -67,7 +70,7 @@ public class MarketWarnActivity extends AbsBaseLoadActivity {
 
     @Override
     public View addMainView() {
-        mBinding = DataBindingUtil.inflate(getLayoutInflater(), R.layout.activity_market_warn, null, false);
+        mBinding = DataBindingUtil.inflate(getLayoutInflater(), R.layout.activity_market_warn2, null, false);
         return mBinding.getRoot();
     }
 
@@ -95,10 +98,10 @@ public class MarketWarnActivity extends AbsBaseLoadActivity {
         mBinding.tvSymbol.setText(model.getSymbol());
 
         if (model.getLastCnyPrice() != null)
-            mBinding.tvPriceCny.setText(MoneyUtils.MONEYSING + scale(model.getLastCnyPrice(),2));
+            mBinding.tvPriceCny.setText(MoneyUtils.MONEYSING + scale(model.getLastCnyPrice(), 2));
 
         if (model.getLastUsdPrice() != null)
-            mBinding.tvPriceUsd.setText(MoneyUtils.MONEYSING_USD + scale(model.getLastUsdPrice(),2));
+            mBinding.tvPriceUsd.setText(MoneyUtils.MONEYSING_USD + scale(model.getLastUsdPrice(), 2));
 
         intEditTextView(mBinding.edtUp);
         intEditTextView(mBinding.edtDown);
@@ -136,31 +139,89 @@ public class MarketWarnActivity extends AbsBaseLoadActivity {
         });
 
         mBinding.ivUp.setOnClickListener(view -> {
-            if (TextUtils.isEmpty(mBinding.edtUp.getText().toString())){
+            if (TextUtils.isEmpty(mBinding.edtUp.getText().toString())) {
                 ToastUtil.show(this, "请输入上涨预警价格");
                 return;
             }
 
-            if (check("up")){
+            if (check("up")) {
                 setWarn(mBinding.edtUp.getText().toString(), "1");
             }
 
         });
 
         mBinding.ivDown.setOnClickListener(view -> {
-            if (TextUtils.isEmpty(mBinding.edtDown.getText().toString())){
+            if (TextUtils.isEmpty(mBinding.edtDown.getText().toString())) {
                 ToastUtil.show(this, "请输入下跌预警价格");
                 return;
             }
 
-            if (check("down")){
+            if (check("down")) {
                 setWarn(mBinding.edtDown.getText().toString(), "0");
             }
 
         });
+
+        mBinding.edtDown.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+                //判断是否有内容  有内容  黄色  没有内容灰色
+
+                if (TextUtils.isEmpty(mBinding.edtDown.getText().toString())) {
+                    //没有内容
+                    mBinding.tvUnitDown.setTextColor(getResources().getColor(R.color.bg_gray));
+                    mBinding.ivDown.setImageResource(R.drawable.market_warn_add_gray);
+
+                } else {
+//                    有内容
+                    mBinding.ivDown.setImageResource(R.drawable.market_warn_add);
+                    mBinding.tvUnitDown.setTextColor(getResources().getColor(R.color.text_black_cd));
+                }
+
+            }
+        });
+
+        mBinding.edtUp.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                //判断是否有内容  有内容  黄色  没有内容灰色
+
+                if (TextUtils.isEmpty(mBinding.edtUp.getText().toString())) {
+                    //没有内容
+                    mBinding.tvUnitUp.setTextColor(getResources().getColor(R.color.bg_gray));
+                    mBinding.ivUp.setImageResource(R.drawable.market_warn_add_gray);
+                } else {
+//                    有内容
+                    mBinding.ivUp.setImageResource(R.drawable.market_warn_add);
+                    mBinding.tvUnitUp.setTextColor(getResources().getColor(R.color.text_black_cd));
+
+                }
+            }
+        });
     }
 
-    private void intEditTextView(EditText edt){
+    private void intEditTextView(EditText edt) {
         edt.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL | InputType.TYPE_CLASS_NUMBER);
         //设置字符过滤
         edt.setFilters(new InputFilter[]{(source, start, end, dest, dstart, dend) -> {
@@ -250,24 +311,24 @@ public class MarketWarnActivity extends AbsBaseLoadActivity {
 
     }
 
-    private boolean check(String type){
+    private boolean check(String type) {
         double current;
-        if (TextUtils.equals(warnCurrency, "CNY")){
+        if (TextUtils.equals(warnCurrency, "CNY")) {
             current = Double.parseDouble(model.getLastCnyPrice());
-        }else {
+        } else {
             current = Double.parseDouble(model.getLastUsdPrice());
         }
 
-        if (TextUtils.equals(type, "up")){
+        if (TextUtils.equals(type, "up")) {
 
-            if (current >= Double.parseDouble(mBinding.edtUp.getText().toString())){
+            if (current >= Double.parseDouble(mBinding.edtUp.getText().toString())) {
                 ToastUtil.show(this, "上涨预警价格必须大于限价");
                 return false;
             }
 
-        }else {
+        } else {
 
-            if (current <= Double.parseDouble(mBinding.edtDown.getText().toString())){
+            if (current <= Double.parseDouble(mBinding.edtDown.getText().toString())) {
                 ToastUtil.show(this, "下跌预警价格必须小于限价");
                 return false;
             }
@@ -278,7 +339,7 @@ public class MarketWarnActivity extends AbsBaseLoadActivity {
 
     }
 
-    private void setWarn(String warnPrice,String warnDirection) {
+    private void setWarn(String warnPrice, String warnDirection) {
 
         Map<String, String> map = new HashMap<>();
         map.put("userId", SPUtilHelper.getUserId());
@@ -300,11 +361,11 @@ public class MarketWarnActivity extends AbsBaseLoadActivity {
 
             @Override
             protected void onSuccess(IsSuccessModes data, String SucMessage) {
-                if (data.isSuccess()){
+                if (data.isSuccess()) {
                     UITipDialog.showSuccess(MarketWarnActivity.this, getString(R.string.do_succ), dialogInterface -> {
                         mRefreshHelper.onDefaluteMRefresh(true);
                     });
-                }else {
+                } else {
                     UITipDialog.showFail(MarketWarnActivity.this, getString(R.string.do_fall));
                 }
             }
@@ -316,7 +377,7 @@ public class MarketWarnActivity extends AbsBaseLoadActivity {
         });
     }
 
-    private void delete(String id){
+    private void delete(String id) {
 
         Map<String, String> map = new HashMap<>();
 
@@ -330,11 +391,11 @@ public class MarketWarnActivity extends AbsBaseLoadActivity {
         call.enqueue(new BaseResponseModelCallBack<IsSuccessModes>(this) {
             @Override
             protected void onSuccess(IsSuccessModes data, String SucMessage) {
-                if (data.isSuccess()){
+                if (data.isSuccess()) {
                     UITipDialog.showSuccess(MarketWarnActivity.this, getString(R.string.do_succ), dialogInterface -> {
                         mRefreshHelper.onDefaluteMRefresh(true);
                     });
-                }else {
+                } else {
                     UITipDialog.showFail(MarketWarnActivity.this, getString(R.string.do_fall));
                 }
 

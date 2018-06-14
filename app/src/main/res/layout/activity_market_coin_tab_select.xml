@@ -135,7 +135,7 @@
                         android:layout_height="wrap_content"
                         android:text=")点击可移除"
                         android:textColor="#6E6E6E"
-                        android:textSize="13sp"
+                        android:textSize="14sp"
                         />
 
                 </LinearLayout>
@@ -182,7 +182,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="可再选"
                                 android:textColor="#6E6E6E"
-                                android:textSize="13sp"
+                                android:textSize="14sp"
                                 />
 
                             <TextView

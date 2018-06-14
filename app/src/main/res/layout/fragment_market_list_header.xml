@@ -29,7 +29,7 @@
                 <RadioButton
                     android:id="@+id/rb_up"
                     android:visibility="gone"
-                    android:text="涨幅榜"
+                    android:text="涨 幅 榜"
                     android:textColor="@drawable/common_market_list_header_txt"
                     android:textSize="16sp"
                     android:button="@null"
@@ -41,7 +41,7 @@
 
                 <CheckBox
                     android:id="@+id/cb_up"
-                    android:text="涨幅榜"
+                    android:text="涨 幅 榜"
                     android:textColor="@drawable/common_market_list_header_txt"
                     android:textSize="16sp"
                     android:button="@null"
@@ -96,7 +96,7 @@
 
                 <CheckBox
                     android:id="@+id/cb_down"
-                    android:text="跌幅榜"
+                    android:text="跌 幅 榜"
                     android:textColor="@drawable/common_market_list_header_txt"
                     android:textSize="16sp"
                     android:button="@null"
@@ -153,7 +153,7 @@
 
                 <CheckBox
                     android:id="@+id/cb_warn"
-                    android:text="预警中"
+                    android:text="预 警 中"
                     android:textColor="@drawable/common_market_list_header_txt"
                     android:textSize="16sp"
                     android:button="@null"

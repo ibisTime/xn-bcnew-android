@@ -97,7 +97,7 @@
             android:layout_width="22dp"
             android:layout_height="22dp"
             android:layout_gravity="center"
-            tools:src="@drawable/add_market_big" />
+            tools:src="@drawable/add_market_done" />
     </FrameLayout>
 
 

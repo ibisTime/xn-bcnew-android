@@ -62,7 +62,7 @@
                         android:ellipsize="end"
                         android:singleLine="true"
                         android:textColor="@color/app_text_gray"
-                        android:textSize="15sp"
+                        android:textSize="14sp"
                         tools:text="sdfsdfsd" />
 
                 </LinearLayout>
@@ -77,7 +77,7 @@
                     android:ellipsize="end"
                     android:singleLine="true"
                     android:textColor="@color/app_text_gray"
-                    android:textSize="15sp"
+                    android:textSize="14sp"
                     tools:text="sdfsdfsdsdfsdfsd" />
 
             </LinearLayout>
@@ -101,7 +101,7 @@
                     android:ellipsize="end"
                     android:singleLine="true"
                     android:textColor="@color/text_black_cd"
-                    android:textSize="16sp"
+                    android:textSize="15sp"
                     tools:text="sdfsdfsd" />
 
                 <TextView
@@ -113,7 +113,7 @@
                     android:gravity="right"
                     android:singleLine="true"
                     android:textColor="@color/app_text_gray_3"
-                    android:textSize="15sp"
+                    android:textSize="14sp"
                     tools:text="sdfsdfsd" />
 
             </LinearLayout>
@@ -137,7 +137,7 @@
     <!-- 以下都是侧滑菜单的内容依序排列 -->
     <Button
         android:id="@+id/btn_to_top"
-        android:layout_width="65dp"
+        android:layout_width="68dp"
         android:layout_height="match_parent"
         android:background="#c3c3c3"
         android:text="@string/to_top"
@@ -146,7 +146,7 @@
 
     <Button
         android:id="@+id/btn_delete"
-        android:layout_width="65dp"
+        android:layout_width="68dp"
         android:layout_height="match_parent"
         android:background="#ff4545"
         android:text="@string/delete"

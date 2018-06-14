@@ -119,8 +119,29 @@ public class MessageFragment extends AbsTablayoutFragment {
             mFragmentList.add(MessageListFragment.getInstance(datum.getCode(), i == 0, datum.getName()));
             i++;
         }
+//        setIndicator(mTabLayoutBinding.tablayout,25,25);
+//        mTabLayoutBinding.tablayout.post(  new Runnable() {
+//            @Override
+//            public void run() {
+//                setIndicator(mTabLayoutBinding.tablayout,60,60);
+//            }
+//        });
 
-        initViewPager();
+//        int linWhint = DisplayHelper.dpToPx(25);
+//        for (int j = 0; j <  mTabLayoutBinding.tablayout.getChildCount(); j++) {
+//
+//            View child = mTabLayoutBinding.tablayout.getChildAt(j);
+//            child.setPadding(0, 0, 0, 0);
+//            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, 1);
+//            params.leftMargin = 20;
+//            params.rightMargin = 20;
+////            params.bottomMargin = bottom;
+////            params.weight=linWhint;
+//            child.setLayoutParams(params);
+//            child.invalidate();
+//        }
+
+    initViewPager();
 
         mTabLayoutBinding.viewpager.setOffscreenPageLimit(4);
         if (mTitleList.size() > 4) {

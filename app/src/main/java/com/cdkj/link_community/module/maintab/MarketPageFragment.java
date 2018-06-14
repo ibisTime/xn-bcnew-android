@@ -21,7 +21,7 @@ import com.cdkj.link_community.module.search.SearchActivity;
 import java.util.ArrayList;
 
 /**
- * 首页 资讯
+ * 平台   自选   币种
  * Created by cdkj on 2018/3/13.
  */
 

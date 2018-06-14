@@ -15,7 +15,14 @@
             android:id="@+id/img"
             android:layout_width="75dp"
             android:layout_height="75dp"
-            tools:src="@mipmap/ic_launcher" />
+            tools:src="@drawable/add_market_big"
+            />
+        <TextView
+            android:text="暂无自选点击添加"
+            android:textColor="@color/yellow"
+            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
 
     </LinearLayout>

@@ -99,7 +99,7 @@ public class CoinTabSelectActivity extends AbsBaseLoadActivity {
 
             @Override
             public void afterTextChanged(Editable editable) {
-                if (TextUtils.isEmpty(editable.toString())){
+                if (TextUtils.isEmpty(editable.toString())) {
                     mBinding.llSearch.setVisibility(View.GONE);
                     mBinding.llRecommend.setVisibility(View.VISIBLE);
                 }
@@ -137,10 +137,10 @@ public class CoinTabSelectActivity extends AbsBaseLoadActivity {
             @Override
             protected void onSuccess(IntroductionInfoModel data, String SucMessage) {
                 if (TextUtils.isEmpty(data.getCvalue())) {
-                    Log.e("CoinTabSelectActivity","ata.getCvalue() is null");
+                    Log.e("CoinTabSelectActivity", "ata.getCvalue() is null");
                     return;
                 }
-                mBinding.tvMax.setText(data.getCvalue()+"");
+                mBinding.tvMax.setText(data.getCvalue() + "");
 
                 getListRequest();
             }
@@ -184,9 +184,9 @@ public class CoinTabSelectActivity extends AbsBaseLoadActivity {
                 mCoinTabArrayList.add(marketCoinTab);
                 mCoinTabArrayList.addAll(data);
 
-                mBinding.tvAlready.setText(data.size()+"");
-                mBinding.tvSearch.setText((Integer.parseInt(mBinding.tvMax.getText().toString())- data.size())+"");
-                mBinding.tvRecommend.setText((Integer.parseInt(mBinding.tvMax.getText().toString())- data.size())+"");
+                mBinding.tvAlready.setText(data.size() + "");
+                mBinding.tvSearch.setText((Integer.parseInt(mBinding.tvMax.getText().toString()) - data.size()) + "");
+                mBinding.tvRecommend.setText((Integer.parseInt(mBinding.tvMax.getText().toString()) - data.size()) + "");
 
                 mBinding.rvAlready.setAdapter(getRvAlreadyAdapter(mCoinTabArrayList));
                 mBinding.rvAlready.setLayoutManager(getLinearLayoutManager());
@@ -207,7 +207,7 @@ public class CoinTabSelectActivity extends AbsBaseLoadActivity {
 
     }
 
-    private MarketCoinTabAdapter getRvAlreadyAdapter(List<MarketCoinTab> data){
+    private MarketCoinTabAdapter getRvAlreadyAdapter(List<MarketCoinTab> data) {
 
         MarketCoinTabAdapter marketCoinTabAdapter = new MarketCoinTabAdapter(data, true);
 
@@ -256,12 +256,19 @@ public class CoinTabSelectActivity extends AbsBaseLoadActivity {
 
     }
 
-    private MarketCoinTabRecommendAdapter getRvRecommendAdapter(List<MarketCoinRecommendTab> data, List<MarketCoinTab> marketCoinTabList){
+    private MarketCoinTabRecommendAdapter getRvRecommendAdapter(List<MarketCoinRecommendTab> data, List<MarketCoinTab> marketCoinTabList) {
 
         MarketCoinTabRecommendAdapter marketCoinTabAdapter = new MarketCoinTabRecommendAdapter(data, marketCoinTabList);
 
+
         marketCoinTabAdapter.setOnItemChildClickListener((adapter, view, position) -> {
             MarketCoinRecommendTab coinRecommendTab = marketCoinTabAdapter.getItem(position);
+
+//            for (MarketCoinTab marketCoinTab : marketCoinTabList) {
+//                if (TextUtils.equals(coinRecommendTab.getSymbol(), marketCoinTab.getNavName())) {
+//                    return;
+//                }
+//            }
             addRequest(coinRecommendTab.getEname());
         });
 
@@ -277,7 +284,7 @@ public class CoinTabSelectActivity extends AbsBaseLoadActivity {
      */
     @NonNull
     private GridLayoutManager getLinearLayoutManager() {
-        return new GridLayoutManager(this, 4){
+        return new GridLayoutManager(this, 4) {
             @Override
             public boolean canScrollVertically() {  //禁止自滚动
                 return false;
@@ -308,11 +315,11 @@ public class CoinTabSelectActivity extends AbsBaseLoadActivity {
                 if (data == null)
                     return;
 
-                if (data.isSuccess()){
+                if (data.isSuccess()) {
                     UITipDialog.showSuccess(CoinTabSelectActivity.this, getString(R.string.do_succ), dialogInterface -> {
                         getListRequest();
                     });
-                }else {
+                } else {
                     UITipDialog.showSuccess(CoinTabSelectActivity.this, getString(R.string.do_fall));
                 }
 
@@ -350,11 +357,11 @@ public class CoinTabSelectActivity extends AbsBaseLoadActivity {
                 if (data == null)
                     return;
 
-                if (data.isSuccess()){
+                if (data.isSuccess()) {
                     UITipDialog.showSuccess(CoinTabSelectActivity.this, getString(R.string.do_succ), dialogInterface -> {
                         getListRequest();
                     });
-                }else {
+                } else {
                     UITipDialog.showSuccess(CoinTabSelectActivity.this, getString(R.string.do_fall));
                 }
 
@@ -391,7 +398,7 @@ public class CoinTabSelectActivity extends AbsBaseLoadActivity {
                 if (data == null)
                     return;
 
-                if (data.size() == 0){
+                if (data.size() == 0) {
                     ToastUtil.show(CoinTabSelectActivity.this, getString(R.string.no_search_info));
                 }
 
@@ -413,7 +420,7 @@ public class CoinTabSelectActivity extends AbsBaseLoadActivity {
 
     }
 
-    private MarketCoinTabRecommendAdapter getRvSearchAdapter(List<MarketCoinRecommendTab> data, List<MarketCoinTab> marketCoinTabList){
+    private MarketCoinTabRecommendAdapter getRvSearchAdapter(List<MarketCoinRecommendTab> data, List<MarketCoinTab> marketCoinTabList) {
 
         MarketCoinTabRecommendAdapter marketCoinTabAdapter = new MarketCoinTabRecommendAdapter(data, marketCoinTabList);
 

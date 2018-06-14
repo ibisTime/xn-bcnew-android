@@ -54,7 +54,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/app_text_gray"
-                    tools:text="sdfsdfsfsf"
+                    tools:text="时间"
                     tools:textSize="@dimen/msg_state_size" />
 
                 <View

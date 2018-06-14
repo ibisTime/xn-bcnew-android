@@ -6,15 +6,24 @@
     </data>
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <com.cdkj.link_community.views.ViewPagerIndicator
+            android:id="@+id/viewindicator"
+            android:layout_width="match_parent"
+            android:layout_height="40dp" />
+
+        <View style="@style/style_split_line" />
+
 
         <LinearLayout
             android:id="@+id/lin_user_head"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/user_center_bg"
+            android:layout_height="120dp"
+            android:background="@drawable/user_head_gary_bg"
+            android:gravity="center_vertical"
             android:orientation="horizontal">
 
 
@@ -36,20 +45,12 @@
                 android:layout_marginLeft="15dp"
                 android:ellipsize="end"
                 android:singleLine="true"
+                android:text="@string/fast_to_login"
                 android:textColor="@color/white"
-                android:textSize="17sp"
-                android:text="@string/fast_to_login" />
+                android:textSize="17sp" />
 
 
         </LinearLayout>
-
-        <com.cdkj.link_community.views.ViewPagerIndicator
-            android:id="@+id/viewindicator"
-            android:layout_width="match_parent"
-            android:layout_height="40dp" />
-
-        <View style="@style/style_split_line" />
-
 
         <com.cdkj.baselibrary.views.EnabledViewpager
             android:id="@+id/viewpager"

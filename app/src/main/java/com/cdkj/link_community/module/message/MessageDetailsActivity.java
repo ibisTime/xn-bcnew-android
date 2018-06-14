@@ -3,6 +3,7 @@ package com.cdkj.link_community.module.message;
 import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
@@ -121,6 +122,15 @@ public class MessageDetailsActivity extends AbsBaseLoadActivity {
 //            CdRouteHelper.openWebViewActivityForUrl("编辑资讯","http://47.96.161.183:2903/news/addNews.html?ownerId=U201804291940579421200");
         });
 
+        mBinding.contentLayout.llTg.setOnClickListener(view -> {
+            if (!SPUtilHelper.isLogin(this, false)) {
+                return;
+            }
+            //java调用JS方法
+            MessageReleaseActivity2.open(this);
+        });
+        //添加下划线
+        mBinding.contentLayout.tvTg.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);
         mBinding.refreshLayout.setEnableRefresh(false);
 
         mBinding.getRoot().setVisibility(View.GONE);
@@ -358,7 +368,7 @@ public class MessageDetailsActivity extends AbsBaseLoadActivity {
         mBinding.contentLayout.tvFrom.setText(getString(R.string.message_frome) + data.getSource());
         mBinding.contentLayout.tvTitle.setText(data.getTitle());
 
-        mBinding.contentLayout.tvCollection.setText(data.getReadCount()+"");
+        mBinding.contentLayout.tvCollection.setText(data.getReadCount() + "");
 
         if (TextUtils.isEmpty(data.getAuther())) {
             mBinding.contentLayout.tvAuthor.setText(getString(R.string.author) + "--");
@@ -425,7 +435,7 @@ public class MessageDetailsActivity extends AbsBaseLoadActivity {
             return;
         }
 
-        MessageDetailRecomListAdapter messageDetailRecomListAdapter = new MessageDetailRecomListAdapter(refNewList,this);
+        MessageDetailRecomListAdapter messageDetailRecomListAdapter = new MessageDetailRecomListAdapter(refNewList, this);
 
         messageDetailRecomListAdapter.setOnItemClickListener((adapter, view, position) -> {
             MessageDetailsActivity.open(this, messageDetailRecomListAdapter.getItem(position).getCode());

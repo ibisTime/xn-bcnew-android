@@ -81,4 +81,10 @@
     <color name="text_color_333333">#333333</color>
     <color name="text_color_666666">#666666</color>
 
+
+    <color name="gray_f7">#F7F7F7</color>
+
+
+    <color name="app_indicator_deep_color">#012454</color>
+
 </resources>

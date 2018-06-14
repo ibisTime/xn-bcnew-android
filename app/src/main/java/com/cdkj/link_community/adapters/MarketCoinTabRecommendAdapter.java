@@ -30,11 +30,12 @@ public class MarketCoinTabRecommendAdapter extends BaseQuickAdapter<MarketCoinRe
 
         helper.setGone(R.id.iv_selected, false);
         helper.setBackgroundRes(R.id.tv_coin, R.drawable.common_market_coin_tab_bg);
-
-        for (MarketCoinTab marketCoinTab : marketCoinTabList){
-            if (TextUtils.equals(item.getSymbol(), marketCoinTab.getNavName())){
+        helper.setTextColor(R.id.tv_coin, mContext.getResources().getColor(R.color.text_black_cd));
+        for (MarketCoinTab marketCoinTab : marketCoinTabList) {
+            if (TextUtils.equals(item.getSymbol(), marketCoinTab.getNavName())) {
                 helper.setGone(R.id.iv_selected, true);
                 helper.setBackgroundRes(R.id.tv_coin, R.drawable.common_market_coin_tab_bg_blue);
+                helper.setTextColor(R.id.tv_coin, mContext.getResources().getColor(R.color.yellow));
             }
         }
 

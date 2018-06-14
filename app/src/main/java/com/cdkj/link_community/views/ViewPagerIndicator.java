@@ -7,17 +7,15 @@ import android.graphics.Color;
 import android.graphics.CornerPathEffect;
 import android.graphics.Paint;
 import android.graphics.Paint.Style;
-import android.graphics.Rect;
+import android.graphics.RectF;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.AttributeSet;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -61,7 +59,7 @@ public class ViewPagerIndicator extends LinearLayout {
         super(context, attrs);
 
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.viewPagerIndicatorStyle);
-        mColor = ta.getResourceId(R.styleable.viewPagerIndicatorStyle_choose_color, R.color.app_indicator_color);
+        mColor = ta.getResourceId(R.styleable.viewPagerIndicatorStyle_choose_color, R.color.app_indicator_deep_color);
         ta.recycle();
 
         mContext = context;
@@ -82,10 +80,12 @@ public class ViewPagerIndicator extends LinearLayout {
             canvas.save();
             mLinWidth = Math.min(mLinWidth, getMeasuredWidth() / 2);
             // 画出一个矩形
-            Rect rect = new Rect(mTranslationX, getMeasuredHeight() - 8, mTranslationX + mLinWidth
-                    , getMeasuredHeight());
+            RectF rect = new RectF(mTranslationX, getMeasuredHeight() - 20, mTranslationX + mLinWidth
+                    , getMeasuredHeight() - 5);
+
             canvas.translate(getMeasuredWidth() / mTabVisibleCount / 2 - mLinWidth / 2, 0);   //计算偏移量
-            canvas.drawRect(rect, mPaint); // 绘制该矩形
+            //canvas.drawRect(rect, mPaint); // 绘制该矩形
+            canvas.drawRoundRect(rect, 20f, 20f, mPaint);
             canvas.restore();
         }
 

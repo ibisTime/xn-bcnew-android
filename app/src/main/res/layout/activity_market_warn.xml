@@ -6,21 +6,24 @@
     <data>
 
     </data>
-
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
     <LinearLayout
         android:id="@+id/ll_root"
-        android:background="@color/white"
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical">
 
         <LinearLayout
-            android:paddingLeft="@dimen/layout_left_interval"
-            android:paddingRight="@dimen/layout_right_interval"
-            android:background="@color/colorPrimary"
-            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="74dp"
+            android:background="@drawable/yujing_icon_bg"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/layout_left_interval"
+            android:paddingRight="@dimen/layout_right_interval">
 
             <TextView
                 android:id="@+id/tv_exchange"
@@ -28,21 +31,14 @@
                 android:layout_height="wrap_content"
                 android:text="Bitfinex"
                 android:textColor="#ffffffff"
-                android:textSize="17dp"
-                />
-
-            <View
-                android:layout_marginTop="8dp"
-                android:background="@color/white"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"/>
-
+                android:textSize="17dp" />
             <LinearLayout
+                android:background="@drawable/yellow_rouds_bg"
                 android:gravity="center_vertical"
                 android:layout_marginTop="13dp"
                 android:layout_marginBottom="13dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="40dp">
 
                 <TextView
                     android:id="@+id/tv_symbol"
@@ -84,27 +80,29 @@
 
             </LinearLayout>
 
-            
         </LinearLayout>
 
+
+
+
         <LinearLayout
-            android:paddingLeft="@dimen/layout_left_interval"
-            android:paddingRight="@dimen/layout_right_interval"
-            android:gravity="center_vertical"
             android:layout_width="match_parent"
-            android:layout_height="53dp">
+            android:layout_height="53dp"
+            android:gravity="center_vertical"
+            android:paddingLeft="@dimen/layout_left_interval"
+            android:paddingRight="@dimen/layout_right_interval">
 
             <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:text="单位"
                 android:textColor="@color/text_black_cd"
-                android:textSize="16sp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:textSize="16sp" />
 
             <View
-                android:layout_weight="1"
                 android:layout_width="0dp"
-                android:layout_height="match_parent"/>
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
 
             <RadioGroup
                 android:id="@+id/radiogroup"
@@ -116,103 +114,102 @@
                 <RadioButton
                     android:id="@+id/radio_usd"
                     style="@style/main_tab_radio"
-                    android:textSize="16sp"
-                    android:layout_height="match_parent"
                     android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_gravity="bottom"
                     android:checked="true"
                     android:drawableLeft="@drawable/common_market_warn_unit"
-                    android:text="美元($)" />
+                    android:text="美元($)"
+                    android:textSize="16sp" />
 
                 <View
-                    android:layout_weight="1"
                     android:layout_width="0dp"
-                    android:layout_height="match_parent"/>
-                
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" />
+
                 <RadioButton
                     android:id="@+id/radio_cny"
                     style="@style/main_tab_radio"
-                    android:textSize="16sp"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:drawableLeft="@drawable/common_market_warn_unit"
-                    android:text="人民币(¥)" />
+                    android:text="人民币(¥)"
+                    android:textSize="16sp" />
 
             </RadioGroup>
-            
-            
+
+
         </LinearLayout>
 
         <View
+            style="@style/style_split_line"
             android:paddingLeft="@dimen/layout_left_interval"
-            android:paddingRight="@dimen/layout_right_interval"
-            style="@style/style_split_line"/>
+            android:paddingRight="@dimen/layout_right_interval" />
 
         <LinearLayout
-            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
             android:layout_marginTop="20dp"
             android:gravity="center_vertical"
+            android:orientation="horizontal"
             android:paddingLeft="@dimen/layout_left_interval"
-            android:paddingRight="@dimen/layout_right_interval"
-            android:layout_width="match_parent"
-            android:layout_height="45dp">
+            android:paddingRight="@dimen/layout_right_interval">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="上涨至"
                 android:textColor="#ff3a3a3a"
-                android:textSize="16dp"
-                />
+                android:textSize="16dp" />
 
             <LinearLayout
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:background="@drawable/common_market_warn_edt_bg"
-                android:layout_marginLeft="15dp"
                 android:layout_width="match_parent"
-                android:layout_height="44dp">
+                android:layout_height="44dp"
+                android:layout_marginLeft="15dp"
+                android:background="@drawable/common_market_warn_edt_bg"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
 
                 <TextView
                     android:id="@+id/tv_unit_up"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:text="@string/money_sing_usd"
-                    android:textSize="16sp"
                     android:textColor="@color/text_black_cd"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:textSize="16sp" />
 
                 <EditText
                     android:id="@+id/edt_up"
-                    android:textSize="16sp"
-                    android:textColor="@color/text_black_cd"
-                    android:layout_marginLeft="10dp"
-                    android:background="@null"
-                    android:layout_weight="1"
                     android:layout_width="0dp"
-                    android:layout_height="match_parent" />
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:textColor="@color/text_black_cd"
+                    android:textSize="16sp" />
 
                 <ImageView
                     android:id="@+id/iv_up"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
-                    android:background="@drawable/market_warn_add"
-                    android:layout_width="18dp"
-                    android:layout_height="18dp" />
+                    android:background="@drawable/market_warn_add" />
 
             </LinearLayout>
 
         </LinearLayout>
 
         <LinearLayout
-            android:orientation="horizontal"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="20dp"
-            android:gravity="center_vertical"
-            android:paddingLeft="@dimen/layout_left_interval"
-            android:paddingRight="@dimen/layout_right_interval"
             android:layout_width="match_parent"
-            android:layout_height="45dp">
+            android:layout_height="45dp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="10dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/layout_left_interval"
+            android:paddingRight="@dimen/layout_right_interval">
 
 
             <TextView
@@ -220,58 +217,57 @@
                 android:layout_height="wrap_content"
                 android:text="下跌至"
                 android:textColor="#ff3a3a3a"
-                android:textSize="16dp"
-                />
+                android:textSize="16dp" />
 
             <LinearLayout
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:background="@drawable/common_market_warn_edt_bg"
-                android:layout_marginLeft="15dp"
                 android:layout_width="match_parent"
-                android:layout_height="44dp">
+                android:layout_height="44dp"
+                android:layout_marginLeft="15dp"
+                android:background="@drawable/common_market_warn_edt_bg"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
 
                 <TextView
                     android:id="@+id/tv_unit_down"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:text="@string/money_sing_usd"
-                    android:textSize="16sp"
                     android:textColor="@color/text_black_cd"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:textSize="16sp" />
 
                 <EditText
                     android:id="@+id/edt_down"
-                    android:textSize="16sp"
-                    android:textColor="@color/text_black_cd"
-                    android:layout_marginLeft="10dp"
-                    android:background="@null"
-                    android:layout_weight="1"
                     android:layout_width="0dp"
-                    android:layout_height="match_parent" />
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:textColor="@color/text_black_cd"
+                    android:textSize="16sp" />
 
                 <ImageView
                     android:id="@+id/iv_down"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
-                    android:background="@drawable/market_warn_add"
-                    android:layout_width="18dp"
-                    android:layout_height="18dp" />
+                    android:background="@drawable/market_warn_add" />
 
             </LinearLayout>
 
         </LinearLayout>
 
         <LinearLayout
-            android:background="#FAFCFF"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:background="#FAFCFF">
 
             <com.scwang.smartrefresh.layout.SmartRefreshLayout
                 android:id="@+id/refreshLayout"
-                android:layout_marginTop="@dimen/dp_10"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/dp_10"
                 android:background="@color/page_bg"
                 app:srlAccentColor="@android:color/tertiary_text_dark"
                 app:srlEnablePreviewInEditMode="true"
@@ -294,8 +290,10 @@
             </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
 
-
         </LinearLayout>
 
     </LinearLayout>
+
+</RelativeLayout>
+
 </layout>

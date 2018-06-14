@@ -20,6 +20,7 @@
     <color name="item_bg_other">#fafcff</color>
 
     <color name="app_indicator_color">#2F93ED</color>
+    <color name="app_indicator_deep_color">#012454</color>
     <color name="app_hint_color">#898989</color>
     <color name="market_gray">#979797</color>
     <color name="market_green">#1fc07d</color>
@@ -27,4 +28,13 @@
     <color name="red">#ff5757</color>
     <color name="bbs_state_color">#2f93ed</color>
     <color name="user_center_bg">#2e2e2e</color>
+
+
+
+
+
+    <color name="all_split_lins">#e2e2e2</color>
+    <color name="yellow">#FFA300</color>
+    <color name="deep_blue">#011F4A</color>
+
 </resources>

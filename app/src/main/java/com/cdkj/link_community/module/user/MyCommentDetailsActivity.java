@@ -241,6 +241,7 @@ public class MyCommentDetailsActivity extends AbsBaseLoadActivity {
         emptyViewBinding.img.setVisibility(View.VISIBLE);
 
         emptyViewBinding.tv.setText(R.string.come_here_sit);
+        emptyViewBinding.tv.setTextColor(getResources().getColor(R.color.txt_gray));
         emptyViewBinding.img.setImageResource(R.drawable.sofa);
 
         replyCommentListAdapter.setEmptyView(emptyViewBinding.getRoot());

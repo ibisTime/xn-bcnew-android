@@ -41,7 +41,7 @@ public class AddMarketListAdapter extends BaseQuickAdapter<CoinListModel, BaseVi
         if (TextUtils.equals(item.getIsChoice(), "1")) {
             viewHolder.setImageResource(R.id.img_add_state, R.drawable.add_market_done);
         } else {
-            viewHolder.setImageResource(R.id.img_add_state, R.drawable.add_market_big);
+            viewHolder.setImageResource(R.id.img_add_state, R.drawable.add_unmarket_done);
         }
 
     }
