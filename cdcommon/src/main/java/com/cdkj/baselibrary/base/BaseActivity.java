@@ -66,6 +66,9 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     protected void addCall(Call call) {
+        if (mCallList.size() > 10) {
+            mCallList.clear();
+        }
         mCallList.add(call);
     }
 

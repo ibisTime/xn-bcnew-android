@@ -11,11 +11,18 @@ import com.cdkj.baselibrary.adapters.ViewPagerAdapter;
 import com.cdkj.baselibrary.base.BaseLazyFragment;
 import com.cdkj.link_community.R;
 import com.cdkj.link_community.databinding.FragmentFirstPageBinding;
+import com.cdkj.link_community.model.event.MessageBannerState;
 import com.cdkj.link_community.module.message.FastMessageFragment;
 import com.cdkj.link_community.module.message.MessageFragment;
 import com.cdkj.link_community.module.search.SearchActivity;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
+
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 
 /**
  * 首页 资讯
@@ -78,13 +85,32 @@ public class FirstPageFragment extends BaseLazyFragment {
 
     }
 
-    @Override
-    protected void lazyLoad() {
 
+    /**
+     * 发生banner状态控制
+     */
+    private void postBannerStateEvent(boolean isStop) {
+        mSubscription.add(Observable.just("")        //开启banner
+                .throttleFirst(3, TimeUnit.SECONDS)  //防止用户过快点击
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(s -> {
+                    MessageBannerState bannerStop = new MessageBannerState();
+                    bannerStop.setStop(isStop);
+                    EventBus.getDefault().post(bannerStop);
+                }));
     }
 
     @Override
-    protected void onInvisible() {
+    protected void lazyLoad() {
+        if (mBinding == null) return;
+        postBannerStateEvent(false);
+    }
 
+
+    @Override
+    protected void onInvisible() {
+        if (mBinding == null) return;
+        postBannerStateEvent(true);
     }
 }

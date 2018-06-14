@@ -23,8 +23,11 @@ import com.cdkj.link_community.databinding.HeaderMessageListBinding;
 import com.cdkj.link_community.loader.BannerImageLoader;
 import com.cdkj.link_community.model.BannerModel;
 import com.cdkj.link_community.model.MessageModel;
+import com.cdkj.link_community.model.event.MessageBannerState;
 import com.cdkj.link_community.module.active.ActiveDetailsActivity;
 import com.youth.banner.BannerConfig;
+
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -67,22 +70,6 @@ public class MessageListFragment extends AbsRefreshListFragment {
 
 
     @Override
-    protected void lazyLoad() {
-
-        if (mRefreshBinding == null || mIsFristRequest) {
-            return;
-        }
-
-        mRefreshHelper.onDefaluteMLoadMore(true);
-
-    }
-
-    @Override
-    protected void onInvisible() {
-
-    }
-
-    @Override
     protected void afterCreate(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mHeaderBinding = DataBindingUtil.inflate(getLayoutInflater(), R.layout.header_message_list, null, false);
 
@@ -108,7 +95,7 @@ public class MessageListFragment extends AbsRefreshListFragment {
         MessageListAdapter msgAdapter = new MessageListAdapter(listData, mActivity);
         msgAdapter.setHeaderAndEmpty(true);
 
-        if (mIsFristRequest){
+        if (mIsFristRequest) {
             msgAdapter.addHeaderView(mHeaderBinding.getRoot());
         }
 
@@ -172,7 +159,7 @@ public class MessageListFragment extends AbsRefreshListFragment {
 
             @Override
             protected void onSuccess(List<BannerModel> data, String SucMessage) {
-                if (data != null){
+                if (data != null) {
                     bannerData = data;
                     banner.clear();
                     bannerTitle.clear();
@@ -217,27 +204,27 @@ public class MessageListFragment extends AbsRefreshListFragment {
         //设置banner点击事件
         mHeaderBinding.banner.setOnBannerClickListener(position -> {
 
-            if (bannerData.get(position-1).getContentType() == null)
+            if (bannerData.get(position - 1).getContentType() == null)
                 return;
 
-            if (bannerData.get(position-1).getUrl() == null){
+            if (bannerData.get(position - 1).getUrl() == null) {
                 return;
             }
 
-            switch (bannerData.get(position-1).getContentType()){
+            switch (bannerData.get(position - 1).getContentType()) {
 
                 case "1":
-                    if (bannerData.get(position-1).getUrl().indexOf("http") != -1){
-                        CdRouteHelper.openWebViewActivityForUrl(bannerData.get(position-1).getName(), bannerData.get(position-1).getUrl());
+                    if (bannerData.get(position - 1).getUrl().indexOf("http") != -1) {
+                        CdRouteHelper.openWebViewActivityForUrl(bannerData.get(position - 1).getName(), bannerData.get(position - 1).getUrl());
                     }
                     break;
 
                 case "2":
-                    MessageDetailsActivity.open(mActivity, bannerData.get(position-1).getUrl());
+                    MessageDetailsActivity.open(mActivity, bannerData.get(position - 1).getUrl());
                     break;
 
                 case "3":
-                    ActiveDetailsActivity.open(mActivity, bannerData.get(position-1).getUrl());
+                    ActiveDetailsActivity.open(mActivity, bannerData.get(position - 1).getUrl());
                     break;
             }
 
@@ -249,4 +236,73 @@ public class MessageListFragment extends AbsRefreshListFragment {
 //        mHeaderBinding.banner.setOnPageChangeListener(new MyPageChangeListener());
 
     }
+
+
+    @Override
+    protected void lazyLoad() {
+
+        if (mRefreshHelper == null) {
+            return;
+        }
+        if (banner != null && banner.size() > 0) {
+            mHeaderBinding.banner.startAutoPlay();
+        }
+        if (mIsFristRequest) {
+            return;
+        }
+
+        mRefreshHelper.onDefaluteMLoadMore(true);
+    }
+
+    @Override
+    protected void onInvisible() {
+        if (mHeaderBinding != null) {
+            mHeaderBinding.banner.stopAutoPlay();
+        }
+    }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (banner != null && banner.size() > 0 && mHeaderBinding != null) {
+            mHeaderBinding.banner.startAutoPlay();
+        }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (mHeaderBinding != null) {
+            mHeaderBinding.banner.stopAutoPlay();
+        }
+    }
+
+
+    @Override
+    public void onDestroy() {
+        if (mHeaderBinding != null) {
+            mHeaderBinding.banner.stopAutoPlay();
+        }
+        super.onDestroy();
+    }
+
+    /**
+     * @param bannerStop
+     */
+    @Subscribe
+    public void bannerStopEvent(MessageBannerState bannerStop) {  //接收事件通知 开启和关闭banner
+
+        if (mHeaderBinding == null) return;
+
+        if (!bannerStop.isStop()) {
+            if (banner != null && banner.size() > 0) {
+                mHeaderBinding.banner.startAutoPlay();
+            }
+        } else {
+            mHeaderBinding.banner.stopAutoPlay();
+        }
+    }
+
+
 }

@@ -73,7 +73,7 @@ public class PlateDetailsActivity extends AbsBaseLoadActivity {
         mPlateCode = getIntent().getStringExtra(CdRouteHelper.DATA_SIGN);
         mBaseBinding.titleView.setRightTitle(getString(R.string.introduce));
 
-        mBaseBinding.getRoot().setVisibility(View.GONE);
+        mBinding.getRoot().setVisibility(View.GONE);
 
         getPlateDetailsRequest();
     }
@@ -106,7 +106,7 @@ public class PlateDetailsActivity extends AbsBaseLoadActivity {
 
             @Override
             protected void onFinish() {
-                mBaseBinding.getRoot().setVisibility(View.VISIBLE);
+                mBinding.getRoot().setVisibility(View.VISIBLE);
                 disMissLoading();
             }
         });

@@ -14,12 +14,18 @@ import com.cdkj.baselibrary.nets.RetrofitUtils;
 import com.cdkj.baselibrary.utils.StringUtils;
 import com.cdkj.link_community.api.MyApiServer;
 import com.cdkj.link_community.model.MessageType;
+import com.cdkj.link_community.model.event.MessageBannerState;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import retrofit2.Call;
 
 /**
@@ -57,14 +63,30 @@ public class MessageFragment extends AbsTablayoutFragment {
         if (mTabLayoutBinding == null || !mTitleList.isEmpty()) {
             return;
         }
-
         getMessageTypeRequest();
-
+        postBannerStateEvent(true);
     }
 
     @Override
     protected void onInvisible() {
+        if (mTitleList == null) return;
+        postBannerStateEvent(false);
+    }
 
+
+    /**
+     * 发生banner状态控制
+     */
+    private void postBannerStateEvent(boolean isStop) {
+        mSubscription.add(Observable.just("")        //开启banner
+                .throttleFirst(3, TimeUnit.SECONDS)  //防止用户过快点击
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(s -> {
+                    MessageBannerState bannerStop = new MessageBannerState();
+                    bannerStop.setStop(isStop);
+                    EventBus.getDefault().post(bannerStop);
+                }));
     }
 
     @Override
@@ -142,7 +164,7 @@ public class MessageFragment extends AbsTablayoutFragment {
 //            child.invalidate();
 //        }
 
-    initViewPager();
+        initViewPager();
 
         mTabLayoutBinding.viewpager.setOffscreenPageLimit(4);
         if (mTitleList.size() > 4) {

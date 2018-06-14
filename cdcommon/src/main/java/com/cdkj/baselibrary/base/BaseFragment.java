@@ -36,26 +36,32 @@ public abstract class BaseFragment extends Fragment {
         super.onAttach(context);
         mActivity = getActivity();
     }
+
     @Subscribe
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EventBus.getDefault().register(this);
         mCallList = new ArrayList<>();
-        mSubscription=new CompositeDisposable();
+        mSubscription = new CompositeDisposable();
     }
+
     protected void addCall(Call call) {
+        if (mCallList.size() > 10) {
+            mCallList.clear();
+        }
         mCallList.add(call);
     }
 
     protected void clearCall() {
 
         for (Call call : mCallList) {
-            if (call == null){
+            if (call == null) {
                 continue;
             }
             call.cancel();
         }
+        mCallList.clear();
 
     }
 
@@ -73,8 +79,8 @@ public abstract class BaseFragment extends Fragment {
      * 显示dialog
      */
     public void showLoadingDialog() {
-        if(loadingDialog==null){
-            loadingDialog=new LoadingDialog(mActivity);
+        if (loadingDialog == null) {
+            loadingDialog = new LoadingDialog(mActivity);
         }
 
         if (loadingDialog != null && !loadingDialog.isShowing()) {
@@ -89,7 +95,7 @@ public abstract class BaseFragment extends Fragment {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
         clearCall();
-        if (mSubscription != null){
+        if (mSubscription != null) {
             mSubscription.dispose();
             mSubscription.clear();
         }
