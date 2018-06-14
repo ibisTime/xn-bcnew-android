@@ -52,7 +52,10 @@ public class FastMessageListAdapter extends BaseQuickAdapter<FastMessage, BaseVi
 
         textView.setText(Html.fromHtml(item.getContent()));
 
-        viewHolder.setText(R.id.tv_date, DateUtil.formatStringData(item.getShowDatetime(), DateUtil.DATE_FMT_YMD));
+        String month = DateUtil.formatStringData(item.getShowDatetime(), "MM月dd日");
+        String week = DateUtil.getWeekOfDate(item.getShowDatetime());
+
+        viewHolder.setText(R.id.tv_title, month+week);
         viewHolder.setText(R.id.tv_time, DateUtil.formatStringData(item.getShowDatetime(), "HH:mm:ss"));
 
         viewHolder.addOnClickListener(R.id.linlayout_to_share);
@@ -71,9 +74,9 @@ public class FastMessageListAdapter extends BaseQuickAdapter<FastMessage, BaseVi
 
         setReadedState(item, textView);
 
-        viewHolder.setGone(R.id.img_date_bg, isShowDateBg(viewHolder.getLayoutPosition()));
-        viewHolder.setGone(R.id.tv_date, isShowDateBg(viewHolder.getLayoutPosition()));
-        viewHolder.setGone(R.id.relayout_point, !isShowDateBg(viewHolder.getLayoutPosition()));
+//        viewHolder.setGone(R.id.img_date_bg, isShowDateBg(viewHolder.getLayoutPosition()));
+        viewHolder.setGone(R.id.tv_title, isShowDateBg(viewHolder.getLayoutPosition()));
+        //viewHolder.setGone(R.id.relayout_point, !isShowDateBg(viewHolder.getLayoutPosition()));
 
     }
 

@@ -82,10 +82,8 @@
     <color name="text_color_666666">#666666</color>
     <color name="text_color_3A3A3A">#3A3A3A</color>
 
-
     <color name="gray_f7">#F7F7F7</color>
-
-
     <color name="app_indicator_deep_color">#012454</color>
+    <color name="tv_bg_gray">#f5f5f7</color>
 
 </resources>
