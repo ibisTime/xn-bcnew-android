@@ -7,7 +7,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <android.support.design.widget.TabLayout
+        <com.cdkj.baselibrary.views.tablayout.TabLayout
             app:tabIndicatorHeight="2.4dp"
             android:id="@+id/tablayout"
             style="@style/MyTabLayout2"

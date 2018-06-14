@@ -42,6 +42,8 @@ public class ActiveFragment extends BaseLazyFragment {
 
     private RefreshHelper mActiveRefreshHelper; //最新评论刷新
 
+    private boolean isFirstReques;
+
     public static ActiveFragment getInstance() {
         ActiveFragment fragment = new ActiveFragment();
         Bundle bundle = new Bundle();
@@ -53,10 +55,6 @@ public class ActiveFragment extends BaseLazyFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mBinding = DataBindingUtil.inflate(getLayoutInflater(), R.layout.fragment_active, null, false);
-
-        if (getArguments() != null) {
-//            isFirstRequest = getArguments().getBoolean(CdRouteHelper.DATASIGN);
-        }
 
 
         initListener();
@@ -117,7 +115,6 @@ public class ActiveFragment extends BaseLazyFragment {
     }
 
 
-
     public void getListRequest(int pageIndex, int limit, boolean isShowDialog) {
         Map<String, String> map = new HashMap<>();
         map.put("status", "1");
@@ -151,10 +148,10 @@ public class ActiveFragment extends BaseLazyFragment {
 
     @Override
     protected void lazyLoad() {
-
-        if (mBinding == null) {
+        if (mBinding == null || isFirstReques) {
             return;
         }
+        isFirstReques = true;
         mActiveRefreshHelper.onDefaluteMRefresh(true);
 
     }

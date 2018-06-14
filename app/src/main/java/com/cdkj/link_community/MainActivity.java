@@ -244,33 +244,6 @@ public class MainActivity extends AbsBaseLoadActivity {
                 );
     }
 
-    @Subscribe
-    public void marketToStopInterval(EventMarketIntervalPause pause) {
-        if (isSume) {
-            isSume = false;
-            mSubscription.add(stopMarketInterval());
-
-        } else {
-
-        }
-
-    }
-
-    /**
-     * 停止行情轮询： 20S
-     *
-     * @return
-     */
-    public Disposable stopMarketInterval() {
-
-        return Observable.interval(0, 1, TimeUnit.SECONDS, AndroidSchedulers.mainThread())    //
-                .subscribeOn(AndroidSchedulers.mainThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .take(20)
-                .subscribe(aLong -> {
-                }, throwable -> isSume = true);
-    }
-
     /**
      * 初始化ViewPager
      */
