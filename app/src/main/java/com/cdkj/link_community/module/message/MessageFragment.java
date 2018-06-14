@@ -63,6 +63,7 @@ public class MessageFragment extends AbsTablayoutFragment {
         if (mTabLayoutBinding == null || !mTitleList.isEmpty()) {
             return;
         }
+
         getMessageTypeRequest();
         postBannerStateEvent(true);
     }
