@@ -226,11 +226,9 @@ public class PlatformListFragment extends AbsRefreshListFragment {
             @Override
             protected void onSuccess(ResponseInListModel<CoinListModel> data, String SucMessage) {
 
-
                 if (platformListAdapter.getData() == null || platformListAdapter.getData().size() == 0 || isClearRefresh) {
-                    mRefreshHelper.setData(data.getList(), getString(R.string.no_platform_info), R.drawable.no_dynamic);
+                    mRefreshHelper.setDataAsync(data.getList(), getString(R.string.no_platform_info), R.drawable.no_dynamic);
                 }else {
-
                     //
                     mRefreshBinding.refreshLayout.finishRefresh();
 

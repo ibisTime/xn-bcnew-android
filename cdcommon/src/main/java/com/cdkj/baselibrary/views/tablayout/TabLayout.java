@@ -66,6 +66,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.cdkj.baselibrary.utils.DisplayHelper;
+
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.ref.WeakReference;
@@ -377,7 +379,7 @@ public class TabLayout extends HorizontalScrollView {
 
         setIndicatorWidthWrapContent(false);
 
-        setSelectedTabIndicatorWidth(45); //固定线宽  TODO 此项目固定
+        setSelectedTabIndicatorWidth(DisplayHelper.dip2px(getContext(), 25)); //固定线宽  TODO 此项目固定
 
     }
 

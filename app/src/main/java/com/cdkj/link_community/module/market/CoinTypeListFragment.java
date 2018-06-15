@@ -228,7 +228,7 @@ public class CoinTypeListFragment extends AbsRefreshListFragment {
             protected void onSuccess(ResponseInListModel<CoinListModel> data, String SucMessage) {
 
                 if (coinListAdapter.getData() == null || coinListAdapter.getData().size() == 0 || isClearRefresh) {
-                    mRefreshHelper.setData(data.getList(), getString(R.string.no_coin_info), R.drawable.no_dynamic);
+                    mRefreshHelper.setDataAsync(data.getList(), getString(R.string.no_coin_info), R.drawable.no_dynamic);
                 }else {
 
                     mRefreshBinding.refreshLayout.finishRefresh();

@@ -131,7 +131,7 @@ public class PlatformFragment extends AbsTablayoutFragment {
         }
 
         initViewPager();
-        mTabLayoutBinding.viewpager.setOffscreenPageLimit(4);
+        mTabLayoutBinding.viewpager.setOffscreenPageLimit(0);
         mTabLayoutBinding.tablayout.setTabMode(TabLayout.MODE_SCROLLABLE);
     }
 

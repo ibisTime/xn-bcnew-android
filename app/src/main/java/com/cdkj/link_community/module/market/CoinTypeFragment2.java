@@ -3,7 +3,6 @@ package com.cdkj.link_community.module.market;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +14,7 @@ import com.cdkj.baselibrary.base.BaseLazyFragment;
 import com.cdkj.baselibrary.nets.BaseResponseListCallBack;
 import com.cdkj.baselibrary.nets.RetrofitUtils;
 import com.cdkj.baselibrary.utils.StringUtils;
+import com.cdkj.baselibrary.views.tablayout.TabLayout;
 import com.cdkj.link_community.R;
 import com.cdkj.link_community.api.MyApiServer;
 import com.cdkj.link_community.databinding.FragmentMarketCoinTabBinding;
@@ -125,7 +125,6 @@ public class CoinTypeFragment2 extends BaseLazyFragment {
 //            }
 //        });
 //    }
-
     public void getListRequest(boolean isShow) {
 
         Map<String, String> map = new HashMap<>();
@@ -190,7 +189,7 @@ public class CoinTypeFragment2 extends BaseLazyFragment {
         }
 
         initViewPager();
-        mTabLayoutBinding.viewpager.setOffscreenPageLimit(4);
+        mTabLayoutBinding.viewpager.setOffscreenPageLimit(0);
         mTabLayoutBinding.tablayout.setTabMode(TabLayout.MODE_SCROLLABLE);
     }
 
@@ -210,7 +209,7 @@ public class CoinTypeFragment2 extends BaseLazyFragment {
     }
 
     @Subscribe
-    public void doRefresh(EventCoinTabSelectedNotify selectedNotify){
+    public void doRefresh(EventCoinTabSelectedNotify selectedNotify) {
         getListRequest(true);
     }
 

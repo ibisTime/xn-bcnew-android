@@ -14,6 +14,10 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshLoadmoreListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
+
 /**
  * Created by cdkj on 2017/10/15.
  */
@@ -231,14 +235,6 @@ public class RefreshHelper<T> {
      * @param datas
      */
     public void setData(List<T> datas, String emp, int img) {
-        if (mRefreshLayout != null) {
-            if (mRefreshLayout.isRefreshing()) {
-                mRefreshLayout.finishRefresh();
-            }
-            if (mRefreshLayout.isLoading()) {
-                mRefreshLayout.finishLoadmore();
-            }
-        }
 
         if (mPageIndex == 1) {         //如果当前加载的是第一页数据
             if (datas != null) {
@@ -266,6 +262,90 @@ public class RefreshHelper<T> {
             }
             if (mAdapter != null) mAdapter.setEmptyView(mEmptyView);
         }
+
+        if (mRefreshLayout != null) {
+            if (mRefreshLayout.isRefreshing()) {
+                mRefreshLayout.finishRefresh();
+            }
+            if (mRefreshLayout.isLoading()) {
+                mRefreshLayout.finishLoadmore();
+            }
+        }
+    }
+
+    /**
+     * 设置加载数据 实现分页逻辑
+     *
+     * @param datas
+     */
+    public void setDataAsync(List<T> datas, String emp, int img) {
+        setData(datas, emp, img);
+//        if (mRefreshLayout != null) {
+//            if (mRefreshLayout.isRefreshing()) {
+//                mRefreshLayout.finishRefresh();
+//            }
+//            if (mRefreshLayout.isLoading()) {
+//                mRefreshLayout.finishLoadmore();
+//            }
+//        }
+//
+//        if (mPageIndex == 1) {         //如果当前加载的是第一页数据
+//            if (datas != null) {
+//                Observable.just("")
+//                        .subscribeOn(Schedulers.newThread())
+//                        .map(s -> {
+//                            mDataList.clear();
+//                            mDataList.addAll(datas);
+//
+//                            return mDataList;
+//                        })
+//                        .observeOn(AndroidSchedulers.mainThread())
+//                        .doFinally(() -> {
+//                            if (mEmptyView != null && mDataList.isEmpty()) {
+//                                if (mRefreshInterface != null) {
+//                                    mRefreshInterface.showEmptyState(emp, img);
+//                                }
+//                                if (mAdapter != null) mAdapter.setEmptyView(mEmptyView);
+//                            }
+//
+//                        })
+//                        .subscribe(s -> {
+//                            if (mAdapter != null) {
+//                                mAdapter.notifyDataSetChanged();
+//                            }
+//                        });
+//            }
+//
+//        } else if (mPageIndex > 1) {
+//            if (datas == null || datas.size() <= 0) {
+//                mPageIndex--;
+//            } else {
+//                Observable.just("")
+//                        .subscribeOn(Schedulers.newThread())
+//                        .map(s -> {
+//                            mDataList.addAll(datas);
+//                            return mDataList;
+//                        })
+//                        .observeOn(AndroidSchedulers.mainThread())
+//                        .doFinally(() -> {
+//                            if (mEmptyView != null && mDataList.isEmpty()) {
+//                                if (mRefreshInterface != null) {
+//                                    mRefreshInterface.showEmptyState(emp, img);
+//                                }
+//                                if (mAdapter != null) mAdapter.setEmptyView(mEmptyView);
+//                            }
+//
+//                        })
+//                        .subscribe(s -> {
+//                            if (mAdapter != null) {
+//                                mAdapter.notifyDataSetChanged();
+//                            }
+//                        }, throwable -> {
+//
+//                        });
+//            }
+//        }
+
     }
 
 

@@ -194,12 +194,13 @@ public class MainActivity extends AbsBaseLoadActivity {
 
 
         mBinding.layoutTab.radiogroup.setOnCheckedChangeListener((radioGroup, i) -> {
-
+            isSume = false;
             switch (i) {
                 case R.id.radio_main_tab_1:
                     mBinding.pagerMain.setCurrentItem(0);
                     break;
                 case R.id.radio_main_tab_2:
+                    isSume = true;
                     if (!isMarketInterval) {
                         mSubscription.add(startMarketInterval());
                     }
@@ -228,13 +229,14 @@ public class MainActivity extends AbsBaseLoadActivity {
      */
     public Disposable startMarketInterval() {
         isMarketInterval = true;
+        MarketInterval marketInterval = new MarketInterval();
         return Observable.interval(10, 10, TimeUnit.SECONDS, AndroidSchedulers.mainThread())    //
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<Long>() {
                                @Override
                                public void accept(Long aLong) throws Exception {
                                    if (isSume) {
-                                       EventBus.getDefault().post(new MarketInterval());
+                                       EventBus.getDefault().post(marketInterval);
                                    }
 
                                }
