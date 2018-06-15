@@ -17,7 +17,6 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.LinearLayout;
 
-import com.cdkj.baselibrary.R;
 import com.cdkj.baselibrary.appmanager.CdRouteHelper;
 import com.cdkj.baselibrary.appmanager.MyCdConfig;
 import com.cdkj.baselibrary.base.AbsBaseLoadActivity;
@@ -27,6 +26,7 @@ import com.cdkj.baselibrary.model.IntroductionInfoModel;
 import com.cdkj.baselibrary.nets.BaseResponseModelCallBack;
 import com.cdkj.baselibrary.nets.RetrofitUtils;
 import com.cdkj.baselibrary.utils.StringUtils;
+import com.cdkj.link_community.R;
 import com.cdkj.link_community.model.PlateDetailsModel;
 import com.cdkj.link_community.module.user.ShareActivity;
 
@@ -72,8 +72,10 @@ public class PlateIntroduceActivity extends AbsBaseLoadActivity {
 
     @Override
     public void topTitleViewRightClick() {
-        ShareActivity.open(this, "http://47.75.175.18:2203/blockShare/blockShare.html?code=" + plateDetailsModel.getCode(),
-                plateDetailsModel.getName(), plateDetailsModel.getName(), "");
+        if (plateDetailsModel != null) {
+            ShareActivity.open(this, RetrofitUtils.getThisUrlIp() + "blockShare/blockShare.html?code=" + plateDetailsModel.getCode(),
+                    plateDetailsModel.getName(), plateDetailsModel.getName(), "");
+        }
     }
 
     private void initLayout() {

@@ -22,6 +22,7 @@ public class RetrofitUtils {
     public static final int RELEASE = 0; //正式环境
     public static final int DEBUG = 1;//研发环境
     public static final int TEST = 2;//测试环境
+    public static String THISIP;//测试环境
 
     private RetrofitUtils() {
 
@@ -66,12 +67,19 @@ public class RetrofitUtils {
     public static String getBaseURL(int urlType) {
         switch (urlType) {
             case DEBUG:
+                THISIP = "http://47.75.175.18:2205/";
                 return "http://47.75.175.18:2205/forward-service/";// 研发环境
 
             case TEST:
+                THISIP = "http://47.75.175.18:2205/";
                 return "http://47.75.175.18:2205/forward-service/";// 测试环境
         }
+        THISIP = "http://47.75.175.18:2201/";
         return "http://47.75.175.18:2201/forward-service/";//正式环境
+    }
+
+    public static String getThisUrlIp() {
+        return THISIP;
     }
 
     /**
