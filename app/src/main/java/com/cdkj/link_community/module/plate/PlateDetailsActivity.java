@@ -64,7 +64,7 @@ public class PlateDetailsActivity extends AbsBaseLoadActivity {
     @Override
     public void topTitleViewRightClick() {
         if (mPlateDetailsModel != null) {
-            PlateIntroduceActivity.open(this, mPlateDetailsModel.getDescription(), mPlateDetailsModel.getName());
+            PlateIntroduceActivity.open(this, mPlateDetailsModel);
         }
     }
 

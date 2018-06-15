@@ -27,6 +27,8 @@ import com.cdkj.baselibrary.model.IntroductionInfoModel;
 import com.cdkj.baselibrary.nets.BaseResponseModelCallBack;
 import com.cdkj.baselibrary.nets.RetrofitUtils;
 import com.cdkj.baselibrary.utils.StringUtils;
+import com.cdkj.link_community.model.PlateDetailsModel;
+import com.cdkj.link_community.module.user.ShareActivity;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -41,15 +43,15 @@ public class PlateIntroduceActivity extends AbsBaseLoadActivity {
 
     private ActivityWebviewBinding mBinding;
     private WebView webView;
+    private PlateDetailsModel plateDetailsModel;
 
 
-    public static void open(Context context, String count, String title) {
+    public static void open(Context context, PlateDetailsModel plateDetailsModel) {
         if (context == null) {
             return;
         }
         Intent intent = new Intent(context, PlateIntroduceActivity.class);
-        intent.putExtra(CdRouteHelper.DATA_SIGN, count);
-        intent.putExtra(CdRouteHelper.DATA_SIGN2, title);
+        intent.putExtra(CdRouteHelper.DATA_SIGN, plateDetailsModel);
         context.startActivity(intent);
     }
 
@@ -63,9 +65,15 @@ public class PlateIntroduceActivity extends AbsBaseLoadActivity {
 
     @Override
     public void afterCreate(Bundle savedInstanceState) {
-        mBaseBinding.titleView.setRightTitle("分享");
+        mBaseBinding.titleView.setRightTitle(getString(R.string.share));
         initLayout();
         initData();
+    }
+
+    @Override
+    public void topTitleViewRightClick() {
+        ShareActivity.open(this, "http://47.75.175.18:2203/blockShare/blockShare.html?code=" + plateDetailsModel.getCode(),
+                plateDetailsModel.getName(), plateDetailsModel.getName(), "");
     }
 
     private void initLayout() {
@@ -107,9 +115,13 @@ public class PlateIntroduceActivity extends AbsBaseLoadActivity {
             return;
         }
 
-        mBaseBinding.titleView.setMidTitle(getIntent().getStringExtra(CdRouteHelper.DATA_SIGN2));
+        plateDetailsModel = getIntent().getParcelableExtra(CdRouteHelper.DATA_SIGN);
 
-        webView.loadData(getIntent().getStringExtra(CdRouteHelper.DATA_SIGN), "text/html;charset=UTF-8", "UTF-8");
+        if (plateDetailsModel != null) {
+            mBaseBinding.titleView.setMidTitle(plateDetailsModel.getName());
+
+            webView.loadData(plateDetailsModel.getDescription(), "text/html;charset=UTF-8", "UTF-8");
+        }
     }
 
 

@@ -1,6 +1,10 @@
 package com.cdkj.link_community.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -8,7 +12,7 @@ import java.util.List;
  * Created by cdkj on 2018/6/13.
  */
 
-public class PlateDetailsModel {
+public class PlateDetailsModel implements Parcelable {
     /**
      * code : NS20180382013215441
      * description : aaaaa
@@ -268,4 +272,70 @@ public class PlateDetailsModel {
             this.percentChange24h = percentChange24h;
         }
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.code);
+        dest.writeString(this.description);
+        dest.writeSerializable(this.avgChange);
+        dest.writeSerializable(this.bestChange);
+        dest.writeSerializable(this.worstChange);
+        dest.writeString(this.bestSymbol);
+        dest.writeString(this.worstSymbol);
+        dest.writeString(this.remark);
+        dest.writeString(this.location);
+        dest.writeString(this.orderNo);
+        dest.writeString(this.status);
+        dest.writeString(this.createDatetime);
+        dest.writeString(this.updater);
+        dest.writeString(this.updateDatetime);
+        dest.writeString(this.name);
+        dest.writeString(this.upCount);
+        dest.writeString(this.downCount);
+        dest.writeString(this.totalCount);
+        dest.writeList(this.list);
+    }
+
+    public PlateDetailsModel() {
+    }
+
+    protected PlateDetailsModel(Parcel in) {
+        this.code = in.readString();
+        this.description = in.readString();
+        this.avgChange = (BigDecimal) in.readSerializable();
+        this.bestChange = (BigDecimal) in.readSerializable();
+        this.worstChange = (BigDecimal) in.readSerializable();
+        this.bestSymbol = in.readString();
+        this.worstSymbol = in.readString();
+        this.remark = in.readString();
+        this.location = in.readString();
+        this.orderNo = in.readString();
+        this.status = in.readString();
+        this.createDatetime = in.readString();
+        this.updater = in.readString();
+        this.updateDatetime = in.readString();
+        this.name = in.readString();
+        this.upCount = in.readString();
+        this.downCount = in.readString();
+        this.totalCount = in.readString();
+        this.list = new ArrayList<ListBean>();
+        in.readList(this.list, ListBean.class.getClassLoader());
+    }
+
+    public static final Parcelable.Creator<PlateDetailsModel> CREATOR = new Parcelable.Creator<PlateDetailsModel>() {
+        @Override
+        public PlateDetailsModel createFromParcel(Parcel source) {
+            return new PlateDetailsModel(source);
+        }
+
+        @Override
+        public PlateDetailsModel[] newArray(int size) {
+            return new PlateDetailsModel[size];
+        }
+    };
 }
