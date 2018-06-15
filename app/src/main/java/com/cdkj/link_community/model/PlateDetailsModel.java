@@ -207,7 +207,7 @@ public class PlateDetailsModel implements Parcelable {
         this.list = list;
     }
 
-    public static class ListBean {
+    public static class ListBean implements Parcelable {
         /**
          * symbol : xrp
          * toSymbol : eth
@@ -271,6 +271,45 @@ public class PlateDetailsModel implements Parcelable {
         public void setPercentChange24h(BigDecimal percentChange24h) {
             this.percentChange24h = percentChange24h;
         }
+
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(Parcel dest, int flags) {
+            dest.writeString(this.symbol);
+            dest.writeString(this.toSymbol);
+            dest.writeSerializable(this.count);
+            dest.writeSerializable(this.lastPrice);
+            dest.writeSerializable(this.lastCnyPrice);
+            dest.writeSerializable(this.percentChange24h);
+        }
+
+        public ListBean() {
+        }
+
+        protected ListBean(Parcel in) {
+            this.symbol = in.readString();
+            this.toSymbol = in.readString();
+            this.count = (BigDecimal) in.readSerializable();
+            this.lastPrice = (BigDecimal) in.readSerializable();
+            this.lastCnyPrice = (BigDecimal) in.readSerializable();
+            this.percentChange24h = (BigDecimal) in.readSerializable();
+        }
+
+        public static final Creator<ListBean> CREATOR = new Creator<ListBean>() {
+            @Override
+            public ListBean createFromParcel(Parcel source) {
+                return new ListBean(source);
+            }
+
+            @Override
+            public ListBean[] newArray(int size) {
+                return new ListBean[size];
+            }
+        };
     }
 
     @Override
