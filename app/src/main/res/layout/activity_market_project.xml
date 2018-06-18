@@ -11,828 +11,835 @@
 
         <LinearLayout
             android:id="@+id/ll_root"
-            android:background="@color/white"
-            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="vertical">
 
             <TextView
-                android:gravity="center_vertical"
-                android:text="项目简介"
-                android:paddingLeft="@dimen/layout_left_interval"
-                android:textSize="12sp"
-                android:background="@color/page_bg"
-                android:textColor="@color/text_color_666666"
                 android:layout_width="match_parent"
-                android:layout_height="30dp"/>
+                android:layout_height="30dp"
+                android:background="@color/page_bg"
+                android:gravity="center_vertical"
+                android:paddingLeft="@dimen/layout_left_interval"
+                android:text="项目简介"
+                android:textColor="@color/text_color_666666"
+                android:textSize="12sp" />
 
             <TextView
                 android:id="@+id/tv_content"
-                android:lines="3"
-                android:text="-"
-                android:ellipsize="end"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_margin="15dp"
                 android:layout_marginBottom="2dp"
-                android:textSize="13sp"
+                android:ellipsize="end"
                 android:lineSpacingExtra="10dp"
+                android:lines="3"
+                android:text="-"
                 android:textColor="@color/text_color_333333"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:textSize="13sp" />
 
             <LinearLayout
                 android:id="@+id/ll_open"
-                android:paddingBottom="15dp"
-                android:layout_marginRight="15dp"
-                android:gravity="center_vertical"
-                android:layout_gravity="right"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center_vertical"
+                android:paddingBottom="15dp">
 
                 <TextView
                     android:id="@+id/tv_open"
-                    android:text="展开全文"
-                    android:textSize="12sp"
-                    android:textColor="@color/colorPrimary"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/text_open_close_bg_line"
+                    android:paddingBottom="3dp"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:paddingTop="3dp"
+                    android:text="展开全文"
+                    android:textColor="@color/yellow"
+                    android:textSize="12sp" />
 
                 <ImageView
                     android:id="@+id/iv_open"
-                    android:background="@drawable/market_project_down"
-                    android:layout_marginLeft="7dp"
                     android:layout_width="9dp"
-                    android:layout_height="5dp" />
+                    android:layout_height="5dp"
+                    android:layout_marginLeft="7dp"
+                    android:background="@drawable/market_project_down"
+                    android:visibility="gone" />
 
             </LinearLayout>
 
-            <View style="@style/style_split_line"/>
+            <View style="@style/style_split_line" />
 
             <LinearLayout
-                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
                 <LinearLayout
-                    android:orientation="horizontal"
                     android:layout_width="match_parent"
-                    android:layout_height="38dp">
+                    android:layout_height="38dp"
+                    android:orientation="horizontal">
 
                     <LinearLayout
-                        android:layout_gravity="center_vertical"
-                        android:layout_weight="1"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1">
 
                         <TextView
-                            android:gravity="center_vertical"
-                            android:textSize="12sp"
-                            android:textColor="@color/text_color_666666"
-                            android:text="中文名"
-                            android:layout_marginLeft="@dimen/layout_left_interval"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/layout_left_interval"
+                            android:gravity="center_vertical"
+                            android:text="中文名"
+                            android:textColor="@color/text_color_666666"
+                            android:textSize="12sp" />
 
                         <TextView
                             android:id="@+id/tv_c_name"
-                            android:gravity="right"
-                            android:textSize="12sp"
-                            android:textColor="@color/text_color_333333"
-                            android:text="-"
-                            android:layout_weight="1"
                             android:layout_width="0dp"
-                            android:layout_height="wrap_content" />
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="right"
+                            android:text="-"
+                            android:textColor="@color/text_color_333333"
+                            android:textSize="12sp" />
 
                     </LinearLayout>
 
                     <View
                         android:layout_width="25dp"
-                        android:layout_height="match_parent"/>
+                        android:layout_height="match_parent" />
 
                     <LinearLayout
-                        android:layout_gravity="center_vertical"
-                        android:layout_weight="1"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1">
 
                         <TextView
-                            android:gravity="center_vertical"
-                            android:textSize="12sp"
-                            android:textColor="@color/text_color_666666"
-                            android:text="英文名"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:text="英文名"
+                            android:textColor="@color/text_color_666666"
+                            android:textSize="12sp" />
 
                         <TextView
                             android:id="@+id/tv_e_name"
-                            android:gravity="right"
-                            android:textSize="12sp"
-                            android:text="-"
-                            android:textColor="@color/text_color_333333"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
                             android:layout_marginRight="@dimen/layout_right_interval"
                             android:layout_weight="1"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content" />
+                            android:gravity="right"
+                            android:text="-"
+                            android:textColor="@color/text_color_333333"
+                            android:textSize="12sp" />
 
                     </LinearLayout>
 
                 </LinearLayout>
 
-                <View style="@style/style_split_line"/>
+                <View style="@style/style_split_line" />
 
                 <LinearLayout
-                    android:orientation="horizontal"
                     android:layout_width="match_parent"
-                    android:layout_height="38dp">
+                    android:layout_height="38dp"
+                    android:orientation="horizontal">
 
                     <LinearLayout
-                        android:layout_gravity="center_vertical"
-                        android:layout_weight="1"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1">
 
                         <TextView
-                            android:gravity="center_vertical"
-                            android:textSize="12sp"
-                            android:textColor="@color/text_color_666666"
-                            android:text="类型"
-                            android:layout_marginLeft="@dimen/layout_left_interval"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/layout_left_interval"
+                            android:gravity="center_vertical"
+                            android:text="类型"
+                            android:textColor="@color/text_color_666666"
+                            android:textSize="12sp" />
 
                         <TextView
                             android:id="@+id/tv_type"
-                            android:gravity="right"
-                            android:textSize="12sp"
-                            android:textColor="@color/text_color_333333"
-                            android:text="-"
-                            android:layout_weight="1"
                             android:layout_width="0dp"
-                            android:layout_height="wrap_content" />
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="right"
+                            android:text="-"
+                            android:textColor="@color/text_color_333333"
+                            android:textSize="12sp" />
 
                     </LinearLayout>
 
                     <View
                         android:layout_width="25dp"
-                        android:layout_height="match_parent"/>
+                        android:layout_height="match_parent" />
 
                     <LinearLayout
-                        android:layout_gravity="center_vertical"
-                        android:layout_weight="1"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1">
 
                         <TextView
-                            android:gravity="center_vertical"
-                            android:textSize="12sp"
-                            android:textColor="@color/text_color_666666"
-                            android:text="发行时间"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:text="发行时间"
+                            android:textColor="@color/text_color_666666"
+                            android:textSize="12sp" />
 
                         <TextView
                             android:id="@+id/tv_time"
-                            android:gravity="right"
-                            android:textSize="12sp"
-                            android:text="-"
-                            android:textColor="@color/text_color_333333"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
                             android:layout_marginRight="@dimen/layout_right_interval"
                             android:layout_weight="1"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content" />
+                            android:gravity="right"
+                            android:text="-"
+                            android:textColor="@color/text_color_333333"
+                            android:textSize="12sp" />
 
                     </LinearLayout>
 
                 </LinearLayout>
 
-                <View style="@style/style_split_line"/>
+                <View style="@style/style_split_line" />
+
                 <LinearLayout
-                    android:orientation="horizontal"
                     android:layout_width="match_parent"
-                    android:layout_height="38dp">
+                    android:layout_height="38dp"
+                    android:orientation="horizontal">
 
                     <LinearLayout
-                        android:layout_gravity="center_vertical"
-                        android:layout_weight="1"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1">
 
                         <TextView
-                            android:gravity="center_vertical"
-                            android:textSize="12sp"
-                            android:textColor="@color/text_color_666666"
-                            android:text="流通量"
-                            android:layout_marginLeft="@dimen/layout_left_interval"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/layout_left_interval"
+                            android:gravity="center_vertical"
+                            android:text="流通量"
+                            android:textColor="@color/text_color_666666"
+                            android:textSize="12sp" />
 
                         <TextView
                             android:id="@+id/tv_turnover"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
                             android:gravity="right"
-                            android:textSize="12sp"
                             android:text="-"
                             android:textColor="@color/text_color_333333"
-                            android:layout_weight="1"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content" />
+                            android:textSize="12sp" />
 
                     </LinearLayout>
 
                     <View
                         android:layout_width="25dp"
-                        android:layout_height="match_parent"/>
+                        android:layout_height="match_parent" />
 
                     <LinearLayout
-                        android:layout_gravity="center_vertical"
-                        android:layout_weight="1"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1">
 
                         <TextView
-                            android:gravity="center_vertical"
-                            android:textSize="12sp"
-                            android:textColor="@color/text_color_666666"
-                            android:text="发行总量"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:text="发行总量"
+                            android:textColor="@color/text_color_666666"
+                            android:textSize="12sp" />
 
                         <TextView
                             android:id="@+id/tv_issue"
-                            android:gravity="right"
-                            android:textSize="12sp"
-                            android:textColor="@color/text_color_333333"
-                            android:layout_marginRight="@dimen/layout_right_interval"
-                            android:text="-"
-                            android:layout_weight="1"
                             android:layout_width="0dp"
-                            android:layout_height="wrap_content" />
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="@dimen/layout_right_interval"
+                            android:layout_weight="1"
+                            android:gravity="right"
+                            android:text="-"
+                            android:textColor="@color/text_color_333333"
+                            android:textSize="12sp" />
 
                     </LinearLayout>
 
                 </LinearLayout>
 
-                <View style="@style/style_split_line"/>
+                <View style="@style/style_split_line" />
+
                 <LinearLayout
-                    android:orientation="horizontal"
                     android:layout_width="match_parent"
-                    android:layout_height="38dp">
+                    android:layout_height="38dp"
+                    android:orientation="horizontal">
 
                     <LinearLayout
-                        android:layout_gravity="center_vertical"
-                        android:layout_weight="1"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1">
 
                         <TextView
-                            android:gravity="center_vertical"
-                            android:textSize="12sp"
-                            android:textColor="@color/text_color_666666"
-                            android:text="流通市值"
-                            android:layout_marginLeft="@dimen/layout_left_interval"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/layout_left_interval"
+                            android:gravity="center_vertical"
+                            android:text="流通市值"
+                            android:textColor="@color/text_color_666666"
+                            android:textSize="12sp" />
 
                         <TextView
                             android:id="@+id/tv_turnover_market_cap"
-                            android:gravity="right"
-                            android:textSize="12sp"
-                            android:textColor="@color/text_color_333333"
-                            android:text="-"
-                            android:layout_weight="1"
                             android:layout_width="0dp"
-                            android:layout_height="wrap_content" />
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="right"
+                            android:text="-"
+                            android:textColor="@color/text_color_333333"
+                            android:textSize="12sp" />
 
                     </LinearLayout>
 
                     <View
                         android:layout_width="25dp"
-                        android:layout_height="match_parent"/>
+                        android:layout_height="match_parent" />
 
                     <LinearLayout
-                        android:layout_gravity="center_vertical"
-                        android:layout_weight="1"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1">
 
                         <TextView
-                            android:gravity="center_vertical"
-                            android:textSize="12sp"
-                            android:textColor="@color/text_color_666666"
-                            android:text="总市值"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:text="总市值"
+                            android:textColor="@color/text_color_666666"
+                            android:textSize="12sp" />
 
                         <TextView
                             android:id="@+id/tv_total_market_cap"
-                            android:gravity="right"
-                            android:textSize="12sp"
-                            android:text="-"
-                            android:textColor="@color/text_color_333333"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
                             android:layout_marginRight="@dimen/layout_right_interval"
                             android:layout_weight="1"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content" />
+                            android:gravity="right"
+                            android:text="-"
+                            android:textColor="@color/text_color_333333"
+                            android:textSize="12sp" />
 
                     </LinearLayout>
 
                 </LinearLayout>
 
-                <View style="@style/style_split_line"/>
+                <View style="@style/style_split_line" />
 
                 <LinearLayout
-                    android:orientation="horizontal"
                     android:layout_width="match_parent"
-                    android:layout_height="38dp">
+                    android:layout_height="38dp"
+                    android:orientation="horizontal">
 
                     <LinearLayout
-                        android:layout_gravity="center_vertical"
-                        android:layout_weight="1"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1">
 
                         <TextView
-                            android:gravity="center_vertical"
-                            android:textSize="12sp"
-                            android:textColor="@color/text_color_666666"
-                            android:text="上架交易所"
-                            android:layout_marginLeft="@dimen/layout_left_interval"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/layout_left_interval"
+                            android:gravity="center_vertical"
+                            android:text="上架交易所"
+                            android:textColor="@color/text_color_666666"
+                            android:textSize="12sp" />
 
                         <TextView
                             android:id="@+id/tv_exchange"
-                            android:gravity="right"
-                            android:textSize="12sp"
-                            android:textColor="@color/text_color_333333"
-                            android:text="-"
-                            android:layout_weight="1"
                             android:layout_width="0dp"
-                            android:layout_height="wrap_content" />
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="right"
+                            android:text="-"
+                            android:textColor="@color/text_color_333333"
+                            android:textSize="12sp" />
 
                     </LinearLayout>
 
                     <View
                         android:layout_width="25dp"
-                        android:layout_height="match_parent"/>
+                        android:layout_height="match_parent" />
 
                     <LinearLayout
-                        android:layout_gravity="center_vertical"
-                        android:layout_weight="1"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1">
 
                         <TextView
-                            android:gravity="center_vertical"
-                            android:textSize="12sp"
-                            android:textColor="@color/text_color_666666"
-                            android:text="前十交易所"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:text="前十交易所"
+                            android:textColor="@color/text_color_666666"
+                            android:textSize="12sp" />
 
                         <TextView
                             android:id="@+id/tv_exchange_top10"
-                            android:gravity="right"
-                            android:textSize="12sp"
-                            android:textColor="@color/text_color_333333"
-                            android:layout_marginRight="@dimen/layout_right_interval"
-                            android:text="-"
-                            android:layout_weight="1"
                             android:layout_width="0dp"
-                            android:layout_height="wrap_content" />
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="@dimen/layout_right_interval"
+                            android:layout_weight="1"
+                            android:gravity="right"
+                            android:text="-"
+                            android:textColor="@color/text_color_333333"
+                            android:textSize="12sp" />
 
                     </LinearLayout>
 
                 </LinearLayout>
 
-                <View style="@style/style_split_line"/>
+                <View style="@style/style_split_line" />
 
                 <LinearLayout
-                    android:orientation="horizontal"
                     android:layout_width="match_parent"
-                    android:layout_height="38dp">
+                    android:layout_height="38dp"
+                    android:orientation="horizontal">
 
                     <LinearLayout
-                        android:layout_gravity="center_vertical"
-                        android:layout_weight="1"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1">
 
                         <TextView
-                            android:gravity="center_vertical"
-                            android:textSize="12sp"
-                            android:textColor="@color/text_color_666666"
-                            android:text="钱包类型"
-                            android:layout_marginLeft="@dimen/layout_left_interval"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/layout_left_interval"
+                            android:gravity="center_vertical"
+                            android:text="钱包类型"
+                            android:textColor="@color/text_color_666666"
+                            android:textSize="12sp" />
 
                         <TextView
                             android:id="@+id/tv_wallet_type"
-                            android:gravity="right"
-                            android:textSize="12sp"
-                            android:textColor="@color/text_color_333333"
-                            android:text="-"
-                            android:layout_weight="1"
                             android:layout_width="0dp"
-                            android:layout_height="wrap_content" />
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="right"
+                            android:text="-"
+                            android:textColor="@color/text_color_333333"
+                            android:textSize="12sp" />
 
                     </LinearLayout>
 
                     <View
                         android:layout_width="25dp"
-                        android:layout_height="match_parent"/>
+                        android:layout_height="match_parent" />
 
                     <LinearLayout
-                        android:layout_gravity="center_vertical"
-                        android:layout_weight="1"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1">
 
 
                     </LinearLayout>
 
                 </LinearLayout>
 
-                <View style="@style/style_split_line"/>
+                <View style="@style/style_split_line" />
 
             </LinearLayout>
 
             <TextView
-                android:gravity="center_vertical"
-                android:text="链接"
-                android:paddingLeft="@dimen/layout_left_interval"
-                android:textSize="12sp"
-                android:background="@color/page_bg"
-                android:textColor="@color/text_color_666666"
                 android:layout_width="match_parent"
-                android:layout_height="30dp"/>
+                android:layout_height="30dp"
+                android:background="@color/page_bg"
+                android:gravity="center_vertical"
+                android:paddingLeft="@dimen/layout_left_interval"
+                android:text="链接"
+                android:textColor="@color/text_color_666666"
+                android:textSize="12sp" />
 
             <LinearLayout
-                android:layout_marginRight="@dimen/layout_right_interval"
-                android:layout_marginLeft="@dimen/layout_left_interval"
-                android:gravity="center_vertical"
                 android:layout_width="match_parent"
-                android:layout_height="38dp">
+                android:layout_height="38dp"
+                android:layout_marginLeft="@dimen/layout_left_interval"
+                android:layout_marginRight="@dimen/layout_right_interval"
+                android:gravity="center_vertical">
 
                 <TextView
-                    android:gravity="center_vertical"
-                    android:textSize="12sp"
-                    android:textColor="@color/text_color_666666"
-                    android:text="官网"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:text="官网"
+                    android:textColor="@color/text_color_666666"
+                    android:textSize="12sp" />
 
                 <TextView
                     android:id="@+id/tv_skypegmwcn"
-                    android:gravity="right"
-                    android:textSize="12sp"
-                    android:textColor="@color/text_color_333333"
-                    android:text="-"
-                    android:layout_weight="1"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:text="-"
+                    android:textColor="@color/text_color_333333"
+                    android:textSize="12sp" />
 
             </LinearLayout>
 
             <TextView
-                android:gravity="center_vertical"
-                android:text="公募信息"
-                android:paddingLeft="@dimen/layout_left_interval"
-                android:textSize="12sp"
-                android:background="@color/page_bg"
-                android:textColor="@color/text_color_666666"
                 android:layout_width="match_parent"
-                android:layout_height="30dp"/>
+                android:layout_height="30dp"
+                android:background="@color/page_bg"
+                android:gravity="center_vertical"
+                android:paddingLeft="@dimen/layout_left_interval"
+                android:text="公募信息"
+                android:textColor="@color/text_color_666666"
+                android:textSize="12sp" />
 
             <LinearLayout
-                android:layout_marginRight="@dimen/layout_right_interval"
-                android:layout_marginLeft="@dimen/layout_left_interval"
-                android:gravity="center_vertical"
                 android:layout_width="match_parent"
-                android:layout_height="38dp">
+                android:layout_height="38dp"
+                android:layout_marginLeft="@dimen/layout_left_interval"
+                android:layout_marginRight="@dimen/layout_right_interval"
+                android:gravity="center_vertical">
 
                 <TextView
-                    android:gravity="center_vertical"
-                    android:textSize="12sp"
-                    android:textColor="@color/text_color_666666"
-                    android:text="ico时间"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:text="ico时间"
+                    android:textColor="@color/text_color_666666"
+                    android:textSize="12sp" />
 
                 <TextView
                     android:id="@+id/tv_ico_time"
-                    android:gravity="right"
-                    android:textSize="12sp"
-                    android:textColor="@color/text_color_333333"
-                    android:text="-"
-                    android:layout_weight="1"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:text="-"
+                    android:textColor="@color/text_color_333333"
+                    android:textSize="12sp" />
 
             </LinearLayout>
 
-            <View style="@style/style_split_line"/>
+            <View style="@style/style_split_line" />
 
             <LinearLayout
-                android:layout_marginRight="@dimen/layout_right_interval"
-                android:layout_marginLeft="@dimen/layout_left_interval"
-                android:gravity="center_vertical"
                 android:layout_width="match_parent"
-                android:layout_height="38dp">
+                android:layout_height="38dp"
+                android:layout_marginLeft="@dimen/layout_left_interval"
+                android:layout_marginRight="@dimen/layout_right_interval"
+                android:gravity="center_vertical">
 
                 <TextView
-                    android:gravity="center_vertical"
-                    android:textSize="12sp"
-                    android:textColor="@color/text_color_666666"
-                    android:text="ico成本"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:text="ico成本"
+                    android:textColor="@color/text_color_666666"
+                    android:textSize="12sp" />
 
                 <TextView
                     android:id="@+id/tv_ico_cost"
-                    android:gravity="right"
-                    android:textSize="12sp"
-                    android:textColor="@color/text_color_333333"
-                    android:text="-"
-                    android:layout_weight="1"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:text="-"
+                    android:textColor="@color/text_color_333333"
+                    android:textSize="12sp" />
 
             </LinearLayout>
 
-            <View style="@style/style_split_line"/>
+            <View style="@style/style_split_line" />
 
             <LinearLayout
-                android:layout_marginRight="@dimen/layout_right_interval"
-                android:layout_marginLeft="@dimen/layout_left_interval"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/layout_left_interval"
+                android:layout_marginRight="@dimen/layout_right_interval">
 
                 <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
                     android:gravity="center_vertical"
-                    android:textSize="12sp"
-                    android:textColor="@color/text_color_666666"
                     android:text="募集资金"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:textColor="@color/text_color_666666"
+                    android:textSize="12sp" />
 
                 <TextView
                     android:id="@+id/tv_ico_amount"
-                    android:layout_marginTop="12dp"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginBottom="12dp"
                     android:layout_marginLeft="18dp"
+                    android:layout_marginTop="12dp"
+                    android:layout_weight="1"
                     android:gravity="right"
-                    android:textSize="12sp"
                     android:text="-"
                     android:textColor="@color/text_color_333333"
-                    android:layout_weight="1"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content" />
+                    android:textSize="12sp" />
 
             </LinearLayout>
 
-            <View style="@style/style_split_line"/>
+            <View style="@style/style_split_line" />
 
             <LinearLayout
-                android:layout_marginRight="@dimen/layout_right_interval"
-                android:layout_marginLeft="@dimen/layout_left_interval"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/layout_left_interval"
+                android:layout_marginRight="@dimen/layout_right_interval">
 
                 <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
                     android:gravity="center_vertical"
-                    android:textSize="12sp"
-                    android:textColor="@color/text_color_666666"
                     android:text="代币分配"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:textColor="@color/text_color_666666"
+                    android:textSize="12sp" />
 
                 <TextView
                     android:id="@+id/tv_ico_coin"
-                    android:layout_marginTop="12dp"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginBottom="12dp"
                     android:layout_marginLeft="18dp"
+                    android:layout_marginTop="12dp"
+                    android:layout_weight="1"
                     android:gravity="right"
-                    android:textSize="12sp"
                     android:text="-"
                     android:textColor="@color/text_color_333333"
-                    android:layout_weight="1"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content" />
+                    android:textSize="12sp" />
 
             </LinearLayout>
 
             <TextView
-                android:gravity="center_vertical"
-                android:text="公募信息"
-                android:paddingLeft="@dimen/layout_left_interval"
-                android:textSize="12sp"
-                android:background="@color/page_bg"
-                android:textColor="@color/text_color_666666"
                 android:layout_width="match_parent"
-                android:layout_height="30dp"/>
+                android:layout_height="30dp"
+                android:background="@color/page_bg"
+                android:gravity="center_vertical"
+                android:paddingLeft="@dimen/layout_left_interval"
+                android:text="公募信息"
+                android:textColor="@color/text_color_666666"
+                android:textSize="12sp" />
 
             <LinearLayout
-                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="38dp">
+                android:layout_height="38dp"
+                android:orientation="horizontal">
 
                 <LinearLayout
-                    android:layout_gravity="center_vertical"
-                    android:layout_weight="1"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1">
 
                     <TextView
-                        android:gravity="center_vertical"
-                        android:textSize="12sp"
-                        android:textColor="@color/text_color_666666"
-                        android:text="最新提交"
-                        android:layout_marginLeft="@dimen/layout_left_interval"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/layout_left_interval"
+                        android:gravity="center_vertical"
+                        android:text="最新提交"
+                        android:textColor="@color/text_color_666666"
+                        android:textSize="12sp" />
 
                     <TextView
                         android:id="@+id/tv_new_commit"
-                        android:gravity="right"
-                        android:textSize="12sp"
-                        android:textColor="@color/text_color_333333"
-                        android:text="-"
-                        android:layout_weight="1"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="right"
+                        android:text="-"
+                        android:textColor="@color/text_color_333333"
+                        android:textSize="12sp" />
 
                 </LinearLayout>
 
                 <View
                     android:layout_width="25dp"
-                    android:layout_height="match_parent"/>
+                    android:layout_height="match_parent" />
 
                 <LinearLayout
-                    android:layout_gravity="center_vertical"
-                    android:layout_weight="1"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1">
 
                     <TextView
-                        android:gravity="center_vertical"
-                        android:textSize="12sp"
-                        android:textColor="@color/text_color_333333"
-                        android:text="总提交"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:text="总提交"
+                        android:textColor="@color/text_color_333333"
+                        android:textSize="12sp" />
 
                     <TextView
                         android:id="@+id/tv_total_commit"
-                        android:gravity="right"
-                        android:textSize="12sp"
-                        android:textColor="@color/text_color_333333"
-                        android:layout_marginRight="@dimen/layout_right_interval"
-                        android:text="-"
-                        android:layout_weight="1"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="@dimen/layout_right_interval"
+                        android:layout_weight="1"
+                        android:gravity="right"
+                        android:text="-"
+                        android:textColor="@color/text_color_333333"
+                        android:textSize="12sp" />
 
                 </LinearLayout>
 
             </LinearLayout>
 
-            <View style="@style/style_split_line"/>
+            <View style="@style/style_split_line" />
 
             <LinearLayout
-                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="38dp">
+                android:layout_height="38dp"
+                android:orientation="horizontal">
 
                 <LinearLayout
-                    android:layout_gravity="center_vertical"
-                    android:layout_weight="1"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1">
 
                     <TextView
-                        android:gravity="center_vertical"
-                        android:textSize="12sp"
-                        android:textColor="@color/text_color_666666"
-                        android:text="总贡献"
-                        android:layout_marginLeft="@dimen/layout_left_interval"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/layout_left_interval"
+                        android:gravity="center_vertical"
+                        android:text="总贡献"
+                        android:textColor="@color/text_color_666666"
+                        android:textSize="12sp" />
 
                     <TextView
                         android:id="@+id/tv_total_contribute"
-                        android:gravity="right"
-                        android:textSize="12sp"
-                        android:textColor="@color/text_color_333333"
-                        android:text="-"
-                        android:layout_weight="1"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="right"
+                        android:text="-"
+                        android:textColor="@color/text_color_333333"
+                        android:textSize="12sp" />
 
                 </LinearLayout>
 
                 <View
                     android:layout_width="25dp"
-                    android:layout_height="match_parent"/>
+                    android:layout_height="match_parent" />
 
                 <LinearLayout
-                    android:layout_gravity="center_vertical"
-                    android:layout_weight="1"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1">
 
                     <TextView
-                        android:gravity="center_vertical"
-                        android:textSize="12sp"
-                        android:textColor="@color/text_color_333333"
-                        android:text="粉丝数"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:text="粉丝数"
+                        android:textColor="@color/text_color_333333"
+                        android:textSize="12sp" />
 
                     <TextView
                         android:id="@+id/tv_fans"
-                        android:gravity="right"
-                        android:textSize="12sp"
-                        android:textColor="@color/text_color_333333"
-                        android:layout_marginRight="@dimen/layout_right_interval"
-                        android:text="-"
-                        android:layout_weight="1"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="@dimen/layout_right_interval"
+                        android:layout_weight="1"
+                        android:gravity="right"
+                        android:text="-"
+                        android:textColor="@color/text_color_333333"
+                        android:textSize="12sp" />
 
                 </LinearLayout>
 
             </LinearLayout>
 
-            <View style="@style/style_split_line"/>
+            <View style="@style/style_split_line" />
 
             <LinearLayout
-                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="38dp">
+                android:layout_height="38dp"
+                android:orientation="horizontal">
 
                 <LinearLayout
-                    android:layout_gravity="center_vertical"
-                    android:layout_weight="1"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1">
 
                     <TextView
-                        android:gravity="center_vertical"
-                        android:textSize="12sp"
-                        android:textColor="@color/text_color_666666"
-                        android:text="关注度"
-                        android:layout_marginLeft="@dimen/layout_left_interval"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/layout_left_interval"
+                        android:gravity="center_vertical"
+                        android:text="关注度"
+                        android:textColor="@color/text_color_666666"
+                        android:textSize="12sp" />
 
                     <TextView
                         android:id="@+id/tv_collect"
-                        android:gravity="right"
-                        android:textSize="12sp"
-                        android:textColor="@color/text_color_333333"
-                        android:text="-"
-                        android:layout_weight="1"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="right"
+                        android:text="-"
+                        android:textColor="@color/text_color_333333"
+                        android:textSize="12sp" />
 
                 </LinearLayout>
 
                 <View
                     android:layout_width="25dp"
-                    android:layout_height="match_parent"/>
+                    android:layout_height="match_parent" />
 
                 <LinearLayout
-                    android:layout_gravity="center_vertical"
-                    android:layout_weight="1"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1">
 
                     <TextView
-                        android:gravity="center_vertical"
-                        android:textSize="12sp"
-                        android:textColor="@color/text_color_333333"
-                        android:text="复制数"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:text="复制数"
+                        android:textColor="@color/text_color_333333"
+                        android:textSize="12sp" />
 
                     <TextView
                         android:id="@+id/tv_copy"
-                        android:gravity="right"
-                        android:textSize="12sp"
-                        android:textColor="@color/text_color_333333"
-                        android:layout_marginRight="@dimen/layout_right_interval"
-                        android:text="-"
-                        android:layout_weight="1"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="@dimen/layout_right_interval"
+                        android:layout_weight="1"
+                        android:gravity="right"
+                        android:text="-"
+                        android:textColor="@color/text_color_333333"
+                        android:textSize="12sp" />
 
                 </LinearLayout>
 
             </LinearLayout>
 
-            <View style="@style/style_split_line"/>
+            <View style="@style/style_split_line" />
 
         </LinearLayout>
 
