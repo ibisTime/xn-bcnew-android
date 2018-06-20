@@ -113,7 +113,7 @@ public class AccountUtil {
      * @param changeValue
      * @return
      */
-    public static int getShowColor(BigDecimal changeValue) {
+    public static int getMarketShowColor(BigDecimal changeValue) {
         if (BigDecimalUtils.compareToZERO(changeValue)) {
             return ContextCompat.getColor(BaseApplication.getInstance(), R.color.market_green);
         }
@@ -127,7 +127,7 @@ public class AccountUtil {
      * @param changeValue
      * @return
      */
-    public static int getShowBtnBg(BigDecimal changeValue) {
+    public static int getMarketShowBtnBg(BigDecimal changeValue) {
         if (BigDecimalUtils.compareToZERO(changeValue)) {
             return R.drawable.market_green_bg;
         }
@@ -141,7 +141,7 @@ public class AccountUtil {
      * @param bigDecimal
      * @return
      */
-    public static String getShowString(BigDecimal bigDecimal) {
+    public static String getMarketShowString(BigDecimal bigDecimal) {
 
         if (bigDecimal.compareTo(BigDecimal.ZERO) == -1) {
 

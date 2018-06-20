@@ -129,8 +129,8 @@ public class PlateDetailsActivity extends AbsBaseLoadActivity {
             mBinding.tvBestName.setText(data.getBestSymbol());
         }
 
-        mBinding.tvBestChange.setText(AccountUtil.getShowString(BigDecimalUtils.multiply(data.getBestChange(), new BigDecimal(100))));
-        mBinding.tvBestChange.setTextColor(AccountUtil.getShowColor(data.getBestChange()));
+        mBinding.tvBestChange.setText(AccountUtil.getMarketShowString(BigDecimalUtils.multiply(data.getBestChange(), new BigDecimal(100))));
+        mBinding.tvBestChange.setTextColor(AccountUtil.getMarketShowColor(data.getBestChange()));
 
         if (TextUtils.isEmpty(data.getWorstSymbol())) {
             mBinding.tvWorstName.setText("--");
@@ -138,16 +138,16 @@ public class PlateDetailsActivity extends AbsBaseLoadActivity {
             mBinding.tvWorstName.setText(data.getWorstSymbol());
         }
 
-        mBinding.tvWorstChange.setText(AccountUtil.getShowString(BigDecimalUtils.multiply(new BigDecimal(100), data.getWorstChange())));
-        mBinding.tvWorstChange.setTextColor(AccountUtil.getShowColor(data.getWorstChange()));
+        mBinding.tvWorstChange.setText(AccountUtil.getMarketShowString(BigDecimalUtils.multiply(new BigDecimal(100), data.getWorstChange())));
+        mBinding.tvWorstChange.setTextColor(AccountUtil.getMarketShowColor(data.getWorstChange()));
 
         mBinding.tvUpCount.setText(getString(R.string.up_coin) + ":" + data.getUpCount());
         mBinding.tvDownCount.setText(getString(R.string.down_coin) + ":" + data.getDownCount());
         mBinding.tvTotalCount.setText(getString(R.string.total_coin_) + ":" + data.getTotalCount());
 
-        mBinding.tvAcgChange.setText(AccountUtil.getShowString(BigDecimalUtils.multiply(data.getAvgChange(), new BigDecimal(100))));
+        mBinding.tvAcgChange.setText(AccountUtil.getMarketShowString(BigDecimalUtils.multiply(data.getAvgChange(), new BigDecimal(100))));
 
-        mBinding.tvAcgChange.setTextColor(AccountUtil.getShowColor(data.getAvgChange()));
+        mBinding.tvAcgChange.setTextColor(AccountUtil.getMarketShowColor(data.getAvgChange()));
 
         /*币种信息*/
         PlateDetailAdapter plateDetailAdapter = new PlateDetailAdapter(data.getList());

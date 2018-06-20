@@ -94,7 +94,7 @@ public class MarketPageFragment extends BaseLazyFragment {
         fragments.add(MyChooseFragment.getInstance());
 
         mBinding.viewpager.setAdapter(new ViewPagerAdapter(getChildFragmentManager(), fragments));
-        mBinding.viewpager.setOffscreenPageLimit(fragments.size());
+        mBinding.viewpager.setOffscreenPageLimit(1);
 
 
     }

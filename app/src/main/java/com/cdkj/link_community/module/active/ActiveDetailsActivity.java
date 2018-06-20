@@ -78,14 +78,14 @@ public class ActiveDetailsActivity extends AbsBaseLoadActivity {
         code = getIntent().getStringExtra(DATA_SIGN);
 
         mBaseBinding.viewV.setVisibility(View.GONE);
-
+        getActive();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
 
-        getActive();
+
     }
 
     /**
@@ -110,12 +110,12 @@ public class ActiveDetailsActivity extends AbsBaseLoadActivity {
         call.enqueue(new BaseResponseModelCallBack<ActiveModel>(this) {
             @Override
             protected void onSuccess(ActiveModel activeModel, String SucMessage) {
-                if (activeModel != null){
+                if (activeModel != null) {
                     model = activeModel;
 
                     setView();
                     initListener();
-                    toReadActiveRequest();
+//                    toReadActiveRequest();
                 }
 
             }
@@ -153,16 +153,16 @@ public class ActiveDetailsActivity extends AbsBaseLoadActivity {
                 + "-" + DateUtil.formatStringData(model.getEndDatetime(), DateUtil.ACTIVE_DATE_FMT));
 
         mBinding.tvLocation.setText(model.getAddress());
-        mBinding.tvBrowse.setText(model.getReadCount()+"");
+        mBinding.tvBrowse.setText(model.getReadCount() + "");
         mBinding.tvMobile.setText(model.getContactMobile());
 
-        mBinding.tvApproveUser.setText("已报名用户("+model.getEnrollCount()+")/已通过("+model.getApproveCount()+")");
+        mBinding.tvApproveUser.setText("已报名用户(" + model.getEnrollCount() + ")/已通过(" + model.getApproveCount() + ")");
+        mBinding.tvPassNum.setText("已通过" + model.getApproveCount() + "/" + model.getEnrollCount());
         mBinding.llApproveUser.setVisibility(View.VISIBLE);
         mBinding.lineApproveUser.setVisibility(View.VISIBLE);
 
 
-
-        if (model.getApprovedList()!= null){
+        if (model.getApprovedList() != null) {
 
             mBinding.flApproveUser.removeAllViews();
 
@@ -172,15 +172,15 @@ public class ActiveDetailsActivity extends AbsBaseLoadActivity {
 
             int limit = model.getApprovedList().size() > 10 ? 10 : model.getApprovedList().size();
 
-            for (int i = 0; i < limit; i++){
+            for (int i = 0; i < limit; i++) {
 
                 iv = new ImageView(ActiveDetailsActivity.this);
                 params = new FrameLayout.LayoutParams(DeviceUtils.dip2px(this, 40f), FrameLayout.LayoutParams.MATCH_PARENT);
 
-                if (i != 0){
-                    params.setMargins(DeviceUtils.dip2px(this, i*25f),0,0,0);
+                if (i != 0) {
+                    params.setMargins(DeviceUtils.dip2px(this, i * 25f), 0, 0, 0);
                 }
-                mBinding.flApproveUser.addView(iv,params);
+                mBinding.flApproveUser.addView(iv, params);
 
                 ImgUtils.loadQiniuLogo(this, model.getApprovedList().get(i).getPhoto(), iv);
             }
@@ -195,12 +195,12 @@ public class ActiveDetailsActivity extends AbsBaseLoadActivity {
                 "</style>" + model.getContent(), "text/html; charset=UTF-8", "utf-8");
 
         // UN_ENROLL("0", "未报名"), ENROLL_APPLY("1", "申请报名中"), ENROLL_SUC("2", "报名成功");
-        if (model.getIsEnroll().equals("0")){
+        if (model.getIsEnroll().equals("0")) {
             mBinding.tvBtn.setText("立即报名");
-        }else if (model.getIsEnroll().equals("1")){
+        } else if (model.getIsEnroll().equals("1")) {
             mBinding.tvBtn.setText("报名申请中");
             mBinding.tvBtn.setBackgroundColor(ContextCompat.getColor(this, R.color.bg_gray_e5e5e5));
-        }else {
+        } else {
             mBinding.tvBtn.setText("已通过请注意查看短信");
         }
 
@@ -233,7 +233,7 @@ public class ActiveDetailsActivity extends AbsBaseLoadActivity {
 
         mBinding.llMap.setOnClickListener(view -> {
 
-            ActiveMapActivity.open(this, model.getLatitude() ,model.getLongitude());
+            ActiveMapActivity.open(this, model.getLatitude(), model.getLongitude());
 
         });
 
@@ -345,7 +345,6 @@ public class ActiveDetailsActivity extends AbsBaseLoadActivity {
 
     /**
      * 获取链接并分享
-     *
      */
     public void getUrlToShare() {
 

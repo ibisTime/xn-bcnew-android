@@ -53,14 +53,14 @@ public class AllPlateAdapter extends BaseQuickAdapter<PlateLlistModel, BaseViewH
         }
 
 
-        helper.setText(R.id.tv_best_change, AccountUtil.getShowString(BigDecimalUtils.multiply(item.getBestChange(), new BigDecimal(100))));
-        helper.setText(R.id.tv_worst_change, AccountUtil.getShowString(BigDecimalUtils.multiply(item.getWorstChange(), new BigDecimal(100))));
-        helper.setText(R.id.btn_state, AccountUtil.getShowString(BigDecimalUtils.multiply(item.getAvgChange(), new BigDecimal(100))));
+        helper.setText(R.id.tv_best_change, AccountUtil.getMarketShowString(BigDecimalUtils.multiply(item.getBestChange(), new BigDecimal(100))));
+        helper.setText(R.id.tv_worst_change, AccountUtil.getMarketShowString(BigDecimalUtils.multiply(item.getWorstChange(), new BigDecimal(100))));
+        helper.setText(R.id.btn_state, AccountUtil.getMarketShowString(BigDecimalUtils.multiply(item.getAvgChange(), new BigDecimal(100))));
 
-        helper.setTextColor(R.id.tv_best_change, AccountUtil.getShowColor(item.getBestChange()));
-        helper.setTextColor(R.id.tv_worst_change, AccountUtil.getShowColor(item.getWorstChange()));
+        helper.setTextColor(R.id.tv_best_change, AccountUtil.getMarketShowColor(item.getBestChange()));
+        helper.setTextColor(R.id.tv_worst_change, AccountUtil.getMarketShowColor(item.getWorstChange()));
 
-        helper.setBackgroundRes(R.id.btn_state, AccountUtil.getShowBtnBg(item.getAvgChange()));
+        helper.setBackgroundRes(R.id.btn_state, AccountUtil.getMarketShowBtnBg(item.getAvgChange()));
 
 
     }

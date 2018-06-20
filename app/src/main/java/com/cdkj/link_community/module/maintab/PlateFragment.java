@@ -199,7 +199,6 @@ public class PlateFragment extends BaseLazyFragment {
 
         map.put("start", pageindex + "");
         map.put("limit", limit + "");
-        map.put("location", "0");
 
         Call<BaseResponseModel<ResponseInListModel<PlateLlistModel>>> call = RetrofitUtils.createApi(MyApiServer.class).getPlateList("628615", StringUtils.getJsonToString(map));
 

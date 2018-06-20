@@ -1,28 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <data>
-
-    </data>
 
     <LinearLayout
-        android:id="@+id/ll_root"
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <RelativeLayout
-            android:layout_marginTop="25dp"
             android:layout_width="match_parent"
-            android:layout_height="44dp">
+            android:layout_height="44dp"
+            android:layout_marginTop="25dp"
+            android:background="@color/title_bg">
 
             <LinearLayout
                 android:id="@+id/fl_back"
-                android:visibility="visible"
                 android:layout_width="55dp"
                 android:layout_height="match_parent"
                 android:paddingLeft="@dimen/layout_left_interval"
-                >
+                android:visibility="visible">
 
                 <ImageView
                     android:layout_width="@dimen/title_left_img_widht"
@@ -34,30 +30,30 @@
 
             <LinearLayout
                 android:id="@+id/ll_title"
-                android:gravity="center"
-                android:layout_centerInParent="true"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:gravity="center">
 
                 <LinearLayout
-                    android:gravity="center"
-                    android:orientation="vertical"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="vertical">
 
                     <TextView
                         android:id="@+id/tv_exchange"
-                        android:textSize="14sp"
-                        android:textColor="@color/white"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white"
+                        android:textSize="14sp" />
 
                     <TextView
                         android:id="@+id/tv_symbol_pair"
-                        android:textSize="16sp"
-                        android:textColor="@color/white"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white"
+                        android:textSize="16sp" />
 
                 </LinearLayout>
 
@@ -65,199 +61,182 @@
 
             <LinearLayout
                 android:id="@+id/ll_refresh"
-                android:layout_toLeftOf="@+id/ll_choice"
-                android:gravity="center"
-                android:paddingLeft="10dp"
-                android:paddingRight="12.5dp"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent">
-
-                <ImageView
-                    android:src="@drawable/market_add_refresh"
-                    android:layout_width="17dp"
-                    android:layout_height="17dp" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/ll_choice"
+                android:layout_height="match_parent"
                 android:layout_alignParentRight="true"
                 android:gravity="center"
                 android:paddingLeft="12.5dp"
-                android:paddingRight="15dp"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent">
+                android:paddingRight="15dp">
 
                 <ImageView
-                    android:id="@+id/iv_choice"
-                    android:src="@drawable/market_add_choice"
                     android:layout_width="17dp"
-                    android:layout_height="17dp" />
+                    android:layout_height="17dp"
+                    android:src="@drawable/market_add_refresh" />
 
             </LinearLayout>
 
         </RelativeLayout>
 
         <LinearLayout
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
             android:layout_width="match_parent"
-            android:layout_height="82dp">
+            android:layout_height="82dp"
+            android:background="#011F49"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
             <RelativeLayout
-                android:orientation="horizontal"
-                android:layout_weight="1"
                 android:layout_width="0dp"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="horizontal">
 
                 <LinearLayout
                     android:id="@+id/ll_layout"
-                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="@dimen/layout_left_interval"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:orientation="vertical">
 
                     <TextView
                         android:id="@+id/tv_price"
-                        android:textSize="25sp"
-                        android:text="$0.00"
-                        android:textColor="@color/white"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:text="$0.00"
+                        android:textColor="@color/market_green"
+                        android:textSize="25sp" />
 
                     <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_marginTop="3dp"
                         android:gravity="center_vertical"
-                        android:orientation="horizontal"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:orientation="horizontal">
 
 
                         <TextView
                             android:id="@+id/tv_range"
-                            android:text="0.00"
-                            android:textStyle="bold"
-                            android:textColor="@color/white"
-                            android:textSize="11sp"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
+                            android:layout_height="wrap_content"
+                            android:text="0.00"
+                            android:textColor="@color/market_green"
+                            android:textSize="11sp"
+                            android:textStyle="bold" />
 
                         <TextView
                             android:id="@+id/tv_range_percent"
-                            android:text="0.00%"
-                            android:textStyle="bold"
-                            android:textColor="@color/white"
-                            android:textSize="11sp"
-                            android:layout_marginLeft="10dp"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:text="0.00%"
+                            android:textColor="@color/market_green"
+                            android:textSize="11sp"
+                            android:textStyle="bold" />
 
                     </LinearLayout>
 
                     <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_marginTop="3dp"
                         android:gravity="center_vertical"
-                        android:orientation="horizontal"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:orientation="horizontal">
 
                         <TextView
                             android:id="@+id/tv_quantity"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:text="量: 0"
-                            android:textStyle="bold"
                             android:textColor="@color/white"
                             android:textSize="11sp"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
+                            android:textStyle="bold" />
 
                     </LinearLayout>
-
 
 
                 </LinearLayout>
 
             </RelativeLayout>
-            
+
             <View
-                android:background="@color/white"
                 android:layout_width="1px"
-                android:layout_height="50dp"/>
+                android:layout_height="50dp"
+                android:background="@color/white" />
 
             <LinearLayout
                 android:id="@+id/ll_market_info"
-                android:gravity="center_vertical"
-                android:layout_weight="1"
                 android:layout_width="0dp"
-                android:orientation="horizontal"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
 
                 <LinearLayout
-                    android:layout_marginLeft="25dp"
-                    android:orientation="vertical"
-                    android:layout_weight="1"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="25dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
 
                     <TextView
                         android:id="@+id/tv_high"
-                        android:text="高: 0"
-                        android:textSize="11sp"
-                        android:textColor="@color/white"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:text="高: 0"
+                        android:textColor="@color/white"
+                        android:textSize="11sp" />
 
                     <TextView
                         android:id="@+id/tv_open"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_marginTop="9dp"
                         android:text="开: 0"
-                        android:textSize="11sp"
                         android:textColor="@color/white"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:textSize="11sp" />
 
                     <TextView
                         android:id="@+id/tv_buy"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_marginTop="9dp"
                         android:text="买: 0"
-                        android:textSize="11sp"
                         android:textColor="@color/white"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:textSize="11sp" />
 
                 </LinearLayout>
 
                 <LinearLayout
-                    android:orientation="vertical"
-                    android:layout_weight="1"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
 
                     <TextView
                         android:id="@+id/tv_low"
-                        android:text="低: 0"
-                        android:textSize="11sp"
-                        android:textColor="@color/white"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:text="低: 0"
+                        android:textColor="@color/white"
+                        android:textSize="11sp" />
 
                     <TextView
                         android:id="@+id/tv_close"
-                        android:text="收: 0"
-                        android:textSize="11sp"
-                        android:layout_marginTop="9dp"
-                        android:textColor="@color/white"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="9dp"
+                        android:text="收: 0"
+                        android:textColor="@color/white"
+                        android:textSize="11sp" />
 
                     <TextView
                         android:id="@+id/tv_sale"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_marginTop="9dp"
                         android:text="卖: 0"
-                        android:textSize="11sp"
                         android:textColor="@color/white"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:textSize="11sp" />
 
                 </LinearLayout>
 
@@ -267,178 +246,203 @@
         </LinearLayout>
 
         <FrameLayout
-            android:background="@color/white"
-            android:layout_weight="1"
-            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="0dp">
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@color/white"
+            android:orientation="vertical">
 
             <FrameLayout
                 android:id="@+id/fl_chart"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
-                
-                
-                
-                
+
+
             </FrameLayout>
-            
+
             <LinearLayout
                 android:id="@+id/ll_more_dialog"
-                android:visibility="gone"
-                android:orientation="vertical"
+                android:layout_width="67dp"
+                android:layout_height="144dp"
+                android:layout_gravity="right|bottom"
                 android:layout_marginBottom="6dp"
                 android:layout_marginRight="30dp"
-                android:layout_gravity="right|bottom"
                 android:background="@drawable/market_more_dialog"
-                android:layout_width="67dp"
-                android:layout_height="144dp">
-                
+                android:orientation="vertical"
+                android:visibility="gone">
+
                 <TextView
                     android:id="@+id/tv_usd"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
                     android:gravity="center"
                     android:text="USD"
-                    android:textSize="14sp"
                     android:textColor="@color/text_black_cd"
-                    android:layout_width="match_parent"
-                    android:layout_weight="1"
-                    android:layout_height="0dp" />
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/tv_cny"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
                     android:gravity="center"
                     android:text="CNY"
-                    android:textSize="14sp"
                     android:textColor="@color/text_black_cd"
-                    android:layout_width="match_parent"
-                    android:layout_weight="1"
-                    android:layout_height="0dp" />
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/tv_original"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
                     android:layout_marginBottom="16dp"
+                    android:layout_weight="1"
                     android:gravity="center"
                     android:text="原价"
-                    android:textSize="14sp"
                     android:textColor="@color/text_black_cd"
-                    android:layout_width="match_parent"
-                    android:layout_weight="1"
-                    android:layout_height="0dp" />
-                
-                
+                    android:textSize="14sp" />
+
+
             </LinearLayout>
-            
+
 
         </FrameLayout>
 
+
         <LinearLayout
-            android:gravity="center_vertical"
+            android:id="@+id/ll_buttom"
             android:layout_width="match_parent"
-            android:layout_height="45dp">
+            android:layout_height="45dp"
+            android:gravity="center_vertical">
+
+            <LinearLayout
+                android:id="@+id/linLayout_add"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="#FFA300"
+                android:gravity="center">
+
+                <ImageView
+                    android:id="@+id/iv_Choice"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:src="@drawable/market_add_choice" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="6dp"
+                    android:text="自选"
+                    android:textColor="@color/white"
+                    android:textSize="14sp" />
+
+            </LinearLayout>
+
 
             <LinearLayout
                 android:id="@+id/ll_warn"
-                android:gravity="center"
-                android:layout_weight="1"
                 android:layout_width="0dp"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center">
 
                 <ImageView
-                    android:background="@drawable/market_warn"
                     android:layout_width="16dp"
-                    android:layout_height="16dp" />
+                    android:layout_height="16dp"
+                    android:background="@drawable/market_capital" />
 
                 <TextView
-                    android:text="预警"
-                    android:layout_marginLeft="6dp"
-                    android:textSize="14sp"
-                    android:textColor="@color/white"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="6dp"
+                    android:text="预警"
+                    android:textColor="@color/white"
+                    android:textSize="14sp" />
 
             </LinearLayout>
 
             <View
-                android:background="@color/splitLine_color"
                 android:layout_width="1px"
-                android:layout_height="22dp"/>
+                android:layout_height="22dp"
+                android:background="@color/splitLine_color" />
 
             <LinearLayout
                 android:id="@+id/ll_capital"
-                android:gravity="center"
-                android:layout_weight="1"
                 android:layout_width="0dp"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center">
 
                 <ImageView
                     android:id="@+id/iv_capital"
-                    android:background="@drawable/market_capital"
                     android:layout_width="16dp"
-                    android:layout_height="16dp" />
+                    android:layout_height="16dp"
+                    android:background="@drawable/market_capital" />
 
                 <TextView
-                    android:text="项目分析"
-                    android:layout_marginLeft="6dp"
-                    android:textSize="14sp"
-                    android:textColor="@color/white"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="6dp"
+                    android:text="介绍"
+                    android:textColor="@color/white"
+                    android:textSize="14sp" />
 
             </LinearLayout>
 
             <View
-                android:background="@color/splitLine_color"
                 android:layout_width="1px"
-                android:layout_height="22dp"/>
+                android:layout_height="22dp"
+                android:background="@color/splitLine_color" />
 
             <LinearLayout
                 android:id="@+id/ll_share"
-                android:visibility="gone"
-                android:gravity="center"
-                android:layout_weight="1"
                 android:layout_width="0dp"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:visibility="gone">
 
                 <ImageView
-                    android:background="@drawable/market_share"
                     android:layout_width="16dp"
-                    android:layout_height="16dp" />
+                    android:layout_height="16dp"
+                    android:background="@drawable/market_share" />
 
                 <TextView
-                    android:text="分享"
-                    android:layout_marginLeft="6dp"
-                    android:textSize="14sp"
-                    android:textColor="@color/white"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="6dp"
+                    android:text="分享"
+                    android:textColor="@color/white"
+                    android:textSize="14sp" />
 
             </LinearLayout>
 
             <View
-                android:visibility="gone"
-                android:background="@color/splitLine_color"
                 android:layout_width="1px"
-                android:layout_height="22dp"/>
+                android:layout_height="22dp"
+                android:background="@color/splitLine_color"
+                android:visibility="gone" />
 
             <LinearLayout
                 android:id="@+id/ll_more"
-                android:gravity="center"
-                android:layout_weight="1"
                 android:layout_width="0dp"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center">
 
                 <ImageView
-                    android:background="@drawable/market_more"
                     android:layout_width="16dp"
-                    android:layout_height="16dp" />
+                    android:layout_height="16dp"
+                    android:background="@drawable/market_more" />
 
                 <TextView
-                    android:text="更多"
-                    android:layout_marginLeft="6dp"
-                    android:textSize="14sp"
-                    android:textColor="@color/white"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="6dp"
+                    android:text="更多"
+                    android:textColor="@color/white"
+                    android:textSize="14sp" />
 
             </LinearLayout>
 

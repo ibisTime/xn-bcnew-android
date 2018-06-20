@@ -6,14 +6,14 @@
     </data>
 
     <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:background="@color/white"
         android:gravity="center"
-        android:paddingTop="15dp"
+        android:orientation="vertical"
         android:paddingLeft="15dp"
         android:paddingRight="15dp"
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:paddingTop="15dp">
 
         <FrameLayout
             android:layout_width="wrap_content"
@@ -21,125 +21,122 @@
 
             <ImageView
                 android:id="@+id/iv_adv"
-                android:scaleType="fitXY"
                 android:layout_width="345dp"
-                android:layout_height="165dp" />
+                android:layout_height="165dp"
+                android:scaleType="fitXY" />
 
             <TextView
                 android:id="@+id/tv_status"
-                android:visibility="gone"
-                android:paddingLeft="5dp"
-                android:background="@drawable/common_active_status_bg_green"
-                android:text="已报名"
-                android:gravity="center_vertical"
-                android:textColor="@color/white"
-                android:textSize="14sp"
                 android:layout_width="58dp"
                 android:layout_height="24dp"
-                />
+                android:background="@drawable/common_active_status_bg_green"
+                android:gravity="center_vertical"
+                android:paddingLeft="5dp"
+                android:text="已报名"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                android:visibility="gone" />
         </FrameLayout>
 
         <LinearLayout
-            android:layout_marginTop="10dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp">
 
             <TextView
                 android:id="@+id/tv_title"
-                android:layout_weight="0.75"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:maxLines="2"
+                android:layout_weight="0.75"
                 android:ellipsize="end"
+                android:maxLines="2"
+                android:text="dfdfdfdfdffdfdfdfdfdfdfdfdff"
                 android:textColor="@color/text_black_cd"
-                android:textSize="17sp"
-                />
+                android:textSize="17sp" />
 
             <TextView
                 android:id="@+id/tv_price"
-                android:gravity="right"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="6dp"
                 android:layout_weight="0.25"
-                android:layout_width="0dp"
-                android:layout_height="18dp"
+                android:ellipsize="end"
+                android:gravity="right"
+                android:singleLine="true"
                 android:textColor="@color/text_color_ffa300"
-                android:textSize="15sp"
-                />
+                android:textSize="15sp" />
 
         </LinearLayout>
 
         <LinearLayout
-            android:gravity="center_vertical"
-            android:layout_marginTop="5dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:gravity="center_vertical">
 
             <ImageView
-                android:src="@drawable/active_date_time"
                 android:layout_width="16dp"
-                android:layout_height="16dp" />
+                android:layout_height="16dp"
+                android:src="@drawable/active_date_time" />
 
             <TextView
                 android:id="@+id/tv_date_time"
-                android:layout_marginLeft="5dp"
-                android:layout_weight="1"
                 android:layout_width="0dp"
                 android:layout_height="20dp"
+                android:layout_marginLeft="5dp"
+                android:layout_weight="1"
                 android:textColor="#ff818181"
-                android:textSize="14sp"
-                />
+                android:textSize="14sp" />
 
             <ImageView
-                android:src="@drawable/active_browse"
                 android:layout_width="16dp"
-                android:layout_height="16dp" />
+                android:layout_height="16dp"
+                android:src="@drawable/active_browse" />
 
             <TextView
                 android:id="@+id/tv_browse"
-                android:layout_marginLeft="5dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
                 android:textColor="#ff818181"
-                android:textSize="14sp"
-                />
-            
+                android:textSize="14sp" />
+
         </LinearLayout>
 
         <LinearLayout
-            android:gravity="center_vertical"
-            android:layout_marginTop="5dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:gravity="center_vertical">
 
             <ImageView
-                android:src="@drawable/active_location"
                 android:layout_width="16dp"
-                android:layout_height="16dp" />
+                android:layout_height="16dp"
+                android:src="@drawable/active_location" />
 
             <TextView
                 android:id="@+id/tv_location"
-                android:layout_marginLeft="5dp"
-                android:layout_weight="1"
                 android:layout_width="0dp"
                 android:layout_height="20dp"
+                android:layout_marginLeft="5dp"
+                android:layout_weight="1"
                 android:textColor="#ff818181"
-                android:textSize="14sp"
-                />
+                android:textSize="14sp" />
 
             <ImageView
                 android:id="@+id/iv_top"
-                android:visibility="gone"
+                android:layout_width="25dp"
+                android:layout_height="15dp"
                 android:layout_marginLeft="5dp"
                 android:background="@drawable/set_top"
-                android:layout_width="25dp"
-                android:layout_height="15dp" />
+                android:visibility="gone" />
 
 
         </LinearLayout>
 
         <View
-            android:layout_marginTop="14dp"
-            style="@style/style_split_line"/>
+            style="@style/style_split_line"
+            android:layout_marginTop="14dp" />
 
     </LinearLayout>
 </layout>

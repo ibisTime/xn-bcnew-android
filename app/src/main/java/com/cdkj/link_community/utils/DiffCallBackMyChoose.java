@@ -82,7 +82,7 @@ public class DiffCallBackMyChoose extends DiffUtil.Callback {
         if (!beanOld.getLastPrice().equals(beanNew.getLastPrice())) {
             return false;//如果有内容不同，就返回false
         }
-        if (beanOld.getVolume() != beanNew.getVolume()) {
+        if (beanOld.getVolume().compareTo(beanNew.getVolume()) != 0) {
             return false;//如果有内容不同，就返回false
         }
         return true; //默认两个data内容是相同的

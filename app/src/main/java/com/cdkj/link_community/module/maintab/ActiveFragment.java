@@ -105,9 +105,7 @@ public class ActiveFragment extends BaseLazyFragment {
         ActiveListAdapter mAdapter = new ActiveListAdapter(listData);
 
         mAdapter.setOnItemClickListener((adapter, view, position) -> {
-            if (!SPUtilHelper.isLogin(mActivity, false)) {
-                return;
-            }
+
             ActiveDetailsActivity.open(mActivity, mAdapter.getItem(position).getCode());
         });
 

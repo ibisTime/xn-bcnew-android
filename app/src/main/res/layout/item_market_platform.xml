@@ -12,9 +12,9 @@
     android:paddingTop="12dp">
 
     <LinearLayout
-        android:layout_gravity="center_vertical"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
         android:layout_weight="1"
         android:orientation="horizontal">
 
@@ -25,18 +25,10 @@
             android:orientation="vertical">
 
             <LinearLayout
-                android:gravity="center_vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:gravity="center_vertical"
                 android:orientation="horizontal">
-
-                <ImageView
-                    android:id="@+id/iv_warn"
-                    android:visibility="gone"
-                    android:layout_marginRight="3dp"
-                    android:background="@drawable/market_list_warn"
-                    android:layout_width="15dp"
-                    android:layout_height="15dp" />
 
                 <TextView
                     android:id="@+id/tv_platform"
@@ -47,13 +39,23 @@
                     tools:text="sdfsdfsd" />
 
                 <TextView
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
                     android:layout_weight="1"
+                    android:singleLine="true"
                     android:textColor="@color/app_text_gray"
                     android:textSize="12sp"
-                    tools:text="sdfsdfsd" />
+                    tools:text="sdfsdfsdsdfsdfsdsdfsdfsd" />
+
+                <ImageView
+                    android:id="@+id/iv_warn"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:layout_marginRight="3dp"
+                    android:src="@drawable/market_list_warn"
+                    android:visibility="gone" />
+
             </LinearLayout>
 
 

@@ -1,5 +1,7 @@
 package com.cdkj.link_community.model;
 
+import java.math.BigDecimal;
+
 /**
  * 我的行情自选
  * Created by cdkj on 2018/3/25.
@@ -118,7 +120,7 @@ public class MyChooseMarket {
     private String isWarn;
     private String lastPrice;
     private String lastCnyPrice;
-    private int volume;
+    private BigDecimal volume;
     private int percentChange24h;
     private String percentChange;
     private int choiceCount;
@@ -204,11 +206,11 @@ public class MyChooseMarket {
         this.lastCnyPrice = lastCnyPrice;
     }
 
-    public int getVolume() {
+    public BigDecimal getVolume() {
         return volume;
     }
 
-    public void setVolume(int volume) {
+    public void setVolume(BigDecimal volume) {
         this.volume = volume;
     }
 

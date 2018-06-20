@@ -210,7 +210,7 @@ public class MessageDetailsActivity extends AbsBaseLoadActivity {
         });
 
         //收藏
-        mBinding.imgCollection.setOnClickListener(view -> {
+        mBinding.llLike.setOnClickListener(view -> {
             if (!SPUtilHelper.isLogin(this, false)) {
                 return;
             }
@@ -322,7 +322,7 @@ public class MessageDetailsActivity extends AbsBaseLoadActivity {
                 messageDetails = data;
                 setShowData(data);
 
-                toReadActiveRequest();
+//                toReadActiveRequest();
             }
 
 

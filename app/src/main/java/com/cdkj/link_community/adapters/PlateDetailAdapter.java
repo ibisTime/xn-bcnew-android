@@ -1,10 +1,10 @@
 package com.cdkj.link_community.adapters;
 
 import android.support.annotation.Nullable;
+import android.text.Html;
 import android.text.TextUtils;
 
 import com.cdkj.baselibrary.utils.BigDecimalUtils;
-import com.cdkj.baselibrary.utils.BitmapUtils;
 import com.cdkj.baselibrary.utils.MoneyUtils;
 import com.cdkj.baselibrary.utils.StringUtils;
 import com.cdkj.link_community.R;
@@ -43,18 +43,20 @@ public class PlateDetailAdapter extends BaseQuickAdapter<PlateDetailsModel.ListB
 
         helper.setText(R.id.tv_price, MoneyUtils.MONEYSING + StringUtils.formatNum2(item.getLastCnyPrice()));
 
-        if (TextUtils.isEmpty(item.getToSymbol())) {
-            helper.setText(R.id.tv_other_price, "--" + StringUtils.formatNum2(item.getLastPrice()));
+        if (TextUtils.equals(item.getToSymbol(), "btc")) {
+
+            helper.setText(R.id.tv_other_price, Html.fromHtml("฿" + StringUtils.formatNum3(item.getLastPrice())));
+
         } else {
-            helper.setText(R.id.tv_other_price, MoneyUtils.MONEYSING + StringUtils.formatNum2(item.getLastPrice()));
+            helper.setText(R.id.tv_other_price, "$" + StringUtils.formatNum3(item.getLastPrice()));
         }
 
-        helper.setTextColor(R.id.tv_price, AccountUtil.getShowColor(item.getLastCnyPrice()));
+        helper.setTextColor(R.id.tv_price, AccountUtil.getMarketShowColor(item.getLastCnyPrice()));
 
-        helper.setText(R.id.btn_state, AccountUtil.getShowString(BigDecimalUtils.multiply(new BigDecimal(100), item.getPercentChange24h())));
+        helper.setText(R.id.btn_state, AccountUtil.getMarketShowString(BigDecimalUtils.multiply(new BigDecimal(100), item.getPercentChange24h())));
 
 
-        helper.setBackgroundRes(R.id.btn_state, AccountUtil.getShowBtnBg(item.getPercentChange24h()));
+        helper.setBackgroundRes(R.id.btn_state, AccountUtil.getMarketShowBtnBg(item.getPercentChange24h()));
 
     }
 

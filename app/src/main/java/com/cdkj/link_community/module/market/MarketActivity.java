@@ -6,6 +6,7 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
+import android.text.Html;
 import android.text.TextUtils;
 import android.view.View;
 
@@ -81,6 +82,7 @@ public class MarketActivity extends AbsBaseLoadActivity {
 
     @Override
     public void afterCreate(Bundle savedInstanceState) {
+        UIStatusBarHelper.translucent(this, ContextCompat.getColor(this, R.color.title_bg));
         if (getIntent() == null)
             return;
 
@@ -102,7 +104,7 @@ public class MarketActivity extends AbsBaseLoadActivity {
             getMarket(true);
         });
 
-        mBinding.llChoice.setOnClickListener(view -> {
+        mBinding.linLayoutAdd.setOnClickListener(view -> {
 
             if (!SPUtilHelper.isLogin(this, false)) {
                 return;
@@ -132,27 +134,27 @@ public class MarketActivity extends AbsBaseLoadActivity {
 
         mBinding.llMore.setOnClickListener(view -> {
 
-            mBinding.llMoreDialog.setVisibility(mBinding.llMoreDialog.getVisibility() == View.GONE ?  View.VISIBLE : View.GONE);
+            mBinding.llMoreDialog.setVisibility(mBinding.llMoreDialog.getVisibility() == View.GONE ? View.VISIBLE : View.GONE);
         });
 
         mBinding.tvUsd.setOnClickListener(view -> {
 
             mBinding.llMoreDialog.setVisibility(View.GONE);
-            if(model.getLastUsdPrice() != null)
-                mBinding.tvPrice.setText(MONEY_SIGN_USD+ scale(model.getLastUsdPrice(),2));
+            if (model.getLastUsdPrice() != null)
+                mBinding.tvPrice.setText(MONEY_SIGN_USD + scale(model.getLastUsdPrice(), 2));
         });
 
         mBinding.tvCny.setOnClickListener(view -> {
 
             mBinding.llMoreDialog.setVisibility(View.GONE);
-            if(model.getLastCnyPrice() != null)
-                mBinding.tvPrice.setText(MONEY_SIGN+ scale(model.getLastCnyPrice(),2));
+            if (model.getLastCnyPrice() != null)
+                mBinding.tvPrice.setText(MONEY_SIGN + scale(model.getLastCnyPrice(), 2));
         });
 
         mBinding.tvOriginal.setOnClickListener(view -> {
 
             mBinding.llMoreDialog.setVisibility(View.GONE);
-            if(model.getLastPrice() != null)
+            if (model.getLastPrice() != null)
                 mBinding.tvPrice.setText(model.getLastPrice());
         });
 
@@ -184,7 +186,7 @@ public class MarketActivity extends AbsBaseLoadActivity {
             @Override
             protected void onSuccess(CoinListModel data, String SucMessage) {
 
-                if (data == null )
+                if (data == null)
                     return;
 
                 model = data;
@@ -203,7 +205,7 @@ public class MarketActivity extends AbsBaseLoadActivity {
         });
     }
 
-    private void setTitle(){
+    private void setTitle() {
         mBinding.tvExchange.setText(model.getExchangeCname());
         mBinding.tvSymbolPair.setText(model.getSymbolPair().toUpperCase());
     }
@@ -214,32 +216,32 @@ public class MarketActivity extends AbsBaseLoadActivity {
 
         setPageBgColor(model.getPercentChange());
 
-        if(model.getLastCnyPrice() != null) {
-            mBinding.tvPrice.setText(MONEY_SIGN+ scale(model.getLastCnyPrice(),2));
+        if (model.getLastCnyPrice() != null) {
+            mBinding.tvPrice.setText(MONEY_SIGN + scale(model.getLastCnyPrice(), 2));
         }
 
         double rate = Double.parseDouble(model.getPercentChange());
-        mBinding.tvRangePercent.setText(formatPercent(rate*100) + "%");
+        mBinding.tvRangePercent.setText(formatPercent(rate * 100) + "%");
         mBinding.tvRange.setText(AccountUtil.scale(model.getPriceChange(), 6));
 
-        mBinding.tvHigh.setText("高: " + AccountUtil.scale(model.getHigh(), 6));
-        mBinding.tvLow.setText("低: " + AccountUtil.scale(model.getLow(), 6));
-        mBinding.tvOpen.setText("开: " + AccountUtil.scale(model.getOpen(), 6));
-        mBinding.tvClose.setText("收: " + AccountUtil.scale(model.getClose(), 6));
+        mBinding.tvHigh.setText(Html.fromHtml("<font  color=\"#3C55AF\">高:</font> " + AccountUtil.scale(model.getHigh(), 6)));
+        mBinding.tvLow.setText(Html.fromHtml("<font  color=\"#3C55AF\">低:</font> " + AccountUtil.scale(model.getLow(), 6)));
+        mBinding.tvOpen.setText(Html.fromHtml("<font  color=\"#3C55AF\">开:</font> " + AccountUtil.scale(model.getOpen(), 6)));
+        mBinding.tvClose.setText(Html.fromHtml("<font  color=\"#3C55AF\">收:</font> " + AccountUtil.scale(model.getClose(), 6)));
+        mBinding.tvQuantity.setText(Html.fromHtml("<font  color=\"#3C55AF\">量:</font> " + AccountUtil.scale(model.getVolume(), 6)));
 
-        if (TextUtils.isEmpty(model.getBidPrice())){
-            mBinding.tvBuy.setText("买: --");
-        }else {
-            mBinding.tvBuy.setText("买: " + AccountUtil.scale(model.getBidPrice(), 6));
+        if (TextUtils.isEmpty(model.getBidPrice())) {
+            mBinding.tvBuy.setText(Html.fromHtml("<font  color=\"#3C55AF\">买:</font> " + "--"));
+        } else {
+            mBinding.tvBuy.setText(Html.fromHtml("<font  color=\"#3C55AF\">买:</font> " + AccountUtil.scale(model.getBidPrice(), 6)));
         }
 
-        if (TextUtils.isEmpty(model.getAskPrice())){
-            mBinding.tvSale.setText("卖: --");
-        }else {
-            mBinding.tvSale.setText("卖: " + AccountUtil.scale(model.getAskPrice(), 6));
+        if (TextUtils.isEmpty(model.getAskPrice())) {
+            mBinding.tvSale.setText(Html.fromHtml("<font  color=\"#3C55AF\">卖:</font> " + "--"));
+        } else {
+            mBinding.tvSale.setText(Html.fromHtml("<font  color=\"#3C55AF\">卖:</font> " + AccountUtil.scale(model.getAskPrice(), 6)));
         }
 
-        mBinding.tvQuantity.setText("量: " + AccountUtil.scale(model.getVolume(), 6));
 
         if (TextUtils.equals(model.getIsChoice(), "1")) {
             mBinding.ivChoice.setImageResource(R.drawable.market_cancel_choice);
@@ -249,17 +251,15 @@ public class MarketActivity extends AbsBaseLoadActivity {
 
     }
 
-    private void setPageBgColor(String percent){
+    private void setPageBgColor(String percent) {
         double rate = Double.parseDouble(percent);
         if (rate == 0) {
-            UIStatusBarHelper.translucent(this, ContextCompat.getColor(this, R.color.colorPrimary));
-            mBinding.llRoot.setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimary));
+
+            mBinding.llButtom.setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimary));
         } else if (rate > 0) {
-            UIStatusBarHelper.translucent(this, ContextCompat.getColor(this, R.color.market_green));
-            mBinding.llRoot.setBackgroundColor(ContextCompat.getColor(this, R.color.market_green));
+            mBinding.llButtom.setBackgroundColor(ContextCompat.getColor(this, R.color.market_green));
         } else {
-            UIStatusBarHelper.translucent(this, ContextCompat.getColor(this, R.color.market_red));
-            mBinding.llRoot.setBackgroundColor(ContextCompat.getColor(this, R.color.market_red));
+            mBinding.llButtom.setBackgroundColor(ContextCompat.getColor(this, R.color.market_red));
         }
     }
 
@@ -272,14 +272,13 @@ public class MarketActivity extends AbsBaseLoadActivity {
                 + model.getToSymbol()
                 + "&exchange="
                 + model.getExchangeEname()
-                + "&isfull=0",true));
+                + "&isfull=0", true));
         mFragmentTransaction.commit();
 
     }
 
     /**
      * 获取链接并分享
-     *
      */
     public void getUrlToShare() {
 
@@ -339,7 +338,7 @@ public class MarketActivity extends AbsBaseLoadActivity {
             protected void onSuccess(IsSuccessModes data, String SucMessage) {
                 if (data.isSuccess()) {
                     UITipDialog.showSuccess(MarketActivity.this, getString(R.string.do_succ), dialogInterface -> getMarket(false));
-                }else {
+                } else {
                     UITipDialog.showFail(MarketActivity.this, getString(R.string.do_fall));
                 }
             }
@@ -367,7 +366,7 @@ public class MarketActivity extends AbsBaseLoadActivity {
 
 
     @Subscribe
-    public void toFullScreen(FullScreenModel fullScreenModel){
+    public void toFullScreen(FullScreenModel fullScreenModel) {
         if (fullScreenModel == null)
             return;
 

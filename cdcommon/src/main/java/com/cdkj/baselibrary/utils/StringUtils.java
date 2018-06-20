@@ -426,5 +426,21 @@ public class StringUtils {
 
     }
 
+    /**
+     * 以万为单位显示格式化
+     *
+     * @param num
+     * @return
+     */
+    public static String formatNum3(BigDecimal num) {
+
+        if (num == null) return "0";
+
+        NumberFormat nf = new DecimalFormat("#.########");
+
+        return nf.format(num);
+
+    }
+
 
 }
