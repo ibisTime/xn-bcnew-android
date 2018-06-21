@@ -12,6 +12,7 @@ import com.cdkj.baselibrary.appmanager.MyCdConfig;
 import com.cdkj.baselibrary.base.AbsRefreshListFragment;
 import com.cdkj.baselibrary.nets.BaseResponseModelCallBack;
 import com.cdkj.baselibrary.nets.RetrofitUtils;
+import com.cdkj.baselibrary.utils.LogUtil;
 import com.cdkj.baselibrary.utils.StringUtils;
 import com.cdkj.link_community.R;
 import com.cdkj.link_community.adapters.CoinPriceListAdapter;
@@ -126,9 +127,16 @@ public class CoinTypePriceListFragment extends AbsRefreshListFragment {
      */
     @Subscribe
     public void IntervalRefreshEvent(MarketInterval marketInterval) {
-        if (mActivity == null || mActivity.isFinishing() || !getUserVisibleHint() || mRefreshHelper == null || isRequesting) {
+
+        //当前页面不显示时停止轮询
+        if (mActivity == null || mActivity.isFinishing() || !getUserVisibleHint() || getParentFragment() == null || !getParentFragment().getUserVisibleHint()) {
             return;
         }
+
+        if (mRefreshHelper == null || isRequesting) {
+            return;
+        }
+        LogUtil.E("刷新 MyChooseFragment");
         mRefreshHelper.onDefaluteMRefresh(false);
     }
 

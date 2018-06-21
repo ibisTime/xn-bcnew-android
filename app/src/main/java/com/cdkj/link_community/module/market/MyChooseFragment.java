@@ -22,6 +22,7 @@ import com.cdkj.baselibrary.interfaces.RefreshHelper;
 import com.cdkj.baselibrary.model.IsSuccessModes;
 import com.cdkj.baselibrary.nets.BaseResponseModelCallBack;
 import com.cdkj.baselibrary.nets.RetrofitUtils;
+import com.cdkj.baselibrary.utils.LogUtil;
 import com.cdkj.baselibrary.utils.StringUtils;
 import com.cdkj.link_community.R;
 import com.cdkj.link_community.adapters.MarketChooseListAdapter;
@@ -87,7 +88,7 @@ public class MyChooseFragment extends BaseLazyFragment {
         //防止局部刷新闪烁
         mRefreshBinding.refreshLayout.setEnableLoadmore(false);
         ((DefaultItemAnimator) mRefreshBinding.rv.getItemAnimator()).setSupportsChangeAnimations(false);
-        mRefreshBinding.rv.setLayoutManager(new WrapContentLinearLayoutManager(mActivity, LinearLayoutManager.VERTICAL,false));
+        mRefreshBinding.rv.setLayoutManager(new WrapContentLinearLayoutManager(mActivity, LinearLayoutManager.VERTICAL, false));
 
         if (SPUtilHelper.isLoginNoStart()) { //未登录不用请求
             mRefreshHelper.onDefaluteMRefresh(true);
@@ -101,12 +102,12 @@ public class MyChooseFragment extends BaseLazyFragment {
     private void initListener() {
         mHeaderBinding.cbUp.setOnClickListener((v) -> {
 
-            if (mHeaderBinding.cbUp.isChecked()){
+            if (mHeaderBinding.cbUp.isChecked()) {
                 mHeaderBinding.cbDown.setChecked(false);
                 mHeaderBinding.cbWarn.setChecked(false);
 
                 direction = "1";
-            }else {
+            } else {
                 direction = "";
             }
 
@@ -116,12 +117,12 @@ public class MyChooseFragment extends BaseLazyFragment {
         });
 
         mHeaderBinding.cbDown.setOnClickListener((v) -> {
-            if (mHeaderBinding.cbDown.isChecked()){
+            if (mHeaderBinding.cbDown.isChecked()) {
                 mHeaderBinding.cbUp.setChecked(false);
                 mHeaderBinding.cbWarn.setChecked(false);
 
                 direction = "0";
-            }else {
+            } else {
                 direction = "";
             }
 
@@ -133,13 +134,13 @@ public class MyChooseFragment extends BaseLazyFragment {
 
             if (!SPUtilHelper.isLogin(mActivity, false)) {
                 mHeaderBinding.cbWarn.setChecked(false);
-            }else {
-                if (mHeaderBinding.cbWarn.isChecked()){
+            } else {
+                if (mHeaderBinding.cbWarn.isChecked()) {
                     mHeaderBinding.cbDown.setChecked(false);
                     mHeaderBinding.cbUp.setChecked(false);
 
                     direction = "2";
-                }else {
+                } else {
                     direction = "";
                 }
 
@@ -242,7 +243,7 @@ public class MyChooseFragment extends BaseLazyFragment {
 
         Map<String, String> map = new HashMap<>();
 
-        map.put("id", market.getChoiceId()+"");
+        map.put("id", market.getChoiceId() + "");
 
         Call call = RetrofitUtils.getBaseAPiService().successRequest("628332", StringUtils.getJsonToString(map));
 
@@ -349,25 +350,25 @@ public class MyChooseFragment extends BaseLazyFragment {
             @Override
             protected void onSuccess(ResponseInListModel<MyChooseMarket> data, String SucMessage) {
 
-                if (marketChooseListAdapter.getData() == null || marketChooseListAdapter.getData().size() == 0){
+                if (marketChooseListAdapter.getData() == null || marketChooseListAdapter.getData().size() == 0) {
                     mHeaderBinding.llRoot.setVisibility(View.GONE);
-                }else {
+                } else {
                     mHeaderBinding.llRoot.setVisibility(View.VISIBLE);
                 }
 
                 if (marketChooseListAdapter.getData() == null || marketChooseListAdapter.getData().size() == 0 || isClearRefresh) {
 
                     mRefreshHelper.setDataAsync(data.getList(), getString(R.string.no_coin_info), R.drawable.no_dynamic);
-                }else {
+                } else {
 
                     if (mRefreshBinding.refreshLayout.isRefreshing()) { //停止刷新
                         mRefreshBinding.refreshLayout.finishRefresh();
                     }
 
-                    if(marketChooseListAdapter.getData().size() == data.getList().size()){
+                    if (marketChooseListAdapter.getData().size() == data.getList().size()) {
                         DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(new DiffCallBackMyChoose(mCoinListModels, data.getList()), true);
                         diffResult.dispatchUpdatesTo(marketChooseListAdapter);
-                    }else {
+                    } else {
                         marketChooseListAdapter.notifyDataSetChanged();
                     }
                 }
@@ -445,10 +446,15 @@ public class MyChooseFragment extends BaseLazyFragment {
      */
     @Subscribe
     public void IntervalRefreshEvent(MarketInterval marketInterval) {
-
-        if (mActivity == null || mActivity.isFinishing() || !getUserVisibleHint() || !SPUtilHelper.isLoginNoStart() || mRefreshHelper == null || isRequesting) {
+        //当前页面不显示时停止轮询
+        if (mActivity == null || mActivity.isFinishing() || !getUserVisibleHint() || getParentFragment() == null || !getParentFragment().getUserVisibleHint()) {
             return;
         }
+        
+        if (!SPUtilHelper.isLoginNoStart() || mRefreshHelper == null || isRequesting) {
+            return;
+        }
+        LogUtil.E("刷新 MyChooseFragment");
         mRefreshHelper.onMRefresh(false);
     }
 

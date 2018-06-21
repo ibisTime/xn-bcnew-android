@@ -140,7 +140,7 @@ public class MainActivity extends AbsBaseLoadActivity {
 
     private void getFastMessage(String code) {
 
-        if (TextUtils.equals(code, "notOpen"))
+        if (TextUtils.isEmpty(code) || TextUtils.equals(code, "notOpen"))
             return;
 
         Map<String, String> map = new HashMap<>();

@@ -20,6 +20,7 @@ import com.cdkj.baselibrary.appmanager.WrapContentLinearLayoutManager;
 import com.cdkj.baselibrary.base.AbsRefreshListFragment;
 import com.cdkj.baselibrary.nets.BaseResponseModelCallBack;
 import com.cdkj.baselibrary.nets.RetrofitUtils;
+import com.cdkj.baselibrary.utils.LogUtil;
 import com.cdkj.baselibrary.utils.StringUtils;
 import com.cdkj.link_community.R;
 import com.cdkj.link_community.adapters.CoinListAdapter;
@@ -108,7 +109,7 @@ public class CoinTypeListFragment extends AbsRefreshListFragment {
         //防止局部刷新闪烁
         mRefreshBinding.refreshLayout.setEnableLoadmore(false);
         ((DefaultItemAnimator) mRefreshBinding.rv.getItemAnimator()).setSupportsChangeAnimations(false);
-        mRefreshBinding.rv.setLayoutManager(new WrapContentLinearLayoutManager(mActivity, LinearLayoutManager.VERTICAL,false));
+        mRefreshBinding.rv.setLayoutManager(new WrapContentLinearLayoutManager(mActivity, LinearLayoutManager.VERTICAL, false));
 
         if (isFirstRequest) {
             mRefreshHelper.onDefaluteMRefresh(true);
@@ -129,12 +130,12 @@ public class CoinTypeListFragment extends AbsRefreshListFragment {
 
         mHeaderBinding.cbUp.setOnClickListener((v) -> {
 
-            if (mHeaderBinding.cbUp.isChecked()){
+            if (mHeaderBinding.cbUp.isChecked()) {
                 mHeaderBinding.cbDown.setChecked(false);
                 mHeaderBinding.cbWarn.setChecked(false);
 
                 direction = "1";
-            }else {
+            } else {
                 direction = "";
             }
 
@@ -145,12 +146,12 @@ public class CoinTypeListFragment extends AbsRefreshListFragment {
 
         mHeaderBinding.cbDown.setOnClickListener((v) -> {
 
-            if (mHeaderBinding.cbDown.isChecked()){
+            if (mHeaderBinding.cbDown.isChecked()) {
                 mHeaderBinding.cbUp.setChecked(false);
                 mHeaderBinding.cbWarn.setChecked(false);
 
                 direction = "0";
-            }else {
+            } else {
                 direction = "";
             }
 
@@ -162,13 +163,13 @@ public class CoinTypeListFragment extends AbsRefreshListFragment {
 
             if (!SPUtilHelper.isLogin(mActivity, false)) {
                 mHeaderBinding.cbWarn.setChecked(false);
-            }else {
-                if (mHeaderBinding.cbWarn.isChecked()){
+            } else {
+                if (mHeaderBinding.cbWarn.isChecked()) {
                     mHeaderBinding.cbDown.setChecked(false);
                     mHeaderBinding.cbUp.setChecked(false);
 
                     direction = "2";
-                }else {
+                } else {
                     direction = "";
                 }
 
@@ -198,7 +199,7 @@ public class CoinTypeListFragment extends AbsRefreshListFragment {
 
         if (TextUtils.isEmpty(mCoinType)) return;
 
-        if (TextUtils.equals(direction, "2")){
+        if (TextUtils.equals(direction, "2")) {
             if (TextUtils.isEmpty(SPUtilHelper.getUserId()))
                 return;
         }
@@ -206,15 +207,15 @@ public class CoinTypeListFragment extends AbsRefreshListFragment {
 
         Map<String, String> map = new HashMap<>();
 
-        if (TextUtils.equals(mCoinType,"全部")){
+        if (TextUtils.equals(mCoinType, "全部")) {
             map.put("symbol", "");
-        }else {
+        } else {
             map.put("symbol", mCoinType);
         }
         map.put("userId", SPUtilHelper.getUserId());
         map.put("direction", direction);
         map.put("start", pageindex + "");
-        map.put("limit",  "20000");
+        map.put("limit", "20000");
         map.put("percentPeriod", "24h");
 
         if (isShowDialog) showLoadingDialog();
@@ -229,14 +230,14 @@ public class CoinTypeListFragment extends AbsRefreshListFragment {
 
                 if (coinListAdapter.getData() == null || coinListAdapter.getData().size() == 0 || isClearRefresh) {
                     mRefreshHelper.setDataAsync(data.getList(), getString(R.string.no_coin_info), R.drawable.no_dynamic);
-                }else {
+                } else {
 
                     mRefreshBinding.refreshLayout.finishRefresh();
 
-                    if(coinListAdapter.getData().size() == data.getList().size()){
+                    if (coinListAdapter.getData().size() == data.getList().size()) {
                         DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(new DiffCallBack(mCoinListModels, data.getList()), true);
                         diffResult.dispatchUpdatesTo(coinListAdapter);
-                    }else {
+                    } else {
                         coinListAdapter.notifyDataSetChanged();
                     }
                 }
@@ -270,10 +271,15 @@ public class CoinTypeListFragment extends AbsRefreshListFragment {
     @Subscribe
     public void IntervalRefreshEvent(MarketInterval marketInterval) {
 
-        if (mActivity == null || mActivity.isFinishing() || !getUserVisibleHint() || mRefreshHelper == null || mRefreshHelper == null || isRequesting) {
+        //当前页面不显示时停止轮询
+        if (mActivity == null || mActivity.isFinishing() || !getUserVisibleHint() || getParentFragment() == null || !getParentFragment().getUserVisibleHint()) {
             return;
         }
 
+        if (mRefreshHelper == null || mRefreshHelper == null || isRequesting) {
+            return;
+        }
+        LogUtil.E("刷新 MyChooseFragment" + mCoinType);
         mRefreshHelper.onMRefresh(false);
     }
 

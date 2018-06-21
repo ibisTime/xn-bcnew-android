@@ -2,6 +2,7 @@ package com.cdkj.link_community.utils;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.text.TextUtils;
 
 import com.cdkj.baselibrary.utils.LogUtil;
 import com.cdkj.link_community.interfaces.QQUiListener;
@@ -56,8 +57,10 @@ public class QqShareUtil {
         /*点击URL*/
         params.putString(QQShare.SHARE_TO_QQ_TARGET_URL, openUrl);
 
+        if (!TextUtils.isEmpty(photoUrl)) {
         /*图片路径*/
-        params.putString(QQShare.SHARE_TO_QQ_IMAGE_URL, photoUrl);
+            params.putString(QQShare.SHARE_TO_QQ_IMAGE_URL, photoUrl);
+        }
 
         Tencent.createInstance(QQAPPID, act.getApplicationContext()).shareToQQ(act, params, listener);
     }
