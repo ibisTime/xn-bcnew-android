@@ -38,7 +38,7 @@ public class ActiveCollectListAdapter extends BaseQuickAdapter<ActiveModel, Base
         helper.setText(R.id.tv_date_time, DateUtil.formatStringData(item.getStartDatetime(), DateUtil.ACTIVE_DATE_FMT)
                 + "-" + DateUtil.formatStringData(item.getEndDatetime(), DateUtil.ACTIVE_DATE_FMT));
 
-        helper.setText(R.id.tv_location, item.getAddress());
+        helper.setText(R.id.tv_location, item.getMeetAddress());
         helper.setText(R.id.tv_browse, item.getReadCount()+"");
 
     }

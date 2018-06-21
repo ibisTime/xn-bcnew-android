@@ -38,7 +38,7 @@ public class MyActiveListAdapter extends BaseQuickAdapter<MyActiveModel, BaseVie
         helper.setText(R.id.tv_date_time, DateUtil.formatStringData(item.getActivity().getStartDatetime(), DateUtil.ACTIVE_DATE_FMT)
                 + "-" + DateUtil.formatStringData(item.getActivity().getEndDatetime(), DateUtil.ACTIVE_DATE_FMT));
 
-        helper.setText(R.id.tv_location, item.getActivity().getAddress());
+        helper.setText(R.id.tv_location, item.getActivity().getMeetAddress());
         helper.setText(R.id.tv_browse, item.getActivity().getReadCount()+"");
 
     }

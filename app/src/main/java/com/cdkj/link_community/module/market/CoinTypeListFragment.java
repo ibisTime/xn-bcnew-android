@@ -37,6 +37,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 import retrofit2.Call;
 
 /**
@@ -63,6 +66,10 @@ public class CoinTypeListFragment extends AbsRefreshListFragment {
     private boolean isClearRefresh = false;
 
     private List<CoinListModel> mCoinListModels = new ArrayList<>();
+
+    //是否在子线程数据处理中
+    private boolean isNewThread = false;
+
 
     /**
      * @param coinType 币种类型
@@ -203,7 +210,14 @@ public class CoinTypeListFragment extends AbsRefreshListFragment {
             if (TextUtils.isEmpty(SPUtilHelper.getUserId()))
                 return;
         }
+        if (mRefreshBinding.rv.getScrollState() != 0) {
+            //recycleView正在滑动, 不进行刷新
+            return;
+        }
 
+        if (isNewThread) { //正在线程处理中 不刷新
+            return;
+        }
 
         Map<String, String> map = new HashMap<>();
 
@@ -229,23 +243,45 @@ public class CoinTypeListFragment extends AbsRefreshListFragment {
             protected void onSuccess(ResponseInListModel<CoinListModel> data, String SucMessage) {
 
                 if (coinListAdapter.getData() == null || coinListAdapter.getData().size() == 0 || isClearRefresh) {
-                    mRefreshHelper.setDataAsync(data.getList(), getString(R.string.no_coin_info), R.drawable.no_dynamic);
+                    mRefreshHelper.setData(data.getList(), getString(R.string.no_coin_info), R.drawable.no_dynamic);
+
+                    mCoinListModels.clear();
+                    mCoinListModels.addAll(data.getList());
+
                 } else {
 
-                    mRefreshBinding.refreshLayout.finishRefresh();
+                    if (mRefreshBinding.refreshLayout.isRefreshing()) {
+                        mRefreshBinding.refreshLayout.finishRefresh();
+                    }
+                    if (mRefreshBinding.refreshLayout.isLoading()) {
+                        mRefreshBinding.refreshLayout.finishLoadmore();
+                    }
 
                     if (coinListAdapter.getData().size() == data.getList().size()) {
-                        DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(new DiffCallBack(mCoinListModels, data.getList()), true);
-                        diffResult.dispatchUpdatesTo(coinListAdapter);
+                        mSubscription.clear();
+                        mSubscription.add(Observable.just(DiffUtil.calculateDiff(new DiffCallBack(mCoinListModels, data.getList()), false))
+                                .subscribeOn(Schedulers.newThread())
+                                .observeOn(AndroidSchedulers.mainThread())
+                                .subscribe(diffResult -> {
+                                    diffResult.dispatchUpdatesTo(coinListAdapter);
+                                    mCoinListModels.clear();
+                                    mCoinListModels.addAll(data.getList());
+                                    isNewThread = false;
+                                }, throwable -> {
+                                    isNewThread = false;
+                                }));
+
+//                        DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(new DiffCallBack(mCoinListModels, data.getList()), true);
+//                        diffResult.dispatchUpdatesTo(coinListAdapter);
                     } else {
-                        coinListAdapter.notifyDataSetChanged();
+
+                        mCoinListModels.clear();
+                        mCoinListModels.addAll(data.getList());
+
+                        mRefreshHelper.setData(data.getList(), getString(R.string.no_coin_info), R.drawable.no_dynamic);
                     }
                 }
-
                 isClearRefresh = false;
-
-                mCoinListModels.clear();
-                mCoinListModels.addAll(data.getList());
             }
 
             @Override

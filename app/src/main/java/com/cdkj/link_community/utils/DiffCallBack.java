@@ -5,6 +5,7 @@ package com.cdkj.link_community.utils;
  */
 
 import android.support.v7.util.DiffUtil;
+import android.text.TextUtils;
 
 import com.cdkj.link_community.model.CoinListModel;
 
@@ -79,10 +80,10 @@ public class DiffCallBack extends DiffUtil.Callback {
     public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
         CoinListModel beanOld = mOldDatas.get(oldItemPosition);
         CoinListModel beanNew = mNewDatas.get(newItemPosition);
-        if (!beanOld.getLastPrice().equals(beanNew.getLastPrice())) {
+        if (!TextUtils.equals(beanOld.getLastPrice(), beanNew.getLastPrice())) {
             return false;//如果有内容不同，就返回false
         }
-        if (beanOld.getVolume() != beanNew.getVolume()) {
+        if (!TextUtils.equals(beanOld.getVolume(), beanNew.getVolume())) {
             return false;//如果有内容不同，就返回false
         }
         return true; //默认两个data内容是相同的

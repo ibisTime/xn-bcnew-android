@@ -358,7 +358,7 @@ public class MyChooseFragment extends BaseLazyFragment {
 
                 if (marketChooseListAdapter.getData() == null || marketChooseListAdapter.getData().size() == 0 || isClearRefresh) {
 
-                    mRefreshHelper.setDataAsync(data.getList(), getString(R.string.no_coin_info), R.drawable.no_dynamic);
+                    mRefreshHelper.setData(data.getList(), getString(R.string.no_coin_info), R.drawable.no_dynamic);
                 } else {
 
                     if (mRefreshBinding.refreshLayout.isRefreshing()) { //停止刷新
@@ -369,7 +369,7 @@ public class MyChooseFragment extends BaseLazyFragment {
                         DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(new DiffCallBackMyChoose(mCoinListModels, data.getList()), true);
                         diffResult.dispatchUpdatesTo(marketChooseListAdapter);
                     } else {
-                        marketChooseListAdapter.notifyDataSetChanged();
+                        mRefreshHelper.setData(data.getList(), getString(R.string.no_coin_info), R.drawable.no_dynamic);
                     }
                 }
 
@@ -450,7 +450,7 @@ public class MyChooseFragment extends BaseLazyFragment {
         if (mActivity == null || mActivity.isFinishing() || !getUserVisibleHint() || getParentFragment() == null || !getParentFragment().getUserVisibleHint()) {
             return;
         }
-        
+
         if (!SPUtilHelper.isLoginNoStart() || mRefreshHelper == null || isRequesting) {
             return;
         }

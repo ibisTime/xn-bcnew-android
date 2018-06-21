@@ -72,11 +72,10 @@ public class PlateIntroduceActivity extends AbsBaseLoadActivity {
 
     @Override
     public void topTitleViewRightClick() {
-        if (plateDetailsModel != null) {
-            ShareActivity.open(this, RetrofitUtils.getThisUrlIp() + "blockShare/blockShare.html?code=" + plateDetailsModel.getCode(),
-                    plateDetailsModel.getName(), plateDetailsModel.getName(), "");
-        }
+        getUrlToShare();
+
     }
+
 
     private void initLayout() {
         //输入法
@@ -124,6 +123,45 @@ public class PlateIntroduceActivity extends AbsBaseLoadActivity {
 
             webView.loadData(plateDetailsModel.getDescription(), "text/html;charset=UTF-8", "UTF-8");
         }
+    }
+
+
+    /**
+     * 获取链接并分享
+     */
+    public void getUrlToShare() {
+
+        Map<String, String> map = new HashMap<>();
+        map.put("ckey", "h5Url");
+        map.put("systemCode", MyCdConfig.SYSTEMCODE);
+        map.put("companyCode", MyCdConfig.COMPANYCODE);
+
+        Call call = RetrofitUtils.getBaseAPiService().getKeySystemInfo("628917", StringUtils.getJsonToString(map));
+
+        addCall(call);
+
+        showLoadingDialog();
+
+        call.enqueue(new BaseResponseModelCallBack<IntroductionInfoModel>(this) {
+            @Override
+            protected void onSuccess(IntroductionInfoModel data, String SucMessage) {
+
+                if (TextUtils.isEmpty(data.getCvalue())) {
+                    return;
+                }
+                if (plateDetailsModel != null) {
+                    ShareActivity.open(PlateIntroduceActivity.this, data.getCvalue() + "/blockShare/blockShare.html?code=" + plateDetailsModel.getCode(),
+                            plateDetailsModel.getName(), plateDetailsModel.getName(), "");
+                }
+
+            }
+
+            @Override
+            protected void onFinish() {
+                disMissLoading();
+            }
+        });
+
     }
 
 

@@ -5,6 +5,7 @@ package com.cdkj.link_community.utils;
  */
 
 import android.support.v7.util.DiffUtil;
+import android.text.TextUtils;
 
 import com.cdkj.link_community.model.MyChooseMarket;
 
@@ -16,7 +17,6 @@ import java.util.List;
  * 邮箱：zhangxutong@imcoming.com
  * 时间： 2016/9/12.
  */
-
 public class DiffCallBackMyChoose extends DiffUtil.Callback {
     private List<MyChooseMarket> mOldDatas, mNewDatas;//看名字
 
@@ -79,7 +79,7 @@ public class DiffCallBackMyChoose extends DiffUtil.Callback {
     public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
         MyChooseMarket beanOld = mOldDatas.get(oldItemPosition);
         MyChooseMarket beanNew = mNewDatas.get(newItemPosition);
-        if (!beanOld.getLastPrice().equals(beanNew.getLastPrice())) {
+        if (!TextUtils.equals(beanOld.getLastPrice(), beanNew.getLastPrice())) {
             return false;//如果有内容不同，就返回false
         }
         if (beanOld.getVolume().compareTo(beanNew.getVolume()) != 0) {

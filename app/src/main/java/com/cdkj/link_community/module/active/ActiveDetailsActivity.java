@@ -147,17 +147,24 @@ public class ActiveDetailsActivity extends AbsBaseLoadActivity {
 //        }else {
 //            mBinding.tvPrice.setText(MONEY_SIGN + AccountUtil.moneyFormat(model.getPrice()));
 //        }
+
         mBinding.tvPrice.setText(model.getPrice());
 
         mBinding.tvDateTime.setText(DateUtil.formatStringData(model.getStartDatetime(), DateUtil.ACTIVE_DATE_FMT)
                 + "-" + DateUtil.formatStringData(model.getEndDatetime(), DateUtil.ACTIVE_DATE_FMT));
 
-        mBinding.tvLocation.setText(model.getAddress());
+        mBinding.tvLocation.setText(model.getMeetAddress());
         mBinding.tvBrowse.setText(model.getReadCount() + "");
         mBinding.tvMobile.setText(model.getContactMobile());
 
         mBinding.tvApproveUser.setText("已报名用户(" + model.getEnrollCount() + ")/已通过(" + model.getApproveCount() + ")");
-        mBinding.tvPassNum.setText("已通过" + model.getApproveCount() + "/" + model.getEnrollCount());
+
+        if (model.getMaxCount() == 0) {
+            mBinding.tvPassNum.setText("已通过" + model.getApproveCount() + "/无限制");
+        } else {
+            mBinding.tvPassNum.setText("已通过" + model.getApproveCount() + "/" + model.getMaxCount());
+        }
+
         mBinding.llApproveUser.setVisibility(View.VISIBLE);
         mBinding.lineApproveUser.setVisibility(View.VISIBLE);
 
@@ -367,7 +374,6 @@ public class ActiveDetailsActivity extends AbsBaseLoadActivity {
                     return;
                 }
 
-
                 ShareActivity.open(ActiveDetailsActivity.this, data.getCvalue() + "/activity/activityDetail.html?code=" + model.getCode(), model.getTitle(), mShareContent, mSharePhotoUrl);
 
             }
@@ -377,7 +383,6 @@ public class ActiveDetailsActivity extends AbsBaseLoadActivity {
                 disMissLoading();
             }
         });
-
     }
 
     /**

@@ -41,6 +41,7 @@ public class ActiveModel implements Serializable {
     private String advPic;
     private String content;
     private String address;
+    private String meetAddress;
     private String longitude;
     private String latitude;
     private String startDatetime;
@@ -59,7 +60,7 @@ public class ActiveModel implements Serializable {
     private int collectCount;
     private String isEnroll;
     private String isCollect;
-    private int enrollCount; // 总报名人数
+    private int enrollCount; // 总报名人数（已经报名人数）
     private int toApproveCount; // 已报名待审核;
     private int approveCount; // 审核通过数量
     private List<ApprovedBean> approvedList;
@@ -94,6 +95,14 @@ public class ActiveModel implements Serializable {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public String getMeetAddress() {
+        return meetAddress;
+    }
+
+    public void setMeetAddress(String meetAddress) {
+        this.meetAddress = meetAddress;
     }
 
     public String getAddress() {

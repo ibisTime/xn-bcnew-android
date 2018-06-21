@@ -29,6 +29,7 @@ import com.cdkj.link_community.databinding.FragmentMarketListHeaderBinding;
 import com.cdkj.link_community.model.CoinListModel;
 import com.cdkj.link_community.model.MarketInterval;
 import com.cdkj.link_community.utils.DiffCallBack;
+import com.cdkj.link_community.utils.DiffCallBackMyChoose;
 
 import org.greenrobot.eventbus.Subscribe;
 
@@ -37,6 +38,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 import retrofit2.Call;
 
 /**
@@ -61,6 +67,8 @@ public class PlatformListFragment extends AbsRefreshListFragment {
 
     // 是否需要完全刷新（不比较）列表
     private boolean isClearRefresh = false;
+    //是否在子线程数据处理中
+    private boolean isNewThread = false;
 
     /**
      * @param platformType 币种类型
@@ -208,6 +216,10 @@ public class PlatformListFragment extends AbsRefreshListFragment {
             return;
         }
 
+        if (isNewThread) { //正在线程处理中 不刷新
+            return;
+        }
+
         Map<String, String> map = new HashMap<>();
 
         map.put("userId", SPUtilHelper.getUserId());
@@ -227,24 +239,49 @@ public class PlatformListFragment extends AbsRefreshListFragment {
             protected void onSuccess(ResponseInListModel<CoinListModel> data, String SucMessage) {
 
                 if (platformListAdapter.getData() == null || platformListAdapter.getData().size() == 0 || isClearRefresh) {
-                    mRefreshHelper.setDataAsync(data.getList(), getString(R.string.no_platform_info), R.drawable.no_dynamic);
+
+                    mRefreshHelper.setData(data.getList(), getString(R.string.no_platform_info), R.drawable.no_dynamic);
+
+                    mCoinListModels.clear();
+                    mCoinListModels.addAll(data.getList());
                 } else {
                     //
-                    mRefreshBinding.refreshLayout.finishRefresh();
-
-                    if (platformListAdapter.getData().size() == data.getList().size()) {
-                        DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(new DiffCallBack(mCoinListModels, data.getList()), false);
-                        diffResult.dispatchUpdatesTo(platformListAdapter);
-                    } else {
-                        platformListAdapter.notifyDataSetChanged();
+                    if (mRefreshBinding.refreshLayout.isRefreshing()) {
+                        mRefreshBinding.refreshLayout.finishRefresh();
                     }
+                    if (mRefreshBinding.refreshLayout.isLoading()) {
+                        mRefreshBinding.refreshLayout.finishLoadmore();
+                    }
+
+                    if (platformListAdapter.getData().size() == data.getList().size()) { //判断重新请求的数据是否相同
+                        isNewThread = true;
+                        //在子线程处理数据
+                        mSubscription.clear();
+                        mSubscription.add(Observable.just(DiffUtil.calculateDiff(new DiffCallBack(mCoinListModels, data.getList()), false))
+                                .subscribeOn(Schedulers.newThread())
+                                .observeOn(AndroidSchedulers.mainThread())
+                                .subscribe(diffResult -> {
+                                    diffResult.dispatchUpdatesTo(platformListAdapter);
+                                    mCoinListModels.clear();
+                                    mCoinListModels.addAll(data.getList());
+                                    isNewThread = false;
+                                }, throwable -> {
+                                    isNewThread = false;
+                                }));
+
+//                        DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(new DiffCallBack(mCoinListModels, data.getList()), true);
+//                        diffResult.dispatchUpdatesTo(platformListAdapter);
+                    } else {
+
+                        mCoinListModels.clear();
+                        mCoinListModels.addAll(data.getList());
+                        mRefreshHelper.setData(data.getList(), getString(R.string.no_platform_info), R.drawable.no_dynamic);
+                    }
+
                 }
 
                 // 重置列表新老比较
                 isClearRefresh = false;
-
-                mCoinListModels.clear();
-                mCoinListModels.addAll(data.getList());
 
             }
 
