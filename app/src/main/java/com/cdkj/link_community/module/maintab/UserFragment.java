@@ -22,6 +22,7 @@ import com.cdkj.link_community.databinding.FragmentUserBinding;
 import com.cdkj.link_community.manager.DataCleanManager;
 import com.cdkj.link_community.model.UserInfoModel;
 import com.cdkj.link_community.module.active.MyActiveActivity;
+import com.cdkj.link_community.module.active.MyActiveTabActivity;
 import com.cdkj.link_community.module.user.LoginActivity;
 import com.cdkj.link_community.module.user.MyMessageActivity;
 import com.cdkj.link_community.module.user.MyMessageCommentsActivity;
@@ -110,7 +111,7 @@ public class UserFragment extends BaseLazyFragment {
             if (!SPUtilHelper.isLogin(mActivity, false)) {
                 return;
             }
-            MyActiveActivity.open(mActivity);
+            MyActiveTabActivity.open(mActivity);
         });
 
        /*资讯评论*/
@@ -148,8 +149,8 @@ public class UserFragment extends BaseLazyFragment {
         showDoubleWarnListen(getString(R.string.sure_logout), view -> {
             SPUtilHelper.logOutClear();
             setShowState();
-            UITipDialog.showSuccess(mActivity, getString(R.string.logout_succ),dialogInterface -> {
-                LoginActivity.open(mActivity,false);
+            UITipDialog.showSuccess(mActivity, getString(R.string.logout_succ), dialogInterface -> {
+                LoginActivity.open(mActivity, false);
             });
         });
     }

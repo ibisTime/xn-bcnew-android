@@ -28,10 +28,11 @@
 
             <TextView
                 android:id="@+id/tv_status"
-                android:layout_width="58dp"
+                android:layout_width="wrap_content"
                 android:layout_height="24dp"
                 android:gravity="center_vertical"
                 android:paddingLeft="5dp"
+                android:paddingRight="12dp"
                 android:textColor="@color/white"
                 android:textSize="14sp"
                 tools:background="@drawable/common_active_status_bg_green"

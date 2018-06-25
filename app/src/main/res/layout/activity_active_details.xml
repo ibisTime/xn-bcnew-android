@@ -302,11 +302,11 @@
                 android:id="@+id/tv_btn"
                 android:layout_width="200dp"
                 android:layout_height="match_parent"
-                tools:background="#ffff5757"
                 android:gravity="center"
-                tools:text="立即报名"
                 android:textColor="#ffffffff"
-                android:textSize="17dp" />
+                android:textSize="17dp"
+                tools:background="#ffff5757"
+                tools:text="立即报名" />
 
             <LinearLayout
                 android:id="@+id/ll_comment"
@@ -333,9 +333,9 @@
                         android:layout_marginRight="5dp"
                         android:background="#fbfbfb"
                         android:gravity="center"
-                        android:text="9"
                         android:textColor="#ff4747"
-                        android:textSize="12sp" />
+                        android:textSize="12sp"
+                        tools:text="9" />
 
 
                 </FrameLayout>

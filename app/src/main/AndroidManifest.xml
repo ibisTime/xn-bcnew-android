@@ -241,6 +241,7 @@
         <activity android:name=".module.active.ActiveApproveUserActivity" />
         <activity android:name=".module.plate.PlateDetailsActivity" />
         <activity android:name=".module.plate.PlateIntroduceActivity" />
+        <activity android:name=".module.active.MyActiveTabActivity" />
     </application>
 
 </manifest>

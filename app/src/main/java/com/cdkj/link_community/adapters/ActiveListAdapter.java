@@ -46,9 +46,9 @@ public class ActiveListAdapter extends BaseQuickAdapter<ActiveModel, BaseViewHol
             helper.setVisible(R.id.tv_status, true);
             helper.setBackgroundRes(R.id.tv_status, R.drawable.common_active_status_bg_yellow);
             helper.setVisible(R.id.tv_status, true);
-        } else if (SPUtilHelper.isLoginNoStart()) {
+        } else if (SPUtilHelper.isLoginNoStart()) {  //已登录
 
-            if (TextUtils.equals(item.getIsEnroll(), "2") || TextUtils.equals(item.getIsEnroll(), "2")) {
+            if (TextUtils.equals(item.getIsEnroll(), "2") || TextUtils.equals(item.getIsEnroll(), "1")) {
                 helper.setText(R.id.tv_status, "已报名");
                 helper.setVisible(R.id.tv_status, true);
                 helper.setBackgroundRes(R.id.tv_status, R.drawable.common_active_status_bg_green);

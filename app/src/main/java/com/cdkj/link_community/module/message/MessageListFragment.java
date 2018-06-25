@@ -105,7 +105,7 @@ public class MessageListFragment extends AbsRefreshListFragment {
 
     @Override
     public void getListRequest(int pageindex, int limit, boolean isShowDialog) {
-
+        getBanner();
         Map<String, String> map = new HashMap<>();
 
         map.put("type", mMessageType);
@@ -133,8 +133,9 @@ public class MessageListFragment extends AbsRefreshListFragment {
 
             @Override
             protected void onFinish() {
-                disMissLoading();
-                getBanner();
+                if (isShowDialog)
+                    disMissLoading();
+
             }
         });
 

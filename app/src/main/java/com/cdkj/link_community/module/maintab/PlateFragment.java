@@ -205,7 +205,7 @@ public class PlateFragment extends BaseLazyFragment {
         call.enqueue(new BaseResponseModelCallBack<ResponseInListModel<PlateLlistModel>>(mActivity) {
             @Override
             protected void onSuccess(ResponseInListModel<PlateLlistModel> data, String SucMessage) {
-                mRefreshHelper.setData(data.getList(), "暂无行情", R.drawable.no_dynamic);
+                mRefreshHelper.setData(data.getList(), "暂无版块", R.drawable.no_dynamic);
             }
 
             @Override
