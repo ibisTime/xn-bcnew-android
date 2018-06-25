@@ -3,8 +3,10 @@ package com.cdkj.link_community.adapters;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
+import com.cdkj.baselibrary.appmanager.SPUtilHelper;
 import com.cdkj.baselibrary.utils.DateUtil;
 import com.cdkj.baselibrary.utils.ImgUtils;
+import com.cdkj.baselibrary.utils.MoneyUtils;
 import com.cdkj.link_community.R;
 import com.cdkj.link_community.model.ActiveModel;
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -29,29 +31,32 @@ public class ActiveListAdapter extends BaseQuickAdapter<ActiveModel, BaseViewHol
 
         helper.setText(R.id.tv_title, item.getTitle());
 
-        helper.setText(R.id.tv_price, item.getPrice());
+        helper.setText(R.id.tv_price, MoneyUtils.MONEYSING + item.getPrice());
 
         helper.setText(R.id.tv_date_time, DateUtil.formatStringData(item.getStartDatetime(), DateUtil.ACTIVE_DATE_FMT)
                 + "-" + DateUtil.formatStringData(item.getEndDatetime(), DateUtil.ACTIVE_DATE_FMT));
 
         helper.setText(R.id.tv_location, item.getMeetAddress());
-        helper.setText(R.id.tv_browse, item.getReadCount()+"");
+        helper.setText(R.id.tv_browse, item.getReadCount() + "");
 
         helper.setGone(R.id.iv_top, TextUtils.equals(item.getIsTop(), "1"));
 
-        if (item.getStatus().equals("9")){
+        if (item.getStatus().equals("9")) {
             helper.setText(R.id.tv_status, "已结束");
             helper.setVisible(R.id.tv_status, true);
             helper.setBackgroundRes(R.id.tv_status, R.drawable.common_active_status_bg_yellow);
-        }else {
-            if (item.getIsEnroll().equals("2")){
+            helper.setVisible(R.id.tv_status, true);
+        } else if (SPUtilHelper.isLoginNoStart()) {
+
+            if (TextUtils.equals(item.getIsEnroll(), "2") || TextUtils.equals(item.getIsEnroll(), "2")) {
                 helper.setText(R.id.tv_status, "已报名");
                 helper.setVisible(R.id.tv_status, true);
                 helper.setBackgroundRes(R.id.tv_status, R.drawable.common_active_status_bg_green);
-            }else {
+            } else {
                 helper.setVisible(R.id.tv_status, false);
             }
         }
+
 
     }
 }

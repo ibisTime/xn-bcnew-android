@@ -45,6 +45,19 @@ public class BigDecimalUtils {
         return bigDecimal.compareTo(BigDecimal.ZERO) == 1;
     }
 
+    /**
+     * 判断是否比零大
+     *
+     * @return
+     */
+    public static boolean compareToZERO(String bigDecimal) {
+        try {
+            return new BigDecimal(bigDecimal).compareTo(BigDecimal.ZERO) == 1;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
 
     //乘法
     public static BigDecimal multiply(BigDecimal b, BigDecimal b1) {

@@ -68,21 +68,6 @@ public class DateUtil {
         return d1 > d2;
     }
 
-    /**
-     * date1等于date2 或更新（更迟，更晚），返回true，否则返回false
-     *
-     * @param date1
-     * @param date2
-     * @return
-     */
-    public static boolean isNewer2(Date date1, Date date2) {
-        if (date1 == null || date2 == null) {
-            return false;
-        }
-        long d1 = date1.getTime();
-        long d2 = date2.getTime();
-        return d1 >= d2;
-    }
 
     /**
      * 大于等于今天返回true

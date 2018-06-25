@@ -82,7 +82,7 @@ public class MarketActivity extends AbsBaseLoadActivity {
 
     @Override
     public void afterCreate(Bundle savedInstanceState) {
-        UIStatusBarHelper.translucent(this, ContextCompat.getColor(this, R.color.title_bg));
+//        UIStatusBarHelper.translucent(this, ContextCompat.getColor(this, R.color.title_bg));
         if (getIntent() == null)
             return;
 
@@ -254,11 +254,19 @@ public class MarketActivity extends AbsBaseLoadActivity {
     private void setPageBgColor(String percent) {
         double rate = Double.parseDouble(percent);
         if (rate == 0) {
-
+            mBinding.tvPrice.setTextColor(ContextCompat.getColor(this, R.color.colorPrimary));
+            mBinding.tvRange.setTextColor(ContextCompat.getColor(this, R.color.colorPrimary));
+            mBinding.tvRangePercent.setTextColor(ContextCompat.getColor(this, R.color.colorPrimary));
             mBinding.llButtom.setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimary));
         } else if (rate > 0) {
+            mBinding.tvPrice.setTextColor(ContextCompat.getColor(this, R.color.market_green));
+            mBinding.tvRange.setTextColor(ContextCompat.getColor(this, R.color.market_green));
+            mBinding.tvRangePercent.setTextColor(ContextCompat.getColor(this, R.color.market_green));
             mBinding.llButtom.setBackgroundColor(ContextCompat.getColor(this, R.color.market_green));
         } else {
+            mBinding.tvPrice.setTextColor(ContextCompat.getColor(this, R.color.market_red));
+            mBinding.tvRange.setTextColor(ContextCompat.getColor(this, R.color.market_red));
+            mBinding.tvRangePercent.setTextColor(ContextCompat.getColor(this, R.color.market_red));
             mBinding.llButtom.setBackgroundColor(ContextCompat.getColor(this, R.color.market_red));
         }
     }

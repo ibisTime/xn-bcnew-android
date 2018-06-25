@@ -2071,9 +2071,9 @@ public class TabLayout extends HorizontalScrollView {
                         left = mIndicatorLeft + (getChildAt(getSelectedTabPosition()).getMeasuredWidth() - mSelectedIndicatorWidth) / 2.0f;
                         right = left + mSelectedIndicatorWidth;
                     }
-                    RectF rect = new RectF(left, getHeight() - mSelectedIndicatorHeight, right
-                            , getHeight());
-                    canvas.drawRoundRect(rect, 20f, 20f, mSelectedIndicatorPaint);
+                    RectF rect = new RectF(left, getHeight() - mSelectedIndicatorHeight - DisplayHelper.dpToPx(4), right
+                            , getHeight() - DisplayHelper.dpToPx(4));
+                    canvas.drawRoundRect(rect, 10f, 10f, mSelectedIndicatorPaint);
 //                    canvas.drawRect(left,
 //                            getHeight() - mSelectedIndicatorHeight,
 //                            right,
@@ -2083,9 +2083,9 @@ public class TabLayout extends HorizontalScrollView {
 //                    canvas.drawRect(mIndicatorLeft, getHeight() - mSelectedIndicatorHeight,
 //                            mIndicatorRight, getHeight(), mSelectedIndicatorPaint);
 
-                    RectF rect = new RectF(mIndicatorLeft, getHeight() - mSelectedIndicatorHeight, mIndicatorRight
-                            , getHeight());
-                    canvas.drawRoundRect(rect, 20f, 20f, mSelectedIndicatorPaint);
+                    RectF rect = new RectF(mIndicatorLeft, getHeight() - mSelectedIndicatorHeight - DisplayHelper.dpToPx(4), mIndicatorRight
+                            , getHeight() - DisplayHelper.dpToPx(4));
+                    canvas.drawRoundRect(rect, 10f, 10f, mSelectedIndicatorPaint);
 
                     mIsDefaultIndicatorWidth = true;
                 }

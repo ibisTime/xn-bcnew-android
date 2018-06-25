@@ -1,24 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
     </data>
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <com.cdkj.link_community.views.ViewPagerIndicator
-            android:id="@+id/viewindicator"
+        <com.cdkj.baselibrary.views.tablayout.TabLayout
+            android:id="@+id/tablayout"
+            style="@style/MyTabLayout2"
             android:layout_width="match_parent"
-            android:layout_height="40dp" />
+            android:layout_height="45dp"
+            android:background="@color/white"
+            app:tabIndicatorHeight="4dp" />
 
         <View style="@style/style_split_line" />
 
 
-        <com.cdkj.baselibrary.views.EnabledViewpager
+        <android.support.v4.view.ViewPager
             android:id="@+id/viewpager"
             android:layout_width="match_parent"
             android:layout_height="0dp"

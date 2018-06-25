@@ -14,7 +14,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 /**
- * 热门板块
+ * 热门版块
  * Created by cdkj on 2018/4/29.
  */
 

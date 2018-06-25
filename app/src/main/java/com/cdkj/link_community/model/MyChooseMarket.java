@@ -167,6 +167,9 @@ public class MyChooseMarket {
     }
 
     public String getSymbol() {
+        if (symbol != null) {
+            symbol.toLowerCase();
+        }
         return symbol;
     }
 
@@ -175,6 +178,9 @@ public class MyChooseMarket {
     }
 
     public String getToSymbol() {
+        if (toSymbol != null) {
+            toSymbol.toLowerCase();
+        }
         return toSymbol;
     }
 

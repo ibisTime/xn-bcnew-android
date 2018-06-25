@@ -69,9 +69,9 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="center"
-                        tools:text="已通过1/5"
                         android:textColor="#818181"
-                        android:textSize="14sp" />
+                        android:textSize="14sp"
+                        tools:text="已通过1/5" />
 
                     <TextView
                         android:id="@+id/tv_price"
@@ -80,9 +80,9 @@
                         android:layout_marginLeft="6dp"
                         android:layout_weight="1"
                         android:gravity="right"
-                        android:text="sdfsdf"
                         android:textColor="@color/text_color_ffa300"
-                        android:textSize="15sp" />
+                        android:textSize="15sp"
+                        tools:text="sdfsdf" />
 
                 </LinearLayout>
 
@@ -302,9 +302,9 @@
                 android:id="@+id/tv_btn"
                 android:layout_width="200dp"
                 android:layout_height="match_parent"
-                android:background="#ffff5757"
+                tools:background="#ffff5757"
                 android:gravity="center"
-                android:text="立即报名"
+                tools:text="立即报名"
                 android:textColor="#ffffffff"
                 android:textSize="17dp" />
 

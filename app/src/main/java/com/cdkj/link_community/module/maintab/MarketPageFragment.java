@@ -29,6 +29,7 @@ public class MarketPageFragment extends BaseLazyFragment {
 
     private FragmentMarketBinding mBinding;
 
+    private boolean isCreate;
 
     public static MarketPageFragment getInstance() {
         MarketPageFragment fragment = new MarketPageFragment();
@@ -42,9 +43,6 @@ public class MarketPageFragment extends BaseLazyFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mBinding = DataBindingUtil.inflate(getLayoutInflater(), R.layout.fragment_market, null, false);
 
-        initTopTitle();
-
-        initViewPager();
 
         return mBinding.getRoot();
     }
@@ -101,6 +99,13 @@ public class MarketPageFragment extends BaseLazyFragment {
 
     @Override
     protected void lazyLoad() {
+
+        if (mBinding == null || isCreate) {
+            return;
+        }
+        isCreate = true;
+        initTopTitle();
+        initViewPager();
 
     }
 

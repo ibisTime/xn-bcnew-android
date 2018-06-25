@@ -35,7 +35,7 @@ import java.util.Map;
 import retrofit2.Call;
 
 /**
- * 板块
+ * 版块
  * Created by cdkj on 2018/6/12.
  */
 
@@ -70,7 +70,7 @@ public class PlateFragment extends BaseLazyFragment {
 
 
     /**
-     * 初始化热门板块recyclerView
+     * 初始化热门版块recyclerView
      */
     private void initRecyclerView() {
 
@@ -156,7 +156,7 @@ public class PlateFragment extends BaseLazyFragment {
     }
 
     /**
-     * 获取热门板块
+     * 获取热门版块
      */
     public void getHotPlateListDataRequest(boolean isShowDialog) {
 
@@ -191,7 +191,7 @@ public class PlateFragment extends BaseLazyFragment {
     }
 
     /**
-     * 获取所有板块
+     * 获取所有版块
      */
     public void getAllPlaceListRequest(int pageindex, int limit, boolean isShowDialog) {
 

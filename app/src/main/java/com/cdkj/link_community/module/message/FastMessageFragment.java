@@ -7,7 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.cdkj.baselibrary.adapters.ViewPagerAdapter;
+import com.cdkj.baselibrary.adapters.TablayoutAdapter;
 import com.cdkj.baselibrary.base.BaseLazyFragment;
 import com.cdkj.link_community.R;
 import com.cdkj.link_community.databinding.FragmentFastMessageBinding;
@@ -27,6 +27,7 @@ public class FastMessageFragment extends BaseLazyFragment {
 
 
     private FragmentFastMessageBinding mBinding;
+    private boolean isCreate;
 
 
     public static FastMessageFragment getInstance() {
@@ -40,43 +41,49 @@ public class FastMessageFragment extends BaseLazyFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
         mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_fast_message, null, false);
-
-        initViews();
-
         return mBinding.getRoot();
     }
 
+
     private void initViews() {
 
+        TablayoutAdapter tablayoutAdapter = new TablayoutAdapter(getChildFragmentManager());
         //设置fragment数据
         ArrayList fragments = new ArrayList<>();
 
-        fragments.add(FastMessageListFragment.getInstance(FastMessageListFragment.ALLMESSAGE,true));
-        fragments.add(FastMessageListFragment.getInstance(FastMessageListFragment.HOTMESSAGE,false));
+        fragments.add(FastMessageListFragment.getInstance(FastMessageListFragment.ALLMESSAGE, true));
+        fragments.add(FastMessageListFragment.getInstance(FastMessageListFragment.HOTMESSAGE, false));
 
-        mBinding.viewpager.setAdapter(new ViewPagerAdapter(getChildFragmentManager(), fragments));
+        tablayoutAdapter.addFrag(fragments, Arrays.asList(getString(R.string.all), getString(R.string.hot_message)));
+
+        mBinding.viewpager.setAdapter(tablayoutAdapter);
+
+        mBinding.tablayout.setupWithViewPager(mBinding.viewpager);        //viewpager和tablayout关联
+
         mBinding.viewpager.setOffscreenPageLimit(fragments.size());
-
-        mBinding.viewpager.setPagingEnabled(true);
-
-        mBinding.viewindicator.setmLinWidth(25);
-        mBinding.viewindicator.setTabItemTitles(Arrays.asList(getString(R.string.all), getString(R.string.hot_message)));
-        mBinding.viewindicator.setViewPager(mBinding.viewpager, 0);
 
     }
 
+
     @Subscribe
-    public void setTabToHotMsgEvent(TabCurrentModel tabCurrentModel){
-        if (tabCurrentModel == null)
+    public void setTabToHotMsgEvent(TabCurrentModel tabCurrentModel) {
+        if (tabCurrentModel == null || tabCurrentModel.getCurrent() < 0 || tabCurrentModel.getCurrent() > 1)
             return;
 
-        mBinding.viewindicator.setViewPager(mBinding.viewpager, tabCurrentModel.getCurrent());
+        mBinding.viewpager.setCurrentItem(tabCurrentModel.getCurrent());
+//        mBinding.viewindicator.setViewPager(mBinding.viewpager, tabCurrentModel.getCurrent());
     }
 
     @Override
     protected void lazyLoad() {
+
+        if (mBinding == null || isCreate) {
+            return;
+        }
+        isCreate = true;
+        initViews();
+
 
     }
 

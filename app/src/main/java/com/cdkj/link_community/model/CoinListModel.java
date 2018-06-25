@@ -174,6 +174,9 @@ public class CoinListModel implements Serializable {
     }
 
     public String getSymbol() {
+        if (symbol != null) {
+            return symbol.toUpperCase();
+        }
         return symbol;
     }
 
@@ -182,6 +185,9 @@ public class CoinListModel implements Serializable {
     }
 
     public String getToSymbol() {
+        if (toSymbol != null) {
+            return toSymbol.toUpperCase();
+        }
         return toSymbol;
     }
 
@@ -376,7 +382,7 @@ public class CoinListModel implements Serializable {
          * unit : 0
          * pic : ETH@3x_1524731524144.png
          * introduce :
-         ETH
+         * ETH
          * status : 1
          * updater : hss
          * updateDatetime : Apr 26, 2018 4:32:14 PM

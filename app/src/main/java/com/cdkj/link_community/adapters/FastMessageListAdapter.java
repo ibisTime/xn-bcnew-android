@@ -55,7 +55,7 @@ public class FastMessageListAdapter extends BaseQuickAdapter<FastMessage, BaseVi
         String month = DateUtil.formatStringData(item.getShowDatetime(), "MM月dd日");
         String week = DateUtil.getWeekOfDate(item.getShowDatetime());
 
-        viewHolder.setText(R.id.tv_title, month+week);
+        viewHolder.setText(R.id.tv_title, month + week);
         viewHolder.setText(R.id.tv_time, DateUtil.formatStringData(item.getShowDatetime(), "HH:mm:ss"));
 
         viewHolder.addOnClickListener(R.id.linlayout_to_share);
@@ -144,27 +144,38 @@ public class FastMessageListAdapter extends BaseQuickAdapter<FastMessage, BaseVi
      * @param textView
      */
     private void setReadedState(FastMessage item, TextView textView) {
-        if (TextUtils.equals(item.getIsRead(), "1")) {
-            textView.setTextColor(ContextCompat.getColor(mContext, R.color.app_text_gray));
+        if (TextUtils.equals(item.getType(), "1")) {  //热门
+            textView.setTextColor(ContextCompat.getColor(mContext, R.color.red));
         } else {
-            if (isHotMessage) {
-
-                textView.setTextColor(ContextCompat.getColor(mContext, R.color.app_text_color_yellow));
-
-            } else {
-
-                // 全部快讯里如果有热点快讯，蓝色字体显示
-                if(TextUtils.equals(item.getType(),"1")){
-
-                    textView.setTextColor(ContextCompat.getColor(mContext, R.color.app_text_color_yellow));
-
-                }else {
-
-                    textView.setTextColor(ContextCompat.getColor(mContext, R.color.text_black_cd));
-
-                }
-            }
+            textView.setTextColor(ContextCompat.getColor(mContext, R.color.app_text_color_yellow));
         }
+//        if (TextUtils.equals(item.getIsRead(), "1")) {
+//
+//            if (isHotMessage) {
+//                textView.setTextColor(ContextCompat.getColor(mContext, R.color.red));
+//            } else {
+//
+//                textView.setTextColor(ContextCompat.getColor(mContext, R.color.app_text_gray));
+//            }
+//        } else {
+//            if (isHotMessage) {
+//
+//                textView.setTextColor(ContextCompat.getColor(mContext, R.color.red));
+//
+//            } else {
+//
+//                // 全部快讯里如果有热点快讯，蓝色字体显示
+//                if (TextUtils.equals(item.getType(), "1")) {
+//
+//                    textView.setTextColor(ContextCompat.getColor(mContext, R.color.app_text_color_yellow));
+//
+//                } else {
+//
+//                    textView.setTextColor(ContextCompat.getColor(mContext, R.color.text_black_cd));
+//
+//                }
+//            }
+//        }
     }
 
     public void setIsRead(String code) {

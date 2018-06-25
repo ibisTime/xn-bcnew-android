@@ -37,7 +37,7 @@ public class CoinListAdapter extends BaseQuickAdapter<CoinListModel, BaseViewHol
         }
 
         viewHolder.setText(R.id.tv_platform, item.getExchangeCname());
-        viewHolder.setText(R.id.tv_coin_name, item.getSymbol().toUpperCase() + "/" +item.getToSymbol().toUpperCase());
+        viewHolder.setText(R.id.tv_coin_name, item.getSymbol() + "/" +item.getToSymbol());
         viewHolder.setText(R.id.tv_price, mContext.getString(R.string.money_sing) + AccountUtil.scale(item.getLastCnyPrice(),2));
         viewHolder.setText(R.id.tv_price_2, item.getLastPrice());
 

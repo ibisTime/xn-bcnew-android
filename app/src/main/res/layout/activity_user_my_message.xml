@@ -13,8 +13,8 @@
 
         <com.cdkj.baselibrary.views.tablayout.TabLayout
             android:id="@+id/tablayout"
-            app:tabIndicatorHeight="2.4dp"
-            style="@style/MyTabLayout"
+            app:tabIndicatorHeight="4dp"
+            style="@style/MyTabLayout2"
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:background="@color/white" />

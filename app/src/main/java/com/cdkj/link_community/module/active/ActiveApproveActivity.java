@@ -15,6 +15,9 @@ import com.cdkj.baselibrary.utils.StringUtils;
 import com.cdkj.baselibrary.utils.ToastUtil;
 import com.cdkj.link_community.R;
 import com.cdkj.link_community.databinding.ActivityActiveApproveBinding;
+import com.cdkj.link_community.model.ActiveApproveSuccess;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -63,7 +66,7 @@ public class ActiveApproveActivity extends AbsBaseLoadActivity {
         mBaseBinding.titleView.setRightTitle("报名");
 
         mBaseBinding.titleView.setRightFraClickListener(view -> {
-            if (check()){
+            if (check()) {
                 approve();
             }
 
@@ -71,14 +74,14 @@ public class ActiveApproveActivity extends AbsBaseLoadActivity {
 
     }
 
-    private boolean check(){
-        if (mBinding.edtName.getText().toString().equals("")){
-            ToastUtil.show(this,"请填写真实姓名");
+    private boolean check() {
+        if (mBinding.edtName.getText().toString().equals("")) {
+            ToastUtil.show(this, "请填写真实姓名");
             return false;
         }
 
-        if (mBinding.edtMobile.getText().toString().equals("")){
-            ToastUtil.show(this,"请填写手机号码");
+        if (mBinding.edtMobile.getText().toString().equals("")) {
+            ToastUtil.show(this, "请填写手机号码");
             return false;
         }
 
@@ -109,6 +112,7 @@ public class ActiveApproveActivity extends AbsBaseLoadActivity {
 
                 if (data.isSuccess()) {
                     ToastUtil.show(ActiveApproveActivity.this, "报名成功");
+                    EventBus.getDefault().post(new ActiveApproveSuccess()); //通知上级界面报名成功
                     finish();
                 }
             }

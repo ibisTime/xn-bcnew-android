@@ -37,7 +37,7 @@
             android:id="@+id/radio_main_tab_3"
             style="@style/main_tab_radio"
             android:drawableTop="@drawable/main_buttom_tab_3"
-            android:text="板块"
+            android:text="版块"
             android:textColor="@drawable/bottom_navigation_text" />
 
         <RadioButton

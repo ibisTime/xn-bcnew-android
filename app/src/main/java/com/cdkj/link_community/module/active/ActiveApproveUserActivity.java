@@ -25,19 +25,19 @@ public class ActiveApproveUserActivity extends AbsTablayoutActivity {
     /**
      * @param context
      */
-    public static void open(Context context,String code) {
+    public static void open(Context context, String code) {
         if (context == null) {
             return;
         }
         Intent intent = new Intent(context, ActiveApproveUserActivity.class);
-        intent.putExtra("code",code);
+        intent.putExtra("code", code);
         context.startActivity(intent);
     }
 
 
     @Override
     public void afterCreate(Bundle savedInstanceState) {
-        mBaseBinding.titleView.setMidTitle("资信调查");
+        mBaseBinding.titleView.setMidTitle("已报名用户");
 
         mTitleList = new ArrayList<>();
         mFragmentList = new ArrayList<>();
@@ -53,10 +53,10 @@ public class ActiveApproveUserActivity extends AbsTablayoutActivity {
     private void initViewPagerData() {
 
         mTitleList.add("已通过");
-        mFragmentList.add(ActiveApproveUserFragment.getInstance(true, code,"1"));
+        mFragmentList.add(ActiveApproveUserFragment.getInstance(true, code, "1"));
 
         mTitleList.add("未审核");
-        mFragmentList.add(ActiveApproveUserFragment.getInstance(false, code,"0"));
+        mFragmentList.add(ActiveApproveUserFragment.getInstance(false, code, "0"));
 
         initViewPager();
         mTabLayoutBinding.viewpager.setOffscreenPageLimit(2);

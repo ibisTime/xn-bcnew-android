@@ -45,9 +45,9 @@
 
                     <View
                         android:id="@+id/tab_index_1"
-                        android:layout_width="27dp"
+                        android:layout_width="25dp"
                         android:layout_height="4dp"
-                        android:layout_marginTop="5dp"
+                        android:layout_marginTop="3dp"
                         android:background="@drawable/search_tab_bg" />
 
 
@@ -71,9 +71,9 @@
 
                     <View
                         android:id="@+id/tab_index_2"
-                        android:layout_width="27dp"
+                        android:layout_width="25dp"
                         android:layout_height="4dp"
-                        android:layout_marginTop="5dp"
+                        android:layout_marginTop="3dp"
                         android:background="@drawable/search_tab_bg"
                         android:visibility="invisible" />
 
@@ -97,9 +97,9 @@
 
                     <View
                         android:id="@+id/tab_index_3"
-                        android:layout_width="27dp"
+                        android:layout_width="25dp"
                         android:layout_height="4dp"
-                        android:layout_marginTop="5dp"
+                        android:layout_marginTop="3dp"
                         android:background="@drawable/search_tab_bg"
                         android:visibility="invisible" />
 
@@ -123,9 +123,9 @@
 
                     <View
                         android:id="@+id/tab_index_4"
-                        android:layout_width="27dp"
+                        android:layout_width="25dp"
                         android:layout_height="4dp"
-                        android:layout_marginTop="5dp"
+                        android:layout_marginTop="3dp"
                         android:background="@drawable/search_tab_bg"
                         android:visibility="invisible" />
 
@@ -149,9 +149,9 @@
 
                     <View
                         android:id="@+id/tab_index_5"
-                        android:layout_width="27dp"
+                        android:layout_width="25dp"
                         android:layout_height="4dp"
-                        android:layout_marginTop="5dp"
+                        android:layout_marginTop="3dp"
                         android:background="@drawable/search_tab_bg"
                         android:visibility="invisible" />
 

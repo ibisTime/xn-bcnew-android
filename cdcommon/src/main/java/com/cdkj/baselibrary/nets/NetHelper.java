@@ -6,8 +6,11 @@ import com.cdkj.baselibrary.CdApplication;
 import com.cdkj.baselibrary.R;
 import com.cdkj.baselibrary.appmanager.CdRouteHelper;
 import com.cdkj.baselibrary.appmanager.SPUtilHelper;
+import com.cdkj.baselibrary.model.eventmodels.EventFinishAll;
 import com.cdkj.baselibrary.utils.LogUtil;
 import com.cdkj.baselibrary.utils.ToastUtil;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
@@ -121,8 +124,9 @@ public class NetHelper {
         if (context != null) {
             ToastUtil.show(context, errorMessage);
         }
+        EventBus.getDefault().post(new EventFinishAll());//结束所有界面
         // 路由跳转登录页面
-        CdRouteHelper.openLogin(false);
+        CdRouteHelper.openLogin(true);
     }
 
 

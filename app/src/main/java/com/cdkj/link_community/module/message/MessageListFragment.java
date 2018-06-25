@@ -78,13 +78,10 @@ public class MessageListFragment extends AbsRefreshListFragment {
             mIsFristRequest = getArguments().getBoolean(ISFRISTREQUEST);
         }
 
-
         initRefreshHelper(MyCdConfig.LISTLIMIT);
-        getBanner();
 
         if (mIsFristRequest) {
             mRefreshHelper.onDefaluteMRefresh(false);
-
         }
     }
 
@@ -108,6 +105,7 @@ public class MessageListFragment extends AbsRefreshListFragment {
 
     @Override
     public void getListRequest(int pageindex, int limit, boolean isShowDialog) {
+
         Map<String, String> map = new HashMap<>();
 
         map.put("type", mMessageType);
@@ -136,6 +134,7 @@ public class MessageListFragment extends AbsRefreshListFragment {
             @Override
             protected void onFinish() {
                 disMissLoading();
+                getBanner();
             }
         });
 

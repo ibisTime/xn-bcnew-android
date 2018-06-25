@@ -6,13 +6,13 @@
 
 
     <color name="app_title_bg">#022454</color>
-    <color name="app_text_color">#2F93ED</color>
+    <color name="app_text_color">#022454</color>
     <color name="app_text_color_022454">#022454</color>
     <color name="app_text_color_yellow">#F6A623</color>
     <color name="app_main_txt_select_un">#A6A6A6</color>
     <color name="app_main_txt_select">#022454</color>
 
-    <color name="radiobutton_txt_select">#2F93ED</color>
+    <color name="radiobutton_txt_select">#022454</color>
     <color name="radiobutton_txt_select_un">#ffffff</color>
 
     <color name="app_text_gray">#818181</color>
@@ -20,7 +20,7 @@
     <color name="app_text_gray_3">#595a6e</color>
     <color name="item_bg_other">#fafcff</color>
 
-    <color name="app_indicator_color">#2F93ED</color>
+    <color name="app_indicator_color">#022454</color>
     <color name="app_indicator_deep_color">#012454</color>
     <color name="app_hint_color">#898989</color>
     <color name="market_gray">#979797</color>
@@ -34,7 +34,8 @@
 
 
 
-
+    <color name="btn_gray">#FFC7C7C7</color>
+    <color name="btn_red">#ffff5757</color>
     <color name="all_split_lins">#e2e2e2</color>
     <color name="yellow">#FFA300</color>
     <color name="deep_blue">#011F4A</color>

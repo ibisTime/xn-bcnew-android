@@ -2,7 +2,6 @@ package com.cdkj.link_community.module.message;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +11,7 @@ import com.cdkj.baselibrary.base.AbsTablayoutFragment;
 import com.cdkj.baselibrary.nets.BaseResponseListCallBack;
 import com.cdkj.baselibrary.nets.RetrofitUtils;
 import com.cdkj.baselibrary.utils.StringUtils;
+import com.cdkj.baselibrary.views.tablayout.TabLayout;
 import com.cdkj.link_community.api.MyApiServer;
 import com.cdkj.link_community.model.MessageType;
 import com.cdkj.link_community.model.event.MessageBannerState;

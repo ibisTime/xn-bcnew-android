@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.view.View;
 
 import com.cdkj.baselibrary.adapters.TablayoutAdapter;
+import com.cdkj.baselibrary.appmanager.CdRouteHelper;
 import com.cdkj.baselibrary.base.AbsBaseLoadActivity;
 import com.cdkj.link_community.R;
 import com.cdkj.link_community.databinding.ActivityUserMyMessageBinding;
@@ -40,9 +41,14 @@ public class MyMessageActivity extends AbsBaseLoadActivity {
         return mBinding.getRoot();
     }
 
+
     @Override
     public void afterCreate(Bundle savedInstanceState) {
         mBaseBinding.titleView.setMidTitle("我的文章");
+        mBaseBinding.titleView.setRightTitle("联系我们");
+        mBaseBinding.titleView.setRightFraClickListener(view -> {
+            CdRouteHelper.openWebViewActivityForkey(getString(R.string.about_us), "about_us");
+        });
 
         mTitleList = new ArrayList<>();
         mFragmentList = new ArrayList<>();

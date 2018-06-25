@@ -6,11 +6,13 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.view.View;
 
+import com.cdkj.baselibrary.adapters.TablayoutAdapter;
 import com.cdkj.baselibrary.adapters.ViewPagerAdapter;
 import com.cdkj.baselibrary.base.AbsBaseLoadActivity;
 import com.cdkj.link_community.R;
 import com.cdkj.link_community.databinding.ActivityUserCollectListBinding;
 import com.cdkj.link_community.model.TabCurrentModel;
+import com.cdkj.link_community.module.message.FastMessageListFragment;
 
 import org.greenrobot.eventbus.Subscribe;
 
@@ -48,29 +50,29 @@ public class UserCollectListActivity extends AbsBaseLoadActivity {
 
     private void initViews() {
 
+        TablayoutAdapter tablayoutAdapter = new TablayoutAdapter(getSupportFragmentManager());
         //设置fragment数据
         ArrayList fragments = new ArrayList<>();
 
         fragments.add(MyCollectMessageListFragment.getInstance());
         fragments.add(MyCollectActiveListFragment.getInstance());
+        tablayoutAdapter.addFrag(fragments, Arrays.asList(getString(R.string.msg), getString(R.string.active)));
 
-        mBinding.viewpager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager(), fragments));
+        mBinding.viewpager.setAdapter(tablayoutAdapter);
+
+        mBinding.tablayout.setupWithViewPager(mBinding.viewpager);        //viewpager和tablayout关联
+
         mBinding.viewpager.setOffscreenPageLimit(fragments.size());
-
-        mBinding.viewpager.setPagingEnabled(true);
-
-        mBinding.viewindicator.setmLinWidth(25);
-        mBinding.viewindicator.setTabItemTitles(Arrays.asList(getString(R.string.msg), getString(R.string.active)));
-        mBinding.viewindicator.setViewPager(mBinding.viewpager, 0);
 
     }
 
+
     @Subscribe
-    public void setTabToHotMsgEvent(TabCurrentModel tabCurrentModel){
+    public void setTabToHotMsgEvent(TabCurrentModel tabCurrentModel) {
         if (tabCurrentModel == null)
             return;
 
-        mBinding.viewindicator.setViewPager(mBinding.viewpager, tabCurrentModel.getCurrent());
+//        mBinding.viewindicator.setViewPager(mBinding.viewpager, tabCurrentModel.getCurrent());
     }
 
 }

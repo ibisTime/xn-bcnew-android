@@ -49,8 +49,6 @@ public class PlatformListAdapter extends BaseQuickAdapter<CoinListModel, BaseVie
 
         viewHolder.setText(R.id.tv_price_2, item.getLastPrice());
 
-        Log.e("item.getIsWarn()", item.getIsWarn());
-        Log.e("item.getSymbol()", item.getSymbol());
 
         viewHolder.setGone(R.id.iv_warn, item.getIsWarn().equals("1"));
 

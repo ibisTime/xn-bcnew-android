@@ -145,7 +145,7 @@ public class MarketWarnActivity extends AbsBaseLoadActivity {
             }
 
             if (check("up")) {
-                setWarn(mBinding.edtUp.getText().toString(), "1");
+                setWarn(mBinding.edtUp.getText().toString(), "0");
             }
 
         });
@@ -157,7 +157,7 @@ public class MarketWarnActivity extends AbsBaseLoadActivity {
             }
 
             if (check("down")) {
-                setWarn(mBinding.edtDown.getText().toString(), "0");
+                setWarn(mBinding.edtDown.getText().toString(), "1");
             }
 
         });

@@ -57,7 +57,7 @@ public interface MyApiServer {
 
 
     /**
-     * 获取板块列表
+     * 获取版块列表
      *
      * @param code
      * @param json
@@ -69,7 +69,7 @@ public interface MyApiServer {
 
 
     /**
-     * 获取板块列表
+     * 获取版块列表
      *
      * @param code
      * @param json

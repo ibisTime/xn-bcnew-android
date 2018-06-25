@@ -100,6 +100,9 @@ public class LoginActivity extends AbsBaseLoadActivity implements SendCodeInterf
         mBinding.tvCode.setOnClickListener(view -> checkPhoneNumAndSendCode());
 
         mBinding.fraFinish.setOnClickListener(view -> {
+            if (canOpenMain) {
+                MyRouteHelper.openMain();
+            }
             finish();
         });
 
@@ -162,6 +165,7 @@ public class LoginActivity extends AbsBaseLoadActivity implements SendCodeInterf
     @Override
     public void onBackPressed() {
         if (canOpenMain) {
+            MyRouteHelper.openMain();
             finish();
         } else {
             super.onBackPressed();
@@ -177,7 +181,7 @@ public class LoginActivity extends AbsBaseLoadActivity implements SendCodeInterf
         // sequence:用户自定义的操作序列号, 同操作结果一起返回，用来标识一次操作的唯一性。
         // alias:每次调用设置有效的别名，覆盖之前的设置。有效的别名组成：字母（区分大小写）、数字、下划线、汉字、特殊字符@!#$&*+=.|。限制：alias 命名长度限制为 40 字节。（判断长度需采用UTF-8编码）
 
-        JPushInterface.setAlias(this, 101,SPUtilHelper.getUserId());
+        JPushInterface.setAlias(this, 101, SPUtilHelper.getUserId());
 
         EventBus.getDefault().post(new LoinSucc());
 
@@ -226,9 +230,9 @@ public class LoginActivity extends AbsBaseLoadActivity implements SendCodeInterf
                     RxTextView.text(btn).accept(count + "");
                 })
                 .subscribe(aLong -> {
-                    RxView.enabled(btn).accept(false);
-                    RxTextView.text(btn).accept((count - aLong) + "秒");
-                }, throwable -> {
+                            RxView.enabled(btn).accept(false);
+                            RxTextView.text(btn).accept((count - aLong) + "秒");
+                        }, throwable -> {
                             RxView.enabled(btn).accept(true);
                             RxTextView.text(btn).accept("验证码");
                         }, () -> {

@@ -3,18 +3,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <com.cdkj.baselibrary.views.tablayout.TabLayout
-            app:tabIndicatorHeight="2.4dp"
             android:id="@+id/tablayout"
             style="@style/MyTabLayout2"
-            app:tabMode="fixed"
             android:layout_width="match_parent"
             android:layout_height="45dp"
-            android:background="@color/white" />
+            android:background="@color/white"
+            app:tabIndicatorHeight="4dp"
+            app:tabMode="fixed" />
 
 
         <View

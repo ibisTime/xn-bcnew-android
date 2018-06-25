@@ -37,10 +37,6 @@ public class MyActiveActivity extends AbsRefreshListActivity {
     public void afterCreate(Bundle savedInstanceState) {
 
         mBaseBinding.titleView.setMidTitle(getString(R.string.user_active));
-        mBaseBinding.titleView.setRightTitle("联系我们");
-        mBaseBinding.titleView.setRightFraClickListener(view -> {
-            CdRouteHelper.openWebViewActivityForkey(getString(R.string.about_us), "about_us");
-        });
 
         initRefreshHelper(MyCdConfig.LISTLIMIT);
 
@@ -66,6 +62,7 @@ public class MyActiveActivity extends AbsRefreshListActivity {
 
     @Override
     public void getListRequest(int pageIndex, int limit, boolean isShowDialog) {
+
         Map<String, String> map = RetrofitUtils.getRequestMap();
 
         map.put("userId", SPUtilHelper.getUserId());

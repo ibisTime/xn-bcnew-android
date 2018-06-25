@@ -10,7 +10,6 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="44dp"
-            android:layout_marginTop="25dp"
             android:background="@color/title_bg">
 
             <LinearLayout
@@ -103,7 +102,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="$0.00"
-                        android:textColor="@color/market_green"
+                        android:textColor="@color/white"
                         android:textSize="25sp" />
 
                     <LinearLayout
@@ -119,7 +118,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="0.00"
-                            android:textColor="@color/market_green"
+                            android:textColor="@color/white"
                             android:textSize="11sp"
                             android:textStyle="bold" />
 
@@ -129,7 +128,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="10dp"
                             android:text="0.00%"
-                            android:textColor="@color/market_green"
+                            android:textColor="@color/white"
                             android:textSize="11sp"
                             android:textStyle="bold" />
 

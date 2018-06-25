@@ -16,7 +16,7 @@ import static com.cdkj.link_community.utils.AccountUtil.getMarketShowColor;
 import static com.cdkj.link_community.utils.AccountUtil.getMarketShowString;
 
 /**
- * 热门板块
+ * 热门版块
  * Created by cdkj on 2018/4/29.
  */
 public class HotPlateAdapter extends BaseQuickAdapter<PlateLlistModel, BaseViewHolder> {
@@ -32,7 +32,7 @@ public class HotPlateAdapter extends BaseQuickAdapter<PlateLlistModel, BaseViewH
 
         if (TextUtils.isEmpty(item.getName())) {
 
-            helper.setText(R.id.tv_plate_name, "--");
+//            helper.setText(R.id.tv_plate_name, "--");
 
         } else {
             helper.setText(R.id.tv_plate_name, item.getName());
@@ -41,7 +41,7 @@ public class HotPlateAdapter extends BaseQuickAdapter<PlateLlistModel, BaseViewH
 
         if (TextUtils.isEmpty(item.getBestSymbol())) {
 
-            helper.setText(R.id.tv_coin, "--");
+//            helper.setText(R.id.tv_coin, "--");
 
         } else {
             helper.setText(R.id.tv_coin, item.getBestSymbol());

@@ -3,6 +3,7 @@ package com.cdkj.link_community.module.active;
 import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
@@ -25,10 +26,14 @@ import com.cdkj.baselibrary.utils.StringUtils;
 import com.cdkj.link_community.R;
 import com.cdkj.link_community.api.MyApiServer;
 import com.cdkj.link_community.databinding.ActivityActiveDetailsBinding;
+import com.cdkj.link_community.model.ActiveApproveSuccess;
 import com.cdkj.link_community.model.ActiveModel;
 import com.cdkj.link_community.module.user.ShareActivity;
 import com.cdkj.link_community.utils.DeviceUtils;
 
+import org.greenrobot.eventbus.Subscribe;
+
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -79,13 +84,6 @@ public class ActiveDetailsActivity extends AbsBaseLoadActivity {
 
         mBaseBinding.viewV.setVisibility(View.GONE);
         getActive();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-
     }
 
     /**
@@ -202,7 +200,13 @@ public class ActiveDetailsActivity extends AbsBaseLoadActivity {
                 "</style>" + model.getContent(), "text/html; charset=UTF-8", "utf-8");
 
         // UN_ENROLL("0", "未报名"), ENROLL_APPLY("1", "申请报名中"), ENROLL_SUC("2", "报名成功");
-        if (model.getIsEnroll().equals("0")) {
+
+        mBinding.tvBtn.setBackgroundColor(ContextCompat.getColor(this, R.color.btn_red));
+        if (DateUtil.isNewer(new Date(), new Date(model.getStartDatetime()))) {  //如果活动已经开始
+            mBinding.tvBtn.setText("活动已开始");
+            mBinding.tvBtn.setBackgroundColor(ContextCompat.getColor(this, R.color.btn_gray));
+            mBinding.tvBtn.setEnabled(false);
+        } else if (model.getIsEnroll().equals("0")) {
             mBinding.tvBtn.setText("立即报名");
         } else if (model.getIsEnroll().equals("1")) {
             mBinding.tvBtn.setText("报名申请中");
@@ -210,6 +214,7 @@ public class ActiveDetailsActivity extends AbsBaseLoadActivity {
         } else {
             mBinding.tvBtn.setText("已通过请注意查看短信");
         }
+
 
         /*评论数量*/
         if (model.getCommentCount() > 999) {
@@ -397,6 +402,12 @@ public class ActiveDetailsActivity extends AbsBaseLoadActivity {
             return "";
         }
         return shareContent.substring(0, 60);
+    }
+
+    //报名成刷新
+    @Subscribe
+    public void refreshEvent(ActiveApproveSuccess activeApproveSuccess) {
+        getActive();
     }
 
     @Override

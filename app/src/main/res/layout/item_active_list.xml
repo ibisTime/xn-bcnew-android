@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -29,13 +30,12 @@
                 android:id="@+id/tv_status"
                 android:layout_width="58dp"
                 android:layout_height="24dp"
-                android:background="@drawable/common_active_status_bg_green"
                 android:gravity="center_vertical"
                 android:paddingLeft="5dp"
-                android:text="已报名"
                 android:textColor="@color/white"
                 android:textSize="14sp"
-                android:visibility="gone" />
+                tools:background="@drawable/common_active_status_bg_green"
+                tools:text="已报名" />
         </FrameLayout>
 
         <LinearLayout
