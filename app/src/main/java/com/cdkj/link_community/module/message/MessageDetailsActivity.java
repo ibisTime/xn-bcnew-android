@@ -82,6 +82,37 @@ public class MessageDetailsActivity extends AbsBaseLoadActivity {
 
     private AgentWeb mAgentWeb;
 
+    @Override
+    protected void onResume() {
+        getMessageDetailRequest();
+        if (mAgentWeb != null)
+            mAgentWeb.getWebLifeCycle().onResume();
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        if (mAgentWeb != null)
+            mAgentWeb.getWebLifeCycle().onPause();
+        super.onPause();
+    }
+
+    @Override
+    protected void onDestroy() {
+        mBinding.contentLayout.webView.clearHistory();
+        ((ViewGroup) mBinding.contentLayout.webView.getParent()).removeView(mBinding.contentLayout.webView);
+        mBinding.contentLayout.webView.loadUrl("about:blank");
+        mBinding.contentLayout.webView.stopLoading();
+        mBinding.contentLayout.webView.setWebChromeClient(null);
+        mBinding.contentLayout.webView.setWebViewClient(null);
+        mBinding.contentLayout.webView.destroy();
+
+        if (mAgentWeb != null)
+            mAgentWeb.getWebLifeCycle().onDestroy();
+
+        super.onDestroy();
+    }
+
     /**
      * @param context
      * @param msgCode 消息编号
@@ -157,22 +188,6 @@ public class MessageDetailsActivity extends AbsBaseLoadActivity {
 
         initRefreshHelper();
         initListener();
-    }
-
-
-    @Override
-    protected void onResume() {
-        getMessageDetailRequest();
-        if (mAgentWeb != null)
-            mAgentWeb.getWebLifeCycle().onResume();
-        super.onResume();
-    }
-
-    @Override
-    protected void onPause() {
-        if (mAgentWeb != null)
-            mAgentWeb.getWebLifeCycle().onPause();
-        super.onPause();
     }
 
 
@@ -829,19 +844,4 @@ public class MessageDetailsActivity extends AbsBaseLoadActivity {
         return shareContent.substring(0, 60);
     }
 
-    @Override
-    protected void onDestroy() {
-        mBinding.contentLayout.webView.clearHistory();
-        ((ViewGroup) mBinding.contentLayout.webView.getParent()).removeView(mBinding.contentLayout.webView);
-        mBinding.contentLayout.webView.loadUrl("about:blank");
-        mBinding.contentLayout.webView.stopLoading();
-        mBinding.contentLayout.webView.setWebChromeClient(null);
-        mBinding.contentLayout.webView.setWebViewClient(null);
-        mBinding.contentLayout.webView.destroy();
-
-        if (mAgentWeb != null)
-            mAgentWeb.getWebLifeCycle().onDestroy();
-
-        super.onDestroy();
-    }
 }

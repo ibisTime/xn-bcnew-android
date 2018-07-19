@@ -145,13 +145,14 @@ public class FastMessageListAdapter extends BaseQuickAdapter<FastMessage, BaseVi
      */
     private void setReadedState(FastMessage item, TextView textView) {
         if (TextUtils.equals(item.getType(), "1")) {  //热门
-            if (isHotMessage) {
-                textView.setTextColor(ContextCompat.getColor(mContext, R.color.red));
-            } else {
-                textView.setTextColor(ContextCompat.getColor(mContext, R.color.app_text_gray));
-            }
+            textView.setTextColor(ContextCompat.getColor(mContext, R.color.text_red));
+//            if (isHotMessage) {
+//                textView.setTextColor(ContextCompat.getColor(mContext, R.color.text_red));
+//            } else {
+//                textView.setTextColor(ContextCompat.getColor(mContext, R.color.text_black_cd));
+//            }
         } else {
-            textView.setTextColor(ContextCompat.getColor(mContext, R.color.red));
+            textView.setTextColor(ContextCompat.getColor(mContext, R.color.text_black_cd));
         }
 //        if (TextUtils.equals(item.getIsRead(), "1")) {
 //

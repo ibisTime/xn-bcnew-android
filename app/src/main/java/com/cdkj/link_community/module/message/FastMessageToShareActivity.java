@@ -56,7 +56,6 @@ import static com.cdkj.baselibrary.utils.BitmapUtils.getBitmapByView;
  * 快讯分享
  * Created by cdkj on 2018/3/19.
  */
-
 public class FastMessageToShareActivity extends AbsBaseLoadActivity {
 
     private ActivityFastMessageShareBinding mBinding;
@@ -198,7 +197,8 @@ public class FastMessageToShareActivity extends AbsBaseLoadActivity {
     public void getShareUrl() {
 
         Map<String, String> map = new HashMap<>();
-        map.put("ckey", "h5Url");
+//        map.put("ckey", "h5Url");
+        map.put("ckey", "h5DownUrl");
         map.put("systemCode", MyCdConfig.SYSTEMCODE);
         map.put("companyCode", MyCdConfig.COMPANYCODE);
 
@@ -232,7 +232,7 @@ public class FastMessageToShareActivity extends AbsBaseLoadActivity {
      * @param url
      */
     public void createCodePhoto(String url) {
-        mSubscription.add(Observable.just(url+"/download/download.html").map(s -> CodeUtils.createImage(s, 300, 300, null))
+        mSubscription.add(Observable.just(url).map(s -> CodeUtils.createImage(s, 300, 300, null))
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.io())
                 .filter(bitmap -> bitmap != null)

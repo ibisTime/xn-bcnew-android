@@ -36,6 +36,7 @@
 
     <color name="btn_gray">#FFC7C7C7</color>
     <color name="btn_red">#ffff5757</color>
+    <color name="text_red">#CB2424</color>
     <color name="all_split_lins">#e2e2e2</color>
     <color name="yellow">#FFA300</color>
     <color name="deep_blue">#011F4A</color>
